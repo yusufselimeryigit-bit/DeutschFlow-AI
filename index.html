@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
 <meta name="description" content="A1'den C2'ye oyunlaştırılmış, yapay zeka destekli Almanca öğrenme uygulaması">
-<meta name="theme-color" content="#58CC02">
+<meta name="theme-color" content="#f6f4ee">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com/3.4.3"></script>
 <script>tailwind.config = { darkMode: 'class', corePlugins: { preflight: false } };</script>
@@ -38,6 +38,10 @@
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
+/* iPhone: hızlı art arda dokunuşlar çift-dokunma yakınlaştırmasına gitmesin (aksi halde ikinci dokunuş düğmeye ulaşmaz) */
+button, a, label, input, select, textarea, .opt, .tok, .node, .story-w, .swatch { touch-action: manipulation; }
+/* Ders ekranı görünür alanı takip etsin: iPhone klavyesi açılınca alttaki “Kontrol et” klavyenin arkasında kalmasın */
+#lesson { top: var(--vvt, 0px); bottom: auto; height: var(--vvh, 100%); }
 html, body { margin: 0; padding: 0; }
 body { font-family: 'Nunito', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; transition: background .3s, color .3s; }
 body::before { content: ''; position: fixed; inset: -20%; z-index: -1; pointer-events: none;
@@ -76,7 +80,7 @@ textarea.pill-input { resize: vertical; min-height: 90px; }
 .press:active { transform: scale(.95); }
 
 /* ============ DÜZEN ============ */
-#app { display: grid; grid-template-columns: 270px 1fr; min-height: 100vh; }
+#app { display: grid; grid-template-columns: 270px minmax(0, 1fr); min-height: 100vh; } /* minmax(0,…): geniş içerik (tablo, ısı haritası) sayfayı ekrandan taşırmasın */
 #sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 22px 14px; border-right: 1px solid var(--stroke); background: var(--card); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
 .brand { display: flex; align-items: center; gap: 10px; padding: 4px 10px 18px; }
 .brand-logo { width: 42px; height: 42px; border-radius: 13px; background: linear-gradient(135deg, var(--acc), var(--a2)); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Outfit'; font-weight: 800; font-size: 20px; box-shadow: 0 6px 16px -6px rgba(88,204,2,.7); }
@@ -89,7 +93,7 @@ textarea.pill-input { resize: vertical; min-height: 90px; }
 .nav-item.active { background: color-mix(in srgb, var(--acc) 15%, transparent); color: var(--accd); }
 .nav-item.active i { color: var(--acc); }
 .dark .nav-item.active { color: color-mix(in srgb, var(--acc) 62%, #fff); }
-#main { padding: 26px 28px 120px; max-width: 1180px; width: 100%; margin: 0 auto; }
+#main { padding: 26px 28px 120px; max-width: 1180px; width: 100%; min-width: 0; margin: 0 auto; }
 #topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
 .stat-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; font-weight: 900; font-size: 15px; background: var(--card); border: 1px solid var(--stroke); }
 #bottomNav { display: none; }
@@ -113,7 +117,7 @@ textarea.pill-input { resize: vertical; min-height: 90px; }
 body.readonly .ro-banner { display: flex; }
 
 @media (max-width: 960px) {
-  #app { grid-template-columns: 1fr; }
+  #app { grid-template-columns: minmax(0, 1fr); }
   #sidebar { display: none; }
   #main { padding: 16px 16px calc(var(--nav-h) + 90px + env(safe-area-inset-bottom)); }
   #topbar { padding-top: env(safe-area-inset-top); }
@@ -372,6 +376,747 @@ html .pdf-doc .hl-m { color: #1C7FD6; } html .pdf-doc .hl-f { color: #E0365F; } 
 #bottomNav, #drawBar { background: color-mix(in srgb, var(--bg2) 92%, transparent) !important; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
+
+<style id="editorial">
+/* =====================================================================
+   EDİTORYAL · FAHRPLAN TASARIMI
+   Stil: editorial-greeting (design-taste-frontend, app sheet, seed 2127892701)
+   Fikir: Almanca yolculuğu bir tren hattının sefer çizelgesidir; her ünite bir durak.
+   Düz yüzeyler, tek vurgu rengi, durağan öğelerde gölge yok, cam/geçiş yok.
+   ===================================================================== */
+:root {
+  --ground: #ffffff; --surface: #f5f3ee; --surface-2: #eeebe4; --raised: #ffffff;
+  --border: #e6e3dc; --rule: #efede7; --control: #d9d7d0;
+  --ink: #1f201d; --muted: #636361; --faint: #8c8c88;
+  --accent: #1b6e66; --accent-ink: #ffffff; --accent-soft: #e3efed;
+  --positive: #2e7d32; --negative: #b42318; --warning: #92400e;
+  --pos-bg: #e6f4e7; --neg-bg: #fdecea; --warn-bg: #fff6e5;
+  --radius-card: 22px; --radius-row: 14px; --row-h: 63px;
+  --ease-out: cubic-bezier(.22, 1, .36, 1); --ease-press: cubic-bezier(.3, .7, .4, 1);
+  /* eski değişkenleri yeni rollere bağla */
+  --bg: var(--ground); --bg2: var(--raised); --card: var(--surface); --card2: var(--raised);
+  --stroke: var(--border); --text: var(--ink); --soft: var(--surface-2);
+  --acc: var(--accent); --accd: #145750;
+  /* seviyeler = hat renkleri (sakin, ulaşım haritası gibi) */
+  --a1: #1b6e66; --a1d: #145750; --a2: #2f6fb0; --a2d: #245688; --b1: #7a4fa3; --b1d: #5f3d80;
+  --b2: #b5651d; --b2d: #8e4f17; --c1: #8a7a1a; --c1d: #6b5f14; --c2: #2b2b28; --c2d: #121211;
+  --red: #b42318; --redd: #8c1b12; --green: #2e7d32; --greend: #23602a;
+  --shadow: none; --r: 22px;
+}
+.dark {
+  --ground: #121211; --surface: #1b1b19; --surface-2: #232321; --raised: #1f1f1d;
+  --border: #2c2c29; --rule: #262624; --control: #3a3a36;
+  --ink: #ecebe6; --muted: #a3a29b; --faint: #75746e;
+  --accent: #4fb3a7; --accent-ink: #0d1f1d; --accent-soft: #17302d;
+  --pos-bg: #16301a; --neg-bg: #3a1714; --warn-bg: #33250f;
+  --accd: #7fd0c6;
+  --a1: #4fb3a7; --a1d: #3b8e84; --a2: #6aa3dd; --a2d: #4e86bf; --b1: #b18ad6; --b1d: #8f6bb5;
+  --b2: #e09552; --b2d: #bf7a3c; --c1: #c9b64a; --c1d: #a99634; --c2: #d9d8d2; --c2d: #b5b4ad;
+}
+html.dark.oled { --ground: #000; --surface: #0e0e0d; --surface-2: #161615; --raised: #0b0b0a; --border: #222220; }
+html[data-accent="blue"] { --accent: #2f6fb0; --accd: #245688; --accent-soft: #e4edf7; }
+html[data-accent="purple"] { --accent: #7a4fa3; --accd: #5f3d80; --accent-soft: #efe8f6; }
+html[data-accent="orange"] { --accent: #b5651d; --accd: #8e4f17; --accent-soft: #f7ece2; }
+html[data-accent="pink"] { --accent: #1f201d; --accd: #000; --accent-soft: #ecebe6; }
+.dark[data-accent="pink"] { --accent: #ecebe6; --accd: #fff; --accent-ink: #121211; }
+
+/* ---------- Temel ---------- */
+body { font-family: 'Instrument Sans', Inter, system-ui, sans-serif; font-size: 16px; background: var(--ground); color: var(--ink); -webkit-font-smoothing: antialiased; }
+body::before { display: none !important; }
+h1, h2, h3, .font-display { font-family: 'Instrument Sans', Inter, system-ui, sans-serif; letter-spacing: -.015em; font-weight: 600; }
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -.01em; }
+.muted { color: var(--muted); }
+b, strong { font-weight: 600; }
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--accent) !important; outline-offset: 2px; }
+.tabular, .stat-pill, .chip, .k-val, table, .bar ~ b { font-variant-numeric: tabular-nums; }
+
+/* ---------- Yüzeyler: düz, tek ton adımı ---------- */
+.glass, .dark .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-radius: var(--radius-card); box-shadow: none; }
+.card { padding: 20px; }
+.glass.idiom { background: var(--surface); color: var(--ink); box-shadow: none; border: 0; }
+.glass.idiom .muted { color: var(--muted); }
+#tutorPanel, #wordPop, #tbMenu { background: var(--raised) !important; -webkit-backdrop-filter: none; backdrop-filter: none; border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 18px 50px -20px rgba(0,0,0,.28); }
+
+/* ---------- Kabuk: açık düzlem ---------- */
+#app { grid-template-columns: 248px minmax(0, 1fr); }
+#sidebar { position: sticky; top: 0; height: 100vh; height: 100dvh; margin: 0; padding: 28px 12px; border-radius: 0; background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-right: 1px solid var(--rule); box-shadow: none; }
+.brand { padding: 0 10px 22px; gap: 10px; }
+.brand-logo { width: 34px; height: 34px; border-radius: 10px; background: var(--accent); box-shadow: none; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 22px; color: var(--accent-ink); }
+.brand b { font-family: 'Instrument Sans', sans-serif; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.brand small { font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.nav-group { text-transform: none; letter-spacing: 0; font-size: 12.5px; font-weight: 500; color: var(--faint); padding: 22px 12px 6px; }
+.nav-item { height: 34px; padding: 0 10px; gap: 10px; border-radius: 10px; font-size: 14px; font-weight: 400; color: var(--muted); box-shadow: none; }
+.nav-item i { width: 18px; font-size: 14px; color: var(--faint); }
+.nav-item:hover { background: var(--surface); color: var(--ink); }
+.nav-item.active, .dark .nav-item.active { background: var(--surface-2); color: var(--ink); box-shadow: none; font-weight: 500; }
+.nav-item.active i { color: var(--ink); }
+#main { padding: 32px 40px 120px; max-width: 1180px; }
+#topbar, .dark #topbar { position: static; padding: 0; margin: 0 0 28px; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; box-shadow: none; }
+.page-title { font-size: 24px; font-weight: 500; letter-spacing: -.015em; }
+.page-sub { font-size: 15px; font-weight: 400; color: var(--muted); margin: 0 0 24px; max-width: 64ch; }
+.stat-pill { background: none; border: 0; box-shadow: none; padding: 6px 8px; font-weight: 500; font-size: 14px; color: var(--ink); gap: 6px; }
+.stat-pill i { color: var(--faint) !important; font-size: 13px; }
+.icon-btn { width: 38px; height: 38px; border-radius: 999px; background: var(--surface); border: 0; box-shadow: none; color: var(--ink); -webkit-backdrop-filter: none; backdrop-filter: none; transition: background .2s var(--ease-out), transform .12s var(--ease-press); }
+.icon-btn:hover { background: var(--surface-2); }
+.icon-btn:active { transform: scale(.94); }
+.ro-banner { background: var(--accent-soft); color: var(--accd); border-radius: 14px; font-weight: 500; }
+
+@media (max-width: 960px) {
+  #app { grid-template-columns: minmax(0, 1fr); }
+  #main { padding: 0 16px calc(var(--nav-h) + 40px + env(safe-area-inset-bottom)); }
+  #topbar, .dark #topbar { position: sticky; top: 0; z-index: 50; height: calc(52px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 0 0; margin: 0 -16px 18px; padding-left: 16px; padding-right: 8px; background: var(--ground); border-bottom: 1px solid var(--rule); border-radius: 0; }
+  #topbar .page-title { font-size: 17px; font-weight: 600; }
+  .page-title { font-size: 17px; }
+  #bottomNav, .dark #bottomNav { left: 0; right: 0; bottom: 0; height: calc(60px + env(safe-area-inset-bottom)); padding: 0 4px env(safe-area-inset-bottom); border-radius: 0; background: var(--ground) !important; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-top: 1px solid var(--rule); box-shadow: none; }
+  .bn-item { font-size: 11px; font-weight: 500; gap: 3px; color: var(--faint); border-radius: 0; box-shadow: none !important; transform: none !important; background: none !important; }
+  .bn-item i { font-size: 18px; }
+  .bn-item.active, .dark .bn-item.active { color: var(--ink); background: none; }
+  .tb-row .stat-pill { padding: 4px 6px; font-size: 13px; }
+}
+
+/* ---------- Düğmeler: düz dolgu, tam yuvarlak ---------- */
+.btn, .btn-red, .btn-ghost { text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 15px; border-radius: 999px; padding: 11px 20px; min-height: 42px;
+  transition: transform .12s var(--ease-press), background-color .2s var(--ease-out), filter .2s; box-shadow: none !important; }
+.btn { background: var(--lv, var(--accent)); color: #fff; }
+.dark .btn { color: #0d0d0c; }
+.btn:hover { filter: brightness(1.06); }
+.btn:active, .btn-red:active, .btn-ghost:active { transform: scale(.97); }
+.btn-red { background: var(--negative); color: #fff; }
+.btn-ghost { background: var(--surface-2); color: var(--ink); border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.dark .btn-ghost { color: var(--ink); }
+.btn-ghost:hover { background: var(--control); filter: none; }
+.btn-sm { padding: 7px 14px; font-size: 14px; min-height: 34px; }
+.btn:disabled { opacity: .4; filter: none; }
+.press { transition: transform .12s var(--ease-press); }
+
+/* ---------- Girdi, sekme, çip, çubuk ---------- */
+.pill-input, #app .pill-input, .sheet .pill-input, #lesson .pill-input, #tutorPanel .pill-input, #gate .pill-input { background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-size: 16px; color: var(--ink); }
+.pill-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.tabs { background: var(--surface-2); border: 0; border-radius: 999px; padding: 3px; box-shadow: none; }
+.tab { border-radius: 999px; font-weight: 500; font-size: 14px; color: var(--muted); }
+.tab.active { background: var(--raised); color: var(--ink); box-shadow: none; }
+.chip { background: var(--surface-2); border: 0; box-shadow: none; font-weight: 500; font-size: 13px; color: var(--ink); }
+.bar { height: 6px; background: var(--surface-2); box-shadow: none; }
+.bar > div { background: var(--lv, var(--accent)); box-shadow: none; transition: transform .6s var(--ease-out), width .6s var(--ease-out); }
+.lvl-badge { border-radius: 6px; height: 22px; min-width: 30px; padding: 0 7px; font-size: 12px; font-weight: 600; letter-spacing: .02em; background: var(--lv); color: #fff; }
+.dark .lvl-badge { color: #0d0d0c; }
+.section-title { font-size: 14px; font-weight: 600; letter-spacing: 0; gap: 8px; margin-bottom: 14px; }
+.section-title i { color: var(--faint) !important; font-size: 13px; }
+.empty { color: var(--muted); font-weight: 400; }
+.empty i { color: var(--faint); }
+
+/* ---------- Pencereler ---------- */
+.overlay { background: rgba(20,20,18,.42); -webkit-backdrop-filter: none; backdrop-filter: none; animation: fadeIn .2s var(--ease-out); }
+.sheet { background: var(--raised); -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; border-radius: 24px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.4); animation: sheetIn2 .32s var(--ease-out); }
+@keyframes sheetIn2 { from { opacity: 0; transform: translateY(14px) scale(.985); filter: blur(4px); } }
+.sheet-head { background: var(--raised); border-bottom: 1px solid var(--rule); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.sheet-head h3 { font-size: 17px; font-weight: 600; }
+.toast { background: var(--ink); color: var(--ground); border: 0; border-radius: 14px; font-weight: 500; font-size: 14px; box-shadow: 0 16px 34px -16px rgba(0,0,0,.45); -webkit-backdrop-filter: none; backdrop-filter: none; animation: toastIn .26s var(--ease-out); }
+.toast i { color: var(--ground) !important; opacity: .8; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(-8px); filter: blur(3px); } }
+
+/* ---------- Ana ekran: editoryal karşılama ---------- */
+.home { max-width: 1100px; margin: 0 auto; }
+.greet-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin: 8px 0 44px; }
+.greet { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(40px, 6.2vw, 72px); line-height: .98; letter-spacing: -.02em; margin: 0; }
+.greet-sub { font-size: 17px; line-height: 1.5; color: var(--muted); margin: 14px 0 0; max-width: 56ch; }
+.greet-sub b { color: var(--ink); font-weight: 500; }
+.greet-act { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.s3 { grid-column: span 3; } .s4 { grid-column: span 4; } .s6 { grid-column: span 6; } .s8 { grid-column: span 8; } .s9 { grid-column: span 9; }
+.k-tile { background: var(--surface); border-radius: var(--radius-card); padding: 16px 18px; min-height: 128px; display: flex; flex-direction: column; }
+.k-lab { font-size: 13px; color: var(--muted); }
+.k-val { font-size: 34px; font-weight: 400; letter-spacing: -.02em; margin-top: auto; line-height: 1.1; }
+.k-val small { font-size: 15px; color: var(--muted); margin-left: 4px; }
+.k-cap { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.panel { background: var(--surface); border-radius: var(--radius-card); padding: 20px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.panel-head h2 { font-size: 14px; font-weight: 600; margin: 0; }
+.panel-head .lnk { font-size: 13px; color: var(--muted); background: none; border: 0; padding: 0; }
+.panel-head .lnk:hover { color: var(--ink); }
+.row-card { display: flex; align-items: center; gap: 14px; width: 100%; min-height: var(--row-h); padding: 10px 14px; margin-bottom: 8px; background: var(--raised); border: 1px solid var(--border); border-radius: var(--radius-row); text-align: left; color: var(--ink); transition: transform .12s var(--ease-press), border-color .2s var(--ease-out); }
+.row-card:last-child { margin-bottom: 0; }
+.row-card:hover { border-color: var(--control); }
+.row-card:active { transform: scale(.99); }
+.row-card .rc-main { flex: 1; min-width: 0; }
+.row-card .rc-t { font-size: 15px; font-weight: 500; }
+.row-card .rc-s { font-size: 13px; color: var(--muted); margin-top: 1px; }
+.row-card .rc-ic { width: 30px; text-align: center; color: var(--faint); font-size: 15px; flex-shrink: 0; }
+.row-card .rc-end { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.row-card.hot { border-color: var(--accent); }
+.row-card.hot .rc-end { color: var(--accd); font-weight: 500; }
+.idiom-de { font-family: 'Instrument Serif', Georgia, serif; font-size: 30px; line-height: 1.12; letter-spacing: -.01em; margin: 2px 0 10px; }
+.idiom-ex { font-size: 14px; line-height: 1.5; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--border); }
+.q-line { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+.q-line + .q-line { border-top: 1px solid var(--border); }
+.q-line .bar { flex: 1; }
+.q-line .q-t { width: 46%; font-size: 14px; }
+.q-line .q-n { font-size: 13px; color: var(--muted); width: 44px; text-align: right; }
+.q-line.done .q-t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--faint); }
+.note { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+.flo-inline { flex-shrink: 0; }
+@media (max-width: 960px) {
+  .greet-row { margin: 6px 0 26px; }
+  .greet { font-size: 40px; }
+  .greet-sub { font-size: 16px; }
+  .s3 { grid-column: span 6; } .s9, .s8, .s6, .s4, .panel.s3 { grid-column: span 12; }
+  .k-tile { min-height: 108px; }
+  .k-val { font-size: 30px; }
+  .flo-inline { display: none; }
+}
+
+/* ---------- Hızlı erişim satırları (eski kare kutucukların yerine) ---------- */
+.hub { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.hub .row-card { margin: 0; }
+@media (min-width: 961px) { .hub.wide { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .hub { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- İmza: Fahrplan (öğrenme yolu = tren hattı) ---------- */
+.line { margin-bottom: 40px; }
+.line-head { display: flex; align-items: center; gap: 14px; padding: 0 0 14px; }
+.line-badge { display: inline-flex; align-items: center; justify-content: center; height: 34px; min-width: 50px; padding: 0 10px; border-radius: 8px; background: var(--lv); color: #fff; font-weight: 600; font-size: 16px; letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+.dark .line-badge { color: #0d0d0c; }
+.line-head h2 { font-size: 20px; font-weight: 600; margin: 0; }
+.line-head .lh-sub { font-size: 13px; color: var(--muted); }
+.line-acts { margin-left: auto; display: flex; gap: 6px; }
+.line.locked .line-badge { background: var(--control); color: var(--muted); }
+.stops { list-style: none; margin: 0; padding: 0; position: relative; }
+.stop { position: relative; }
+.stop > button { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 66px; padding: 10px 14px 10px 0; text-align: left; color: var(--ink); border-radius: 14px; transition: background .2s var(--ease-out), transform .12s var(--ease-press); }
+.stop > button:hover { background: var(--surface); }
+.stop > button:active { transform: scale(.995); }
+.stop .rail { position: relative; width: 44px; align-self: stretch; flex-shrink: 0; margin: -10px 0; } /* düğmenin iç boşluğunu da kaplasın: hat duraklar arasında kesilmesin */
+.stop .rail::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: var(--rule); }
+.stop:first-child .rail::before { top: 50%; }
+.stop:last-child .rail::before { bottom: 50%; }
+.stop .rail::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; margin-left: -2px; background: var(--lv); transform-origin: top; transform: scaleY(var(--fill, 0)); transition: transform .5s var(--ease-out) var(--d, 0ms); }
+.stop:first-child .rail::after { top: 50%; }
+.stop:last-child .rail::after { bottom: 50%; }
+.stop.done .rail { --fill: 1; }
+.stop.current .rail { --fill: .5; }
+.stop.current .rail::after { bottom: 50%; transform: scaleY(1); }
+.stop.current:first-child .rail::after { display: none; }
+.stop .dot { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--ground); border: 3px solid var(--control); z-index: 1; transition: transform .3s var(--ease-out); }
+.stop.done .dot { background: var(--lv); border-color: var(--lv); }
+.stop.current .dot { width: 24px; height: 24px; margin: -12px 0 0 -12px; border: 6px solid var(--lv); background: var(--ground); }
+.stop.end .dot { width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 6px; border: 4px solid var(--ink); }
+.stop.end.done .dot { background: var(--ink); }
+.stop .st-name { flex: 1; min-width: 0; }
+.stop .st-t { font-size: 16px; font-weight: 500; line-height: 1.3; }
+.stop .st-de { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.stop .st-meta { font-size: 13px; color: var(--muted); white-space: nowrap; text-align: right; }
+.stop.current .st-meta { color: var(--lvd); font-weight: 600; }
+.stop.current > button { background: var(--surface); }
+.stop.locked .st-t, .stop.locked .st-de { color: var(--faint); }
+.stop.locked > button { cursor: default; }
+.halt { display: inline-block; font-size: 12px; font-weight: 600; color: #fff; background: var(--lv); border-radius: 6px; padding: 3px 8px; margin-top: 6px; }
+.dark .halt { color: #0d0d0c; }
+.line.drawn .stop .rail::after { transition: none; }
+
+/* ---------- Ders ekranı ---------- */
+#lesson { background: var(--ground); }
+#lesson::before { display: none; }
+.ls-top { padding-top: calc(14px + env(safe-area-inset-top)); }
+#lesson .progress { height: 6px; background: var(--surface-2); border: 0; box-shadow: none; }
+#lesson .progress > div { background: var(--lv); box-shadow: none; }
+.ls-kind { font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--lvd); }
+.ls-q { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(28px, 5vw, 40px); line-height: 1.15; letter-spacing: -.01em; }
+.ls-q .muted { font-family: 'Instrument Sans', sans-serif; font-size: .55em; }
+#lesson .opt, #gameArea .opt, .opt { background: var(--raised); border: 1px solid var(--border); border-radius: 16px; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-weight: 500; font-size: 17px; min-height: 58px;
+  transition: transform .12s var(--ease-press), border-color .18s var(--ease-out), background-color .18s var(--ease-out); }
+#lesson .opt:hover, #gameArea .opt:hover { border-color: var(--control); }
+#lesson .opt:active, #gameArea .opt:active { transform: scale(.985); }
+#lesson .opt.sel, #gameArea .opt.sel { border-color: var(--ink); background: var(--raised); box-shadow: inset 0 0 0 1px var(--ink); }
+#lesson .opt.ok, #gameArea .opt.ok { border-color: var(--positive); background: var(--pos-bg); box-shadow: inset 0 0 0 1px var(--positive); animation: okPop .32s var(--ease-out); }
+#lesson .opt.bad, #gameArea .opt.bad { border-color: var(--negative); background: var(--neg-bg); box-shadow: inset 0 0 0 1px var(--negative); animation: badShake .3s var(--ease-out); }
+.opt .k { border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); font-size: 12px; }
+.tok { background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-weight: 500; font-size: 17px; transition: transform .12s var(--ease-press), border-color .18s; }
+.tok:active { transform: scale(.96); }
+.tok.sel { box-shadow: inset 0 0 0 1px var(--ink); border-color: var(--ink); }
+.tok.ok { border-color: var(--positive); background: var(--pos-bg); box-shadow: none; }
+.tok.bad { border-color: var(--negative); background: var(--neg-bg); box-shadow: none; }
+.answer-line { border-bottom: 1px solid var(--border); }
+.ls-foot { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; border-top: 1px solid var(--rule); box-shadow: none; }
+.ls-foot.ok, .ls-foot.bad { animation: footIn .28s var(--ease-out); }
+.ls-foot.ok { background: var(--pos-bg); border-top-color: transparent; }
+.ls-foot.bad { background: var(--neg-bg); border-top-color: transparent; }
+.fb-title { font-family: 'Instrument Sans', sans-serif; font-size: 18px; font-weight: 600; }
+.ls-foot.ok .fb-title, .dark .ls-foot.ok .fb-title { color: var(--positive); }
+.ls-foot.bad .fb-title, .dark .ls-foot.bad .fb-title { color: var(--negative); }
+.dark .ls-foot.ok .fb-title { color: #7cc982; } .dark .ls-foot.bad .fb-title { color: #f08a7f; }
+.fb-text { font-weight: 400; font-size: 15px; }
+.ai-box { background: var(--raised); border: 1px solid var(--border); border-radius: 14px; box-shadow: none; font-weight: 400; }
+@keyframes okPop { 40% { transform: scale(1.015); } }
+@keyframes badShake { 20% { transform: translateX(-5px); } 45% { transform: translateX(4px); } 70% { transform: translateX(-2px); } }
+@keyframes footIn { from { transform: translateY(14px); opacity: .4; } }
+
+/* ---------- Kartlar, tablolar, mesajlar ---------- */
+.flash-f { background: var(--surface); border: 0; border-radius: 24px; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.flash-b { background: var(--lv); border-radius: 24px; box-shadow: none; }
+.flash .big { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 40px; }
+.flash-in { transition: transform .5s var(--ease-out); }
+.box-col { background: var(--surface); border: 0; border-radius: 16px; box-shadow: none; }
+.box-col b { font-family: 'Instrument Sans', sans-serif; font-weight: 400; font-size: 30px; }
+#app .ex, .sheet .ex, .guide .ex { background: var(--surface); border: 0; border-radius: 14px; box-shadow: none; font-weight: 500; }
+.guide .tip { background: var(--warn-bg); border-left: 3px solid var(--warning); border-radius: 10px; font-weight: 500; }
+.guide p, .guide ul { font-weight: 400; }
+.guide h4 { font-family: 'Instrument Sans', sans-serif; font-weight: 600; font-size: 16px; }
+#app table.gt, .sheet table.gt { border: 1px solid var(--border); border-radius: 14px; box-shadow: none; }
+#app table.gt th, .sheet table.gt th { background: var(--surface); color: var(--ink); font-weight: 600; border-bottom: 1px solid var(--border); }
+#app table.gt td, .sheet table.gt td, #app table.gt tr:nth-child(even) td, .sheet table.gt tr:nth-child(even) td { background: var(--raised); font-weight: 400; border-top: 1px solid var(--rule); }
+.msg { font-weight: 400; border-radius: 18px; }
+.msg.me { background: var(--ink); color: var(--ground); box-shadow: none; }
+.msg.ai { background: var(--surface); border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.story-s { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 24px; line-height: 1.55; }
+.story-w:hover { background: var(--accent-soft); }
+.mic-btn { background: var(--ink); color: var(--ground); box-shadow: none; width: 104px; height: 104px; font-size: 36px; transition: transform .15s var(--ease-press); }
+.mic-btn:active { transform: scale(.96); }
+.mic-btn.on { background: var(--negative); color: #fff; box-shadow: 0 0 0 10px var(--neg-bg); animation: none; }
+.badge .b-ic, .badge.locked .b-ic, .dark .badge.locked .b-ic { background: var(--surface-2) !important; color: var(--ink) !important; border-radius: 50%; box-shadow: none; width: 56px; height: 56px; font-size: 22px; }
+.badge:not(.locked) .b-ic { background: var(--accent) !important; color: var(--accent-ink) !important; }
+.badge.locked { opacity: .55; }
+#tutorFab { border-radius: 999px; width: auto; height: 46px; padding: 0 18px; font-size: 15px; background: var(--ink); color: var(--ground); box-shadow: 0 12px 30px -14px rgba(0,0,0,.5); }
+#tutorFab::after { content: 'AI Öğretmen'; margin-left: 8px; font-weight: 500; }
+.node-label { background: none; border: 0; box-shadow: none; }
+.pin-pad button { background: var(--surface); border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-weight: 400; font-size: 26px; }
+.pin-pad button:active { background: var(--surface-2); transform: scale(.95); }
+.prof .av, .badge .b-ic { box-shadow: none; }
+.prof .av { border-radius: 50%; }
+.flo-bubble { background: var(--raised); border: 1px solid var(--border); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--ink); font-weight: 500; }
+.flo-bubble::before { display: none; }
+.wemo { font-size: 18px; }
+.swatch { box-shadow: 0 0 0 1px var(--border); }
+#drawBar { border-radius: 18px; background: var(--raised) !important; border: 1px solid var(--border); }
+.hm i, .hm-key { border-radius: 3px; }
+.cert-doc .brand-logo { font-family: 'Outfit', sans-serif; }
+
+/* ---------- Hareket: Jakub (birincil) + Jhey (ikincil); sık etkileşimler kısa (Emil) ---------- */
+.flo, .flo-happy, .flo-wing, .path-deco { animation: none; }
+.flo-happy { animation: floJump .5s var(--ease-out) 1; }
+.flo-wing { animation: floWave .9s var(--ease-out) 2; }
+.enter { animation: enterUp .42s var(--ease-out) both; animation-delay: var(--ed, 0ms); }
+@keyframes enterUp { from { opacity: 0; transform: translateY(12px); filter: blur(4px); } }
+.node.current { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .enter, .sheet, .toast, .ls-foot.ok, .ls-foot.bad, #lesson .opt.ok, #lesson .opt.bad, .flo-happy, .flo-wing { animation: none !important; }
+  .stop .rail::after { transition: none; }
+}
+.line.prep .stop .rail::after { transform: scaleY(0) !important; }
+@media (min-width: 961px) { body[data-page="home"] #topbar .page-title { visibility: hidden; } }
+/* ---------- Sade menü: 5 ana bölüm + altta profil ---------- */
+#sidebar { display: flex; flex-direction: column; }
+@media (max-width: 960px) { #sidebar { display: none !important; } } /* telefonda alt menü var */
+#sideNav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+#sideNav .nav-item { height: 42px; font-size: 15px; gap: 12px; padding: 0 12px; }
+#sideNav .nav-item i { font-size: 15px; width: 20px; }
+.side-foot { margin-top: auto; padding-top: 12px; }
+.side-prof { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 12px; text-align: left; color: var(--ink); transition: background .2s var(--ease-out); }
+.side-prof:hover { background: var(--surface); }
+.side-prof > i { color: var(--faint); font-size: 13px; }
+.side-av { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 15px; flex-shrink: 0; }
+.side-pn { flex: 1; min-width: 0; }
+.side-pn b { display: block; font-size: 14px; font-weight: 600; }
+.side-pn small { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-x { display: none !important; }
+.tbm-head { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px 10px; margin-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.tbm-head b { font-size: 15px; }
+.tbm-head span { font-size: 12.5px; }
+#tbMenu .nav-item { height: 40px; font-size: 14px; }
+/* ---------- Editoryal PDF ders notu ---------- */
+html .pdf-doc { font-family: 'Instrument Sans', Inter, sans-serif; font-size: 13.5px; color: #1f201d; --card2: #fff; --soft: #f5f3ee; --stroke: #e6e3dc; --text: #1f201d; --muted: #636361; }
+html .pdf-ed .pdf-top { display: flex; justify-content: space-between; font-size: 11px; color: #636361; padding-bottom: 10px; border-bottom: 1px solid #e6e3dc; }
+html .pdf-ed .pdf-top b { color: #1f201d; font-weight: 600; }
+html .pdf-ed .pdf-title { display: flex; gap: 18px; align-items: flex-start; margin: 26px 0 8px; }
+html .pdf-ed .pdf-badge { flex-shrink: 0; min-width: 56px; height: 38px; padding: 0 10px; border-radius: 8px; background: var(--lv); color: #fff; font-weight: 600; font-size: 18px; display: flex; align-items: center; justify-content: center; margin-top: 4px; }
+html .pdf-ed .pdf-h1 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 42px; line-height: 1.02; letter-spacing: -.01em; margin: 0; color: #1f201d; }
+html .pdf-ed .pdf-sub { font-size: 14px; color: #636361; margin-top: 6px; }
+html .pdf-ed h2 { font-family: 'Instrument Sans', sans-serif; font-size: 15px; font-weight: 600; color: #1f201d; margin: 28px 0 10px; padding: 10px 0 0; border: 0; border-top: 2px solid var(--lv); }
+html .pdf-ed .guide h4 { font-family: 'Instrument Sans', sans-serif; font-size: 14px; font-weight: 600; margin: 14px 0 6px; }
+html .pdf-ed .guide p, html .pdf-ed .guide ul { font-weight: 400; color: #1f201d; }
+html .pdf-ed table.gt { border: 1px solid #e6e3dc; border-radius: 10px; box-shadow: none; font-size: 13px; }
+html .pdf-ed table.gt th { background: #f5f3ee; color: #1f201d; font-weight: 600; border-bottom: 1px solid #e6e3dc; }
+html .pdf-ed table.gt td, html .pdf-ed table.gt tr:nth-child(even) td { background: #fff; font-weight: 400; border-top: 1px solid #efede7; }
+html .pdf-ed .tip { background: #fff6e5; border-left: 3px solid #92400e; border-radius: 8px; font-weight: 500; }
+html .pdf-ed .ex { background: #f5f3ee; border-radius: 10px; font-weight: 500; }
+html .pdf-ed .pdf-q { display: flex; gap: 10px; margin: 10px 0; font-weight: 500; line-height: 1.5; }
+html .pdf-ed .pdf-qn { flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px; background: #f5f3ee; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; }
+html .pdf-ed .pdf-opts { margin: 4px 0 0; gap: 22px; font-weight: 400; }
+html .pdf-ed .pdf-key { font-size: 12.5px; line-height: 1.8; font-weight: 400; }
+html .pdf-ed .pdf-foot { display: flex; justify-content: space-between; margin-top: 26px; padding-top: 10px; border-top: 1px solid #e6e3dc; font-size: 10.5px; color: #8c8c88; font-weight: 500; }
+/* Sertifika (editoryal) */
+.cert2 { width: 1122px; height: 770px; background: #fff; color: #1f201d; font-family: 'Instrument Sans', sans-serif; position: relative; box-sizing: border-box; padding: 34px; }
+.cert2-bar { position: absolute; left: 34px; right: 34px; top: 34px; height: 10px; background: var(--lv); }
+.cert2-in { height: 100%; box-sizing: border-box; border: 1px solid #e6e3dc; padding: 46px 64px 36px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.cert2-top { width: 100%; display: flex; align-items: center; gap: 12px; font-size: 18px; }
+.cert2-mark { width: 40px; height: 40px; border-radius: 10px; background: #1b6e66; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 26px; }
+.cert2-no { margin-left: auto; font-size: 12px; color: #8c8c88; }
+.cert2-title { font-family: 'Instrument Serif', serif; font-size: 96px; line-height: 1; margin-top: 30px; letter-spacing: -.02em; }
+.cert2-sub { font-size: 15px; color: #636361; margin-top: 6px; }
+.cert2-txt { font-size: 18px; line-height: 1.6; max-width: 760px; margin-top: 22px; color: #3d3d3a; }
+.cert2-name { font-family: 'Instrument Serif', serif; font-size: 62px; line-height: 1.05; margin-top: 6px; }
+.cert2-bottom { margin-top: auto; width: 100%; display: flex; justify-content: space-between; align-items: flex-end; text-align: left; }
+.cert2-k { font-size: 12px; color: #8c8c88; }
+.cert2-v { font-size: 18px; font-weight: 500; }
+.cert2-badge { width: 120px; height: 84px; border-radius: 12px; background: var(--lv); color: #fff; font-size: 40px; font-weight: 600; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+.cert2-badge small { font-size: 13px; font-weight: 500; margin-top: 6px; }
+.cert2-sign { display: flex; align-items: center; gap: 10px; }
+/* ---------- Türkçe Köprüsü ---------- */
+.br-row { display: grid; grid-template-columns: 1fr 1.2fr 2fr auto; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.br-row:last-child { border-bottom: 0; }
+.br-false { grid-template-columns: 1.2fr 2fr 1.6fr auto; }
+.br-tr { font-weight: 600; font-size: 16px; }
+.br-de { font-size: 22px; }
+.br-n { font-size: 13.5px; }
+.br-act { display: flex; gap: 6px; }
+.br-cogn, .br-words { display: flex; flex-wrap: wrap; gap: 8px; }
+.br-chip { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 8px 14px; border-radius: 14px; background: var(--raised); border: 1px solid var(--border); text-align: left; transition: transform .12s var(--ease-press); }
+.br-chip:active { transform: scale(.97); }
+.br-chip b { font-weight: 500; font-size: 15px; }
+.br-chip span { font-size: 12.5px; color: var(--muted); }
+.br-tabs { overflow: visible; }
+@media (max-width: 560px) { .br-tabs { display: grid; grid-template-columns: 1fr 1fr; border-radius: 18px; } .br-tabs .tab { border-radius: 14px; } }
+.br-snd { display: flex; flex-wrap: wrap; gap: 6px; }
+.br-snd .chip { cursor: pointer; }
+.br-snd .chip.on { background: var(--ink); color: var(--ground); }
+.br-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.br-pairs .opt { justify-content: center; font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; }
+.br-ex { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; font-size: 15px; margin-top: 6px; }
+.br-ex.bad { background: var(--neg-bg); color: var(--negative); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--negative) 50%, transparent); }
+.br-ex.good { background: var(--pos-bg); color: var(--positive); font-weight: 500; }
+.tr-hint { font-size: 12.5px; color: var(--accd); background: var(--accent-soft); border-radius: 8px; padding: 6px 10px; margin-top: 10px; line-height: 1.4; }
+@media (max-width: 720px) { .br-row, .br-false { grid-template-columns: 1fr auto; } .br-row .br-n, .br-false > span:nth-child(2) { grid-column: 1 / -1; } }
+/* ---------- Gölge okuma ---------- */
+.sh-sent { font-size: clamp(26px, 4vw, 38px); line-height: 1.2; }
+.sh-wave { width: 100%; height: 80px; margin-top: 18px; background: var(--raised); border-radius: 12px; }
+/* ---------- Sınav hazırlığı ---------- */
+.ready-find { font-size: 16px; line-height: 1.5; margin: 0 0 18px; }
+.ready-row { display: grid; grid-template-columns: 120px 1fr 52px 150px; gap: 14px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); }
+.ready-l b { display: block; font-weight: 600; } .ready-l span { font-size: 12.5px; }
+.ready-bar { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.ready-bar > div { height: 100%; background: var(--accent); border-radius: 999px; transition: transform .6s var(--ease-out); }
+.ready-v { font-size: 18px; text-align: right; }
+.ready-n { font-size: 12.5px; text-align: right; }
+.cando { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.cando i { margin-top: 3px; color: var(--control); font-size: 13px; }
+.cando.ok { color: var(--ink); } .cando.ok i { color: var(--accent); }
+@media (max-width: 720px) { .ready-row { grid-template-columns: 90px 1fr 48px; } .ready-n { display: none; } }
+/* ---------- Tekrar: 4 dereceli cevap + bağlam cümlesi ---------- */
+.rv4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+.rv4 .btn { flex-direction: column; gap: 0; padding: 8px 6px; line-height: 1.15; }
+.rv4 .btn small { font-size: 11.5px; opacity: .8; font-weight: 400; }
+.ctx-mask { font-family: 'Instrument Serif', serif; font-size: 19px; line-height: 1.35; margin-top: 14px; color: var(--muted); }
+.ctx-full { font-family: 'Instrument Serif', serif; font-size: 18px; line-height: 1.35; margin-top: 14px; opacity: .95; }
+.ctx-full small { display: block; font-family: 'Instrument Sans', sans-serif; font-size: 12.5px; opacity: .8; margin-top: 4px; }
+/* ---------- Pekiştirme notu ---------- */
+.remed { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; max-width: 520px; margin: 14px auto 0; padding: 14px 16px; border-radius: 16px; background: var(--accent-soft); color: var(--ink); font-size: 14.5px; line-height: 1.45; text-align: left; }
+/* ---------- Tanıtım turu ---------- */
+.tour { padding: 30px 26px 24px; }
+.tour-ic { width: 56px; height: 56px; border-radius: 16px; background: var(--accent); color: var(--accent-ink); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.tour-dots { display: flex; gap: 6px; margin: 18px 0 6px; }
+.tour-dots i { width: 22px; height: 4px; border-radius: 2px; background: var(--surface-2); }
+.tour-dots i.on { background: var(--accent); }
+/* ---------- Okunaklı yazı (disleksi dostu) ---------- */
+html.dys body, html.dys .serif, html.dys .greet, html.dys .ls-q, html.dys .story-s, html.dys .idiom-de, html.dys .flash .big, html.dys .sh-sent, html.dys h1, html.dys h2, html.dys h3 { font-family: 'Atkinson Hyperlegible', 'Instrument Sans', sans-serif !important; letter-spacing: .02em; word-spacing: .08em; }
+html.dys body { line-height: 1.6; }
+@media (prefers-reduced-motion: reduce) { .ready-bar > div { transition: none; } }
+</style>
+<style id="herbarium">
+/* =====================================================================
+   HERBARYUM TASARIMI
+   Stil: pastel-consumer (design-taste-frontend, app sheet, seed 1071292858), sakin ve klas uyarlama
+   Fikir: Almanca öğrenmek bir koleksiyon kurmaktır; her ünite preslenmiş bir yaprak (Blatt),
+   her seviye bir dosya (Mappe). Fildişi kâğıt, yosun yeşili mürekkep, Fraunces başlıklar.
+   Kural: açık renkli kutu + aynı tonun koyu mürekkebi; durağan öğelerde gölge yok.
+   Seviye renkleri dataviz doğrulayıcısından geçti (açık ve koyu tema ayrı ayrı).
+   ===================================================================== */
+:root {
+  --ground: #f6f4ee; --surface: #fdfcf9; --surface-2: #efece4; --raised: #ffffff;
+  --border: #e3dfd4; --rule: #ebe7dd; --control: #d6d2c6;
+  --ink: #1c1e1a; --muted: #5d6058; --faint: #8a8c83;
+  --accent: #2f5d46; --accent-ink: #ffffff; --accent-soft: #e3ebe4; --accd: #24493a;
+  --positive: #2f7a45; --negative: #a8321f; --warning: #855a00;
+  --pos-bg: #e5f0e7; --neg-bg: #f8e9e5; --warn-bg: #f8f0dc;
+  --btn-ink: #ffffff;
+  --radius-card: 20px; --radius-row: 14px; --row-h: 64px;
+  --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  /* seviyeler: çizgi rengi / mürekkep / açık kutu */
+  --a1: #2f8a4f; --a1d: #1f5c35; --a1s: #e4f0e7;
+  --a2: #3b6fb6; --a2d: #25497e; --a2s: #e5edf7;
+  --b1: #b4477a; --b1d: #7a2c52; --b1s: #f6e6ee;
+  --b2: #c07d00; --b2d: #6e4a00; --b2s: #f7eedb;
+  --c1: #00879e; --c1d: #00505e; --c1s: #ddeff2;
+  --c2: #4a4a44; --c2d: #1f1f1c; --c2s: #eae9e3;
+  --red: #a8321f; --redd: #7e2416; --green: #2f7a45; --greend: #225a33;
+  /* tekrar aşamaları: tek ton, açıktan koyuya (sıralı ölçek) */
+  --st1: #e6ede6; --st2: #c9dacd; --st3: #9fbfa8; --st4: #5f8f70; --st5: #2f5d46;
+}
+.dark {
+  --ground: #141513; --surface: #1b1c19; --surface-2: #232420; --raised: #1f201d;
+  --border: #2e2f2a; --rule: #262723; --control: #3b3c36;
+  --ink: #ecebe4; --muted: #a5a69c; --faint: #76776f;
+  --accent: #8dbb9c; --accent-ink: #0f1a13; --accent-soft: #1e2b22; --accd: #b3d6be;
+  --positive: #7cc58f; --negative: #ee8b78; --warning: #e0b35c;
+  --pos-bg: #18291d; --neg-bg: #341b16; --warn-bg: #2e2513;
+  --btn-ink: #111210;
+  --a1: #3f9a5c; --a1d: #a8dab7; --a1s: #1b2a20;
+  --a2: #5f93dc; --a2d: #b9d0f3; --a2s: #1a2434;
+  --b1: #d26a9a; --b1d: #f1c0d6; --b1s: #31202a;
+  --b2: #c08520; --b2d: #efcd8e; --b2s: #302616;
+  --c1: #1c96ac; --c1d: #a3dde7; --c1s: #142c32;
+  --c2: #b9b8b0; --c2d: #ecebe4; --c2s: #262622;
+  --st1: #1e2620; --st2: #26392c; --st3: #345440; --st4: #5a8a6a; --st5: #8dbb9c;
+}
+html.dark.oled { --ground: #000; --surface: #0d0e0c; --surface-2: #161714; --raised: #0b0b0a; --border: #22231f; }
+html[data-accent="blue"] { --accent: #25497e; --accd: #1c3a66; --accent-soft: #e5edf7; }
+html[data-accent="purple"] { --accent: #7a2c52; --accd: #622142; --accent-soft: #f6e6ee; }
+html[data-accent="orange"] { --accent: #6e4a00; --accd: #573a00; --accent-soft: #f7eedb; }
+html[data-accent="pink"] { --accent: #1c1e1a; --accd: #000; --accent-soft: #eae9e3; }
+.dark[data-accent="blue"] { --accent: #8fb3e8; --accd: #b9d0f3; --accent-soft: #1a2434; }
+.dark[data-accent="purple"] { --accent: #e0a2be; --accd: #f1c0d6; --accent-soft: #31202a; }
+.dark[data-accent="orange"] { --accent: #e3bc72; --accd: #efcd8e; --accent-soft: #302616; }
+.dark[data-accent="pink"] { --accent: #ecebe4; --accd: #fff; --accent-ink: #141513; --accent-soft: #262622; }
+
+/* ---------- Yazı ---------- */
+body { font-family: var(--sans); font-size: 16px; letter-spacing: -.005em; background: var(--ground); color: var(--ink); font-feature-settings: 'ss01'; }
+h1, h2, h3, .font-display { font-family: var(--sans); font-weight: 600; letter-spacing: -.015em; }
+.serif { font-family: var(--serif); font-weight: 400; letter-spacing: -.01em; font-variation-settings: 'SOFT' 50, 'WONK' 0; }
+b, strong { font-weight: 600; }
+.smallcaps { font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); }
+
+/* ---------- Yüzeyler: kâğıt, ince kenar, gölge yok ---------- */
+.glass, .dark .glass { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card); box-shadow: none; }
+.glass.idiom { background: var(--surface); border: 1px solid var(--rule); }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card); padding: 22px; }
+.panel-head h2 { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+.k-tile { background: var(--surface); border: 1px solid var(--rule); }
+.row-card { background: var(--raised); border: 1px solid var(--border); border-radius: var(--radius-row); }
+.dark .row-card { background: var(--surface-2); border-color: var(--border); }
+.row-card .rc-ic { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); color: var(--accd); display: inline-flex; align-items: center; justify-content: center; font-size: 14px; }
+.row-card.hot { border-color: transparent; background: var(--accent-soft); }
+.row-card.hot .rc-ic { background: var(--accent); color: var(--accent-ink); }
+.row-card.hot .rc-end { color: var(--accd); }
+#tutorPanel, #wordPop, #tbMenu { border-radius: 18px; box-shadow: 0 24px 60px -28px rgba(28,30,26,.35); }
+
+/* ---------- Kabuk ---------- */
+#sidebar { background: var(--ground); border-right: 1px solid var(--rule); padding: 30px 14px 18px; }
+.brand { padding: 0 8px 26px; }
+.brand-logo { border-radius: 11px; background: var(--accent); color: var(--accent-ink); font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 21px; }
+.brand b { font-family: var(--serif); font-weight: 500; font-size: 19px; letter-spacing: -.01em; }
+.brand small { font-family: var(--sans); }
+#sideNav .nav-item { height: 44px; border-radius: 12px; font-weight: 500; color: var(--muted); }
+#sideNav .nav-item i { color: var(--faint); }
+#sideNav .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+#sideNav .nav-item.active, .dark #sideNav .nav-item.active { background: var(--accent-soft); color: var(--accd); font-weight: 600; }
+#sideNav .nav-item.active i { color: var(--accd); }
+.side-prof:hover { background: var(--surface-2); }
+#main { padding: 36px 44px 120px; }
+.page-title { font-family: var(--serif); font-weight: 400; font-size: 30px; letter-spacing: -.015em; }
+.page-sub { font-size: 15.5px; line-height: 1.55; }
+.icon-btn { background: var(--surface); border: 1px solid var(--rule); }
+.icon-btn:hover { background: var(--surface-2); }
+@media (max-width: 960px) {
+  #main { padding: 0 16px calc(var(--nav-h) + 40px + env(safe-area-inset-bottom)); }
+  #topbar, .dark #topbar { background: color-mix(in srgb, var(--ground) 94%, transparent); border-bottom: 1px solid var(--rule); }
+  #topbar .page-title { font-family: var(--serif); font-size: 21px; font-weight: 400; }
+  #bottomNav, .dark #bottomNav { background: var(--ground) !important; border-top: 1px solid var(--rule); }
+  .bn-item { font-weight: 600; font-size: 11px; color: var(--faint); position: relative; }
+  .bn-item.active, .dark .bn-item.active { color: var(--accd); }
+  .bn-item::before { content: ''; position: absolute; top: 0; left: 50%; width: 22px; height: 3px; margin-left: -11px; border-radius: 0 0 3px 3px; background: var(--accent); transform: scaleX(0); transition: transform .24s var(--ease-out); }
+  .bn-item.active::before { transform: scaleX(1); }
+}
+
+/* ---------- Düğmeler: koyu mürekkep dolgu ---------- */
+.btn, .btn-red, .btn-ghost { font-family: var(--sans); font-weight: 600; font-size: 15px; letter-spacing: -.005em; min-height: 44px; padding: 11px 20px; }
+.btn { background: var(--lvd, var(--accent)); color: var(--btn-ink); }
+.dark .btn { color: var(--btn-ink); }
+.btn:hover { filter: brightness(1.08); }
+.btn-ghost { background: var(--surface-2); color: var(--ink); }
+.dark .btn-ghost { background: var(--surface-2); color: var(--ink); }
+.btn-ghost:hover { background: var(--control); }
+.btn-sm { min-height: 36px; padding: 7px 14px; font-size: 14px; }
+.btn-red { background: var(--negative); color: #fff; }
+.dark .btn-red { color: #1a0d0a; }
+
+/* ---------- Rozet, çip, çubuk: açık kutu + aynı tonun mürekkebi ---------- */
+.lvl-badge { background: var(--lvs, var(--accent-soft)); color: var(--lvd, var(--accd)); border-radius: 7px; font-weight: 700; letter-spacing: .03em; }
+.dark .lvl-badge { color: var(--lvd, var(--accd)); }
+.chip { background: var(--surface-2); color: var(--ink); font-weight: 600; }
+.bar { height: 6px; background: var(--surface-2); }
+.bar > div { background: var(--lv, var(--accent)); border-radius: 999px; }
+.tabs { background: var(--surface-2); }
+.tab { font-weight: 600; }
+.tab.active { background: var(--raised); color: var(--ink); }
+.pill-input, #app .pill-input, .sheet .pill-input, #lesson .pill-input, #tutorPanel .pill-input, #gate .pill-input { border-radius: 12px; border-color: var(--border); background: var(--raised); }
+.section-title { font-size: 15px; }
+
+/* ---------- Pencereler ---------- */
+.overlay { background: rgba(22,24,20,.38); }
+.sheet { border-radius: 24px; border: 1px solid var(--rule); box-shadow: 0 34px 90px -36px rgba(22,24,20,.45); }
+.sheet-head h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; letter-spacing: -.01em; }
+.toast { border-radius: 14px; font-weight: 600; }
+
+/* ---------- Ana sayfa: karşılama + koleksiyon etiketi ---------- */
+.greet-row { align-items: stretch; margin: 6px 0 36px; gap: 32px; }
+.greet { font-family: var(--serif); font-weight: 400; font-size: clamp(42px, 6vw, 74px); line-height: 1; letter-spacing: -.025em; font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144; }
+.greet em { font-style: italic; color: var(--accd); }
+.greet-sub { font-size: 17px; margin-top: 16px; }
+.greet-act { margin-top: 24px; }
+.label-card { flex: 0 0 300px; align-self: flex-start; background: var(--raised); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px 14px; position: relative; }
+.dark .label-card { background: var(--surface); }
+.label-card::before { content: ''; position: absolute; inset: 5px; border: 1px solid var(--rule); border-radius: 3px; pointer-events: none; }
+.lc-top { display: flex; justify-content: space-between; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.lc-genus { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.1; margin: 12px 0 2px; color: var(--lvd); }
+.lc-cap { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.lc-dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: 13.5px; }
+.lc-dl dt { color: var(--faint); }
+.lc-dl dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lc-stem { display: flex; gap: 3px; margin-top: 12px; }
+.lc-stem i { flex: 1; height: 4px; border-radius: 2px; background: var(--surface-2); }
+.lc-stem i.on { background: var(--lv); }
+.ledger { grid-column: span 12; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card); }
+.ledger > div { padding: 18px 22px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ledger > div + div { border-left: 1px solid var(--rule); }
+.lg-lab { font-size: 13px; color: var(--muted); }
+.lg-val { font-family: var(--serif); font-size: 40px; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: lining-nums tabular-nums; }
+.lg-val small { font-family: var(--sans); font-size: 14px; color: var(--muted); margin-left: 5px; letter-spacing: 0; }
+.lg-cap { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.idiom-de { font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1.15; }
+.quote-mark { font-family: var(--serif); font-size: 54px; line-height: .6; color: var(--accent); opacity: .5; height: 22px; }
+@media (max-width: 960px) {
+  .greet-row { flex-direction: column; gap: 22px; margin-bottom: 24px; }
+  .greet { font-size: 44px; }
+  .label-card { flex: none; width: 100%; box-sizing: border-box; }
+  .ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ledger > div:nth-child(3) { border-left: 0; }
+  .ledger > div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .ledger > div { padding: 14px 16px; }
+  .lg-val { font-size: 32px; }
+}
+
+/* ---------- İmza: Herbaryum (öğrenme yolu = yaprak koleksiyonu) ---------- */
+.mappe { margin-bottom: 44px; }
+.mp-head { display: flex; align-items: flex-end; gap: 18px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+.mp-id { font-family: var(--serif); font-size: 64px; line-height: .85; letter-spacing: -.03em; color: var(--lvd); font-variation-settings: 'opsz' 144; }
+.mp-t { min-width: 0; }
+.mp-t h2 { font-family: var(--serif); font-weight: 400; font-size: 24px; letter-spacing: -.01em; margin: 0; }
+.mp-t .mp-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.mp-prog { display: flex; gap: 3px; margin-top: 8px; max-width: 220px; }
+.mp-prog i { flex: 1; height: 3px; border-radius: 2px; background: var(--surface-2); }
+.mp-prog i.on { background: var(--lv); }
+.mp-acts { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.mappe.locked .mp-id { color: var(--control); }
+.specs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 12px; }
+.spec > button { position: relative; display: flex; flex-direction: column; align-items: flex-start; width: 100%; height: 100%; min-height: 168px; padding: 14px 16px 14px; text-align: left; color: var(--ink); background: var(--raised); border: 1px solid var(--border); border-radius: 16px; transition: transform .14s var(--ease-press), border-color .2s var(--ease-out), background-color .2s var(--ease-out); }
+.dark .spec > button { background: var(--surface); }
+.spec > button:hover { border-color: var(--control); }
+.spec > button:active { transform: scale(.98); }
+.sp-no { font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--faint); font-variant-numeric: tabular-nums; }
+.sp-de { font-family: var(--serif); font-size: 21px; line-height: 1.15; letter-spacing: -.01em; margin-top: 10px; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
+.empty-leaf { display: block; width: 72px; height: 72px; margin: 4px auto 8px; }
+.empty-leaf path { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1; }
+.empty-leaf .vein { fill: none; }
+.report-tile i { color: var(--faint) !important; font-size: 15px !important; }
+.sp-t { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+.sp-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-top: auto; padding-top: 14px; }
+.sp-st { font-size: 12.5px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.leaf { width: 26px; height: 26px; flex-shrink: 0; }
+.leaf path { fill: var(--lv); fill-opacity: 0; stroke: var(--control); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; transition: fill-opacity .5s var(--ease-out) var(--d, 0ms), stroke .3s var(--ease-out) var(--d, 0ms); }
+.leaf .vein { fill: none; }
+.spec.done .leaf path { fill-opacity: 1; stroke: var(--lv); }
+.spec.done .leaf .vein { stroke: var(--raised); }
+.dark .spec.done .leaf .vein { stroke: var(--surface); }
+.spec.done .sp-st { color: var(--lvd); }
+.spec.current > button { background: var(--lvs); border-color: transparent; }
+.spec.current .sp-no, .spec.current .sp-st { color: var(--lvd); }
+.spec.current .leaf path { stroke: var(--lvd); fill-opacity: .18; }
+.spec.current .sp-de { color: var(--lvd); }
+.spec.locked > button { background: transparent; border-style: dashed; cursor: default; }
+.spec.locked .sp-de, .spec.locked .sp-t { color: var(--faint); }
+.spec.locked > button:active { transform: none; }
+.spec.exam { grid-column: 1 / -1; }
+.spec.exam > button { min-height: 0; flex-direction: row; align-items: center; gap: 18px; padding: 16px 18px; }
+.spec.exam .sp-main { flex: 1; min-width: 0; }
+.spec.exam .sp-de { margin-top: 4px; }
+.spec.exam .seal { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--control); display: inline-flex; align-items: center; justify-content: center; color: var(--faint); flex-shrink: 0; font-size: 16px; }
+.spec.exam.done .seal { background: var(--lvd); border-color: var(--lvd); color: var(--btn-ink); }
+.spec.exam.open .seal, .spec.exam.current .seal { border-color: var(--lvd); color: var(--lvd); }
+.sp-next { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--btn-ink); background: var(--lvd); border-radius: 6px; padding: 3px 8px; }
+.mappe.prep .spec.done .leaf path { fill-opacity: 0; stroke: var(--control); }
+.mappe.drawn .leaf path { transition: none; }
+@media (max-width: 960px) {
+  .mp-head { flex-wrap: wrap; gap: 12px 16px; }
+  .mp-id { font-size: 52px; }
+  .mp-acts { margin-left: 0; width: 100%; justify-content: flex-start; }
+  .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .spec > button { min-height: 156px; padding: 12px 13px; }
+  .sp-de { font-size: 18px; }
+}
+
+/* ---------- Tekrar kutusu: büyüme aşamaları ---------- */
+.box-grid .box-col { background: var(--surface) !important; border: 1px solid var(--rule); border-radius: 16px; padding: 14px 8px 12px; }
+.box-grid .box-col .lvl-badge { background: var(--stage) !important; color: var(--stage-ink) !important; }
+.box-grid .box-col b { font-family: var(--serif); font-weight: 400; font-size: 34px; margin-top: 6px; }
+.box-grid .box-col:nth-child(1) { --stage: var(--st1); --stage-ink: var(--ink); }
+.box-grid .box-col:nth-child(2) { --stage: var(--st2); --stage-ink: var(--ink); }
+.box-grid .box-col:nth-child(3) { --stage: var(--st3); --stage-ink: #10190f; }
+.box-grid .box-col:nth-child(4) { --stage: var(--st4); --stage-ink: #fff; }
+.box-grid .box-col:nth-child(5) { --stage: var(--st5); --stage-ink: #fff; }
+.dark .box-grid .box-col:nth-child(3), .dark .box-grid .box-col:nth-child(4) { --stage-ink: var(--ink); }
+.dark .box-grid .box-col:nth-child(5) { --stage-ink: #10190f; }
+
+/* ---------- Grafikler (dataviz: tek seri, tek ton, ince çubuk, üzerine gelince değer) ---------- */
+.hm-0 { background: var(--surface-2); } .hm-1 { background: var(--st2); } .hm-2 { background: var(--st3); } .hm-3 { background: var(--st4); } .hm-4 { background: var(--st5); }
+.hm i { border-radius: 3px; }
+.wk7 { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; height: 190px; padding-top: 22px; }
+.wk7::after { content: ''; position: absolute; left: 0; right: 0; bottom: 24px; height: 1px; background: var(--border); }
+.wk7-c { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0; height: 100%; padding-bottom: 24px; outline: none; }
+.wk7-c .b { width: 60%; max-width: 30px; min-height: 2px; border-radius: 4px 4px 0 0; background: var(--st3); transform-origin: bottom; transition: transform .6s var(--ease-out), background-color .2s; }
+.wk7-c.now .b { background: var(--accent); }
+.wk7-c .d { position: absolute; bottom: 0; font-size: 12px; color: var(--muted); }
+.wk7-c.now .d { color: var(--ink); font-weight: 600; }
+.wk7-c .v { font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 4px; font-variant-numeric: tabular-nums; }
+.wk7-c .tip { position: absolute; left: 50%; bottom: calc(100% - 18px); transform: translate(-50%, 4px); opacity: 0; pointer-events: none; white-space: nowrap; background: var(--ink); color: var(--ground); font-size: 12px; font-weight: 500; padding: 6px 9px; border-radius: 8px; transition: opacity .15s, transform .15s var(--ease-out); z-index: 2; }
+.wk7-c:hover .tip, .wk7-c:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
+.wk7-c:hover .b { filter: brightness(.92); }
+.ready-bar > div { background: var(--accent); }
+
+/* ---------- Ders ekranı ---------- */
+.ls-q { font-family: var(--serif); font-weight: 400; letter-spacing: -.015em; }
+.ls-q .muted { font-family: var(--sans); }
+.ls-kind { font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 12px; }
+#lesson .opt, #gameArea .opt, .opt { font-family: var(--sans); font-weight: 600; border-radius: 16px; }
+#lesson .opt.sel, #gameArea .opt.sel { border-color: var(--lvd, var(--ink)); box-shadow: inset 0 0 0 1px var(--lvd, var(--ink)); background: var(--lvs, var(--raised)); }
+.tok { font-family: var(--sans); font-weight: 600; }
+.fb-title { font-family: var(--serif); font-weight: 500; font-size: 21px; }
+.flash .big, .story-s, .sh-sent, .ctx-mask, .ctx-full, .br-pairs .opt { font-family: var(--serif); }
+.flash-b { background: var(--lvs); color: var(--lvd); }
+.msg.me { background: var(--accent); color: var(--accent-ink); }
+.mic-btn { background: var(--accent); color: var(--accent-ink); }
+#tutorFab { background: var(--accent); color: var(--accent-ink); }
+.badge:not(.locked) .b-ic { background: var(--accent-soft) !important; color: var(--accd) !important; }
+.tour-ic { background: var(--accent-soft); color: var(--accd); }
+.remed { background: var(--accent-soft); }
+
+/* ---------- PDF ve sertifika: aynı kâğıt ---------- */
+html .pdf-doc { font-family: 'Manrope', sans-serif; color: #1c1e1a; }
+html .pdf-ed .pdf-h1, .cert2-title, .cert2-name, .cert2-mark { font-family: 'Fraunces', Georgia, serif; }
+html .pdf-ed .pdf-badge { background: var(--lvs, #e4f0e7); color: var(--lvd, #1f5c35); }
+html .pdf-ed h2 { font-family: 'Manrope', sans-serif; }
+.cert2 { font-family: 'Manrope', sans-serif; background: #fdfcf9; }
+.cert2-mark { background: #2f5d46; font-style: italic; }
+.cert2-badge { background: var(--lvs, #e4f0e7); color: var(--lvd, #1f5c35); }
+
+/* ---------- Hareket: Jakub (birincil), Emil (sık dokunuşlar kısa) ---------- */
+.enter { animation: enterUp .44s var(--ease-out) both; animation-delay: var(--ed, 0ms); }
+@keyframes enterUp { from { opacity: 0; transform: translateY(10px); filter: blur(3px); } }
+@media (prefers-reduced-motion: reduce) {
+  .leaf path, .wk7-c .b, .wk7-c .tip, .bn-item::before { transition: none !important; }
+}
+html.dys .greet, html.dys .sp-de, html.dys .mp-t h2, html.dys .lg-val, html.dys .lc-genus, html.dys .page-title { font-family: 'Atkinson Hyperlegible', sans-serif !important; font-style: normal; }
+</style>
+
 </head>
 <body>
 <div id="toast"></div>
@@ -1059,7 +1804,7 @@ const QUEST_POOL = [
 /* =====================================================================
    DeutschFlow AI — uygulama mantığı
    ===================================================================== */
-const DEFAULT_API_KEY = 'AIzaSyCimOTI-QWYLC54NfFj4eERIFvCtDbsB4o';
+const DEFAULT_API_KEY = ''; // Anahtar dosyada tutulmaz (GitHub'da herkese açık olurdu); Ayarlar'dan girilir ve sadece bu cihazda saklanır
 const DEFAULT_MODEL = 'gemini-3-flash-preview'; // “gemini-3.0-flash” adında model yok (404); Gemini 3 Flash'ın API adı bu
 const FALLBACK_MODELS = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-flash-latest'];
 const DAY = 86400000;
@@ -1168,6 +1913,7 @@ function listen(lang, onText, onEnd) {
 /* ---------- Gemini API ---------- */
 async function aiRequest(model, contents, system, json) {
   const key = (CFG.apiKey || DEFAULT_API_KEY).trim();
+  if (!key) { if (PAGE !== 'settings') setTimeout(() => go('settings'), 1200); throw new Error('API anahtarı girilmemiş. Ayarlar → Yapay Zeka bölümüne Google AI Studio anahtarını yapıştır.'); }
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
   const body = { contents, generationConfig: { temperature: .7 } };
   if (system) body.systemInstruction = { parts: [{ text: system }] };
@@ -1392,7 +2138,7 @@ function go(p) {
   $('#view').innerHTML = (VIEWS[p] || VIEWS.home)();
   if (AFTER[p]) AFTER[p]();
   window.scrollTo({ top: 0 });
-  if (window.gsap) gsap.from('#view > *, #view .anim', { y: 18, opacity: 0, duration: .45, stagger: .04, ease: 'power3.out', clearProps: 'transform,opacity' });
+  enterView();
 }
 function renderTopbar() {
   if (!D) return;
@@ -1602,7 +2348,7 @@ function renderItem() {
   else if (it.k === 'match') { LSN.m = { L: shuffle(it.pairs.map((p, i) => ({ t: p[0], i }))), R: shuffle(it.pairs.map((p, i) => ({ t: p[1], i }))), a: null, done: 0, miss: 0 }; h += `<h2 class="ls-q">Eşleşen çiftlere dokun</h2><div class="match-grid"><div>${LSN.m.L.map(x => `<button class="opt" style="margin-bottom:12px" data-side="L" data-i="${x.i}" onclick="tapMatch(this)">${esc(x.t)}</button>`).join('')}</div><div>${LSN.m.R.map(x => `<button class="opt" style="margin-bottom:12px" data-side="R" data-i="${x.i}" onclick="tapMatch(this)">${esc(x.t)}</button>`).join('')}</div></div>`; }
   else if (it.k === 'dict') { h += `<h2 class="ls-q">Duyduğun cümleyi yaz</h2><div class="row" style="margin-bottom:16px"><button class="btn" onclick="speak(LSN.items[LSN.i].a)"><i class="fa-solid fa-volume-high"></i> Dinle</button><button class="btn btn-ghost" onclick="speak(LSN.items[LSN.i].a,{rate:.6})"><i class="fa-solid fa-gauge-simple-low"></i> Yavaş</button></div><textarea id="fillIn" class="pill-input" rows="2" autocomplete="off" spellcheck="false" placeholder="Almanca yaz…" oninput="LSN.sel=this.value.trim()||null;footCheck()"></textarea>${umlautBar('fillIn')}`; setTimeout(() => speak(it.a), 400); }
   $('#lsBody').innerHTML = h; footCheck();
-  if (window.gsap) gsap.from('#lsBody > *', { x: 30, opacity: 0, duration: .35, stagger: .03, ease: 'power2.out' });
+  enterLesson();
   const fi = $('#fillIn'); if (fi && it.k === 'fill') setTimeout(() => fi.focus(), 200);
 }
 const tokenize = s => s.split(/\s+/).filter(Boolean);
@@ -1614,8 +2360,9 @@ function footCheck() {
   $('#lsFoot').className = 'ls-foot';
   $('#lsFoot').innerHTML = `<div class="ls-foot-in"><button class="btn btn-ghost" onclick="skipItem()">Boş bırak</button><button class="btn" ${ready ? '' : 'disabled'} onclick="checkItem()">Kontrol et</button></div>`;
 }
-function selOpt(i) { if (LSN.checked) return; LSN.sel = i; document.querySelectorAll('#lsBody .opt').forEach(b => b.classList.toggle('sel', +b.dataset.i === i)); footCheck(); }
+function selOpt(i) { if (!LSN) return; if (LSN.checked) return; LSN.sel = i; document.querySelectorAll('#lsBody .opt').forEach(b => b.classList.toggle('sel', +b.dataset.i === i)); footCheck(); }
 function tapTok(k) {
+  if (!LSN) return;
   if (LSN.checked) return; const btn = document.querySelector(`#bank [data-k="${k}"]`); if (btn.classList.contains('used')) return;
   btn.classList.add('used'); LSN.built.push(k);
   const b = document.createElement('button'); b.className = 'tok press'; b.textContent = LSN.tokens[k].w;
@@ -1623,6 +2370,7 @@ function tapTok(k) {
   $('#ansLine').appendChild(b); footCheck();
 }
 function tapMatch(btn) {
+  if (!LSN || !LSN.m) return;
   const m = LSN.m; if (btn.classList.contains('gone')) return;
   if (btn.dataset.side === 'L') say(btn.textContent);
   if (!m.a || m.a.dataset.side === btn.dataset.side) { document.querySelectorAll('.match-grid .opt').forEach(b => b.classList.remove('sel')); btn.classList.add('sel'); m.a = btn; return; }
@@ -1630,8 +2378,9 @@ function tapMatch(btn) {
   else { m.miss++; [m.a, btn].forEach(b => { b.classList.add('bad'); setTimeout(() => b.classList.remove('bad', 'sel'), 500); }); sfxBad(); m.a = null; }
   footCheck();
 }
-function skipItem() { LSN.sel = null; finishItem(false, true); }
+function skipItem() { if (!LSN || LSN.checked) return; LSN.sel = null; finishItem(false, true); }
 function checkItem() {
+  if (!LSN || LSN.checked || !LSN.items[LSN.i]) return;
   const it = LSN.items[LSN.i]; let ok = false;
   if (it.k === 'mc') ok = LSN.sel === it.a;
   else if (it.k === 'tf') ok = (LSN.sel === 1) === it.a;
@@ -1678,7 +2427,7 @@ async function whyWrong() {
   try { box.innerHTML = `<div class="ai-box">${md(await aiText(`Soru: ${q}\nÖğrencinin cevabı: ${r.given}\nDoğru cevap: ${answerText(it)}\nÖğrenci neden yanılmış olabilir? Kuralı Türkçe, 3-5 cümlede, bir örnekle açıkla.`, tutorSys()))}</div>`; }
   catch (e) { box.innerHTML = `<div class="ai-box">${aiErr(e)}</div>`; }
 }
-function nextItem() { LSN.i++; save(); if (LSN.i >= LSN.items.length) lessonSummary(); else renderItem(); }
+function nextItem() { if (!LSN) return; LSN.i++; save(); if (LSN.i >= LSN.items.length) lessonSummary(); else renderItem(); }
 document.addEventListener('keydown', e => {
   if (!LSN || $('#drawLayer') || $('#modalRoot').innerHTML) return;
   const it = LSN.items[LSN.i]; if (!it) return;
@@ -1715,7 +2464,7 @@ function lessonSummary() {
       <div class="glass card" style="padding:14px"><div class="muted" style="font-weight:800;font-size:13px">XP</div><div class="font-display" style="font-size:30px;font-weight:800;color:var(--c1)">+${xp}</div></div>
     </div>${extra}</div>`;
   $('#lsFoot').className = 'ls-foot'; $('#lsFoot').innerHTML = `<div class="ls-foot-in">${!pass && o.kind !== 'placement' ? `<button class="btn btn-ghost" onclick="retryLesson()"><i class="fa-solid fa-rotate"></i> Tekrar dene</button>` : '<span></span>'}<button class="btn" onclick="quitLesson(true)">Devam</button></div>`;
-  if (window.gsap) gsap.from('#lsBody .glass', { scale: .5, opacity: 0, stagger: .1, duration: .5, ease: 'back.out(2)' });
+  enterLesson();
 }
 function retryLesson() { const o = LSN.opts; if (o.kind === 'unit') startUnit(o.unitId); else if (o.kind === 'boss') startBoss(LEVELS.findIndex(L => L.id === o.levelId)); else startLesson(shuffle(LSN.items), o); }
 
@@ -1735,8 +2484,8 @@ function addCard(de, tr, src, silent, toBox1) {
 }
 VIEWS.review = () => {
   const now = Date.now(), due = D.cards.filter(c => c.due <= now);
-  return `<p class="page-sub">5 aşamalı aralıklı tekrar: bildikçe kart üst kutuya çıkar (1 → 3 → 7 → 14 gün), bilemezsen 1. kutuya döner.</p>
-  <div class="box-grid">${[1, 2, 3, 4, 5].map(b => { const cs = D.cards.filter(c => c.box === b); return `<div class="box-col" style="${lvStyle(['a1', 'a2', 'b1', 'b2', 'c1'][b - 1])}"><span class="lvl-badge">${b}. kutu</span><b>${cs.length}</b><div class="muted" style="font-size:12px;font-weight:800">${cs.filter(c => c.due <= now).length} bekliyor · ${LEITNER_DAYS[b - 1] ? LEITNER_DAYS[b - 1] + ' gün' : 'her gün'}</div></div>`; }).join('')}</div>
+  return `<p class="page-sub">Akıllı tekrar (FSRS): her kelime tam unutmak üzereyken sorulur. Kutular kelimenin hafızanda ne kadar kaldığını gösterir.</p>
+  <div class="box-grid">${[1, 2, 3, 4, 5].map(b => { const cs = D.cards.filter(c => c.box === b); return `<div class="box-col" style="${lvStyle(['a1', 'a2', 'b1', 'b2', 'c1'][b - 1])}"><span class="lvl-badge">${b}. kutu</span><b>${cs.length}</b><div class="muted" style="font-size:12px;font-weight:800">${cs.filter(c => c.due <= now).length} bekliyor · ${['1 günden az', '1–3 gün', '3–7 gün', '1–3 hafta', '3+ hafta'][b - 1]}</div></div>`; }).join('')}</div>
   <div class="glass card" style="margin-top:16px;text-align:center;padding:28px">
     <div style="font-size:52px">${due.length ? '🗂️' : '✨'}</div>
     <h2 style="margin:6px 0">${due.length ? due.length + ' kart tekrar bekliyor' : 'Bugünlük tekrar yok!'}</h2>
@@ -1765,6 +2514,7 @@ function renderReviewCard() {
   window.LSN_card = c; if (deFront) setTimeout(() => say(c.de), 300);
 }
 function rvAnswer(ok) {
+  if (!rv || !rv.list[rv.i]) return;
   const c = rv.list[rv.i];
   if (ok) { c.box = Math.min(5, c.box + 1); rv.ok++; sfxOk(); } else { c.box = 1; sfxBad(); }
   c.due = Date.now() + LEITNER_DAYS[c.box - 1] * DAY - (ok ? 0 : 0);
@@ -1916,7 +2666,7 @@ function pronListen() {
   b.classList.add('on'); st.textContent = '🎙️ Dinliyorum… konuş';
   rec = listen('de-DE', (heard, conf) => {
     const t = $('#pronT').value, r = wordMatch(t, heard), pct = Math.round((r.score * .8 + similarity(t, heard) * .2) * 100), bad = r.words.filter(w => !w.ok).map(w => w.w);
-    D.stats.pron++; questProgress('pron', 1); if (pct >= 70) addXP(pct >= 90 ? 6 : 3); checkBadges(); save();
+    D.stats.pron++; questProgress('pron', 1); logSkill('sprechen', pct / 100); if (pct >= 70) addXP(pct >= 90 ? 6 : 3); checkBadges(); save();
     $('#pronRes').innerHTML = `<div class="glass card" style="padding:16px"><div class="fb-title" style="color:${pct >= 90 ? 'var(--a1)' : pct >= 70 ? 'var(--b2)' : 'var(--red)'}">${pct >= 90 ? '🎉 Doğru telaffuz ettin!' : pct >= 70 ? '👍 Çok iyi, biraz daha!' : '🔁 Tekrar deneyelim'} · %${pct}</div>
       <div style="margin:10px 0;font-size:19px;font-weight:800;line-height:1.7">${r.words.map(w => `<span style="color:${w.ok ? 'var(--a1)' : 'var(--red)'};${w.ok ? '' : 'text-decoration:underline wavy'}">${esc(w.w)}</span>`).join(' ')}</div>
       <div class="muted" style="font-weight:700">Duyduğum: “${esc(heard)}”</div>
@@ -2164,7 +2914,7 @@ VIEWS.settings = () => {
     <button class="btn btn-sm btn-red" style="margin-top:12px" onclick="resetProgress()"><i class="fa-solid fa-triangle-exclamation"></i> İlerlemeyi sıfırla</button>
     <button class="btn btn-sm btn-ghost" style="margin-top:12px" onclick="deleteProfile()"><i class="fa-solid fa-user-xmark"></i> Profili sil</button></div></div>
   <div class="stack"><div class="glass card"><div class="section-title"><i class="fa-solid fa-robot"></i> Yapay Zeka (Gemini)</div>
-    <label class="muted" style="font-weight:800">API anahtarı</label><input id="stKey" class="pill-input" type="password" value="${esc(CFG.apiKey || '')}" placeholder="Boş = uygulamadaki varsayılan anahtar">
+    <label class="muted" style="font-weight:800">API anahtarı</label><input id="stKey" class="pill-input" type="password" value="${esc(CFG.apiKey || '')}" placeholder="Google AI Studio API anahtarını yapıştır">
     <label class="muted" style="font-weight:800;margin-top:10px;display:block">Model</label><div class="row" style="flex-wrap:nowrap"><input id="stModel" class="pill-input" list="modelList" value="${esc(CFG.model || DEFAULT_MODEL)}"><button class="btn btn-sm btn-ghost" style="white-space:nowrap" onclick="listModels()"><i class="fa-solid fa-list"></i> Modelleri listele</button></div><datalist id="modelList"></datalist><div id="modelOut" class="muted" style="font-size:13px;font-weight:700;margin-top:6px">Önerilen: <b>gemini-3-flash-preview</b> (hızlı, ~5 sn).</div>
     <div class="muted" style="font-size:13px;font-weight:700;margin-top:6px;word-break:break-all">Uç nokta: generativelanguage.googleapis.com/v1beta/models/<b>{model}</b>:generateContent</div>
     <div class="row" style="margin-top:10px"><button class="btn btn-sm" onclick="CFG.apiKey=$('#stKey').value.trim();CFG.model=$('#stModel').value.trim()||DEFAULT_MODEL;saveCfg();toast('Kaydedildi')">Kaydet</button><button class="btn btn-sm btn-ghost" onclick="testAI()"><i class="fa-solid fa-plug"></i> Bağlantıyı test et</button></div><div id="aiTest" style="margin-top:10px"></div></div>
@@ -2309,7 +3059,7 @@ const _finishItem = finishItem;
 finishItem = function (ok, skipped) {
   const it = LSN && LSN.items[LSN.i], was = LSN && LSN.checked; _finishItem(ok, skipped);
   if (was || !it || !it.cardId) return; const c = D.cards.find(x => x.id === it.cardId); if (!c) return;
-  c.box = ok ? Math.min(5, c.box + 1) : 1; c.due = Date.now() + LEITNER_DAYS[c.box - 1] * DAY; D.stats.reviews++; questProgress('review', 1); save();
+  fsrsReview(c, ok ? 3 : 1); D.stats.reviews++; questProgress('review', 1); save();
 };
 const _lessonSummary = lessonSummary;
 lessonSummary = function () {
@@ -2490,6 +3240,7 @@ function renderGame() {
 }
 function newMatchSet() { const s = pick(GM.pool, 5); GM.pairs = s; GM.L = shuffle(s.map((p, i) => ({ t: p.de, i }))); GM.R = shuffle(s.map((p, i) => ({ t: p.tr, i }))); GM.sel = null; GM.done = 0; }
 function gmTap(btn) {
+  if (!GM || GM.id !== 'match') return;
   if (btn.classList.contains('gone')) return;
   if (!GM.sel || GM.sel.dataset.side === btn.dataset.side) { document.querySelectorAll('#gameArea .opt').forEach(b => b.classList.remove('sel')); btn.classList.add('sel'); GM.sel = btn; return; }
   if (GM.sel.dataset.i === btn.dataset.i) { [GM.sel, btn].forEach(b => { b.classList.remove('sel'); b.classList.add('ok', 'gone'); }); GM.score++; GM.done++; beep(760, .07); GM.sel = null; if (GM.done === 5) { newMatchSet(); renderGame(); } else document.querySelector('#gameArea .chip').textContent = '⭐ ' + GM.score; }
@@ -2501,13 +3252,14 @@ function newScramble() {
   const word = bareWord(v.de); let mix; do { mix = shuffle([...word.toUpperCase()]); } while (mix.join('') === word.toUpperCase() && word.length > 1);
   GM.w = v; GM.word = word; GM.mix = mix;
 }
-function scCheck() { const t = $('#scIn').value.trim(); if (!t) return; if (t.toLowerCase() === GM.word.toLowerCase()) { GM.score += 2; sfxOk(); say(GM.w.de); newScramble(); if (GM) renderGame(); } else { sfxBad(); $('#scFb').innerHTML = '<span style="color:var(--red)">Tekrar dene!</span>'; } }
-function scSkip() { $('#scFb').innerHTML = `<span class="muted">Cevap: ${esc(GM.word)}</span>`; setTimeout(() => { if (!GM) return; newScramble(); if (GM) renderGame(); }, 1200); }
+function scCheck() { if (!GM || GM.id !== 'scramble') return; const t = $('#scIn').value.trim(); if (!t) return; if (t.toLowerCase() === GM.word.toLowerCase()) { GM.score += 2; sfxOk(); say(GM.w.de); newScramble(); if (GM) renderGame(); } else { sfxBad(); $('#scFb').innerHTML = '<span style="color:var(--red)">Tekrar dene!</span>'; } }
+function scSkip() { if (!GM || GM.id !== 'scramble') return; $('#scFb').innerHTML = `<span class="muted">Cevap: ${esc(GM.word)}</span>`; setTimeout(() => { if (!GM) return; newScramble(); if (GM) renderGame(); }, 1200); }
 function newHang() {
   const cand = GM.pool.filter(v => /^[A-Za-zÄÖÜäöüß]{4,13}$/.test(bareWord(v.de))); GM.w = cand[Math.floor(Math.random() * cand.length)];
   GM.word = bareWord(GM.w.de).toUpperCase().replace(/ß/g, 'ẞ'); GM.got = new Set(); GM.tried = new Set();
 }
 function hangTry(c) {
+  if (!GM || GM.id !== 'hangman' || GM.tried.has(c)) return;
   GM.tried.add(c);
   if (GM.word.includes(c)) { GM.got.add(c); beep(700, .06); if ([...GM.word].every(x => GM.got.has(x))) { GM.score += 3; sfxOk(); say(GM.w.de); toast('✓ ' + GM.w.de + ' = ' + GM.w.tr); newHang(); } }
   else { GM.lives--; sfxBad(); if (GM.lives <= 0) { toast('Kelime: ' + GM.w.de + ' (' + GM.w.tr + ')', 'warn'); endGame(); return; } }
@@ -2637,7 +3389,7 @@ async function exportPdf(unitIds, name) {
     if (!window.html2pdf) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
     const opt = { margin: [10, 9, 12, 9], filename: fname, image: { type: 'jpeg', quality: .92 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css', 'legacy'], before: '.pdf-break', avoid: ['tr', '.ex', '.tip', '.pdf-q', 'h2', 'h4', '.pdf-head'] } };
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css', 'legacy'], before: '.pdf-break', avoid: ['tr', '.ex', '.tip', '.pdf-q', 'h2', 'h4', '.pdf-head', '.pdf-sec', '.pdf-title'] } };
     let w = html2pdf().set(opt).from(els[0]).toPdf();
     els.slice(1).forEach((el, i) => { w = w.get('pdf').then(pdf => { const m = $('#pdfMsg'); if (m) m.textContent = `${i + 1} / ${els.length} ünite`; pdf.addPage(); }).from(el).toContainer().toCanvas().toPdf(); });
     await w.save();
@@ -2690,12 +3442,12 @@ function mascot(mood = 'normal', size = 96) {
     think: `<circle cx="45" cy="52" r="12" fill="#fff"/><circle cx="75" cy="52" r="12" fill="#fff"/><circle cx="50" cy="48" r="6" fill="#1F2937"/><circle cx="80" cy="48" r="6" fill="#1F2937"/><path d="M34 38 L54 36" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>`
   };
   const e = eyes[mood] || eyes.normal, wave = mood === 'wave' || mood === 'happy';
-  return `<svg class="flo flo-${mood}" width="${size}" height="${size}" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7BE52C"/><stop offset="1" stop-color="#46A302"/></linearGradient></defs>
+  return `<svg class="flo flo-${mood}" width="${size}" height="${size}" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f9a8f"/><stop offset="1" stop-color="#1b6e66"/></linearGradient></defs>
     <ellipse cx="60" cy="112" rx="30" ry="5" fill="#000" opacity=".12"/>
     <path d="M50 24 Q56 6 63 22 Q70 10 72 26" fill="url(#${id})"/>
-    <ellipse cx="17" cy="76" rx="10" ry="17" fill="#46A302" transform="rotate(20 17 76)"/>
-    <g class="${wave ? 'flo-wing' : ''}" style="transform-origin:100px 70px"><ellipse cx="103" cy="74" rx="10" ry="17" fill="#46A302" transform="rotate(-20 103 74)"/></g>
-    <circle cx="60" cy="64" r="44" fill="url(#${id})"/><ellipse cx="60" cy="84" rx="27" ry="20" fill="#EAFFD8"/>
+    <ellipse cx="17" cy="76" rx="10" ry="17" fill="#1b6e66" transform="rotate(20 17 76)"/>
+    <g class="${wave ? 'flo-wing' : ''}" style="transform-origin:100px 70px"><ellipse cx="103" cy="74" rx="10" ry="17" fill="#1b6e66" transform="rotate(-20 103 74)"/></g>
+    <circle cx="60" cy="64" r="44" fill="url(#${id})"/><ellipse cx="60" cy="84" rx="27" ry="20" fill="#e6f2f0"/>
     ${mood === 'normal' || mood === 'wave' ? eyes.normal : e}
     <path d="M53 66 L67 66 L60 76 Z" fill="#FF9600" stroke="#E07E00" stroke-width="1.5" stroke-linejoin="round"/>
     <rect x="53" y="86" width="14" height="3.4" fill="#1F2937"/><rect x="53" y="89.4" width="14" height="3.4" fill="#DD0000"/><rect x="53" y="92.8" width="14" height="3.4" fill="#FFCE00"/>
@@ -2768,9 +3520,9 @@ renderItem = function () {
   $('#lsBar').style.width = (LSN.i / LSN.items.length * 100) + '%'; $('#lsCount').textContent = (LSN.i + 1) + '/' + LSN.items.length;
   $('#lsBody').innerHTML = `<div class="ls-kind">${KIND_NAMES.spot}</div><h2 class="ls-q">Bu cümlede bir hata var. Hatalı kelimeye dokun!</h2><div class="muted" style="font-weight:700;margin:-10px 0 18px">“${esc(it.tr)}”</div>
     <div class="bank" style="font-size:19px">${it.words.map((w, i) => `<button class="tok press spot-w" data-i="${i}" onclick="selSpot(${i})">${esc(w)}</button>`).join('')}</div>`;
-  footCheck(); if (window.gsap) gsap.from('#lsBody > *', { x: 30, opacity: 0, duration: .35, stagger: .03, ease: 'power2.out' });
+  footCheck(); enterLesson();
 };
-function selSpot(i) { if (LSN.checked) return; LSN.sel = i; document.querySelectorAll('.spot-w').forEach(b => b.classList.toggle('sel', +b.dataset.i === i)); footCheck(); }
+function selSpot(i) { if (!LSN) return; if (LSN.checked) return; LSN.sel = i; document.querySelectorAll('.spot-w').forEach(b => b.classList.toggle('sel', +b.dataset.i === i)); footCheck(); }
 const _checkItem = checkItem;
 checkItem = function () {
   const it = LSN.items[LSN.i]; if (it.k !== 'spot') return _checkItem();
@@ -2899,7 +3651,7 @@ async function hfLoop() {
     if (HF.sr) {
       set('hfStat', '🎙️ Türkçesini söyle…'); const heard = await listenP('tr-TR', 5500); if (!HF || !HF.run) break;
       const ok = trMatch(heard, c.tr); set('hfTr', esc(c.tr)); set('hfStat', heard ? `Duyduğum: “${esc(heard)}”` : 'Ses duyamadım'); set('hfFlo', mascot(ok ? 'happy' : 'sad', 100));
-      c.box = ok ? Math.min(5, c.box + 1) : 1; c.due = Date.now() + LEITNER_DAYS[c.box - 1] * DAY; D.stats.reviews++; questProgress('review', 1); if (ok) HF.ok++; save();
+      fsrsReview(c, ok ? 3 : 1); D.stats.reviews++; questProgress('review', 1); if (ok) HF.ok++; save();
       await speakP(ok ? 'Doğru!' : 'Doğrusu: ' + c.tr, 'tr-TR'); if (!ok) await speakP(c.de, 'de-DE', .8);
     } else { await new Promise(r => setTimeout(r, 2500)); if (!HF || !HF.run) break; set('hfTr', esc(c.tr)); await speakP(c.tr, 'tr-TR'); D.stats.reviews++; questProgress('review', 1); save(); }
     HF.i++; await new Promise(r => setTimeout(r, 600));
@@ -3020,6 +3772,630 @@ VIEWS.settings = () => `<div class="glass card" style="margin-bottom:16px"><div 
     <div style="margin-top:12px"><b>Yazı boyutu: <span id="zoomV">%${Math.round((CFG.zoom || 1) * 100)}</span></b><input type="range" min=".85" max="1.3" step=".05" value="${CFG.zoom || 1}" style="width:100%" oninput="document.getElementById('zoomV').textContent='%'+Math.round(this.value*100)" onchange="CFG.zoom=+this.value;saveCfg();applyTheme()"></div></div></div></div>` + _settings2();
 applyTheme();
 
+/* =====================================================================
+   EDİTORYAL · FAHRPLAN ekranları (ana sayfa, öğrenme yolu, hızlı erişim) ve hareket katmanı
+   ===================================================================== */
+const HUB_DESC = { review: 'Aralıklı tekrar kartları', errors: 'Hatalarını türüne göre çalış', deck: 'Kelime defteri ve telaffuz', stories: 'Kelimeye dokun, çevirisi gelsin', listen: 'Altyazıyla dinle, boşluk doldur', camera: 'Fotoğraftaki metni çevir', dictation: 'Dinle ve harf harf yaz', roleplay: 'Gerçek hayattan diyaloglar', voice: 'Sesli sohbet pratiği', exam: 'Goethe tarzı konuşma sınavı', writing: 'Yaz, puanlansın, düzeltilsin', games: 'Eşleştir, karışık harf, adam asmaca', plan: 'Sınav tarihine göre takvim', guides: 'Tüm konu anlatımları ve PDF', conj: 'Fiillerin tüm zamanları', artikel: 'der, die, das kuralları', notes: 'Notlar ve çizimler', focus: 'Pomodoro ve süre tutucu', report: 'Haftalık gelişim ve takvim', league: 'Haftalık XP sıralaması', badges: 'Rozetler ve sertifikalar', settings: 'Görünüm, ses, yapay zeka' };
+hubTiles = function (list) {
+  return `<div class="hub ${list.length > 6 ? 'wide' : ''}">${list.map(p => `<button class="row-card" onclick="go('${p}')"><span class="rc-ic"><i class="fa-solid ${PAGES[p][1]}"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${PAGES[p][0]}</span><span class="rc-s" style="display:block">${HUB_DESC[p] || ''}</span></span><i class="fa-solid fa-chevron-right" style="color:var(--faint);font-size:12px"></i></button>`).join('')}</div>`;
+};
+
+/* ---------- Ana sayfa ---------- */
+VIEWS.home = () => {
+  ensureQuests();
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, h = new Date().getHours();
+  const hi = h < 11 ? ['Guten Morgen', 'Günaydın'] : h < 18 ? ['Guten Tag', 'İyi günler'] : ['Guten Abend', 'İyi akşamlar'];
+  const nu = nextUnit(), L = LEVELS[currentLevelIdx()], due = D.cards.filter(c => c.due <= Date.now()).length;
+  const total = LEVELS.reduce((a, x) => a + x.units.length, 0), wk = weekXP(D.days), tier = TIERS.find(t => wk >= t[0]);
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length], dailyDone = D.daily && D.daily[today()] != null, studied = D.lastDay === today();
+  const halt = nu ? (nu.boss ? { de: 'Endstation ' + LEVELS[nu.li].id, t: LEVELS[nu.li].id + ' seviye sonu sınavı', go: `startBoss(${nu.li})` } : { de: nu.u.de, t: nu.u.t, go: `openUnit('${nu.u.id}')` }) : null;
+  const g = D.goal ? goalInfo() : null;
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); return d ? `<div class="q-line ${q.p >= d.goal ? 'done' : ''}"><span class="q-t">${d.t}</span><span class="bar" style="--lv:var(--accent)"><div style="width:${Math.round(q.p / d.goal * 100)}%"></div></span><span class="q-n tabular">${q.p}/${d.goal}</span></div>` : ''; }).join('');
+  return `<div class="home">
+  <div class="greet-row"><div style="min-width:0">
+    <h1 class="greet">${hi[0]}, ${esc(p.name)}.</h1>
+    <p class="greet-sub">${hi[1]}. ${halt ? `<b>Nächster Halt: ${esc(halt.de)}</b> — sıradaki durağın ${esc(halt.t)}, ${L.id} hattında.` : '<b>Endstation erreicht.</b> A1’den C2’ye bütün hatları bitirdin.'}${!studied && h >= 17 ? ` Bugün henüz çalışmadın${displayStreak() ? `; ${displayStreak()} günlük serin bekliyor` : ''}.` : ''}</p>
+    <div class="greet-act">${halt ? `<button class="btn" style="--lv:var(--accent)" onclick="${halt.go}"><i class="fa-solid fa-play"></i> Devam et</button>` : ''}<button class="btn btn-ghost" onclick="startDaily()">${dailyDone ? 'Günün dersini tekrar çöz' : 'Günün dersi · 5 dk'}</button>${!D.placementDone && !RO ? `<button class="btn btn-ghost" onclick="startPlacement()">Seviye tespit sınavı</button>` : ''}</div>
+  </div><div class="flo-inline">${mascot(studied ? 'happy' : 'normal', 96)}</div></div>
+  <div class="grid12">
+    <div class="k-tile s3"><span class="k-lab">Seri</span><span class="k-val tabular">${displayStreak()}<small>gün</small></span><span class="k-cap">Seri kalkanı ${D.shields}/3</span></div>
+    <div class="k-tile s3"><span class="k-lab">Bu hafta</span><span class="k-val tabular">${wk}<small>XP</small></span><span class="k-cap">${tier[1].replace(/^\S+\s/, '')} ligindesin</span></div>
+    <div class="k-tile s3"><span class="k-lab">Tekrar bekleyen</span><span class="k-val tabular">${due}<small>kart</small></span><span class="k-cap">${due ? 'Hazır olduğunda başla' : D.cards.length ? 'Bugünlük kutu boş' : 'Ünite bitirdikçe dolar'}</span></div>
+    <div class="k-tile s3"><span class="k-lab">Duraklar</span><span class="k-val tabular">${lessonsDone(D)}<small>/ ${total}</small></span><span class="k-cap">Şu an ${L.id} · ${L.tr} hattı</span></div>
+    <section class="panel s9"><div class="panel-head"><h2>Bugünkü yolculuk</h2><button class="lnk" onclick="go('learn')">Bütün hat →</button></div>
+      ${halt ? `<button class="row-card hot" onclick="${halt.go}"><span class="rc-ic"><i class="fa-solid fa-train"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(halt.t)}</span><span class="rc-s" style="display:block">${esc(halt.de)} · ${nu && !nu.boss ? buildUnitItems(nu.u, LEVELS[nu.li]).length + ' etkinlik' : 'baraj %80'}</span></span><span class="rc-end">Nächster Halt</span></button>` : ''}
+      <button class="row-card" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti ✓' : '5 dk'}</span></button>
+      <button class="row-card" onclick="go('review')"><span class="rc-ic"><i class="fa-solid fa-box-archive"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Tekrar kutusu</span><span class="rc-s" style="display:block">${D.cards.length} kart · 5 kutulu aralıklı tekrar</span></span><span class="rc-end tabular">${due} bekliyor</span></button>
+      ${g ? `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(D.goal.exam)}</span><span class="rc-s" style="display:block">Hedefe ilerleme %${g.pct} · ${g.today.length ? 'bugün: ' + g.today.map(x => esc(x.u.t)).join(', ') : 'bugün: tekrar'}</span></span><span class="rc-end tabular">${Math.max(0, g.days)} gün</span></button>` : `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hedefi koy</span><span class="rc-s" style="display:block">Tarihi gir, kalan duraklar günlere bölünsün</span></span><span class="rc-end">Plan</span></button>`}
+    </section>
+    <section class="panel s3"><div class="panel-head"><h2>Günün deyimi</h2><button class="icon-btn" style="width:32px;height:32px" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high" style="font-size:12px"></i></button></div>
+      <div class="idiom-de">${esc(idiom.de)}</div><div style="font-weight:500">${esc(idiom.tr)}</div><div class="muted" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
+      <div class="idiom-ex">${esc(idiom.ex)}<div class="muted" style="margin-top:2px">${esc(idiom.exTr)}</div></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></section>
+    <section class="panel s6"><div class="panel-head"><h2>Günlük görevler</h2><span class="chip">Kalkan ${D.shields}/3</span></div>${quests}<p class="note">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan.</p></section>
+    <section class="panel s6"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
+  </div></div>`;
+};
+
+/* ---------- Öğrenme yolu: Fahrplan ---------- */
+let lineDrawn = false;
+VIEWS.learn = () => {
+  const nu = nextUnit();
+  return `<p class="page-sub">Her seviye bir hat, her ünite bir durak. Durağı %80 ile geç, hattın sonundaki sınavı geçince sonraki hattın kapısı açılır.</p>` + LEVELS.map((L, li) => {
+    const open = levelUnlocked(li), doneN = L.units.filter(u => D.done[u.id] != null).length, bossOpen = bossUnlocked(li), bossDone = !!D.boss[L.id];
+    const stops = L.units.map((u, ui) => {
+      const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, cur = nu && !nu.boss && nu.u.id === u.id;
+      const cls = dn ? 'done' : cur ? 'current' : un ? 'open' : 'locked';
+      return `<li class="stop ${cls}" style="--d:${ui * 60}ms"><button onclick="${un ? `openUnit('${u.id}')` : `toast('Önce önceki durağı geç','warn')`}" ${un ? '' : 'aria-disabled="true"'}><span class="rail"><span class="dot"></span></span><span class="st-name"><span class="st-t" style="display:block">${esc(u.t)}</span><span class="st-de" style="display:block">${esc(u.de)}</span>${cur ? '<span class="halt">Nächster Halt</span>' : ''}</span><span class="st-meta tabular">${dn ? '%' + Math.round(D.done[u.id] * 100) : cur ? 'Sıradaki' : un ? 'Açık' : '<i class="fa-solid fa-lock"></i>'}</span></button></li>`;
+    }).join('');
+    const bossCur = nu && nu.boss && nu.li === li;
+    const end = `<li class="stop end ${bossDone ? 'done' : bossCur ? 'current' : bossOpen ? 'open' : 'locked'}" style="--d:${L.units.length * 60}ms"><button onclick="${bossOpen ? `startBoss(${li})` : `toast('Son durak için bütün durakları geç','warn')`}"><span class="rail"><span class="dot"></span></span><span class="st-name"><span class="st-t" style="display:block">Endstation · ${L.id} seviye sonu sınavı</span><span class="st-de" style="display:block">15 soru · baraj %80${bossDone && D.bossScore && D.bossScore[L.id] ? ' · sonuç %' + D.bossScore[L.id].score : ''}</span>${bossCur ? '<span class="halt">Nächster Halt</span>' : ''}</span><span class="st-meta">${bossDone ? 'Geçildi' : bossOpen ? 'Hazır' : '<i class="fa-solid fa-lock"></i>'}</span></button></li>`;
+    return `<section class="line ${open ? '' : 'locked'} ${lineDrawn ? 'drawn' : 'prep'}" style="${lvStyle(L.color)}">
+      <header class="line-head"><span class="line-badge">${L.id}</span><div><h2>${L.tr}</h2><div class="lh-sub">${esc(L.name)} · ${doneN}/${L.units.length} durak${bossDone ? ' · sınav geçildi' : ''}</div></div>
+        <div class="line-acts">${bossDone ? `<button class="btn btn-ghost btn-sm" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i> Sertifika</button>` : ''}<button class="btn btn-ghost btn-sm" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i> Notlar</button></div></header>
+      <ol class="stops">${stops}${end}</ol></section>`;
+  }).join('');
+};
+AFTER.learn = () => {
+  // İmza hareketi: hat, oturumda ilk açılışta duraklara doğru bir kez dolar (sık açılınca tekrar etmez)
+  const lines = document.querySelectorAll('.line.prep');
+  if (!lines.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => requestAnimationFrame(() => { lines.forEach(l => l.classList.remove('prep')); }));
+  if (!reduce) setTimeout(() => { lineDrawn = true; }, 900); else lineDrawn = true;
+  const cur = document.querySelector('.stop.current');
+  if (cur) setTimeout(() => cur.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }), reduce ? 0 : 350);
+};
+
+/* ---------- Hareket katmanı ---------- */
+function enterView() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const els = [...document.querySelectorAll('#view > *:not(.home), #view .home > .greet-row, #view .grid12 > *')].slice(0, 14);
+  els.forEach((el, i) => { el.classList.remove('enter'); void el.offsetWidth; el.style.setProperty('--ed', (i * 45) + 'ms'); el.classList.add('enter'); });
+}
+function enterLesson() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  [...document.querySelectorAll('#lsBody > *, #lsBody .opt, #lsBody .tok')].slice(0, 12).forEach((el, i) => { el.classList.remove('enter'); void el.offsetWidth; el.style.setProperty('--ed', (i * 30) + 'ms'); el.classList.add('enter'); });
+}
+const _goEd = go;
+go = function (p) { _goEd(p); document.body.dataset.page = PAGE; };
+ACCENTS.splice(0, ACCENTS.length, ['green', 'Turkuaz', '#1b6e66'], ['blue', 'Mavi', '#2f6fb0'], ['purple', 'Erik', '#7a4fa3'], ['orange', 'Kehribar', '#b5651d'], ['pink', 'Mürekkep', '#1f201d']);
+
+/* ---------- Sade menü: bilgisayarda ve telefonda aynı 5 ana bölüm ---------- */
+PAGES.more = ['Araçlar', 'fa-toolbox'];
+PAGES.practice = ['Pratik', 'fa-dumbbell'];
+const MAIN_NAV = [['home', 'Ana Sayfa', 'Ana'], ['learn', 'Öğren', 'Öğren'], ['review', 'Tekrar', 'Tekrar'], ['practice', 'Pratik', 'Pratik'], ['more', 'Araçlar', 'Araçlar']];
+const NAV_PARENT = { errors: 'review', deck: 'review', stories: 'practice', listen: 'practice', camera: 'practice', dictation: 'practice', roleplay: 'practice', voice: 'practice', exam: 'practice', writing: 'practice', games: 'practice', guides: 'more', conj: 'more', artikel: 'more', notes: 'more', focus: 'more', report: 'more', league: 'more', badges: 'more', settings: 'more', plan: 'more' };
+const navParent = p => NAV_PARENT[p] || p;
+renderNav = function () {
+  const p = PROFILES.find(x => x.id === PID) || { name: '?', color: '#888' }, li = D ? levelInfo(D.xp) : { lvl: 1 }, L = D ? LEVELS[currentLevelIdx()] : LEVELS[0];
+  $('#sideNav').innerHTML = MAIN_NAV.map(([k, t]) => `<button class="nav-item" data-p="${k}" onclick="go('${k}')"><i class="fa-solid ${PAGES[k][1]}"></i>${t}</button>`).join('')
+    + `<div class="side-foot"><button class="side-prof" onclick="profMenu(event)" aria-label="Profil menüsü"><span class="side-av" style="background:${p.color}">${esc(p.name.charAt(0).toUpperCase())}</span><span class="side-pn"><b>${esc(p.name)}</b><small>${L.id} · ${L.tr} · Seviye ${li.lvl}</small></span><i class="fa-solid fa-ellipsis"></i></button></div>`;
+  $('#bottomNav').innerHTML = MAIN_NAV.map(([k, , t]) => `<button class="bn-item press" data-p="${k}" onclick="go('${k}')"><i class="fa-solid ${PAGES[k][1]}"></i>${t}</button>`).join('');
+};
+const _goNav = go;
+go = function (p) {
+  _goNav(p);
+  const par = navParent(PAGE);
+  document.querySelectorAll('#sideNav .nav-item, .bn-item').forEach(b => b.classList.toggle('active', b.dataset.p === par));
+  const sp = document.querySelector('.side-pn small'); if (sp && D) { const L = LEVELS[currentLevelIdx()]; sp.textContent = `${L.id} · ${L.tr} · Seviye ${levelInfo(D.xp).lvl}`; }
+};
+// Profil satırı ve ⋯ düğmesi aynı menüyü açar: ayarlar, tema, çizim, AI öğretmen, profil değiştir
+function profMenu(ev) {
+  ev.stopPropagation(); let m = $('#tbMenu'); if (m) { m.remove(); return; }
+  const p = PROFILES.find(x => x.id === PID) || { name: '?' }, dark = document.documentElement.classList.contains('dark'), tg = ev.currentTarget || ev.target, r = tg && tg.getBoundingClientRect ? tg.getBoundingClientRect() : { top: 0, left: 0 };
+  m = document.createElement('div'); m.id = 'tbMenu';
+  m.innerHTML = `<div class="tbm-head"><b>${esc(p.name)}</b><span class="muted">Seri ${displayStreak()} gün · kalkan ${D.shields}/3 · ${D.xp} XP</span></div>` + [['fa-robot', 'AI Öğretmen', 'toggleTutor()'], ['fa-pen', 'Ekrana çiz', 'openDraw()'], [dark ? 'fa-sun' : 'fa-moon', dark ? 'Açık tema' : 'Koyu tema', 'toggleTheme()'], ['fa-gear', 'Ayarlar', "go('settings')"], ['fa-right-from-bracket', 'Profil değiştir', 'logout()']]
+    .map(([ic, t, fn]) => `<button class="nav-item" onclick="document.getElementById('tbMenu').remove();${fn}"><i class="fa-solid ${ic}"></i>${t}</button>`).join('');
+  document.body.appendChild(m);
+  if (r.top > innerHeight / 2) { m.style.top = 'auto'; m.style.bottom = (innerHeight - r.top + 8) + 'px'; m.style.left = r.left + 'px'; m.style.right = 'auto'; }
+  setTimeout(() => document.addEventListener('click', function h(e) { if (!m.contains(e.target)) { m.remove(); document.removeEventListener('click', h); } }), 10);
+}
+tbMenu = profMenu;
+// Tekrar bölümü: kartların altında Yanlış Deposu ve Kelime Defteri
+const _reviewNav = VIEWS.review;
+VIEWS.review = () => _reviewNav() + `<div class="panel" style="margin-top:16px"><div class="panel-head"><h2>Tekrar bölümünde</h2></div>${hubTiles(['errors', 'deck'])}</div>`;
+VIEWS.practice = () => `<p class="page-sub">Okuyarak, dinleyerek, konuşarak, yazarak ve oynayarak pratik yap.</p>${hubTiles(['stories', 'listen', 'camera', 'dictation', 'roleplay', 'voice', 'exam', 'writing', 'games'])}`;
+VIEWS.more = () => `<p class="page-sub">Rehberler, araçlar ve ilerlemen.</p>${hubTiles(['plan', 'guides', 'conj', 'artikel', 'notes', 'focus', 'report', 'league', 'badges', 'settings'])}`;
+
+/* =====================================================================
+   EK 3 (a): Editoryal PDF · Türkçe Köprüsü · FSRS tekrar · bağlam cümlesi
+   ===================================================================== */
+Object.assign(PAGES, { bridge: ['Türkçe Köprüsü', 'fa-bridge'], shadow: ['Gölge Okuma', 'fa-repeat'], ready: ['Sınav Hazırlığı', 'fa-gauge-high'], diary: ['Tagebuch', 'fa-feather-pointed'], friend: ['Lena ile Sohbet', 'fa-user-group'] });
+Object.assign(NAV_PARENT, { bridge: 'practice', shadow: 'practice', diary: 'practice', friend: 'practice', ready: 'more' });
+Object.assign(HUB_DESC, { bridge: 'Türklere özel: tanıdık kelimeler, tuzaklar, sesler', shadow: 'Dinle, kendi sesini kaydet, karşılaştır', ready: 'Dört beceride sınava ne kadar hazırsın', diary: 'Her akşam üç Almanca cümle', friend: 'Seni hatırlayan Berlinli bir arkadaş' });
+VIEWS.practice = () => `<p class="page-sub">Okuyarak, dinleyerek, konuşarak, yazarak ve oynayarak pratik yap.</p>${hubTiles(['bridge', 'stories', 'listen', 'shadow', 'friend', 'diary', 'camera', 'dictation', 'roleplay', 'voice', 'exam', 'writing', 'games'])}`;
+VIEWS.more = () => `<p class="page-sub">Rehberler, araçlar ve ilerlemen.</p>${hubTiles(['ready', 'plan', 'guides', 'conj', 'artikel', 'notes', 'focus', 'report', 'league', 'badges', 'settings'])}`;
+const _dd3 = defaultData;
+defaultData = function () { const d = _dd3(); Object.assign(d, { skill: {}, diary: [], lena: { msgs: [], facts: [] }, remedial: {}, tourDone: false }); return d; };
+
+/* ---------- 1) PDF ders notu: editoryal tasarım ---------- */
+Object.assign(PDF_HEX, { a1: ['#1b6e66', '#145750'], a2: ['#2f6fb0', '#245688'], b1: ['#7a4fa3', '#5f3d80'], b2: ['#b5651d', '#8e4f17'], c1: ['#8a7a1a', '#6b5f14'], c2: ['#2b2b28', '#121211'] }); // yeni hat renkleri
+unitPdfHtml = function (u, L) {
+  const [c, cd] = PDF_HEX[L.color] || PDF_HEX.a1, qs = qItems(u), letters = 'abcde', f = findUnit(u.id);
+  const myNotes = D.notes.filter(n => (n.title || '').startsWith(L.id + ' · ' + u.t) && n.text);
+  const qHtml = qs.map((q, i) => `<div class="pdf-q"><span class="pdf-qn">${i + 1}</span><div>${q.k === 'tf' ? esc(q.q) + ' <span class="pdf-muted">(Doğru / Yanlış)</span>' : esc(q.q).replace('___', '<span class="pdf-blank"></span>')}
+    ${q.k === 'mc' ? `<div class="pdf-opts">${q.o.map((o, k) => `<span>${letters[k]}) ${esc(o)}</span>`).join('')}</div>` : ''}</div></div>`).join('');
+  const build = u.s.map((s, i) => `<div class="pdf-q"><span class="pdf-qn">${qs.length + i + 1}</span><div>Almancaya çevir: <i>“${esc(s[1])}”</i><div class="pdf-line"></div></div></div>`).join('');
+  const key = qs.map((q, i) => `<b>${i + 1}.</b> ${q.k === 'mc' ? letters[q.a] + ') ' + esc(q.o[q.a]) : q.k === 'tf' ? (q.a ? 'Doğru' : 'Yanlış') : esc(q.a[0])}${q.e ? ` <span class="pdf-muted">— ${esc(q.e)}</span>` : ''}`).concat(u.s.map((s, i) => `<b>${qs.length + i + 1}.</b> ${esc(s[0])}`)).join('<br>');
+  return `<section class="pdf-unit pdf-ed" style="--lv:${c};--lvd:${cd}">
+    <div class="pdf-top"><span><b>DeutschFlow</b> · Ders notu</span><span>${L.id} hattı · durak ${f ? f.ui + 1 : 1} / ${L.units.length}</span></div>
+    <div class="pdf-title"><span class="pdf-badge">${L.id}</span><div><h1 class="pdf-h1">${esc(u.t)}</h1><div class="pdf-sub">${esc(u.de || '')} · ${esc(L.tr)} (${esc(L.name)})</div></div></div>
+    <h2>Konu anlatımı</h2><div class="guide">${u.g}</div>
+    <div class="pdf-sec"><h2>Kelimeler</h2><table class="gt"><tr><th style="width:50%">Almanca</th><th>Türkçe</th></tr>${u.v.map(v => `<tr><td>${esc(v[0])}</td><td>${esc(v[1])}</td></tr>`).join('')}</table></div>
+    <div class="pdf-sec"><h2>Örnek cümleler</h2><table class="gt"><tr><th style="width:55%">Almanca</th><th>Türkçe</th></tr>${u.s.map(s => `<tr><td>${esc(s[0])}</td><td>${esc(s[1])}</td></tr>`).join('')}</table></div>
+    ${myNotes.length ? `<h2>Kendi notlarım</h2>${myNotes.map(n => `<div class="ex" style="white-space:pre-wrap">${esc(n.text)}</div>`).join('')}` : ''}
+    <h2 class="pdf-break">Alıştırmalar</h2>${qHtml}${build}
+    <h2>Cevap anahtarı</h2><div class="pdf-key">${key}</div>
+    <div class="pdf-foot"><span>${esc((PROFILES.find(x => x.id === PID) || {}).name || '')}</span><span>${new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</span><span>DeutschFlow AI</span></div></section>`;
+};
+certPdf = async function (lv) {
+  const L = LEVELS.find(x => x.id === lv); if (!D.boss[lv]) { toast('Önce ' + lv + ' seviye sonu sınavını geç', 'warn'); return; }
+  const [c, cd] = PDF_HEX[L.color], sc = (D.bossScore || {})[lv], name = (PROFILES.find(x => x.id === PID) || {}).name || '', no = 'DF-' + lv + '-' + (hashStr(PID + lv) % 900000 + 100000);
+  const date = new Date(sc ? sc.date : Date.now()).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const flo = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(mascot('happy', 84).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ').replace(/ class="[^"]*"/g, ''));
+  pdfProgress(lv + ' sertifikası');
+  const host = document.createElement('div'); host.className = 'pdf-host'; document.body.appendChild(host);
+  host.innerHTML = `<div class="cert2" style="--lv:${c};--lvd:${cd}"><div class="cert2-bar"></div><div class="cert2-in">
+    <div class="cert2-top"><span class="cert2-mark">D</span><b>DeutschFlow</b><span class="cert2-no">No. ${no}</span></div>
+    <div class="cert2-title">Zertifikat</div><div class="cert2-sub">Başarı belgesi</div>
+    <div class="cert2-txt">Bu belge</div><div class="cert2-name">${esc(name)}</div>
+    <div class="cert2-txt">adlı öğrencinin <b>${L.id} · ${esc(L.tr)}</b> (${esc(L.name)}) hattının bütün duraklarını ve son durak sınavını başarıyla tamamladığını onaylar.</div>
+    <div class="cert2-bottom"><div><div class="cert2-k">Tarih</div><div class="cert2-v">${date}</div></div><div class="cert2-badge">${L.id}<small>${sc ? 'sınav %' + sc.score : ''}</small></div><div class="cert2-sign"><img alt="" width="64" height="64" src="${flo}"><div><div class="cert2-v" style="font-family:'Instrument Serif',serif;font-size:26px">Flo</div><div class="cert2-k">DeutschFlow koçu</div></div></div></div></div></div>`;
+  try {
+    if (!window.html2pdf) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    await html2pdf().set({ margin: 0, filename: `DeutschFlow-${lv}-Sertifika.pdf`, image: { type: 'jpeg', quality: .95 }, html2canvas: { scale: 2, backgroundColor: '#ffffff', logging: false }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } }).from(host.firstChild).save();
+    closeModal(); toast('Sertifika indirildi'); confettiBurst(true);
+  } catch (e) { closeModal(); toast('Sertifika oluşturulamadı: ' + (e.message || e), 'err'); }
+  finally { host.remove(); }
+};
+
+/* ---------- 2) Türkçe Köprüsü ---------- */
+const BR_LOANS = [['şalter', 'der Schalter', 'elektrik düğmesi'], ['otoban', 'die Autobahn', 'otoyol'], ['aysberg', 'der Eisberg', 'buzdağı: Eis = buz, Berg = dağ'], ['şnitzel', 'das Schnitzel', 'pane et'], ['şnaps', 'der Schnaps', 'sert içki'], ['fön', 'der Föhn', 'saç kurutma makinesi; Almancada bir dağ rüzgârının da adı'], ['müsli', 'das Müsli', 'kahvaltılık tahıl'], ['dübel', 'der Dübel', 'duvar tıpası'], ['şablon', 'die Schablone', 'kalıp'], ['kuvars', 'der Quarz', 'bir mineral'], ['haymatlos', 'heimatlos', 'vatansız: Heimat = yurt, -los = -sız'], ['zeplin', 'der Zeppelin', 'hava gemisi; mucidi Graf Zeppelin'], ['röntgen', 'das Röntgen', 'X ışını; Wilhelm Röntgen'], ['dizel', 'der Diesel', 'motor türü; Rudolf Diesel'], ['kiç', 'der Kitsch', 'zevksiz süs'], ['hamburger', 'der Hamburger', 'adını Hamburg kentinden alır'], ['aspirin', 'das Aspirin', 'Alman Bayer firmasının markası'], ['realpolitik', 'die Realpolitik', 'gerçekçi politika']];
+const BR_COGN = [['das Hotel', 'otel'], ['das Taxi', 'taksi'], ['das Telefon', 'telefon'], ['das Problem', 'problem'], ['die Musik', 'müzik'], ['die Universität', 'üniversite'], ['die Kultur', 'kültür'], ['die Politik', 'politika'], ['die Mathematik', 'matematik'], ['die Physik', 'fizik'], ['die Biologie', 'biyoloji'], ['die Psychologie', 'psikoloji'], ['die Demokratie', 'demokrasi'], ['die Schokolade', 'çikolata'], ['die Limonade', 'limonata'], ['die Tomate', 'domates'], ['der Tunnel', 'tünel'], ['die Garage', 'garaj'], ['der Balkon', 'balkon'], ['der Bus', 'otobüs'], ['der Professor', 'profesör'], ['das Radio', 'radyo'], ['das Museum', 'müze'], ['das Theater', 'tiyatro'], ['der Salat', 'salata'], ['die Bank', 'banka'], ['die Polizei', 'polis']];
+const BR_FALSE = [['die Pasta', 'pasta (tatlı)', 'makarna', 'Türkçedeki pasta: die Torte'], ['der Termin', 'termin (teslim tarihi)', 'randevu', 'teslim tarihi: die Frist'], ['das Gymnasium', 'jimnastik salonu', 'lise (üniversiteye hazırlayan)', 'spor salonu: die Turnhalle'], ['die Promotion', 'promosyon', 'doktora', 'promosyon: die Werbeaktion'], ['der Konkurs', 'konkur (yarışma)', 'iflas', 'yarışma: der Wettbewerb'], ['die Billion', 'milyar', 'trilyon', 'milyar: die Milliarde'], ['das Sofa', 'sofa (ev içi hol)', 'kanepe', 'hol: der Flur'], ['der Kollege', 'kolej', 'iş arkadaşı', 'kolej: die Privatschule'], ['die Kaution', 'kefalet', 'kira depozitosu', 'kefalet: die Bürgschaft'], ['der Chef', 'aşçı şef', 'patron, amir', 'aşçı şef: der Küchenchef'], ['das Handy', 'el ile ilgili bir şey', 'cep telefonu', '—']];
+const BR_ERR = [
+  ['Fiili sona koymak', 'Türkçede fiil sonda gelir. Almanca ana cümlede çekimli fiil ikinci sıradadır; sona yalnızca yan cümlede ve ikinci fiil parçasında gider.', 'Ich heute ins Kino gehe.', 'Ich gehe heute ins Kino.'],
+  ['Artikeli atlamak', 'Türkçede artikel yoktur. Almancada sayılabilen tekil isim neredeyse her zaman bir artikelle gelir.', 'Ich habe Hund.', 'Ich habe einen Hund.'],
+  ['“-de/-da”yı tek edatla çevirmek', 'Türkçe -de her yer için yeter; Almancada yere göre in, an, auf, bei seçilir ve hal eki değişir.', 'Das Buch ist in dem Tisch.', 'Das Buch liegt auf dem Tisch.'],
+  ['“o” zamirini cinsiyetsiz kullanmak', 'Türkçedeki tek “o” yerine Almancada ismin cinsine göre er, sie veya es gelir; eşyalar için de.', 'Der Tisch ist neu. Es ist schön.', 'Der Tisch ist neu. Er ist schön.'],
+  ['Soruyu “mi” gibi kurmak', 'Evet-hayır sorusunda soru eki yoktur; fiil başa geçer.', 'Du kommst morgen?', 'Kommst du morgen?'],
+  ['“Değil/yok”u hep nicht yapmak', 'Belirsiz ya da artikelsiz bir ismi kein olumsuz yapar; nicht fiili, sıfatı ve belirli ismi.', 'Ich habe nicht Zeit.', 'Ich habe keine Zeit.'],
+  ['İsimleri küçük yazmak', 'Almancada bütün isimler büyük harfle başlar: das Haus, die Freude.', 'Ich trinke wasser.', 'Ich trinke Wasser.'],
+  ['Perfekt’te yardımcı fiili seçememek', 'Türkçede yardımcı fiil yoktur. Yer değiştirme ve durum değişikliği sein, diğerleri haben alır.', 'Ich habe nach Berlin gefahren.', 'Ich bin nach Berlin gefahren.']
+];
+const BR_SOUNDS = [
+  ['ichlaut', 'ch: ich-Laut', 'e, i, ä, ö, ü ve ünsüzlerden sonra ince ve önden: “hiç” derken çıkan hafif sese benzer, ama dudaklar yayvan. “ş” deme.', ['ich', 'mich', 'Milch', 'Licht', 'München'], [['Kirche', 'Kirsche'], ['mich', 'misch']]],
+  ['achlaut', 'ch: ach-Laut', 'a, o, u, au sonrasında boğazdan, Türkçedeki kalın “h” gibi: Bach, Buch, Nacht.', ['ach', 'Buch', 'Nacht', 'Koch', 'auch'], [['Bach', 'Back'], ['Nacht', 'nackt']]],
+  ['r', 'Alman r’si', 'Dil ucuyla değil, boğazın gerisinde hafif bir hırıltıyla. Hece sonundaki -er çoğu zaman yumuşak bir “a”: Lehrer ≈ “lehra”.', ['rot', 'Brot', 'Reise', 'Lehrer', 'Bier'], [['Rand', 'Land'], ['rot', 'Lot']]],
+  ['z', 'z = ts', 'Almanca z her zaman “ts” okunur: Zeit ≈ “tsayt”. Türkçedeki z sesini Almanca çoğunlukla s ile yazar: Sonne.', ['Zeit', 'Zug', 'Pizza', 'zehn', 'Platz'], [['zehn', 'sehen'], ['Zeit', 'seit']]],
+  ['eiie', 'ei ve ie', 'ei “ay” okunur (mein ≈ “mayn”), ie uzun bir “i”dir (Liebe ≈ “liibe”). Türk öğrenciler ikisini sık karıştırır.', ['mein', 'Wein', 'nein', 'Liebe', 'Bier', 'vier'], [['Wein', 'Wien'], ['Leid', 'Lied'], ['Feier', 'vier']]],
+  ['auslaut', 'Sonda sertleşme', 'Kelime sonunda b, d, g sertleşir: Tag ≈ “tak”, Hund ≈ “hunt”, ab ≈ “ap”. Bu yüzden aşağıdaki çiftler aynı okunur.', ['Tag', 'Hund', 'ab', 'Kind', 'gelb'], [['Rad', 'Rat'], ['seid', 'seit']]],
+  ['stsp', 'st ve sp başta: şt, şp', 'Kelime ya da kök başında st ve sp “şt”, “şp” okunur: Stadt ≈ “ştat”, Sport ≈ “şport”.', ['Stadt', 'Straße', 'Sport', 'spielen', 'verstehen'], []],
+  ['vw', 'v = f, w = v', 'Almanca v çoğunlukla “f”: Vater ≈ “fater”. w ise Türkçe “v”: Wasser ≈ “vasser”.', ['Vater', 'Vogel', 'viel', 'Wasser', 'Wein', 'wo'], [['vier', 'wir']]],
+  ['len', 'Uzun ve kısa ünlü', 'Ünlüden sonra çift ünsüz varsa ünlü kısa (Mitte), h veya tek ünsüz varsa genelde uzun (Miete, sehen). Anlam değişir.', ['sehen', 'Miete', 'Mitte', 'Staat', 'Stadt'], [['Miete', 'Mitte'], ['Ofen', 'offen'], ['Staat', 'Stadt']]],
+  ['umlaut', 'ö ve ü: senin avantajın', 'Türkçedeki ö ve ü ile neredeyse aynı. Yalnızca uzun olanları (über, Tür, schön) biraz uzat.', ['schön', 'über', 'Tür', 'können', 'müde'], [['schon', 'schön'], ['Mutter', 'Mütter']]]
+];
+let BR = { tab: 'loans', snd: 'ichlaut', pairQ: null, score: { ok: 0, n: 0 } };
+VIEWS.bridge = () => {
+  const tabs = [['loans', 'Zaten biliyorsun'], ['false', 'Yalancı dostlar'], ['sounds', 'Telaffuz laboratuvarı'], ['errors', 'Tipik Türk hataları']];
+  let body = '';
+  if (BR.tab === 'loans') body = `<p class="page-sub">Bu kelimeler Türkçeye Almancadan geçti, yani bir kısmını zaten biliyorsun. Altta da her iki dilde neredeyse aynı olan kelimeler var.</p>
+    <div class="panel"><div class="panel-head"><h2>Almancadan Türkçeye geçenler</h2><span class="chip">${BR_LOANS.length} kelime</span></div>${BR_LOANS.map(([tr, de, n]) => `<div class="br-row"><span class="br-tr">${esc(tr)}</span><span class="br-de serif">${esc(de)}</span><span class="br-n muted">${esc(n)}</span><span class="br-act"><button class="icon-btn" title="Dinle" data-say="${esc(de)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button><button class="icon-btn" title="Kutuya ekle" data-de="${esc(de)}" data-tr="${esc(tr + ' — ' + n)}" onclick="addCard(this.dataset.de,this.dataset.tr,'bridge')"><i class="fa-solid fa-plus"></i></button></span></div>`).join('')}</div>
+    <div class="panel" style="margin-top:16px"><div class="panel-head"><h2>İki dilde neredeyse aynı</h2><button class="btn btn-ghost btn-sm" onclick="BR_COGN.forEach(([de,tr])=>addCard(de,tr,'bridge',true));save();toast('${BR_COGN.length} tanıdık kelime kutuya eklendi')">Hepsini kutuya ekle</button></div><div class="br-cogn">${BR_COGN.map(([de, tr]) => `<button class="br-chip" data-say="${esc(de)}" onclick="say(this.dataset.say)"><b>${esc(de)}</b><span>${esc(tr)}</span></button>`).join('')}</div></div>`;
+  if (BR.tab === 'false') body = `<p class="page-sub">Türkçeye benzeyen ama başka anlama gelen kelimeler. Sınavda en çok bunlar kaybettirir.</p>
+    <div class="panel">${BR_FALSE.map(([de, look, real, tip]) => `<div class="br-row br-false"><span class="br-de serif">${esc(de)}</span><span><span class="muted">Sanılan:</span> <s>${esc(look)}</s><br><span class="muted">Gerçek anlamı:</span> <b>${esc(real)}</b></span><span class="br-n muted">${esc(tip)}</span><span class="br-act"><button class="icon-btn" title="Dinle" data-say="${esc(de)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button><button class="icon-btn" title="Kutuya ekle" data-de="${esc(de)}" data-tr="${esc(real + ' (DİKKAT: ' + look + ' değil)')}" onclick="addCard(this.dataset.de,this.dataset.tr,'bridge')"><i class="fa-solid fa-plus"></i></button></span></div>`).join('')}</div>`;
+  if (BR.tab === 'errors') body = `<p class="page-sub">Türkçe düşünürken Almancada en sık yapılan sekiz kalıp hata. Yanlış Deposu bu kalıpları görünce seni ayrıca uyarır.</p>
+    <div class="grid12">${BR_ERR.map(([t, why, bad, good]) => `<div class="panel s6"><h2 style="font-size:15px;margin:0 0 8px">${esc(t)}</h2><p style="margin:0 0 12px;font-size:14px;line-height:1.5">${esc(why)}</p><div class="br-ex bad"><i class="fa-solid fa-xmark"></i> ${esc(bad)}</div><div class="br-ex good"><i class="fa-solid fa-check"></i> ${esc(good)} <button class="icon-btn" style="width:30px;height:30px;margin-left:auto" title="Dinle" data-say="${esc(good)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high" style="font-size:11px"></i></button></div></div>`).join('')}</div>`;
+  if (BR.tab === 'sounds') { const s = BR_SOUNDS.find(x => x[0] === BR.snd) || BR_SOUNDS[0];
+    body = `<p class="page-sub">Türk öğrencilerin zorlandığı Almanca sesler. Dinle, söyle, sonra çok yakın kelime çiftlerinde kulağını sına.</p>
+    <div class="br-snd">${BR_SOUNDS.map(x => `<button class="chip ${x[0] === s[0] ? 'on' : ''}" onclick="BR.snd='${x[0]}';BR.pairQ=null;go('bridge')">${esc(x[1])}</button>`).join('')}</div>
+    <div class="grid12" style="margin-top:14px"><div class="panel s6"><h2 class="serif" style="font-size:30px;font-weight:400;margin:0 0 8px">${esc(s[1])}</h2><p style="margin:0 0 14px;line-height:1.55">${esc(s[2])}</p>
+      <div class="br-words">${s[3].map(w => `<button class="br-chip" data-say="${esc(w)}" onclick="say(this.dataset.say)"><b class="serif" style="font-size:20px;font-weight:400">${esc(w)}</b><span><i class="fa-solid fa-volume-high"></i></span></button>`).join('')}</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" onclick="PRON.target=BR_SOUNDS.find(x=>x[0]==='${s[0]}')[3].join(', ');go('deck')"><i class="fa-solid fa-microphone"></i> Bu kelimeleri söyle</button></div>
+    <div class="panel s6"><div class="panel-head"><h2>Hangisini duydun?</h2><span class="chip tabular">${BR.score.ok}/${BR.score.n}</span></div>${s[4].length ? `<p class="muted" style="margin:0 0 12px;font-size:14px">Dinle düğmesine bas, sonra duyduğun kelimeyi seç.</p><button class="btn" style="--lv:var(--accent)" onclick="brPair()"><i class="fa-solid fa-volume-high"></i> Dinle</button><div class="br-pairs">${(BR.pairQ ? BR.pairQ.pair : s[4][0]).map((w, i) => `<button class="opt" onclick="brPick(${i})" ${BR.pairQ ? '' : 'disabled'}>${esc(w)}</button>`).join('')}</div><div id="brFb" class="muted" style="min-height:22px;margin-top:8px;font-weight:500"></div>` : '<p class="muted">Bu ses için çift alıştırması yok; soldaki kelimeleri dinleyip tekrarla.</p>'}</div></div>`; }
+  return `<div class="tabs br-tabs" style="max-width:640px">${tabs.map(([k, t]) => `<button class="tab ${BR.tab === k ? 'active' : ''}" onclick="BR.tab='${k}';go('bridge')">${t}</button>`).join('')}</div>${body}`;
+};
+function brPair() { const s = BR_SOUNDS.find(x => x[0] === BR.snd), pair = s[4][Math.floor(Math.random() * s[4].length)], ans = Math.floor(Math.random() * 2); BR.pairQ = { pair, ans }; go('bridge'); setTimeout(() => speak(pair[ans], { rate: .85 }), 150); }
+function brPick(i) { if (!BR.pairQ) return; const q = BR.pairQ, ok = i === q.ans, same = BR.snd === 'auslaut'; BR.score.n++; if (ok || same) BR.score.ok++; logSkill('horen', ok || same ? 1 : 0);
+  const fb = same ? `İkisi de aynı okunur: “${q.pair[0]}” = “${q.pair[1]}”. Sonda sertleşme bu!` : ok ? `Doğru: “${q.pair[q.ans]}”.` : `Duyduğun “${q.pair[q.ans]}” idi.`; BR.pairQ = null; go('bridge'); const e = $('#brFb'); if (e) { e.textContent = fb; e.style.color = ok || same ? 'var(--positive)' : 'var(--negative)'; } if (ok || same) sfxOk(); else sfxBad(); }
+// Yanlış Deposu: kalıp hatalara Türklere özel not
+const TR_HINT = { hal: 'Türkçede artikel ve cinsiyet yok; ismi her zaman artikeliyle ezberle.', sira: 'Türkçede fiil sonda. Almanca ana cümlede çekimli fiil ikinci sırada.', edat: 'Türkçe “-de” her yere yeter; Almancada in / an / auf / bei ve hal eki birlikte seçilir.', fiil: 'Türkçede yardımcı fiil yok: Perfekt’te hareket ve durum değişimi sein, diğerleri haben.', cumle: 'Evet-hayır sorusunda fiil başa geçer; yan cümlede fiil sona.' };
+const _errV = VIEWS.errors;
+VIEWS.errors = () => { let h = _errV(); Object.entries(TR_HINT).forEach(([c, t]) => { const name = (ERR_CATS[c] || [])[0]; if (name) h = h.replace(`<b>${name}</b></div>`, `<b>${name}</b></div><div class="tr-hint">Türklere özel: ${esc(t)}</div>`); }); return h.replace('<div id="catAi"></div>', `<div id="catAi"></div><div class="row" style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="BR.tab='errors';go('bridge')"><i class="fa-solid fa-bridge"></i> Tipik Türk hataları rehberi</button></div>`); };
+
+/* ---------- 4) Akıllı tekrar zamanlaması: FSRS-4.5 (varsayılan ağırlıklar) ---------- */
+const FSRS_W = [0.4872, 1.4003, 3.7145, 13.8206, 5.1618, 1.2298, 0.8975, 0.031, 1.6474, 0.1367, 1.0461, 2.1072, 0.0793, 0.3246, 1.587, 0.2272, 2.8755];
+const FSRS_DECAY = -0.5, FSRS_FACTOR = 19 / 81;
+const fsrsR = (t, s) => Math.pow(1 + FSRS_FACTOR * t / s, FSRS_DECAY);
+const fsrsD0 = g => Math.min(10, Math.max(1, FSRS_W[4] - Math.exp(FSRS_W[5] * (g - 1)) + 1));
+function fsrsNext(c, g, now) {
+  const w = FSRS_W; now = now || Date.now();
+  let s = c.s, d = c.d;
+  if (!s) { if (c.box > 1 && !c.reps) { s = LEITNER_DAYS[c.box - 1] || 1; d = 5; } else { return { s: w[g - 1], d: fsrsD0(g) }; } }
+  const t = Math.max(0, (now - (c.last || c.added || now)) / DAY), R = fsrsR(t, s);
+  let d2 = d - w[6] * (g - 3); d2 = w[7] * fsrsD0(4) + (1 - w[7]) * d2; d2 = Math.min(10, Math.max(1, d2));
+  let s2;
+  if (g === 1) s2 = w[11] * Math.pow(d, -w[12]) * (Math.pow(s + 1, w[13]) - 1) * Math.exp(w[14] * (1 - R));
+  else s2 = s * (1 + Math.exp(w[8]) * (11 - d) * Math.pow(s, -w[9]) * (Math.exp(w[10] * (1 - R)) - 1) * (g === 2 ? w[15] : 1) * (g === 4 ? w[16] : 1));
+  return { s: Math.max(0.1, s2), d: d2 };
+}
+const fsrsIvlMs = (g, s) => g === 1 ? 10 * 60000 : Math.max(1, Math.round(s)) * DAY;
+function fsrsReview(c, g) {
+  const now = Date.now(), r = fsrsNext(c, g, now);
+  c.s = r.s; c.d = r.d; c.last = now; c.reps = (c.reps || 0) + 1; if (g === 1) c.lapses = (c.lapses || 0) + 1;
+  c.due = now + fsrsIvlMs(g, r.s); c.box = r.s < 1 ? 1 : r.s < 3 ? 2 : r.s < 7 ? 3 : r.s < 21 ? 4 : 5;
+}
+const fmtIvl = ms => ms < 3600000 ? Math.round(ms / 60000) + ' dk' : ms < DAY * 30 ? Math.round(ms / DAY) + ' gün' : (ms / DAY / 30).toFixed(1).replace('.0', '') + ' ay';
+const _rrc2 = renderReviewCard;
+renderReviewCard = function () {
+  _rrc2(); if (!rv) return; const c = rv.list[rv.i]; if (!c) return;
+  const box = $('#rvBtns'); if (box) { box.className = 'rv4'; box.innerHTML = [[1, 'Tekrar', 'red'], [2, 'Zor', 'b2'], [3, 'İyi', 'a1'], [4, 'Kolay', 'a2']].map(([g, t, col]) => { const r = fsrsNext(c, g); return `<button class="btn ${g === 1 ? 'btn-red' : g === 3 ? '' : 'btn-ghost'}" ${g === 3 ? 'style="--lv:var(--accent)"' : ''} onclick="rvGrade(${g})"><span>${t}</span><small>${fmtIvl(fsrsIvlMs(g, r.s))}</small></button>`; }).join(''); }
+  if (c.ctx) { const back = document.querySelector('.flash-b'); if (back) back.insertAdjacentHTML('beforeend', `<div class="ctx-full">${esc(c.ctx)}${c.ctxTr ? `<small>${esc(c.ctxTr)}</small>` : ''}</div>`);
+    const front = document.querySelector('.flash-f'); const frontIsTr = front && !front.textContent.includes(c.de);
+    if (front && frontIsTr) front.insertAdjacentHTML('beforeend', `<div class="ctx-mask">${esc(maskWord(c.ctx, c.de))}</div>`); }
+};
+function rvGrade(g) {
+  if (!rv || !rv.list[rv.i]) return; const c = rv.list[rv.i];
+  fsrsReview(c, g); if (g > 1) rv.ok++; else if (!c._relearn) { c._relearn = true; rv.list.push(c); }
+  logSkill('lesen', g > 1 ? 1 : 0); D.stats.reviews++; questProgress('review', 1); save(); if (g > 1) sfxOk(); else sfxBad(); rv.i++; renderReviewCard();
+}
+rvAnswer = ok => rvGrade(ok ? 3 : 1);
+
+/* ---------- 5) Kelimenin geçtiği cümle (bağlam) ---------- */
+function maskWord(sent, de) { const w = bareWord(de).split(/\s+/)[0]; if (!w) return sent; const re = new RegExp('(^|[^\\p{L}])(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?=[^\\p{L}]|$)', 'iu'); return sent.replace(re, '$1____'); }
+function findCtx(de) {
+  const w = bareWord(de).split(/\s+/)[0].toLowerCase(); if (!w || w.length < 2) return null;
+  const re = new RegExp('(^|[^\\p{L}])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '([^\\p{L}]|$)', 'iu');
+  const pools = [LEVELS.flatMap(L => L.units.flatMap(u => u.s)), STORIES.flatMap(s => s.s), CLIPS.flatMap(c => c.lines)];
+  if (CAM && CAM.res && CAM.res.metin) pools.unshift(CAM.res.metin.split(/(?<=[.!?])\s+/).map(x => [x, '']));
+  for (const p of pools) { const hit = p.find(x => re.test(x[0])); if (hit) return hit; }
+  return null;
+}
+const _addCard3 = addCard;
+addCard = function (de, tr, src, silent, toBox1) {
+  _addCard3(de, tr, src, silent, toBox1); if (!D) return;
+  const c = D.cards.find(x => norm(x.de) === norm(String(de).trim())); if (c && !c.ctx) { const h = findCtx(c.de); if (h) { c.ctx = h[0]; c.ctxTr = h[1] || ''; save(); } }
+};
+
+/* =====================================================================
+   EK 3 (b): Beceri kaydı · Gölge Okuma · Sınav Hazırlığı · Uyarlanan zorluk
+   Tagebuch · Lena · Paylaşım kartı · Erişilebilirlik · Tanıtım turu
+   ===================================================================== */
+/* ---------- Beceri kaydı (Lesen, Hören, Schreiben, Sprechen) ---------- */
+function logSkill(k, v) { if (!D || RO) return; D.skill = D.skill || {}; const a = D.skill[k] = D.skill[k] || []; a.push({ v: Math.max(0, Math.min(1, +v || 0)), t: Date.now() }); if (a.length > 80) a.splice(0, a.length - 80); }
+const SKILLS = [['lesen', 'Okuma', 'Lesen'], ['horen', 'Dinleme', 'Hören'], ['schreiben', 'Yazma', 'Schreiben'], ['sprechen', 'Konuşma', 'Sprechen']];
+function skillInfo(k) { const a = ((D.skill || {})[k] || []).slice(-24); if (!a.length) return { n: 0, avg: null, ready: 0 }; const avg = a.reduce((s, x) => s + x.v, 0) / a.length; return { n: a.length, avg, ready: Math.round(avg * Math.min(1, a.length / 12) * 100) }; }
+const _fi3 = finishItem;
+finishItem = function (ok, skipped) {
+  const it = LSN && LSN.items[LSN.i], was = LSN && LSN.checked; _fi3(ok, skipped); if (was || !it) return;
+  logSkill(it.k === 'dict' ? 'horen' : it.k === 'build' || it.k === 'spot' ? 'schreiben' : 'lesen', ok ? 1 : 0);
+  const f = $('#lsFoot'); if (f) { f.setAttribute('role', 'status'); f.setAttribute('aria-live', 'polite'); }
+};
+const _checkDict3 = checkDict;
+checkDict = function () { const first = DX && !DX.done, t = ($('#dictIn') || {}).value || ''; _checkDict3(); if (first && t.trim() && DX && DX.done) logSkill('horen', similarity(t, DX.s[0])); };
+const _checkCloze3 = checkCloze;
+checkCloze = function () { _checkCloze3(); if (!LC || !LC.cloze) return; let ok = 0; document.querySelectorAll('.lc-gap').forEach(inp => { if (norm(inp.value) === norm(LC.cloze[+inp.dataset.k].w)) ok++; }); logSkill('horen', ok / LC.cloze.length); };
+const _checkWriting3 = checkWriting;
+checkWriting = async function () { const n = D.writings.length; await _checkWriting3(); if (D.writings.length > n) logSkill('schreiben', D.writings[0].puan / 100); };
+const _gradeExam3 = gradeExam;
+gradeExam = async function () { const n = D.exams.length; await _gradeExam3(); if (D.exams.length > n) logSkill('sprechen', D.exams[0].puan / 100); };
+const _finishStory3 = finishStory;
+finishStory = function (id) { const first = D && !D.stories[id]; _finishStory3(id); if (first) logSkill('lesen', 1); };
+
+/* ---------- 6) Gölge okuma + ses kaydı ---------- */
+let SH = { i: 0, rec: null, chunks: [], url: null, dur: 0, tts: 0, peaks: null, recording: false, t0: 0 };
+function shPool() { const li = currentLevelIdx(); return LEVELS.slice(0, li + 1).flatMap(L => L.units.flatMap(u => u.s)).concat(STORIES.filter(s => LEVELS.findIndex(L => L.id === s.lv) <= li).flatMap(s => s.s)); }
+VIEWS.shadow = () => {
+  const pool = shPool(), s = pool[SH.i % pool.length];
+  return `<p class="page-sub">Gölge okuma: önce dinle, sonra aynı ritimle söyleyip sesini kaydet, ikisini arka arkaya dinleyerek karşılaştır. Dil öğretmenlerinin en sevdiği konuşma tekniği.</p>
+  <div class="grid12"><div class="panel s8"><div class="panel-head"><h2>Cümle</h2><div class="row"><span class="chip tabular">${SH.i % pool.length + 1} / ${pool.length}</span><button class="icon-btn" title="Sonraki cümle" onclick="SH.i++;shReset();go('shadow')"><i class="fa-solid fa-forward"></i></button></div></div>
+    <div class="serif sh-sent">${esc(s[0])}</div><div class="muted" style="margin-top:6px">${esc(s[1])}</div>
+    <div class="row" style="margin-top:18px"><button class="btn btn-ghost" onclick="shListen()"><i class="fa-solid fa-volume-high"></i> Örneği dinle</button><button class="btn btn-ghost" onclick="speak(shPool()[SH.i%shPool().length][0],{rate:.7})"><i class="fa-solid fa-gauge-simple-low"></i> Yavaş</button>
+      <button class="btn ${SH.recording ? 'btn-red' : ''}" style="${SH.recording ? '' : '--lv:var(--accent)'}" onclick="shToggleRec()"><i class="fa-solid ${SH.recording ? 'fa-stop' : 'fa-microphone'}"></i> ${SH.recording ? 'Kaydı durdur' : 'Kaydet'}</button></div>
+    <canvas id="shWave" class="sh-wave" width="1200" height="160" aria-label="Kaydının ses dalgası"></canvas>
+    ${SH.url ? `<div class="row" style="margin-top:12px"><button class="btn btn-ghost" onclick="shPlayMine()"><i class="fa-solid fa-play"></i> Benimkini dinle</button><button class="btn btn-ghost" onclick="shCompare()"><i class="fa-solid fa-right-left"></i> Önce örnek, sonra ben</button></div>` : ''}</div>
+  <div class="panel s4"><div class="panel-head"><h2>Ritim</h2></div>${SH.url ? `<div class="k-val tabular" style="font-size:30px">${SH.dur.toFixed(1)}<small>sn</small></div><div class="k-cap">Senin kaydın${SH.tts ? ` · örnek ${SH.tts.toFixed(1)} sn` : ''}</div>
+      <p style="margin:14px 0 0;font-size:14px;line-height:1.5">${SH.tts ? (Math.abs(SH.dur - SH.tts) / SH.tts < .2 ? 'Ritim örneğe çok yakın. Şimdi vurgulu heceleri aynı yerde yapmaya çalış.' : SH.dur > SH.tts ? 'Örnekten yavaşsın. Bir kez daha dinle, kelimeleri birbirine bağlayarak söyle.' : 'Örnekten hızlısın. Her kelimeyi bitirmeden diğerine geçme.') : 'Ritmi karşılaştırmak için önce örneği dinle.'}</p>` : `<p class="muted" style="margin:0;font-size:14px;line-height:1.5">Kaydettiğinde burada süren ve örneğe göre ritmin görünür. Kayıt yalnızca bu oturumda tutulur, hiçbir yere gönderilmez.</p>`}</div></div>`;
+};
+AFTER.shadow = () => shDraw();
+function shReset() { if (SH.url) URL.revokeObjectURL(SH.url); Object.assign(SH, { url: null, dur: 0, tts: 0, peaks: null }); }
+function shListen() { const s = shPool()[SH.i % shPool().length][0], t0 = performance.now(); speak(s, { onend: () => { SH.tts = (performance.now() - t0) / 1000; if (PAGE === 'shadow') go('shadow'); } }); }
+async function shToggleRec() {
+  if (!canEdit()) return;
+  if (SH.recording) { SH.rec && SH.rec.state !== 'inactive' && SH.rec.stop(); return; }
+  if (!navigator.mediaDevices || !window.MediaRecorder) { toast('Bu tarayıcı ses kaydını desteklemiyor', 'err'); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    SH.chunks = []; SH.rec = new MediaRecorder(stream); SH.recording = true; SH.t0 = performance.now(); go('shadow');
+    SH.rec.ondataavailable = e => e.data.size && SH.chunks.push(e.data);
+    SH.rec.onstop = async () => { stream.getTracks().forEach(t => t.stop()); SH.recording = false; shReset(); const blob = new Blob(SH.chunks, { type: SH.rec.mimeType || 'audio/webm' }); SH.url = URL.createObjectURL(blob); SH.dur = (performance.now() - SH.t0) / 1000;
+      try { const ab = await blob.arrayBuffer(), ctx = new (window.AudioContext || window.webkitAudioContext)(), buf = await ctx.decodeAudioData(ab); SH.dur = buf.duration; const ch = buf.getChannelData(0), n = 120, step = Math.floor(ch.length / n); SH.peaks = Array.from({ length: n }, (_, i) => { let m = 0; for (let j = i * step; j < (i + 1) * step; j++) m = Math.max(m, Math.abs(ch[j] || 0)); return m; }); } catch (e) { SH.peaks = null; }
+      logSkill('sprechen', SH.tts ? Math.max(.3, 1 - Math.abs(SH.dur - SH.tts) / SH.tts) : .6); D.stats.pron++; questProgress('pron', 1); save(); if (PAGE === 'shadow') go('shadow'); };
+    SH.rec.start(); setTimeout(() => { if (SH.recording && SH.rec.state === 'recording') SH.rec.stop(); }, 15000);
+  } catch (e) { SH.recording = false; toast('Mikrofona izin verilmedi', 'err'); go('shadow'); }
+}
+function shPlayMine(after) { if (!SH.url) return; const a = new Audio(SH.url); a.onended = after || null; a.play().catch(() => toast('Kayıt çalınamadı', 'err')); }
+function shCompare() { const s = shPool()[SH.i % shPool().length][0]; speak(s, { onend: () => setTimeout(() => shPlayMine(), 350) }); }
+function shDraw() {
+  const cv = $('#shWave'); if (!cv) return; const g = cv.getContext('2d'), W = cv.width, H = cv.height, cs = getComputedStyle(document.documentElement);
+  g.clearRect(0, 0, W, H); const ink = cs.getPropertyValue('--accent').trim() || '#1b6e66', base = cs.getPropertyValue('--surface-2').trim() || '#eee';
+  const peaks = SH.peaks || Array.from({ length: 120 }, () => 0), bw = W / peaks.length;
+  peaks.forEach((p, i) => { const h = Math.max(4, p * (H - 8)); g.fillStyle = SH.peaks ? ink : base; g.fillRect(i * bw + 1, (H - h) / 2, Math.max(2, bw - 3), h); });
+}
+
+/* ---------- 7) Sınav hazırlık ölçeri + Kann-Beschreibungen ---------- */
+const CAN_DO = {
+  A1: [['Kendimi tanıtıp selamlaşabilirim', ['a1u1', 'a1u3']], ['Ailemi basit cümlelerle anlatabilirim', ['a1u2']], ['Yiyecek-içecek isteyip fiyat sorabilirim', ['a1u4', 'a1u1']], ['Basit sorular sorup cevaplayabilirim', ['a1u6']], ['Neyin olmadığını söyleyebilirim', ['a1u6', 'a1u5']], ['Kısa, basit bir metni okuyup anlayabilirim', ['story:st1']]],
+  A2: [['Günlük rutinimi anlatabilirim', ['a2u2']], ['Geçmişte ne yaptığımı anlatabilirim', ['a2u4']], ['Evimi ve eşyaların yerini tarif edebilirim', ['a2u5']], ['Alışverişte karşılaştırma yapabilirim', ['a2u6']], ['Ne yapabileceğimi ve yapmam gerekeni söyleyebilirim', ['a2u3']], ['Kime ve neye olduğunu doğru hal ekiyle söyleyebilirim', ['a2u1']]],
+  B1: [['Gerekçe göstererek fikrimi söyleyebilirim', ['b1u2']], ['Geçmiş olayları yazılı anlatabilirim', ['b1u1']], ['Sağlık sorunlarımı anlatabilirim', ['b1u3']], ['Süreçleri edilgen çatıyla anlatabilirim', ['b1u4']], ['Kişi ve şeyleri ilgi cümleleriyle tarif edebilirim', ['b1u6']], ['Basit bir iş görüşmesi yapabilirim', ['b1u1', 'skill:sprechen:50']]],
+  B2: [['Varsayım ve dilekleri ifade edebilirim', ['b2u1']], ['Bir konunun artı ve eksilerini tartışabilirim', ['b2u5']], ['Başkasının sözlerini aktarabilirim', ['b2u4']], ['Haber metinlerini anlayabilirim', ['b2u2', 'b2u3']], ['Görüş yazısı yazabilirim', ['skill:schreiben:60']]],
+  C1: [['Resmi yazışma yapabilirim', ['c1u5']], ['Yoğun akademik metinleri anlayabilirim', ['c1u4']], ['Karmaşık bağlaçlarla akıcı anlatabilirim', ['c1u3']], ['Haber dilindeki aktarımları anlayabilirim', ['c1u2']], ['İsim-fiil kalıplarını kullanabilirim', ['c1u1']]],
+  C2: [['Deyimleri ve incelikleri kullanabilirim', ['c2u1', 'c2u2']], ['Edebi metinleri yorumlayabilirim', ['c2u4']], ['Cümle yapısıyla vurgu yapabilirim', ['c2u3']]]
+};
+function canDoMet(req) { return req.every(r => r.startsWith('story:') ? !!D.stories[r.slice(6)] : r.startsWith('skill:') ? skillInfo(r.split(':')[1]).ready >= +r.split(':')[2] : D.done[r] != null); }
+const SKILL_GO = { lesen: ["go('stories')", 'Bir hikâye oku'], horen: ["go('listen')", 'Altyazılı dinle'], schreiben: ["go('diary')", 'Günlüğe yaz'], sprechen: ["go('shadow')", 'Gölge okuma yap'] };
+VIEWS.ready = () => {
+  const target = (D.goal && D.goal.lv) || LEVELS[currentLevelIdx()].id, rows = SKILLS.map(([k, tr, de]) => ({ k, tr, de, ...skillInfo(k) }));
+  const withData = rows.filter(r => r.n), noData = rows.filter(r => !r.n), weakest = (withData.length ? withData : rows).slice().sort((a, b) => a.ready - b.ready)[0], cando = CAN_DO[target] || [], met = cando.filter(x => canDoMet(x[1])).length;
+  const overall = Math.round(rows.reduce((s, r) => s + r.ready, 0) / 4);
+  return `<p class="page-sub">Goethe sınavının dört becerisinde ne kadar hazırsın. Oranlar senin son cevaplarından ve ne kadar pratik yaptığından hesaplanır; az veri varken bilerek düşük tutulur.</p>
+  <div class="grid12"><section class="panel s8"><div class="panel-head"><h2>${target} sınavına hazırlık</h2><span class="chip tabular">genel %${overall}</span></div>
+    <p class="ready-find">${weakest.n ? `En zayıf becerin <b>${weakest.tr}</b> (%${weakest.ready}). Bu hafta ona ağırlık ver.${noData.length ? ` ${noData.map(r => r.tr).join(' ve ')} için henüz hiç veri yok.` : ''}` : 'Henüz yeterli veri yok. Birkaç ders, dikte ve yazma alıştırması yaptıkça oranlar oluşur.'} <button class="btn btn-sm" style="--lv:var(--accent);margin-left:6px" onclick="${SKILL_GO[weakest.k][0]}">${SKILL_GO[weakest.k][1]}</button></p>
+    ${rows.map(r => `<div class="ready-row"><div class="ready-l"><b>${r.tr}</b><span class="muted">${r.de}</span></div><div class="ready-bar"><div style="width:${r.ready}%"></div></div><div class="ready-v tabular">%${r.ready}</div><div class="ready-n muted tabular">${r.n ? `${r.n} cevap · ort. %${Math.round(r.avg * 100)}` : 'veri yok'}</div></div>`).join('')}
+    <p class="note">Okuma: ders soruları, hikâyeler, kartlar · Dinleme: dikte, altyazılı dinleme, ses çiftleri · Yazma: cümle kurma, hata avcısı, yazma atölyesi · Konuşma: sözlü sınav, telaffuz, gölge okuma.</p></section>
+  <section class="panel s4"><div class="panel-head"><h2>${target}: yapabilirim</h2><span class="chip tabular">${met}/${cando.length}</span></div>${cando.map(([t, req]) => { const ok = canDoMet(req); return `<div class="cando ${ok ? 'ok' : ''}"><i class="fa-solid ${ok ? 'fa-circle-check' : 'fa-circle'}"></i><span>${esc(t)}</span></div>`; }).join('')}
+    <p class="note">Liste, Goethe ve Avrupa Dil Çerçevesi’nin “Kann-Beschreibungen” anlatımlarına göre sadeleştirildi; ilgili duraklar bitince işaretlenir.</p></section></div>`;
+};
+const _plan3 = VIEWS.plan;
+VIEWS.plan = () => { const r = SKILLS.map(([k]) => skillInfo(k).ready), o = Math.round(r.reduce((a, b) => a + b, 0) / 4); return `<button class="row-card hot" style="margin-bottom:16px" onclick="go('ready')"><span class="rc-ic"><i class="fa-solid fa-gauge-high"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hazırlık ölçerin</span><span class="rc-s" style="display:block">Okuma %${r[0]} · Dinleme %${r[1]} · Yazma %${r[2]} · Konuşma %${r[3]}</span></span><span class="rc-end tabular">%${o}</span></button>` + _plan3(); };
+
+/* ---------- 8) Uyarlanan zorluk: pekiştirme dersi + hızlı geçme ---------- */
+const _ls3 = lessonSummary;
+lessonSummary = function () {
+  const o = LSN.opts, score = LSN.correct / LSN.items.length, wrongs = LSN.results.filter(r => !r.ok && r.it.k !== 'match').map(r => r.it);
+  _ls3();
+  const body = $('#lsBody > div');
+  if (o.kind === 'unit' && score < .9 && wrongs.length) {
+    const f = findUnit(o.unitId), extra = shuffle(qItems(f.u)).slice(0, 3), sp = makeSpot(f.u), items = shuffle(wrongs.concat(extra, sp ? [sp] : [])).slice(0, 8);
+    D.remedial = D.remedial || {}; D.remedial[o.unitId] = { items, ts: Date.now() }; save();
+    if (body) body.insertAdjacentHTML('beforeend', `<div class="remed"><b>Pekiştirme dersi hazır.</b> Zorlandığın ${wrongs.length} soru ve benzerleriyle ${items.length} soruluk kısa bir ders. Günün dersine de eklendi.<button class="btn btn-sm" style="--lv:var(--accent)" onclick="startRemedial('${o.unitId}')">Şimdi çöz</button></div>`);
+  }
+  if (o.kind === 'remedial' && score >= .8 && D.remedial) { delete D.remedial[o.unitId]; save(); if (body) body.insertAdjacentHTML('beforeend', '<div class="remed"><b>Pekiştirme tamam.</b> Bu durağın eksikleri kapandı.</div>'); }
+  if (o.kind === 'testout') {
+    const f = findUnit(o.unitId);
+    if (score >= .9) { const first = D.done[o.unitId] == null; D.done[o.unitId] = Math.max(D.done[o.unitId] || 0, score); if (first) { f.u.v.forEach(v => addCard(v[0], v[1], f.u.id, true)); questProgress('lesson', 1); } save(); if (body) body.insertAdjacentHTML('beforeend', `<div class="remed"><b>Durak geçildi.</b> ${esc(f.u.t)} zaten biliyormuşsun; kelimeleri tekrar kutuna eklendi.</div>`); }
+    else if (body) body.insertAdjacentHTML('beforeend', `<div class="remed">Hızlı geçmek için %90 gerekiyor. Normal dersle birlikte sağlam öğrenelim.<button class="btn btn-sm" style="--lv:var(--accent)" onclick="quitLesson(true);startUnit('${o.unitId}')">Dersi başlat</button></div>`);
+  }
+};
+function startRemedial(id) { const r = D.remedial && D.remedial[id], f = findUnit(id); if (!r || !f) return; quitLesson(true); startLesson(r.items, { title: 'Pekiştirme · ' + f.u.t, color: f.L.color, kind: 'remedial', unitId: id, pass: .8 }); }
+function startTestOut(id) { const f = findUnit(id); if (!f) return; closeModal(); const sp = makeSpot(f.u), s = pick(f.u.s, 1)[0]; const items = shuffle(qItems(f.u).concat(sp ? [sp] : [], s ? [{ k: 'build', q: s[1], a: s[0], id: f.u.id + ':tb', unit: f.u.id }] : [])); startLesson(items, { title: 'Hızlı geç · ' + f.u.t, color: f.L.color, kind: 'testout', unitId: id, pass: .9 }); }
+const _buildDaily3 = buildDaily;
+buildDaily = function () { const base = _buildDaily3(), rem = Object.values(D.remedial || {}).flatMap(r => r.items).slice(0, 3), ids = new Set(base.map(x => x.id)); return rem.filter(x => !ids.has(x.id)).concat(base).slice(0, 13); };
+const _openUnit3 = openUnit;
+openUnit = function (id) { const r = _openUnit3(id), f = findUnit(id); if (f && D.done[id] == null && unitUnlocked(f.li, f.ui) && !RO) { const row = document.querySelector('#modalRoot .sheet-body > div:last-child'); if (row) row.insertAdjacentHTML('beforeend', `<button class="btn btn-ghost" onclick="startTestOut('${id}')"><i class="fa-solid fa-forward-fast"></i> Biliyorum, hızlı geç</button>`); } return r; };
+
+/* ---------- 9) Tagebuch ---------- */
+const DIARY_PROMPTS = [['Wie war dein Tag heute?', 'Bugün günün nasıldı?'], ['Was hast du heute gegessen?', 'Bugün ne yedin?'], ['Worauf freust du dich morgen?', 'Yarın neyi dört gözle bekliyorsun?'], ['Was hast du heute gelernt?', 'Bugün ne öğrendin?'], ['Mit wem hast du heute gesprochen?', 'Bugün kiminle konuştun?'], ['Was hat dich heute gefreut oder geärgert?', 'Bugün seni ne sevindirdi ya da kızdırdı?'], ['Was machst du am Wochenende?', 'Hafta sonu ne yapacaksın?']];
+function diaryStreak() { const days = new Set((D.diary || []).map(e => e.date)); let n = 0, d = new Date(); for (;;) { const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); if (days.has(k)) { n++; d = new Date(d.getTime() - DAY); } else break; } return n; }
+VIEWS.diary = () => {
+  const pr = DIARY_PROMPTS[hashStr(today()) % DIARY_PROMPTS.length], todayE = (D.diary || []).find(e => e.date === today());
+  return `<p class="page-sub">Her akşam üç Almanca cümle. Yapay zeka nazikçe düzeltir; haftalar sonra eski sayfalara bakınca ne kadar ilerlediğini görürsün.</p>
+  <div class="grid12"><section class="panel s8"><div class="panel-head"><h2>${new Date().toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' })}</h2><span class="chip tabular">${diaryStreak()} gün üst üste</span></div>
+    <div class="serif" style="font-size:28px;line-height:1.15">${esc(pr[0])}</div><div class="muted" style="margin:4px 0 14px">${esc(pr[1])}</div>
+    <textarea id="diIn" class="pill-input" rows="6" spellcheck="false" placeholder="Heute …">${esc(todayE ? todayE.text : '')}</textarea>${umlautBar('diIn')}
+    <div class="row" style="margin-top:12px"><button class="btn" style="--lv:var(--accent)" onclick="diarySave(true)"><i class="fa-solid fa-wand-magic-sparkles"></i> Kaydet ve düzelt</button><button class="btn btn-ghost" onclick="diarySave(false)">Sadece kaydet</button></div>
+    <div id="diOut">${todayE && todayE.fix ? diaryFixHtml(todayE) : ''}</div></section>
+  <section class="panel s4"><div class="panel-head"><h2>Önceki sayfalar</h2><span class="chip">${(D.diary || []).length}</span></div>${(D.diary || []).slice(0, 10).map((e, i) => `<button class="row-card" onclick="diaryShow(${i})"><span class="rc-main"><span class="rc-t" style="display:block">${new Date(e.date + 'T12:00:00').toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })}</span><span class="rc-s" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.text)}</span></span>${e.fix ? `<span class="rc-end tabular">${(e.fix.hatalar || []).length} düzeltme</span>` : ''}</button>`).join('') || '<p class="muted" style="margin:0">İlk sayfanı bu akşam yaz.</p>'}</section></div>`;
+};
+function diaryFixHtml(e) { const f = e.fix; return `<div class="remed" style="display:block;margin-top:16px"><b>Düzeltilmiş hali</b><div class="serif" style="font-size:20px;line-height:1.5;margin:6px 0 10px">${esc(f.duzeltilmis || e.text)}</div>${(f.hatalar || []).map(h => `<div style="font-size:14px;margin:4px 0"><s style="color:var(--negative)">${esc(h.yanlis)}</s> → <b style="color:var(--positive)">${esc(h.dogru)}</b> <span class="muted">${esc(h.aciklama || '')}</span></div>`).join('')}${f.yorum ? `<p style="margin:10px 0 0;font-size:14px">${esc(f.yorum)}</p>` : ''}</div>`; }
+async function diarySave(fix) {
+  if (!canEdit()) return; const text = $('#diIn').value.trim(); if ((text.match(/\S+/g) || []).length < 3) { toast('Birkaç kelime daha yaz', 'warn'); return; }
+  D.diary = D.diary || []; let e = D.diary.find(x => x.date === today()); if (!e) { e = { date: today(), text }; D.diary.unshift(e); addXP(5); } else e.text = text; save();
+  if (!fix) { toast('Günlüğe kaydedildi'); go('diary'); return; }
+  const out = $('#diOut'); out.innerHTML = '<div class="ai-box" style="max-width:none;margin-top:16px"><span class="typing"><i></i><i></i><i></i></span> Düzeltiliyor…</div>';
+  try { const raw = await aiText(`Öğrencinin seviyesi ${levelName()}. Almanca günlük sayfası:\n"""${text}"""\nSADECE JSON: {"duzeltilmis":"hatasız Almanca hali (öğrencinin üslubunu koru)","hatalar":[{"yanlis":"","dogru":"","aciklama":"kısa Türkçe kural"}],"yorum":"içeriğe dair samimi, tek cümlelik Türkçe yorum"}`, 'Sen nazik bir Almanca öğretmenisin. Sadece geçerli JSON döndür.', true);
+    e.fix = JSON.parse(raw.replace(/^```(json)?|```$/g, '').trim()); (e.fix.hatalar || []).slice(0, 6).forEach(h => { if (h.yanlis && h.dogru) { const id = 'di:' + hashStr(h.yanlis + h.dogru); D.wrong = D.wrong.filter(x => x.id !== id); D.wrong.unshift({ id, item: { k: 'fill', q: 'Düzelt: “' + h.yanlis + '”', a: [h.dogru], e: h.aciklama || '', id, cat: 'yazma', unit: '' }, given: h.yanlis, ts: Date.now() }); } });
+    logSkill('schreiben', Math.max(.2, 1 - (e.fix.hatalar || []).length / Math.max(4, (text.match(/\S+/g) || []).length / 3))); D.stats.writes++; questProgress('write', 1); save(); out.innerHTML = diaryFixHtml(e); }
+  catch (er) { out.innerHTML = `<div class="ai-box" style="max-width:none;margin-top:16px">${aiErr(er)}</div>`; }
+}
+function diaryShow(i) { const e = D.diary[i]; modal(`<div class="sheet-head"><h3>${new Date(e.date + 'T12:00:00').toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</h3><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="sheet-body"><div class="serif" style="font-size:22px;line-height:1.55;white-space:pre-wrap">${esc(e.text)}</div>${e.fix ? diaryFixHtml(e) : ''}</div>`); }
+
+/* ---------- 10) Lena: seni hatırlayan konuşma arkadaşı ---------- */
+const LENA_SYS = () => `Du bist Lena, 26, Grafikdesignerin aus Berlin-Kreuzberg. Du lernst selbst ein bisschen Türkisch und bist mit ${esc((PROFILES.find(x => x.id === PID) || {}).name || 'deinem Freund')} befreundet, der Deutsch lernt (Niveau ${levelName()}).
+Was du über ihn weißt: ${(D.lena.facts || []).join('; ') || 'noch nichts – frag ihn neugierig nach seinem Leben'}.
+Regeln: Schreib wie eine echte Freundin: warm, neugierig, 1–3 kurze Sätze auf Niveau ${levelName()}, erzähl auch von dir (Arbeit, Kreuzberg, deine Katze Mira, Döner bei Mustafa). Greif frühere Themen auf. Stell am Ende eine Frage.
+Danach in einer neuen Zeile: "TR: " + kurze türkische Übersetzung. Wenn er einen Fehler gemacht hat, eine weitere Zeile: "Düzeltme: " + korrigierter Satz + kurze türkische Erklärung. Keine Emojis.`;
+VIEWS.friend = () => `<div class="grid12"><section class="panel s8" style="display:flex;flex-direction:column;min-height:60vh"><div class="panel-head"><div class="row" style="gap:12px"><span class="side-av" style="background:#7a4fa3;width:42px;height:42px;font-size:18px">L</span><div><h2 style="font-size:16px">Lena</h2><div class="muted" style="font-size:13px">26 · grafik tasarımcı · Berlin-Kreuzberg</div></div></div><button class="btn btn-ghost btn-sm" onclick="lenaRemember()">Sohbeti bitir</button></div>
+  <div class="msgs" id="lnMsgs" style="flex:1;max-height:52vh">${(D.lena.msgs || []).slice(-30).map(rpMsgHtml).join('') || `<div class="empty"><div class="serif" style="font-size:24px;color:var(--ink)">Hallo! Ich bin Lena.</div>Ona Almanca bir şey yaz; seni tanıdıkça neler konuştuğunuzu hatırlayacak.</div>`}</div>
+  <div class="row" style="margin-top:12px;flex-wrap:nowrap"><button class="icon-btn" id="lnMic" title="Konuş" onclick="lenaMic()"><i class="fa-solid fa-microphone"></i></button><input id="lnIn" class="pill-input" placeholder="Lena’ya yaz…" onkeydown="if(event.key==='Enter')lenaSend()"><button class="btn" style="--lv:var(--accent)" onclick="lenaSend()" aria-label="Gönder"><i class="fa-solid fa-paper-plane"></i></button></div>${umlautBar('lnIn')}</section>
+  <section class="panel s4"><div class="panel-head"><h2>Lena hatırlıyor</h2><span class="chip">${(D.lena.facts || []).length}</span></div>${(D.lena.facts || []).map(f => `<div class="cando ok"><i class="fa-solid fa-bookmark"></i><span>${esc(f)}</span></div>`).join('') || '<p class="muted" style="margin:0;font-size:14px;line-height:1.5">Sohbetin sonunda “Sohbeti bitir”e basınca Lena senin hakkında öğrendiklerini buraya not eder ve bir dahaki sefere hatırlar.</p>'}
+  ${(D.lena.facts || []).length ? `<button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="if(canEdit()&&confirm('Lena’nın hafızası silinsin mi?')){D.lena={msgs:[],facts:[]};save();go('friend')}">Hafızayı sıfırla</button>` : ''}</section></div>`;
+AFTER.friend = () => { const m = $('#lnMsgs'); if (m) m.scrollTop = m.scrollHeight; };
+async function lenaSend(t) {
+  if (!canEdit()) return; const inp = $('#lnIn'), text = (t || inp.value).trim(); if (!text) return; inp.value = '';
+  D.lena.msgs.push({ role: 'user', text }); const box = $('#lnMsgs'); box.innerHTML = D.lena.msgs.slice(-30).map(rpMsgHtml).join('') + '<div class="msg ai typing"><i></i><i></i><i></i></div>'; box.scrollTop = box.scrollHeight;
+  try { const r = (await aiCall(D.lena.msgs.slice(-16).map(m => ({ role: m.role, parts: [{ text: m.text }] })), LENA_SYS())).trim(); D.lena.msgs.push({ role: 'model', text: r }); speak(r.split('\n')[0]); logSkill('sprechen', .65); addXP(2); }
+  catch (e) { D.lena.msgs.push({ role: 'model', text: '⚠️ ' + e.message }); }
+  D.lena.msgs = D.lena.msgs.slice(-60); save(); if (PAGE === 'friend') { $('#lnMsgs').innerHTML = D.lena.msgs.slice(-30).map(rpMsgHtml).join(''); AFTER.friend(); }
+  if (D.lena.msgs.filter(m => m.role === 'user').length % 6 === 0) lenaRemember(true);
+}
+function lenaMic() { const b = $('#lnMic'); if (rec) { rec.stop(); return; } b.style.background = 'var(--negative)'; b.style.color = '#fff'; rec = listen('de-DE', t => lenaSend(t), () => { rec = null; const bb = $('#lnMic'); if (bb) { bb.style.background = ''; bb.style.color = ''; } }); }
+async function lenaRemember(silent) {
+  const conv = D.lena.msgs.slice(-20).filter(m => m.role === 'user').map(m => m.text).join('\n'); if (!conv) { if (!silent) toast('Önce biraz sohbet edin', 'warn'); return; }
+  try { const raw = await aiText(`Bir arkadaşın (Lena) öğrenci hakkında hatırlaması gereken en fazla 5 kısa, somut bilgi çıkar (Türkçe, her biri 8 kelimeden kısa). Önceki bilgiler: ${JSON.stringify(D.lena.facts || [])}. Öğrencinin söyledikleri:\n${conv}\nSADECE JSON dizi döndür.`, 'Sadece geçerli JSON döndür.', true);
+    const arr = JSON.parse(raw.replace(/^```(json)?|```$/g, '').trim()); if (Array.isArray(arr)) { const all = (D.lena.facts || []).concat(arr.map(String)); D.lena.facts = [...new Set(all)].slice(-20); save(); if (!silent) toast('Lena bunları hatırlayacak'); if (PAGE === 'friend') go('friend'); } }
+  catch (e) { if (!silent) aiErr(e); }
+}
+
+/* ---------- 11) Paylaşılabilir ilerleme kartı ---------- */
+async function shareCard() {
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, L = LEVELS[currentLevelIdx()], li = levelInfo(D.xp), W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g = cv.getContext('2d');
+  if (document.fonts && document.fonts.load) { try { await Promise.all([document.fonts.load("400 100px 'Instrument Serif'"), document.fonts.load("600 40px 'Instrument Sans'"), document.fonts.load("400 40px 'Instrument Sans'")]); } catch (e) {} }
+  const [lc] = PDF_HEX[L.color] || PDF_HEX.a1, ink = '#1f201d', muted = '#636361', paper = '#f5f3ee';
+  g.fillStyle = paper; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#1b6e66'; g.beginPath(); g.roundRect ? g.roundRect(80, 80, 64, 64, 16) : g.rect(80, 80, 64, 64); g.fill(); g.fillStyle = '#fff'; g.font = "400 46px 'Instrument Serif', Georgia"; g.textAlign = 'center'; g.fillText('D', 112, 128);
+  g.textAlign = 'left'; g.fillStyle = ink; g.font = "600 34px 'Instrument Sans', sans-serif"; g.fillText('DeutschFlow', 162, 124);
+  g.fillStyle = muted; g.font = "400 34px 'Instrument Sans', sans-serif"; g.fillText(new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }), 80, 250);
+  g.fillStyle = ink; g.font = "400 300px 'Instrument Serif', Georgia"; g.fillText(String(displayStreak()), 72, 560);
+  g.font = "400 56px 'Instrument Serif', Georgia"; g.fillText('günlük seri', 84, 640);
+  g.fillStyle = muted; g.font = "400 36px 'Instrument Sans', sans-serif"; g.fillText(`${p.name} · ${D.xp} XP · Seviye ${li.lvl}`, 84, 710);
+  // mini Fahrplan: geçerli hattın durakları
+  const n = L.units.length + 1, x0 = 110, x1 = W - 110, y = 900, step = (x1 - x0) / (n - 1);
+  g.fillStyle = lc; g.beginPath(); g.roundRect ? g.roundRect(80, 790, 120, 64, 12) : g.rect(80, 790, 120, 64); g.fill(); g.fillStyle = '#fff'; g.font = "600 36px 'Instrument Sans', sans-serif"; g.textAlign = 'center'; g.fillText(L.id, 140, 835);
+  g.textAlign = 'left'; g.fillStyle = ink; g.font = "600 36px 'Instrument Sans', sans-serif"; g.fillText(L.tr + ' hattı', 224, 835);
+  g.strokeStyle = '#e6e3dc'; g.lineWidth = 10; g.beginPath(); g.moveTo(x0, y + 60); g.lineTo(x1, y + 60); g.stroke();
+  const doneN = L.units.filter(u => D.done[u.id] != null).length; if (doneN) { g.strokeStyle = lc; g.beginPath(); g.moveTo(x0, y + 60); g.lineTo(x0 + step * doneN, y + 60); g.stroke(); }
+  for (let i = 0; i < n; i++) { const cx = x0 + step * i, done = i < doneN || (i === n - 1 && D.boss[L.id]), cur = i === doneN; g.beginPath(); g.arc(cx, y + 60, cur ? 24 : 16, 0, Math.PI * 2); g.fillStyle = done ? lc : '#fff'; g.fill(); g.lineWidth = cur ? 10 : 6; g.strokeStyle = done || cur ? lc : '#d9d7d0'; g.stroke(); }
+  g.fillStyle = muted; g.font = "400 32px 'Instrument Sans', sans-serif"; g.fillText(`${doneN} / ${L.units.length} durak`, 80, y + 150);
+  g.fillStyle = ink; g.font = "400 64px 'Instrument Serif', Georgia"; g.fillText(nextUnit() && !nextUnit().boss ? 'Nächster Halt: ' + nextUnit().u.de.slice(0, 26) : 'Weiter so!', 80, 1200);
+  g.fillStyle = muted; g.font = "400 30px 'Instrument Sans', sans-serif"; g.fillText('A1’den C2’ye Almanca · DeutschFlow AI', 80, 1262);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png')), file = new File([blob], 'DeutschFlow-ilerleme.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], title: 'DeutschFlow', text: `${displayStreak()} günlük Almanca serim!` }); return; } catch (e) { if (e.name === 'AbortError') return; } }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 3000); toast('İlerleme kartı indirildi');
+}
+const _badges3 = VIEWS.badges;
+VIEWS.badges = () => `<button class="row-card hot" style="margin-bottom:16px" onclick="shareCard()"><span class="rc-ic"><i class="fa-solid fa-share-nodes"></i></span><span class="rc-main"><span class="rc-t" style="display:block">İlerlemeni paylaş</span><span class="rc-s" style="display:block">Serin, hattın ve duraklarınla hikâye boyutunda bir kart</span></span><span class="rc-end">PNG</span></button>` + _badges3();
+
+/* ---------- 12) Erişilebilirlik ---------- */
+(function () {
+  const t = $('#toast'); if (t) { t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); }
+  const IC_NAME = { 'fa-volume-high': 'Dinle', 'fa-plus': 'Ekle', 'fa-xmark': 'Kapat', 'fa-trash': 'Sil', 'fa-robot': 'Yapay zekaya sor', 'fa-ellipsis': 'Menü', 'fa-forward': 'Sonraki', 'fa-play': 'Oynat', 'fa-microphone': 'Konuş', 'fa-pen': 'Düzenle', 'fa-arrow-left': 'Geri', 'fa-chevron-right': 'Aç', 'fa-paper-plane': 'Gönder', 'fa-broom': 'Temizle', 'fa-rotate-left': 'Geri al', 'fa-language': 'Çeviriyi göster' };
+  const label = root => (root.querySelectorAll ? root.querySelectorAll('.icon-btn:not([aria-label]), button[title]:not([aria-label])') : []).forEach(b => { let t = b.getAttribute('title'); if (!t && !b.textContent.trim()) { const i = b.querySelector('i'); const k = i && [...i.classList].find(c => IC_NAME[c]); t = k && IC_NAME[k]; } if (t) b.setAttribute('aria-label', t); });
+  label(document);
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => n.nodeType === 1 && label(n)))).observe(document.body, { childList: true, subtree: true });
+})();
+const _applyTheme3 = applyTheme;
+applyTheme = function () { _applyTheme3(); document.documentElement.classList.toggle('dys', !!CFG.dys); };
+const _settings3 = VIEWS.settings;
+VIEWS.settings = () => _settings3().replace('<b>Yazı boyutu:', `<label class="between" style="margin:0 0 12px;cursor:pointer"><b>Okunaklı yazı (disleksi dostu)</b><input type="checkbox" ${CFG.dys ? 'checked' : ''} onchange="CFG.dys=this.checked;saveCfg();applyTheme()"></label><b>Yazı boyutu:`);
+applyTheme();
+
+/* ---------- 13) Atlanabilir tanıtım turu ---------- */
+const TOUR = [['Öğrenme yolu bir tren hattı', 'Her seviye bir hat, her ünite bir durak. Sıradaki durağında “Nächster Halt” yazar; hattın sonundaki sınavı geçince sonraki hat açılır.', 'fa-train'], ['Tekrar kutusu unutmadan önce sorar', 'Öğrendiğin kelimeler kutuya düşer. Akıllı zamanlama her kelimeyi tam unutmak üzereyken karşına çıkarır; “Tekrar, Zor, İyi, Kolay” ile cevapla.', 'fa-box-archive'], ['Yapay zeka öğretmenin hazır', 'Ayarlar → Yapay Zeka’ya Google AI Studio anahtarını girince AI Öğretmen, Lena, yazma ve sözlü sınav çalışır. Anahtar yalnızca bu cihazda saklanır.', 'fa-robot']];
+function showTour(i) {
+  i = i || 0; const s = TOUR[i];
+  modal(`<div class="sheet-body tour"><div class="tour-ic"><i class="fa-solid ${s[2]}"></i></div><div class="tour-dots">${TOUR.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div><h2 class="serif" style="font-size:32px;font-weight:400;margin:6px 0 10px">${s[0]}</h2><p style="margin:0;line-height:1.55">${s[1]}</p>
+    <div class="row" style="margin-top:22px;justify-content:space-between"><button class="btn btn-ghost" onclick="endTour()">Atla</button><div class="row">${i ? `<button class="btn btn-ghost" onclick="showTour(${i - 1})">Geri</button>` : ''}<button class="btn" style="--lv:var(--accent)" onclick="${i < TOUR.length - 1 ? `showTour(${i + 1})` : 'endTour()'}">${i < TOUR.length - 1 ? 'İleri' : 'Başla'}</button></div></div></div>`, false, 480);
+}
+function endTour() { if (D) { D.tourDone = true; save(); } closeModal(); setTimeout(() => { if (D && !D.placementDone && D.xp === 0) placementPrompt(); }, 200); }
+const _pp3 = placementPrompt;
+placementPrompt = function () { if (D && !RO && !D.tourDone && !D.placementDone && !LSN && !$('#modalRoot').innerHTML && PAGE === 'home') { showTour(0); return; } _pp3(); };
+
+/* =====================================================================
+   HERBARYUM ekranları: ana sayfa, öğrenme yolu (yaprak koleksiyonu), tekrar aşamaları, grafikler
+   ===================================================================== */
+lvStyle = function (color) { const k = LV_COLORS[color] ? color : 'a1'; return `--lv:var(--${k});--lvd:var(--${k}d);--lvs:var(--${k}s)`; };
+Object.assign(PDF_HEX, { a1: ['#2f8a4f', '#1f5c35'], a2: ['#3b6fb6', '#25497e'], b1: ['#b4477a', '#7a2c52'], b2: ['#c07d00', '#6e4a00'], c1: ['#00879e', '#00505e'], c2: ['#4a4a44', '#1f1f1c'] });
+ACCENTS.splice(0, ACCENTS.length, ['green', 'Yosun', '#2f5d46'], ['blue', 'Gece mavisi', '#25497e'], ['purple', 'Şarap', '#7a2c52'], ['orange', 'Kehribar', '#6e4a00'], ['pink', 'Mürekkep', '#1c1e1a']);
+const LEAF = '<svg class="leaf" viewBox="0 0 26 26" aria-hidden="true"><path d="M5 21C5 11 11.5 5 21 5c0 9.5-6 16-16 16Z"/><path class="vein" d="M5.5 20.5 15.5 10.5M10 16h4.5M12.6 13.4V9.6"/></svg>';
+const STAGES = [['Tohum', 'Samen'], ['Filiz', 'Keim'], ['Yaprak', 'Blatt'], ['Çiçek', 'Blüte'], ['Meyve', 'Frucht']];
+
+/* ---------- Ana sayfa ---------- */
+VIEWS.home = () => {
+  ensureQuests();
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, h = new Date().getHours();
+  const hi = h < 11 ? ['Guten Morgen', 'Günaydın'] : h < 18 ? ['Guten Tag', 'İyi günler'] : ['Guten Abend', 'İyi akşamlar'];
+  const nu = nextUnit(), li = currentLevelIdx(), L = LEVELS[li], due = D.cards.filter(c => c.due <= Date.now()).length;
+  const total = LEVELS.reduce((a, x) => a + x.units.length, 0), wk = weekXP(D.days), tier = TIERS.find(t => wk >= t[0]);
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length], dailyDone = D.daily && D.daily[today()] != null, studied = D.lastDay === today();
+  const next = nu ? (nu.boss ? { de: 'Abschlussprüfung ' + LEVELS[nu.li].id, t: LEVELS[nu.li].id + ' seviye sonu sınavı', go: `startBoss(${nu.li})` } : { de: nu.u.de, t: nu.u.t, go: `openUnit('${nu.u.id}')` }) : null;
+  const g = D.goal ? goalInfo() : null, lvDone = L.units.filter(u => D.done[u.id] != null).length;
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); return d ? `<div class="q-line ${q.p >= d.goal ? 'done' : ''}"><span class="q-t">${d.t}</span><span class="bar"><div style="width:${Math.round(q.p / d.goal * 100)}%"></div></span><span class="q-n tabular">${q.p}/${d.goal}</span></div>` : ''; }).join('');
+  const date = new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+  return `<div class="home">
+  <div class="greet-row"><div style="min-width:0;flex:1">
+    <h1 class="greet">${hi[0]},<br><em>${esc(p.name)}</em>.</h1>
+    <p class="greet-sub">${hi[1]}. ${next ? `Koleksiyonuna eklenecek sıradaki yaprak: <b>${esc(next.de)}</b> — ${esc(next.t)}.` : '<b>Sammlung vollständig.</b> A1’den C2’ye bütün dosyaları tamamladın.'}${!studied && h >= 17 ? ` Bugün henüz çalışmadın${displayStreak() ? `; ${displayStreak()} günlük serin bekliyor` : ''}.` : ''}</p>
+    <div class="greet-act">${next ? `<button class="btn" onclick="${next.go}"><i class="fa-solid fa-play"></i> Devam et</button>` : ''}<button class="btn btn-ghost" onclick="startDaily()">${dailyDone ? 'Günün dersini tekrar çöz' : 'Günün dersi · 5 dk'}</button>${!D.placementDone && !RO ? `<button class="btn btn-ghost" onclick="startPlacement()">Seviye tespit sınavı</button>` : ''}</div>
+  </div>
+  <aside class="label-card" style="${lvStyle(L.color)}" aria-label="Koleksiyon etiketi">
+    <div class="lc-top"><span class="smallcaps">Sammlung · Koleksiyon</span><span class="smallcaps tabular">Nr. ${String(lessonsDone(D)).padStart(3, '0')}</span></div>
+    <div class="lc-genus">${L.id} ${esc(L.name)}</div><div class="lc-cap">${L.tr} dosyası · ${lvDone}/${L.units.length} yaprak</div>
+    <dl class="lc-dl"><dt>Sıradaki</dt><dd>${next ? esc(next.de) : '—'}</dd><dt>Toplam</dt><dd>${lessonsDone(D)} / ${total}</dd><dt>Tarih</dt><dd>${date}</dd></dl>
+    <div class="lc-stem" aria-hidden="true">${L.units.map(u => `<i class="${D.done[u.id] != null ? 'on' : ''}"></i>`).join('')}</div>
+  </aside></div>
+  <div class="grid12">
+    <div class="ledger">
+      <div><span class="lg-lab">Seri</span><span class="lg-val tabular">${displayStreak()}<small>gün</small></span><span class="lg-cap">Seri kalkanı ${D.shields}/3</span></div>
+      <div><span class="lg-lab">Bu hafta</span><span class="lg-val tabular">${wk}<small>XP</small></span><span class="lg-cap">${tier[1].replace(/^\S+\s/, '')} ligindesin</span></div>
+      <div><span class="lg-lab">Tekrar bekleyen</span><span class="lg-val tabular">${due}<small>kart</small></span><span class="lg-cap">${due ? 'Hazır olduğunda başla' : D.cards.length ? 'Bugünlük kutu boş' : 'Ünite bitirdikçe dolar'}</span></div>
+      <div><span class="lg-lab">Koleksiyon</span><span class="lg-val tabular">${lessonsDone(D)}<small>/ ${total}</small></span><span class="lg-cap">Şu an ${L.id} · ${L.tr}</span></div>
+    </div>
+    <section class="panel s8"><div class="panel-head"><h2>Bugün</h2><button class="lnk" onclick="go('learn')">Koleksiyonun tamamı →</button></div>
+      ${next ? `<button class="row-card hot" onclick="${next.go}"><span class="rc-ic"><i class="fa-solid fa-leaf"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(next.t)}</span><span class="rc-s" style="display:block">${esc(next.de)} · ${nu && !nu.boss ? buildUnitItems(nu.u, LEVELS[nu.li]).length + ' etkinlik' : 'baraj %80'}</span></span><span class="rc-end">Sıradaki</span></button>` : ''}
+      <button class="row-card" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti' : '5 dk'}</span></button>
+      <button class="row-card" onclick="go('review')"><span class="rc-ic"><i class="fa-solid fa-seedling"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Tekrar kutusu</span><span class="rc-s" style="display:block">${D.cards.length} kart · tohumdan meyveye beş aşama</span></span><span class="rc-end tabular">${due} bekliyor</span></button>
+      ${g ? `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(D.goal.exam)}</span><span class="rc-s" style="display:block">Hedefe ilerleme %${g.pct} · ${g.today.length ? 'bugün: ' + g.today.map(x => esc(x.u.t)).join(', ') : 'bugün: tekrar'}</span></span><span class="rc-end tabular">${Math.max(0, g.days)} gün</span></button>` : `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hedefi koy</span><span class="rc-s" style="display:block">Tarihi gir, kalan üniteler günlere bölünsün</span></span><span class="rc-end">Plan</span></button>`}
+    </section>
+    <section class="panel s4"><div class="panel-head"><h2>Günün deyimi</h2><button class="icon-btn" style="width:34px;height:34px" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high" style="font-size:12px"></i></button></div>
+      <div class="quote-mark" aria-hidden="true">“</div><div class="idiom-de">${esc(idiom.de)}</div><div style="font-weight:600">${esc(idiom.tr)}</div><div class="muted" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
+      <div class="idiom-ex">${esc(idiom.ex)}<div class="muted" style="margin-top:2px">${esc(idiom.exTr)}</div></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></section>
+    <section class="panel s6"><div class="panel-head"><h2>Günlük görevler</h2><span class="chip">Kalkan ${D.shields}/3</span></div>${quests}<p class="note">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan.</p></section>
+    <section class="panel s6"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
+  </div></div>`;
+};
+
+/* ---------- Öğrenme yolu: Herbaryum ---------- */
+let herbDrawn = false;
+VIEWS.learn = () => {
+  const nu = nextUnit();
+  return `<p class="page-sub">Her seviye bir dosya, her ünite koleksiyona eklenen bir yaprak. Yaprağı %80 ile kazan; dosyanın sonundaki sınavı geçince sıradaki dosya açılır.</p>` + LEVELS.map((L, li) => {
+    const open = levelUnlocked(li), doneN = L.units.filter(u => D.done[u.id] != null).length, bossOpen = bossUnlocked(li), bossDone = !!D.boss[L.id];
+    const specs = L.units.map((u, ui) => {
+      const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, cur = nu && !nu.boss && nu.u.id === u.id;
+      const cls = dn ? 'done' : cur ? 'current' : un ? 'open' : 'locked';
+      return `<li class="spec ${cls}" style="--d:${ui * 70}ms"><button onclick="${un ? `openUnit('${u.id}')` : `toast('Önce önceki yaprağı kazan','warn')`}" ${un ? '' : 'aria-disabled="true"'} aria-label="${esc(u.de)} · ${esc(u.t)}"><span class="sp-no">Blatt ${String(ui + 1).padStart(2, '0')}</span><span class="sp-de" lang="de">${esc(u.de)}</span><span class="sp-t">${esc(u.t)}</span><span class="sp-foot">${cur ? '<span class="sp-next">Sıradaki</span>' : `<span class="sp-st">${dn ? '%' + Math.round(D.done[u.id] * 100) : un ? 'Açık' : '<i class="fa-solid fa-lock"></i>'}</span>`}${LEAF}</span></button></li>`;
+    }).join('');
+    const bossCur = nu && nu.boss && nu.li === li, bcls = bossDone ? 'done' : bossCur ? 'current' : bossOpen ? 'open' : 'locked';
+    const exam = `<li class="spec exam ${bcls}"><button onclick="${bossOpen ? `startBoss(${li})` : `toast('Sınav için dosyadaki bütün yaprakları kazan','warn')`}" ${bossOpen ? '' : 'aria-disabled="true"'}><span class="seal"><i class="fa-solid ${bossDone ? 'fa-check' : bossOpen ? 'fa-award' : 'fa-lock'}"></i></span><span class="sp-main"><span class="sp-no">Abschlussprüfung</span><span class="sp-de" style="display:block">${L.id} seviye sonu sınavı</span><span class="sp-t" style="display:block">15 soru · baraj %80${bossDone && D.bossScore && D.bossScore[L.id] ? ' · sonuç %' + D.bossScore[L.id].score : ''}</span></span>${bossCur ? '<span class="sp-next">Sıradaki</span>' : `<span class="sp-st">${bossDone ? 'Geçildi' : bossOpen ? 'Hazır' : ''}</span>`}</button></li>`;
+    return `<section class="mappe ${open ? '' : 'locked'} ${herbDrawn ? 'drawn' : 'prep'}" style="${lvStyle(L.color)}">
+      <header class="mp-head"><span class="mp-id">${L.id}</span><div class="mp-t"><h2>${L.tr} <span class="muted" style="font-size:.7em">· ${esc(L.name)}</span></h2><div class="mp-sub">${doneN}/${L.units.length} yaprak${bossDone ? ' · sınav geçildi' : ''}</div><div class="mp-prog" aria-hidden="true">${L.units.map(u => `<i class="${D.done[u.id] != null ? 'on' : ''}"></i>`).join('')}</div></div>
+        <div class="mp-acts">${bossDone ? `<button class="btn btn-ghost btn-sm" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i> Sertifika</button>` : ''}<button class="btn btn-ghost btn-sm" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i> Notlar</button></div></header>
+      <ol class="specs">${specs}${exam}</ol></section>`;
+  }).join('');
+};
+AFTER.learn = () => {
+  // İmza hareketi: oturumdaki ilk açılışta kazanılmış yapraklar sırayla mürekkeplenir (bir kez)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, ms = document.querySelectorAll('.mappe.prep');
+  if (ms.length) { requestAnimationFrame(() => requestAnimationFrame(() => ms.forEach(m => m.classList.remove('prep')))); if (!reduce) setTimeout(() => { herbDrawn = true; }, 1200); else herbDrawn = true; }
+  const cur = document.querySelector('.spec.current');
+  if (cur && ms.length) setTimeout(() => cur.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }), reduce ? 0 : 350);
+};
+
+/* ---------- Profil renkleri: canlı eski tonlar yerine tasarımın derin mürekkep tonları ---------- */
+const PCOL_MAP = { '#58cc02': '#2f5d46', '#1cb0f6': '#25497e', '#a560f0': '#7a2c52', '#ff9600': '#8a5a12', '#ff4b4b': '#a8321f', '#e5a400': '#6e4a00', '#14b8a6': '#00505e', '#ffc800': '#6e4a00' };
+const pcol = c => PCOL_MAP[String(c || '').toLowerCase()] || c;
+PROFILE_COLORS.splice(0, PROFILE_COLORS.length, '#2f5d46', '#25497e', '#7a2c52', '#8a5a12', '#a8321f', '#6e4a00', '#00505e');
+const herbProfColors = () => PROFILES.forEach(p => { p.color = pcol(p.color); });
+herbProfColors();
+const _renderNavHerb = renderNav; renderNav = function () { herbProfColors(); return _renderNavHerb.apply(this, arguments); };
+
+/* ---------- Tekrar kutusu: tohumdan meyveye ---------- */
+const _reviewHerb = VIEWS.review;
+VIEWS.review = () => _reviewHerb().replace(/<svg class="flo [\s\S]*?<\/svg>/g, LEAF.replace('class="leaf"', 'class="empty-leaf"')).replace(/<span class="lvl-badge">(\d)\. kutu<\/span>/g, (m, n) => `<span class="lvl-badge" title="${n}. kutu">${STAGES[n - 1][0]}</span>`);
+
+/* ---------- Rapor: sakin rakamlar (eski kalın yazılar ve renkli simgeler yerine) ---------- */
+const _reportHerb = VIEWS.report;
+VIEWS.report = () => _reportHerb().replace(/font-weight:\s?(700|800|900)/g, 'font-weight:600').replace(/<div class="glass card" style="padding:16px">/g, '<div class="glass card report-tile" style="padding:16px">').replace(/font-size:28px;font-weight:600;margin-top:6px/g, "font-family:var(--serif);font-size:34px;font-weight:400;margin-top:8px");
+
+/* ---------- Rapor: son 7 gün (tek seri, tek ton, üzerine gelince değer) ---------- */
+const _afterReportHerb = AFTER.report;
+AFTER.report = () => {
+  if (_afterReportHerb) _afterReportHerb();
+  const t = [...document.querySelectorAll('#view .section-title')].find(e => /Son 7 gün/.test(e.textContent)), box = t && t.nextElementSibling;
+  if (!box) return;
+  const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(Date.now() - (6 - i) * DAY), k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); return { k, n: d.toLocaleDateString('tr-TR', { weekday: 'short' }), f: d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' }), r: D.days[k] || { xp: 0, lessons: 0, min: 0 } }; });
+  const max = Math.max(20, ...days.map(d => d.r.xp)), top = Math.max(...days.map(d => d.r.xp));
+  box.outerHTML = `<div class="wk7" role="img" aria-label="Son 7 günün XP değerleri: ${days.map(d => d.n + ' ' + d.r.xp).join(', ')}">${days.map(d => { const now = d.k === today(), lab = (now || (d.r.xp && d.r.xp === top)) && d.r.xp; return `<div class="wk7-c ${now ? 'now' : ''}" tabindex="0"><span class="tip">${d.f} · ${d.r.xp} XP · ${d.r.lessons || 0} ders</span>${lab ? `<span class="v">${d.r.xp}</span>` : ''}<span class="b" style="height:${d.r.xp ? Math.max(3, d.r.xp / max * 140) : 2}px"></span><span class="d">${d.n}</span></div>`; }).join('')}</div>`;
+};
+
+/* ---------- Görünür alan (iPhone klavyesi) ---------- */
+function syncViewport() { const v = window.visualViewport; if (!v) return; const r = document.documentElement.style; r.setProperty('--vvh', v.height + 'px'); r.setProperty('--vvt', v.offsetTop + 'px'); }
+if (window.visualViewport) { visualViewport.addEventListener('resize', syncViewport); visualViewport.addEventListener('scroll', syncViewport); syncViewport(); }
+document.addEventListener('focusin', e => { if (e.target.closest && e.target.closest('#lesson') && /INPUT|TEXTAREA/.test(e.target.tagName)) setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300); });
 /* ---------- Başlat ---------- */
 applyTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!CFG.theme) applyTheme(); });
