@@ -10,7 +10,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -1115,6 +1116,106 @@ html .pdf-ed h2 { font-family: 'Manrope', sans-serif; }
   .leaf path, .wk7-c .b, .wk7-c .tip, .bn-item::before { transition: none !important; }
 }
 html.dys .greet, html.dys .sp-de, html.dys .mp-t h2, html.dys .lg-val, html.dys .lc-genus, html.dys .page-title { font-family: 'Atkinson Hyperlegible', sans-serif !important; font-style: normal; }
+.brand-logo .df-mark, .cert2-mark .df-mark { width: 100%; height: 100%; display: block; }
+.cert2-mark { color: #f6f4ee; }
+/* =====================================================================
+   TELEFON: SADE DÜZEN
+   design-taste app-screens §12: başlık tek satır, işlemler ⋯ menüsünde; sayılar 3 dar sütun;
+   aynı bilgi iki kez gösterilmez; kutu içinde kutu yok, listeler tek yüzeyde çizgiyle ayrılır.
+   ui-ux-pro-max: 44px dokunma alanı, uzun metin kısaltılır, gruplu listeler.
+   ===================================================================== */
+.greet-m, .next-m, .mp-lock { display: none; }
+.hub-g + .hub-g { margin-top: 28px; }
+.hub-h { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .01em; margin: 0 0 10px 2px; }
+@media (max-width: 960px) {
+  .m-hide { display: none !important; }
+  /* üst çubuk: tek satır */
+  #topbar, .dark #topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 8px; }
+  #topbar > div:first-child { flex: 1; min-width: 0; }
+  #topbar .page-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tb-row { flex-wrap: nowrap !important; gap: 2px !important; flex-shrink: 0; }
+  .tb-row .stat-pill[title="Seviye"] { display: none; }
+  .page-sub { font-size: 14.5px; margin-bottom: 18px; }
+
+  /* ana sayfa */
+  .home .greet-row { margin: 10px 0 22px; gap: 16px; }
+  .home .greet { font-size: 40px; }
+  .label-card, .home .greet-sub { display: none; }
+  .greet-m { display: block; font-size: 14.5px; color: var(--muted); margin: 10px 0 0; }
+  .next-m { display: block; margin-top: 20px; padding: 18px 18px 16px; border-radius: 20px; background: var(--lvs); }
+  .nm-top { display: flex; justify-content: space-between; }
+  .nm-top .smallcaps { color: var(--lvd); opacity: .85; }
+  .nm-de { font-family: var(--serif); font-size: 27px; line-height: 1.12; letter-spacing: -.015em; color: var(--lvd); margin-top: 10px; -webkit-hyphens: auto; hyphens: auto; }
+  .nm-t { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .next-m .lc-stem i { background: color-mix(in srgb, var(--lvd) 14%, transparent); }
+  .next-m .lc-stem i.on { background: var(--lvd); }
+  .home .greet-act { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .home .greet-act .btn { width: 100%; padding-left: 10px; padding-right: 10px; white-space: nowrap; }
+  .home .greet-act .btn:nth-child(3) { grid-column: 1 / -1; }
+  .home .grid12 { gap: 28px; }
+  .ledger { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ledger > div { padding: 12px 14px; border-top: 0 !important; }
+  .ledger > div:nth-child(3) { border-left: 1px solid var(--rule); }
+  .lg-val { font-size: 28px; }
+  .lg-val small { font-size: 12.5px; margin-left: 3px; }
+  .lg-cap { display: none; }
+  .home .panel { background: transparent; border: 0; padding: 0; border-radius: 0; }
+  .home .panel-head { margin-bottom: 10px; padding: 0 2px; }
+  .home .panel.s4 { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-card); padding: 18px; }
+  .home .panel.s4 .idiom-de { font-size: 24px; }
+  .home .panel.s4 .quote-mark { display: none; }
+  .home .q-line .q-t { width: 52%; }
+
+  /* listeler: tek yüzey, satırlar ince çizgiyle */
+  .hub, .home .panel.s8 { display: block; background: var(--raised); border: 1px solid var(--border) !important; border-radius: 18px !important; overflow: hidden; }
+  .dark .hub, .dark .home .panel.s8 { background: var(--surface); }
+  .home .panel.s8 { padding: 0 !important; }
+  .home .panel.s8 .panel-head { padding: 14px 16px 4px; margin: 0; }
+  .hub .row-card, .home .panel.s8 .row-card { margin: 0; border: 0; border-radius: 0; background: transparent; min-height: 62px; padding: 10px 14px; }
+  .hub .row-card + .row-card, .home .panel.s8 .row-card + .row-card { border-top: 1px solid var(--rule); }
+  .row-card .rc-ic { width: 34px; height: 34px; border-radius: 10px; font-size: 13px; }
+  .row-card .rc-t { font-size: 15px; }
+  .row-card .rc-s { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* öğrenme yolu: dosya başlığı tek satır, yapraklar tek sütun liste */
+  .mappe { margin-bottom: 32px; }
+  .mp-head { flex-wrap: nowrap; align-items: center; gap: 14px; padding-bottom: 12px; margin-bottom: 12px; }
+  .mp-id { font-size: 44px; }
+  .mp-t h2 { font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mp-t h2 .muted { display: none; }
+  .mp-acts { margin-left: auto; width: auto; flex-wrap: nowrap; }
+  .mp-acts .btn { width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; }
+  .mp-acts .bt { display: none; }
+  .mappe.locked .specs { display: none; }
+  .mp-lock { display: block; font-size: 13.5px; color: var(--faint); margin: 0 2px; }
+  .specs { display: block; background: var(--raised); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+  .dark .specs { background: var(--surface); }
+  .spec + .spec { border-top: 1px solid var(--rule); }
+  .spec > button, .dark .spec > button { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; column-gap: 12px; align-items: center; min-height: 64px; height: auto; padding: 10px 14px; border: 0 !important; border-radius: 0; background: transparent; }
+  .spec > button:active { transform: none; background: var(--surface-2); }
+  .spec .sp-no { display: none; }
+  .spec .sp-foot { display: contents; }
+  .spec .leaf { grid-column: 1; grid-row: 1 / 3; width: 24px; height: 24px; }
+  .spec .sp-de { grid-column: 2; grid-row: 1; font-size: 17px; margin: 0; }
+  .spec .sp-t { grid-column: 2; grid-row: 2; font-size: 12.5px; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .spec .sp-st, .spec .sp-next { grid-column: 3; grid-row: 1 / 3; }
+  .spec.current > button { background: var(--lvs); }
+  .spec.locked > button { background: transparent; }
+  .spec.exam > button { display: flex; gap: 12px; min-height: 64px; }
+  .spec.exam .seal { width: 30px; height: 30px; font-size: 12px; }
+  .spec.exam .sp-no { display: block; font-size: 10.5px; }
+  .spec.exam .sp-de { font-size: 17px; margin-top: 2px; }
+  .spec.exam .sp-t { white-space: normal; }
+  .hub-h { margin-left: 4px; }
+}
+/* ---------- Ders ekranı + klavye: arkadaki uygulama gizli, sayfa kilitli ---------- */
+html.ls-open, html.ls-open body { overflow: hidden; height: 100%; overscroll-behavior: none; background: var(--ground); }
+html.ls-open #app, html.ls-open #tutorFab, html.ls-open #bottomNav { display: none !important; }
+#lesson { position: fixed; left: 0; right: 0; top: var(--vvt, 0px); bottom: auto; height: var(--vvh, 100dvh); overflow: hidden; overscroll-behavior: contain; }
+#lesson .ls-body { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; min-height: 0; }
+#lesson .ls-top, #lesson .ls-foot { flex-shrink: 0; }
+#lesson input, #lesson textarea, #lesson .pill-input { font-size: max(16px, calc(16px / var(--zf, 1))) !important; }
+#lesson .hl, .ls-q .hl { background: var(--lvs, var(--accent-soft)); color: var(--lvd, var(--accd)); border-radius: 8px; padding: 0 4px; box-shadow: inset 0 -2px 0 var(--lv, var(--accent)); }
 </style>
 
 </head>
@@ -1126,7 +1227,7 @@ html.dys .greet, html.dys .sp-de, html.dys .mp-t h2, html.dys .lg-val, html.dys 
 
 <div id="app" hidden>
   <aside id="sidebar">
-    <div class="brand"><div class="brand-logo">D</div><div><b>DeutschFlow</b><small>AI · A1 → C2</small></div></div>
+    <div class="brand"><div class="brand-logo"><svg class="df-mark" viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(.84) translate(-58 -57)"><path d="M40 98C40 74 76 70 76 48 76 36 68 28 60 22" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><g fill="currentColor"><path d="M41 86c-12 0-18-6-19-14 10 0 17 5 19 14Z"/><path d="M66 66c-11-2-15-9-15-17 9 2 15 8 15 17Z"/><path d="M76 50c3-11 11-16 20-16-2 10-10 16-20 16Z"/><path d="M68 34c-10-3-13-10-12-18 9 3 13 10 12 18Z"/></g></g></svg></div><div><b>DeutschFlow</b><small>AI · A1 → C2</small></div></div>
     <nav id="sideNav"></nav>
   </aside>
   <main id="main">
@@ -2043,7 +2144,7 @@ async function renderGate() {
   $('#app').hidden = true; $('#tutorFab').hidden = true; $('#tutorPanel').hidden = true;
   const g = $('#gate'); g.hidden = false;
   g.innerHTML = `<div style="max-width:760px;width:100%;text-align:center">
-    <div class="brand" style="justify-content:center"><div class="brand-logo" style="width:64px;height:64px;font-size:30px;border-radius:20px">D</div></div>
+    <div class="brand" style="justify-content:center"><div class="brand-logo" style="width:64px;height:64px;font-size:30px;border-radius:20px"><svg class="df-mark" viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(.84) translate(-58 -57)"><path d="M40 98C40 74 76 70 76 48 76 36 68 28 60 22" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><g fill="currentColor"><path d="M41 86c-12 0-18-6-19-14 10 0 17 5 19 14Z"/><path d="M66 66c-11-2-15-9-15-17 9 2 15 8 15 17Z"/><path d="M76 50c3-11 11-16 20-16-2 10-10 16-20 16Z"/><path d="M68 34c-10-3-13-10-12-18 9 3 13 10 12 18Z"/></g></g></svg></div></div>
     <h1 style="font-size:36px;font-weight:800;margin-top:6px">DeutschFlow AI</h1>
     <p class="muted" style="font-weight:700;font-size:17px;margin:6px 0 28px">A1'den C2'ye Almanca — kim çalışıyor?</p>
     <div class="row" style="justify-content:center;gap:16px">${PROFILES.map(p => `
@@ -3672,7 +3773,7 @@ async function certPdf(lv) {
   pdfProgress(lv + ' sertifikası');
   const host = document.createElement('div'); host.className = 'pdf-host'; document.body.appendChild(host);
   host.innerHTML = `<div class="cert-doc" style="--lv:${c};--lvd:${cd}"><div class="cert-in">
-    <div class="cert-top"><div class="cert-brand"><div class="brand-logo" style="width:46px;height:46px">D</div><b>DeutschFlow AI</b></div><div class="cert-no">Sertifika No: ${no}</div></div>
+    <div class="cert-top"><div class="cert-brand"><div class="brand-logo" style="width:46px;height:46px"><svg class="df-mark" viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(.84) translate(-58 -57)"><path d="M40 98C40 74 76 70 76 48 76 36 68 28 60 22" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><g fill="currentColor"><path d="M41 86c-12 0-18-6-19-14 10 0 17 5 19 14Z"/><path d="M66 66c-11-2-15-9-15-17 9 2 15 8 15 17Z"/><path d="M76 50c3-11 11-16 20-16-2 10-10 16-20 16Z"/><path d="M68 34c-10-3-13-10-12-18 9 3 13 10 12 18Z"/></g></g></svg></div><b>DeutschFlow AI</b></div><div class="cert-no">Sertifika No: ${no}</div></div>
     <div class="cert-title">SERTİFİKA</div><div class="cert-sub">BAŞARI BELGESİ · ZERTIFIKAT</div>
     <div class="cert-txt">Bu belge,</div><div class="cert-name">${esc(name)}</div>
     <div class="cert-txt">adlı öğrencinin DeutschFlow AI Almanca programında <b>${L.id} · ${esc(L.tr)}</b> (${esc(L.name)}) seviyesinin tüm ünitelerini ve seviye sonu sınavını başarıyla tamamladığını onaylar.</div>
@@ -3937,7 +4038,7 @@ certPdf = async function (lv) {
   pdfProgress(lv + ' sertifikası');
   const host = document.createElement('div'); host.className = 'pdf-host'; document.body.appendChild(host);
   host.innerHTML = `<div class="cert2" style="--lv:${c};--lvd:${cd}"><div class="cert2-bar"></div><div class="cert2-in">
-    <div class="cert2-top"><span class="cert2-mark">D</span><b>DeutschFlow</b><span class="cert2-no">No. ${no}</span></div>
+    <div class="cert2-top"><span class="cert2-mark"><svg class="df-mark" viewBox="0 0 120 120" aria-hidden="true"><g transform="translate(60 60) scale(.84) translate(-58 -57)"><path d="M40 98C40 74 76 70 76 48 76 36 68 28 60 22" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><g fill="currentColor"><path d="M41 86c-12 0-18-6-19-14 10 0 17 5 19 14Z"/><path d="M66 66c-11-2-15-9-15-17 9 2 15 8 15 17Z"/><path d="M76 50c3-11 11-16 20-16-2 10-10 16-20 16Z"/><path d="M68 34c-10-3-13-10-12-18 9 3 13 10 12 18Z"/></g></g></svg></span><b>DeutschFlow</b><span class="cert2-no">No. ${no}</span></div>
     <div class="cert2-title">Zertifikat</div><div class="cert2-sub">Başarı belgesi</div>
     <div class="cert2-txt">Bu belge</div><div class="cert2-name">${esc(name)}</div>
     <div class="cert2-txt">adlı öğrencinin <b>${L.id} · ${esc(L.tr)}</b> (${esc(L.name)}) hattının bütün duraklarını ve son durak sınavını başarıyla tamamladığını onaylar.</div>
@@ -4307,7 +4408,9 @@ VIEWS.home = () => {
   return `<div class="home">
   <div class="greet-row"><div style="min-width:0;flex:1">
     <h1 class="greet">${hi[0]},<br><em>${esc(p.name)}</em>.</h1>
+    <p class="greet-m">${hi[1]}${displayStreak() ? ` · ${displayStreak()} günlük seri` : ''}${!studied && h >= 17 ? ' · bugün henüz çalışmadın' : ''}</p>
     <p class="greet-sub">${hi[1]}. ${next ? `Koleksiyonuna eklenecek sıradaki yaprak: <b>${esc(next.de)}</b> — ${esc(next.t)}.` : '<b>Sammlung vollständig.</b> A1’den C2’ye bütün dosyaları tamamladın.'}${!studied && h >= 17 ? ` Bugün henüz çalışmadın${displayStreak() ? `; ${displayStreak()} günlük serin bekliyor` : ''}.` : ''}</p>
+    ${next ? `<div class="next-m" style="${lvStyle(LEVELS[nu.li].color)}"><div class="nm-top"><span class="smallcaps">Sıradaki yaprak · ${LEVELS[nu.li].id}</span><span class="smallcaps tabular">${lvDone}/${L.units.length}</span></div><div class="nm-de" lang="de">${esc(next.de)}</div><div class="nm-t">${esc(next.t)}</div><div class="lc-stem" aria-hidden="true">${L.units.map(u => `<i class="${D.done[u.id] != null ? 'on' : ''}"></i>`).join('')}</div></div>` : ''}
     <div class="greet-act">${next ? `<button class="btn" onclick="${next.go}"><i class="fa-solid fa-play"></i> Devam et</button>` : ''}<button class="btn btn-ghost" onclick="startDaily()">${dailyDone ? 'Günün dersini tekrar çöz' : 'Günün dersi · 5 dk'}</button>${!D.placementDone && !RO ? `<button class="btn btn-ghost" onclick="startPlacement()">Seviye tespit sınavı</button>` : ''}</div>
   </div>
   <aside class="label-card" style="${lvStyle(L.color)}" aria-label="Koleksiyon etiketi">
@@ -4319,22 +4422,22 @@ VIEWS.home = () => {
   <div class="grid12">
     <div class="ledger">
       <div><span class="lg-lab">Seri</span><span class="lg-val tabular">${displayStreak()}<small>gün</small></span><span class="lg-cap">Seri kalkanı ${D.shields}/3</span></div>
-      <div><span class="lg-lab">Bu hafta</span><span class="lg-val tabular">${wk}<small>XP</small></span><span class="lg-cap">${tier[1].replace(/^\S+\s/, '')} ligindesin</span></div>
-      <div><span class="lg-lab">Tekrar bekleyen</span><span class="lg-val tabular">${due}<small>kart</small></span><span class="lg-cap">${due ? 'Hazır olduğunda başla' : D.cards.length ? 'Bugünlük kutu boş' : 'Ünite bitirdikçe dolar'}</span></div>
+      <div class="m-hide"><span class="lg-lab">Bu hafta</span><span class="lg-val tabular">${wk}<small>XP</small></span><span class="lg-cap">${tier[1].replace(/^\S+\s/, '')} ligindesin</span></div>
+      <div><span class="lg-lab">Tekrar<span class="m-hide"> bekleyen</span></span><span class="lg-val tabular">${due}<small>kart</small></span><span class="lg-cap">${due ? 'Hazır olduğunda başla' : D.cards.length ? 'Bugünlük kutu boş' : 'Ünite bitirdikçe dolar'}</span></div>
       <div><span class="lg-lab">Koleksiyon</span><span class="lg-val tabular">${lessonsDone(D)}<small>/ ${total}</small></span><span class="lg-cap">Şu an ${L.id} · ${L.tr}</span></div>
     </div>
     <section class="panel s8"><div class="panel-head"><h2>Bugün</h2><button class="lnk" onclick="go('learn')">Koleksiyonun tamamı →</button></div>
-      ${next ? `<button class="row-card hot" onclick="${next.go}"><span class="rc-ic"><i class="fa-solid fa-leaf"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(next.t)}</span><span class="rc-s" style="display:block">${esc(next.de)} · ${nu && !nu.boss ? buildUnitItems(nu.u, LEVELS[nu.li]).length + ' etkinlik' : 'baraj %80'}</span></span><span class="rc-end">Sıradaki</span></button>` : ''}
-      <button class="row-card" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti' : '5 dk'}</span></button>
+      ${next ? `<button class="row-card hot m-hide" onclick="${next.go}"><span class="rc-ic"><i class="fa-solid fa-leaf"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(next.t)}</span><span class="rc-s" style="display:block">${esc(next.de)} · ${nu && !nu.boss ? buildUnitItems(nu.u, LEVELS[nu.li]).length + ' etkinlik' : 'baraj %80'}</span></span><span class="rc-end">Sıradaki</span></button>` : ''}
+      <button class="row-card m-hide" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti' : '5 dk'}</span></button>
       <button class="row-card" onclick="go('review')"><span class="rc-ic"><i class="fa-solid fa-seedling"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Tekrar kutusu</span><span class="rc-s" style="display:block">${D.cards.length} kart · tohumdan meyveye beş aşama</span></span><span class="rc-end tabular">${due} bekliyor</span></button>
       ${g ? `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(D.goal.exam)}</span><span class="rc-s" style="display:block">Hedefe ilerleme %${g.pct} · ${g.today.length ? 'bugün: ' + g.today.map(x => esc(x.u.t)).join(', ') : 'bugün: tekrar'}</span></span><span class="rc-end tabular">${Math.max(0, g.days)} gün</span></button>` : `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hedefi koy</span><span class="rc-s" style="display:block">Tarihi gir, kalan üniteler günlere bölünsün</span></span><span class="rc-end">Plan</span></button>`}
     </section>
     <section class="panel s4"><div class="panel-head"><h2>Günün deyimi</h2><button class="icon-btn" style="width:34px;height:34px" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high" style="font-size:12px"></i></button></div>
-      <div class="quote-mark" aria-hidden="true">“</div><div class="idiom-de">${esc(idiom.de)}</div><div style="font-weight:600">${esc(idiom.tr)}</div><div class="muted" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
-      <div class="idiom-ex">${esc(idiom.ex)}<div class="muted" style="margin-top:2px">${esc(idiom.exTr)}</div></div>
+      <div class="quote-mark" aria-hidden="true">“</div><div class="idiom-de">${esc(idiom.de)}</div><div style="font-weight:600">${esc(idiom.tr)}</div><div class="muted m-hide" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
+      <div class="idiom-ex m-hide">${esc(idiom.ex)}<div class="muted" style="margin-top:2px">${esc(idiom.exTr)}</div></div>
       <button class="btn btn-ghost btn-sm" style="margin-top:14px" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></section>
     <section class="panel s6"><div class="panel-head"><h2>Günlük görevler</h2><span class="chip">Kalkan ${D.shields}/3</span></div>${quests}<p class="note">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan.</p></section>
-    <section class="panel s6"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
+    <section class="panel s6 m-hide"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
   </div></div>`;
 };
 
@@ -4353,8 +4456,8 @@ VIEWS.learn = () => {
     const exam = `<li class="spec exam ${bcls}"><button onclick="${bossOpen ? `startBoss(${li})` : `toast('Sınav için dosyadaki bütün yaprakları kazan','warn')`}" ${bossOpen ? '' : 'aria-disabled="true"'}><span class="seal"><i class="fa-solid ${bossDone ? 'fa-check' : bossOpen ? 'fa-award' : 'fa-lock'}"></i></span><span class="sp-main"><span class="sp-no">Abschlussprüfung</span><span class="sp-de" style="display:block">${L.id} seviye sonu sınavı</span><span class="sp-t" style="display:block">15 soru · baraj %80${bossDone && D.bossScore && D.bossScore[L.id] ? ' · sonuç %' + D.bossScore[L.id].score : ''}</span></span>${bossCur ? '<span class="sp-next">Sıradaki</span>' : `<span class="sp-st">${bossDone ? 'Geçildi' : bossOpen ? 'Hazır' : ''}</span>`}</button></li>`;
     return `<section class="mappe ${open ? '' : 'locked'} ${herbDrawn ? 'drawn' : 'prep'}" style="${lvStyle(L.color)}">
       <header class="mp-head"><span class="mp-id">${L.id}</span><div class="mp-t"><h2>${L.tr} <span class="muted" style="font-size:.7em">· ${esc(L.name)}</span></h2><div class="mp-sub">${doneN}/${L.units.length} yaprak${bossDone ? ' · sınav geçildi' : ''}</div><div class="mp-prog" aria-hidden="true">${L.units.map(u => `<i class="${D.done[u.id] != null ? 'on' : ''}"></i>`).join('')}</div></div>
-        <div class="mp-acts">${bossDone ? `<button class="btn btn-ghost btn-sm" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i> Sertifika</button>` : ''}<button class="btn btn-ghost btn-sm" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i> Notlar</button></div></header>
-      <ol class="specs">${specs}${exam}</ol></section>`;
+        <div class="mp-acts">${bossDone ? `<button class="btn btn-ghost btn-sm" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i><span class="bt"> Sertifika</span></button>` : ''}<button class="btn btn-ghost btn-sm" aria-label="${L.id} notları" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i><span class="bt"> Notlar</span></button></div></header>
+      ${open ? '' : `<p class="mp-lock">${L.units.length} yaprak · önceki dosyanın sınavını geçince açılır</p>`}<ol class="specs">${specs}${exam}</ol></section>`;
   }).join('');
 };
 AFTER.learn = () => {
@@ -4372,6 +4475,11 @@ PROFILE_COLORS.splice(0, PROFILE_COLORS.length, '#2f5d46', '#25497e', '#7a2c52',
 const herbProfColors = () => PROFILES.forEach(p => { p.color = pcol(p.color); });
 herbProfColors();
 const _renderNavHerb = renderNav; renderNav = function () { herbProfColors(); return _renderNavHerb.apply(this, arguments); };
+
+/* ---------- Pratik ve Araçlar: uzun düz liste yerine başlıklı gruplar ---------- */
+const hubGroups = gs => gs.map(([t, l]) => `<section class="hub-g"><h2 class="hub-h">${t}</h2>${hubTiles(l)}</section>`).join('');
+VIEWS.practice = () => `<p class="page-sub">Okuyarak, dinleyerek, konuşarak ve yazarak pratik yap.</p>` + hubGroups([['Okuma ve dinleme', ['stories', 'listen', 'shadow', 'dictation', 'camera']], ['Konuşma', ['friend', 'roleplay', 'voice', 'exam']], ['Yazma ve kelime', ['writing', 'diary', 'games', 'bridge']]]);
+VIEWS.more = () => `<p class="page-sub">İlerlemen, rehberler ve araçlar.</p>` + hubGroups([['İlerleme', ['ready', 'plan', 'report', 'league', 'badges']], ['Rehberler', ['guides', 'conj', 'artikel']], ['Araçlar', ['notes', 'focus', 'settings']]]);
 
 /* ---------- Tekrar kutusu: tohumdan meyveye ---------- */
 const _reviewHerb = VIEWS.review;
@@ -4392,10 +4500,34 @@ AFTER.report = () => {
   box.outerHTML = `<div class="wk7" role="img" aria-label="Son 7 günün XP değerleri: ${days.map(d => d.n + ' ' + d.r.xp).join(', ')}">${days.map(d => { const now = d.k === today(), lab = (now || (d.r.xp && d.r.xp === top)) && d.r.xp; return `<div class="wk7-c ${now ? 'now' : ''}" tabindex="0"><span class="tip">${d.f} · ${d.r.xp} XP · ${d.r.lessons || 0} ders</span>${lab ? `<span class="v">${d.r.xp}</span>` : ''}<span class="b" style="height:${d.r.xp ? Math.max(3, d.r.xp / max * 140) : 2}px"></span><span class="d">${d.n}</span></div>`; }).join('')}</div>`;
 };
 
+/* ---------- Eski ekranlarda sakin yazı: çok kalın satır içi yazılar ve süs bayrakları yumuşatılır ---------- */
+const calmHtml = h => typeof h === 'string' ? h.replace(/font-weight:\s?(800|900)/g, 'font-weight:600').replace(/font-weight:\s?700/g, 'font-weight:600').replace(/🇩🇪 ?/g, '').replace(/🇹🇷 ?/g, '') : h;
+Object.keys(VIEWS).forEach(k => { const f = VIEWS[k]; VIEWS[k] = function () { return calmHtml(f.apply(this, arguments)); }; });
 /* ---------- Görünür alan (iPhone klavyesi) ---------- */
 function syncViewport() { const v = window.visualViewport; if (!v) return; const r = document.documentElement.style; r.setProperty('--vvh', v.height + 'px'); r.setProperty('--vvt', v.offsetTop + 'px'); }
 if (window.visualViewport) { visualViewport.addEventListener('resize', syncViewport); visualViewport.addEventListener('scroll', syncViewport); syncViewport(); }
-document.addEventListener('focusin', e => { if (e.target.closest && e.target.closest('#lesson') && /INPUT|TEXTAREA/.test(e.target.tagName)) setTimeout(() => e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }), 300); });
+// Ders açıkken arkadaki uygulama gizlenir ve sayfa kilitlenir: klavye açılınca ana ekran araya girmez
+let lsScrollY = 0;
+new MutationObserver(() => {
+  const on = !!document.querySelector('#lessonRoot #lesson'), h = document.documentElement;
+  if (on === h.classList.contains('ls-open')) return;
+  if (on) { lsScrollY = window.scrollY; h.classList.add('ls-open'); }
+  else { h.classList.remove('ls-open'); window.scrollTo(0, lsScrollY); }
+  syncViewport();
+}).observe(document.getElementById('lessonRoot'), { childList: true, subtree: false });
+// Yazı kutusuna geçince sadece ders gövdesi kayar, sayfanın kendisi değil
+document.addEventListener('focusin', e => {
+  const t = e.target; if (!t.closest || !t.closest('#lesson') || !/INPUT|TEXTAREA/.test(t.tagName)) return;
+  setTimeout(() => {
+    window.scrollTo(0, 0); syncViewport();
+    const b = t.closest('.ls-body'); if (!b) return;
+    const r = t.getBoundingClientRect(), br = b.getBoundingClientRect(), y = b.scrollTop + r.top - br.top - (br.height - r.height) / 2;
+    b.scrollTo({ top: Math.max(0, y), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }, 320);
+});
+document.addEventListener('focusout', e => { if (e.target.closest && e.target.closest('#lesson')) setTimeout(() => { if (document.documentElement.classList.contains('ls-open')) window.scrollTo(0, 0); syncViewport(); }, 120); });
+// Yazı boyutu küçültülmüşse de yazı kutuları 16px'in altına inmesin (iPhone kendiliğinden yakınlaştırmasın)
+const _applyThemeKb = applyTheme; applyTheme = function () { _applyThemeKb.apply(this, arguments); document.documentElement.style.setProperty('--zf', String(CFG.zoom && CFG.zoom < 1 ? CFG.zoom : 1)); };
 /* ---------- Başlat ---------- */
 applyTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!CFG.theme) applyTheme(); });
