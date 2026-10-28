@@ -1216,6 +1216,84 @@ html.ls-open #app, html.ls-open #tutorFab, html.ls-open #bottomNav { display: no
 #lesson .ls-top, #lesson .ls-foot { flex-shrink: 0; }
 #lesson input, #lesson textarea, #lesson .pill-input { font-size: max(16px, calc(16px / var(--zf, 1))) !important; }
 #lesson .hl, .ls-q .hl { background: var(--lvs, var(--accent-soft)); color: var(--lvd, var(--accd)); border-radius: 8px; padding: 0 4px; box-shadow: inset 0 -2px 0 var(--lv, var(--accent)); }
+/* ---------- Ders geri bildirimi: uzun AI cevabı "Devam"ı ekran dışına itmesin (ui-ux-pro-max: overflow içeriği kırpmasın) ---------- */
+#lesson .ls-foot { max-height: 74%; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+#lesson .ls-foot #nextBtn { position: sticky; bottom: 0; z-index: 2; box-shadow: 0 0 0 6px color-mix(in srgb, var(--neg-bg) 90%, transparent); }
+#lesson .ls-foot.ok #nextBtn { box-shadow: 0 0 0 6px color-mix(in srgb, var(--pos-bg) 90%, transparent); }
+#whyBox .ai-box { max-height: 36vh; overflow-y: auto; overscroll-behavior: contain; }
+@keyframes tutFade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { #tutorPanel:not([hidden]) { animation: none !important; } }
+/* ---------- Klavye açıkken alt menü ve yüzen düğme gizlenir (ui-ux-pro-max: kalıcı arayüz odağı kapatmasın) ---------- */
+html.kb-open #bottomNav, html.kb-open #tutorFab { display: none !important; }
+/* ---------- AI Öğretmen telefonda tam ekran; arkadaki uygulama gizlenir ---------- */
+@media (max-width: 960px) {
+  html.tut-open, html.tut-open body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+  html.tut-open #app { display: none !important; }
+  #tutorPanel:not([hidden]) { left: 0 !important; right: 0 !important; top: var(--vvt, 0px) !important; bottom: auto !important; width: auto !important; height: var(--vvh, 100dvh) !important; border-radius: 0 !important; border: 0 !important; padding-top: env(safe-area-inset-top); z-index: 130 !important; background: var(--ground) !important; }
+  #tutorPanel .msgs { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  #tutorPanel:not([hidden]) { animation: tutFade .2s ease-out !important; transform: none !important; }
+  #tutorPanel input, #tutorPanel textarea, #main input, #main textarea { font-size: max(16px, calc(16px / var(--zf, 1))) !important; }
+}
+/* =====================================================================
+   ÜNİTE ÖN İZLEMESİ (derse başlamadan önceki ekran)
+   design-taste app-screens: başlık sabit, tek birincil işlem her zaman görünür, içerik ortada kayar;
+   ui-ux-pro-max: sekmeler tek satıra sığar, tablolar kendi içinde kayar, 44px dokunma alanı.
+   ===================================================================== */
+.overlay:has(> .sheet.us-sheet) { padding: 0; }
+.sheet.us-sheet { display: flex; flex-direction: column; width: min(760px, calc(100vw - 48px)); max-width: 760px !important; height: auto; max-height: min(86vh, 860px); padding: 0; overflow: hidden; border-radius: 24px; }
+.us { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.us-head { flex-shrink: 0; padding: 20px 24px 0; border-bottom: 1px solid var(--rule); background: var(--raised); }
+.us-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.us-top .smallcaps { color: var(--lvd); }
+.us-x { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.us-de { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 38px); line-height: 1.08; letter-spacing: -.02em; color: var(--ink); margin: 6px 0 0; -webkit-hyphens: auto; hyphens: auto; }
+.us-tr { font-size: 15px; color: var(--muted); margin-top: 4px; }
+.us-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.us-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.us-meta i { color: var(--lvd); font-size: 12px; }
+.us-tabs { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 16px 0 14px; }
+.us-tabs .tab { min-height: 40px; white-space: nowrap; padding: 0 6px; }
+.us-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 18px 24px 24px; }
+.us-body .guide { font-size: 15.5px; line-height: 1.6; }
+.us-body .guide h4:first-child { margin-top: 0; }
+.us-tbl { overflow-x: auto; margin: 10px 0; border-radius: 14px; -webkit-overflow-scrolling: touch; }
+.us-tbl table.gt { margin: 0 !important; min-width: 100%; }
+.us-tbl table.gt th, .us-tbl table.gt td { white-space: nowrap; }
+.us-words { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+.us-w { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.us-w .wemo { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+.us-w-main { flex: 1; min-width: 0; }
+.us-w-de { font-family: var(--serif); font-size: 19px; line-height: 1.2; color: var(--ink); }
+.us-w-tr { font-size: 13.5px; color: var(--muted); margin-top: 1px; }
+.us-ib { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); flex-shrink: 0; transition: background-color .2s var(--ease-out), color .2s, transform .12s var(--ease-press); }
+.us-ib:hover { background: var(--surface-2); color: var(--ink); }
+.us-ib:active { transform: scale(.94); }
+.us-s { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--rule); margin-bottom: 10px; }
+.us-s-de { font-family: var(--serif); font-size: 20px; line-height: 1.3; color: var(--ink); }
+.us-s-tr { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.us-ai { margin-top: 26px; padding: 16px; border-radius: 16px; background: var(--lvs); }
+.us-ai-t { font-weight: 600; color: var(--lvd); }
+.us-ai-s { font-size: 13.5px; color: var(--muted); margin: 2px 0 12px; }
+.us-ai .row { gap: 8px; }
+.us-foot { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 14px 24px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--rule); background: var(--raised); }
+.us-go { flex: 1; min-height: 48px; font-size: 16px; }
+.us-skip { font-size: 13.5px; color: var(--lvd); font-weight: 600; padding: 8px 4px; white-space: nowrap; }
+.us-skip:hover { text-decoration: underline; }
+.dark .us-head, .dark .us-foot { background: var(--surface); }
+@media (max-width: 640px) {
+  .sheet.us-sheet { width: 100vw; height: var(--vvh, 100dvh); max-height: none; border-radius: 0; border: 0; }
+  .overlay:has(> .sheet.us-sheet) { align-items: stretch; }
+  .us-head { padding: calc(14px + env(safe-area-inset-top)) 16px 0; }
+  .us-de { font-size: 30px; }
+  .us-tabs { margin: 14px 0 12px; }
+  .us-body { padding: 16px 16px 20px; }
+  .us-words { grid-template-columns: minmax(0, 1fr); }
+  .us-foot { padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); flex-wrap: wrap; }
+  .us-foot .us-skip { order: -1; width: 100%; text-align: center; padding: 0 0 4px; }
+  .us-foot .us-lbl { display: none; }
+  .us-foot .btn-ghost { width: 48px; min-height: 48px; padding: 0; }
+}
+html.dys .us-de, html.dys .us-w-de, html.dys .us-s-de { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
 </style>
 
 </head>
@@ -4500,6 +4578,35 @@ AFTER.report = () => {
   box.outerHTML = `<div class="wk7" role="img" aria-label="Son 7 günün XP değerleri: ${days.map(d => d.n + ' ' + d.r.xp).join(', ')}">${days.map(d => { const now = d.k === today(), lab = (now || (d.r.xp && d.r.xp === top)) && d.r.xp; return `<div class="wk7-c ${now ? 'now' : ''}" tabindex="0"><span class="tip">${d.f} · ${d.r.xp} XP · ${d.r.lessons || 0} ders</span>${lab ? `<span class="v">${d.r.xp}</span>` : ''}<span class="b" style="height:${d.r.xp ? Math.max(3, d.r.xp / max * 140) : 2}px"></span><span class="d">${d.n}</span></div>`; }).join('')}</div>`;
 };
 
+/* ---------- Ünite ön izlemesi: sabit başlık, kayan içerik, her zaman görünen "Derse başla" ---------- */
+openUnit = function (id) {
+  const f = findUnit(id); if (!f) return; const { L, u, li, ui } = f;
+  const n = buildUnitItems(u, L).length, mins = Math.max(3, Math.round(n * 0.6));
+  const canSkip = D.done[id] == null && unitUnlocked(li, ui) && !RO;
+  const words = u.v.map(v => { const e = wordEmoji(v[0]); return `<div class="us-w">${e ? `<span class="wemo" aria-hidden="true">${e}</span>` : ''}<div class="us-w-main"><div class="us-w-de" lang="de">${esc(v[0])}</div><div class="us-w-tr">${esc(v[1])}</div></div><button class="us-ib" aria-label="${esc(v[0])} dinle" data-say="${esc(v[0])}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button><button class="us-ib" aria-label="Tekrar kutusuna ekle" data-de="${esc(v[0])}" data-tr="${esc(v[1])}" onclick="addCard(this.dataset.de,this.dataset.tr,'${u.id}')"><i class="fa-solid fa-plus"></i></button></div>`; }).join('');
+  const sents = u.s.map(x => `<div class="us-s"><div style="flex:1;min-width:0"><div class="us-s-de" lang="de">${esc(x[0])}</div><div class="us-s-tr">${esc(x[1])}</div></div><button class="us-ib" aria-label="Dinle" data-say="${esc(x[0])}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button></div>`).join('');
+  const el = modal(`<div class="us" style="${lvStyle(L.color)}">
+    <header class="us-head"><div class="us-top"><span class="smallcaps">${L.id} · Blatt ${String(ui + 1).padStart(2, '0')}</span><button class="us-x" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>
+      <h3 class="us-de" lang="de">${esc(u.de)}</h3><div class="us-tr">${esc(u.t)}</div>
+      <div class="us-meta"><span><i class="fa-solid fa-list-check"></i>${n} etkinlik</span><span><i class="fa-solid fa-spell-check"></i>${u.v.length} kelime</span><span><i class="fa-solid fa-quote-left"></i>${u.s.length} cümle</span><span><i class="fa-regular fa-clock"></i>~${mins} dk</span></div>
+      <div class="tabs us-tabs" role="tablist">${[['g', 'Konu'], ['v', 'Kelimeler'], ['s', 'Cümleler']].map(([k, t], i) => `<button class="tab ${i ? '' : 'active'}" role="tab" onclick="unitTab(this,'${k}');this.closest('.us').querySelector('.us-body').scrollTop=0">${t}</button>`).join('')}</div></header>
+    <div class="us-body">
+      <div data-pane="g"><div class="guide">${u.g}</div>
+        <div class="us-ai"><div class="us-ai-t">Anlamadığın yer mi var?</div><div class="us-ai-s">Yapay zekâ konuyu başka örneklerle anlatsın ya da yeni alıştırmalar üretsin.</div>
+          <div class="row"><button class="btn btn-sm" onclick="aiExplainUnit('${u.id}')"><i class="fa-solid fa-wand-magic-sparkles"></i> Farklı anlat</button><button class="btn btn-sm btn-ghost" onclick="aiGenExercises('${u.id}')"><i class="fa-solid fa-dice"></i> Alıştırma üret</button></div>
+          <div id="aiUnitOut" class="ai-box" style="max-width:none;margin-top:14px" hidden></div></div></div>
+      <div data-pane="v" hidden><div class="us-words">${words}</div></div>
+      <div data-pane="s" hidden>${sents}</div>
+    </div>
+    <footer class="us-foot">${canSkip ? `<button class="us-skip" onclick="startTestOut('${u.id}')"><i class="fa-solid fa-forward-fast"></i> Biliyorum, hızlı geç</button>` : ''}
+      <button class="btn us-go" onclick="closeModal();startUnit('${u.id}')"><i class="fa-solid fa-play"></i> Derse başla</button>
+      <button class="btn btn-ghost" aria-label="Not al" onclick="noteFromUnit('${u.id}')"><i class="fa-solid fa-note-sticky"></i><span class="us-lbl"> Not al</span></button>
+      <button class="btn btn-ghost" aria-label="PDF indir" onclick="exportPdf(['${u.id}'])"><i class="fa-solid fa-file-pdf"></i><span class="us-lbl"> PDF</span></button></footer>
+  </div>`);
+  const sh = el.querySelector('.sheet'); sh.classList.add('us-sheet');
+  sh.querySelectorAll('.guide table').forEach(t => { if (!t.parentElement.classList.contains('us-tbl')) { const w = document.createElement('div'); w.className = 'us-tbl'; t.before(w); w.appendChild(t); } });
+  return el;
+};
 /* ---------- Eski ekranlarda sakin yazı: çok kalın satır içi yazılar ve süs bayrakları yumuşatılır ---------- */
 const calmHtml = h => typeof h === 'string' ? h.replace(/font-weight:\s?(800|900)/g, 'font-weight:600').replace(/font-weight:\s?700/g, 'font-weight:600').replace(/🇩🇪 ?/g, '').replace(/🇹🇷 ?/g, '') : h;
 Object.keys(VIEWS).forEach(k => { const f = VIEWS[k]; VIEWS[k] = function () { return calmHtml(f.apply(this, arguments)); }; });
@@ -4526,6 +4633,22 @@ document.addEventListener('focusin', e => {
   }, 320);
 });
 document.addEventListener('focusout', e => { if (e.target.closest && e.target.closest('#lesson')) setTimeout(() => { if (document.documentElement.classList.contains('ls-open')) window.scrollTo(0, 0); syncViewport(); }, 120); });
+// AI Öğretmen açıkken (telefonda) arkadaki uygulama gizlenir; kapanınca kaldığın yere dönülür
+let tutScrollY = 0;
+new MutationObserver(() => {
+  const open = !$('#tutorPanel').hidden, h = document.documentElement;
+  if (open === h.classList.contains('tut-open')) return;
+  if (open) { tutScrollY = window.scrollY; h.classList.add('tut-open'); } else { h.classList.remove('tut-open', 'kb-open'); window.scrollTo(0, tutScrollY); }
+  syncViewport();
+}).observe(document.getElementById('tutorPanel'), { attributes: true, attributeFilter: ['hidden'] });
+// Telefonda bir yazı kutusuna geçince alt menü gizlenir, klavye kapanınca geri gelir
+const isTextField = t => t && (t.tagName === 'TEXTAREA' || (t.tagName === 'INPUT' && !/^(checkbox|radio|range|button|submit|color|file)$/i.test(t.type)) || t.isContentEditable);
+document.addEventListener('focusin', e => {
+  if (!isTextField(e.target) || innerWidth > 960) return;
+  document.documentElement.classList.add('kb-open');
+  if (e.target.closest('#tutorPanel')) setTimeout(() => { window.scrollTo(0, 0); syncViewport(); const m = $('#tutMsgs'); if (m) m.scrollTop = m.scrollHeight; }, 320);
+});
+document.addEventListener('focusout', () => setTimeout(() => { if (!isTextField(document.activeElement)) { document.documentElement.classList.remove('kb-open'); syncViewport(); } }, 150));
 // Yazı boyutu küçültülmüşse de yazı kutuları 16px'in altına inmesin (iPhone kendiliğinden yakınlaştırmasın)
 const _applyThemeKb = applyTheme; applyTheme = function () { _applyThemeKb.apply(this, arguments); document.documentElement.style.setProperty('--zf', String(CFG.zoom && CFG.zoom < 1 ? CFG.zoom : 1)); };
 /* ---------- Başlat ---------- */
