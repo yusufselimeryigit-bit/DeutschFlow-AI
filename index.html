@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<script>try{var dd=localStorage.getItem("df_design");if(dd==="bh")document.documentElement.classList.add("bh");else if(dd!=="herb")document.documentElement.classList.add("bm")}catch(e){document.documentElement.classList.add("bm")}</script>
+<script>try{var dd=localStorage.getItem("df_design");var c=document.documentElement.classList;if(dd==="bh")c.add("bh");else if(dd==="bm")c.add("bm");else if(dd==="fx")c.add("bm","fx");else if(dd!=="herb")c.add("bm","am")}catch(e){document.documentElement.classList.add("bm","am")}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Geist+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Geist+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com/3.4.3"></script>
 <script>tailwind.config = { darkMode: 'class', corePlugins: { preflight: false } };</script>
@@ -1826,6 +1826,613 @@ html.bh input, html.bh progress { accent-color: var(--ink); }
 }
 @media (prefers-reduced-motion: reduce) { .album .pmk { transition: none; } .album.prep .pmk { opacity: .82; transform: rotate(-12deg); } .album > li > button { transition: none; } }
 html.dys.bm .bm-greet, html.dys.bm .stp-de, html.dys.bm .bm-pgh h2 { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+
+/* =====================================================================
+   AKIŞ TASARIMI (html.fx) — dikey akış: her ünite ekranı tek başına doldurur, sıradaki bir kaydırma ötede.
+   Briefmarke'nin düz bileşen katmanının (html.bm) üstüne kurulur; renk, yazı, kabuk ve imza ekranlar yenidir.
+   Seviyeler kendi renk alanında: A1 mercan, A2 mandalina, B1 güneş, B2 yeşil, C1 elektrik mavisi, C2 mor.
+   ===================================================================== */
+html.fx {
+  --ground: #f4f4f7; --surface: #ffffff; --surface-2: #ececf2; --raised: #ffffff;
+  --border: #e1e1ea; --rule: #e9e9f0; --control: #cdcdd9;
+  --ink: #111118; --muted: #5a5a6b; --faint: #7e7e93;
+  --accent: #111118; --accent-ink: #ffffff; --accent-soft: #ececf2; --accd: #111118;
+  --track: #e1e1ea; --grey: #6b6b7c;
+  --positive: #0b8a4c; --negative: #d4263c; --pos-bg: #e1f6e9; --neg-bg: #fde7ea;
+  --btn-ink: #ffffff;
+  --display: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  --sans: 'Geist', system-ui, -apple-system, sans-serif;
+  --serif: var(--display);
+  --mono: 'Geist Mono', ui-monospace, monospace;
+  --a1: #e5372b; --a1d: #b0231a; --a1s: #fdecea;
+  --a2: #e9660a; --a2d: #a94a05; --a2s: #fef0e3;
+  --b1: #f2b200; --b1d: #7f5c00; --b1s: #fff5d6;
+  --b2: #0d9b58; --b2d: #087040; --b2s: #e1f6e9;
+  --c1: #2f5bff; --c1d: #1c3dcc; --c1s: #e8edff;
+  --c2: #7b3ff2; --c2d: #5925c2; --c2s: #f0e9fe;
+  --st1: #ececf2; --st2: #d9d9e4; --st3: #a9a9bd; --st4: #6b6b82; --st5: #111118;
+  --fx-glass: rgba(250, 250, 252, .74);
+  --fx-r: 22px;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+}
+html.fx.dark {
+  --ground: #0e0e13; --surface: #17171e; --surface-2: #21212a; --raised: #17171e;
+  --border: #2b2b36; --rule: #23232d; --control: #3a3a48;
+  --ink: #f2f2f7; --muted: #a8a8ba; --faint: #80809a;
+  --accent: #f2f2f7; --accent-ink: #111118; --accent-soft: #21212a; --accd: #f2f2f7;
+  --track: #2b2b36; --positive: #4fd18b; --negative: #ff6b7d; --pos-bg: #10301e; --neg-bg: #3a141b;
+  --btn-ink: #111118;
+  --a1: #e5372b; --a2: #e9660a; --b1: #f2b200; --b2: #0d9b58; --c1: #2f5bff; --c2: #7b3ff2;
+  --a1d: #ff8f85; --a1s: #3a1714; --a2d: #ffb169; --a2s: #3a2410; --b1d: #ffd45a; --b1s: #362a08;
+  --b2d: #5fe0a0; --b2s: #0f2e1f; --c1d: #9ab0ff; --c1s: #18224a; --c2d: #c2a3ff; --c2s: #271748;
+  --st1: #21212a; --st2: #2b2b36; --st3: #4a4a5c; --st4: #8a8aa0; --st5: #f2f2f7;
+  --fx-glass: rgba(20, 20, 27, .74);
+}
+html.fx.dark.oled { --ground: #000; --surface: #0d0d11; --surface-2: #17171d; --raised: #0d0d11; --border: #24242c; }
+html.fx[data-accent] { --accent: #111118; --accd: #111118; --accent-soft: #ececf2; }
+html.fx.dark[data-accent] { --accent: #f2f2f7; --accd: #f2f2f7; --accent-soft: #21212a; }
+
+/* ---------- Yazı ---------- */
+html.fx body { font-family: var(--sans); font-size: 15px; letter-spacing: -.004em; background: var(--ground); -webkit-font-smoothing: antialiased; }
+html.fx h1, html.fx h2, html.fx h3, html.fx .font-display, html.fx .page-title { font-family: var(--display); font-weight: 700; letter-spacing: -.025em; font-optical-sizing: auto; }
+html.fx .page-title { font-size: 30px; line-height: 1.05; }
+html.fx .tabular, html.fx .stat-pill, html.fx .q-n { font-variant-numeric: tabular-nums; }
+html.fx ::selection { background: var(--c1); color: #fff; }
+html.fx :focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+html.fx body { caret-color: var(--c1); }
+html.fx * { scrollbar-width: thin; scrollbar-color: var(--control) transparent; }
+
+/* ---------- Yüzeyler ve kontroller ---------- */
+html.fx .glass, html.fx .panel, html.fx .k-tile { border-radius: var(--fx-r); border-color: var(--border); box-shadow: 0 1px 2px rgba(17, 17, 24, .04); }
+html.fx .row-card { border-radius: 16px; }
+html.fx .row-card .rc-ic { border-radius: 12px; background: var(--surface-2); color: var(--ink); }
+html.fx .row-card.hot { background: var(--c1s); border-color: transparent; }
+html.fx .row-card.hot .rc-ic { background: var(--c1); color: #fff; }
+html.fx .row-card.hot .rc-end { color: var(--c1d); }
+html.fx .panel-head h2 { font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
+html.fx .btn, html.fx .btn-red, html.fx .btn-ghost { font-family: var(--sans); font-weight: 600; border-radius: 14px; min-height: 46px; font-size: 15px; transition: transform .14s var(--ease-out), background-color .2s; }
+html.fx .btn:active { transform: scale(.97); }
+html.fx .btn-sm { min-height: 36px; border-radius: 11px; font-size: 13.5px; }
+html.fx .btn.btn-ghost, html.fx .btn-ghost, html.fx.dark .btn-ghost { background: var(--surface-2); color: var(--ink); }
+html.fx .btn-ghost:hover { background: var(--border); }
+html.fx .tabs { background: var(--surface-2); border-radius: 14px; padding: 4px; }
+html.fx .tab { border-radius: 10px; font-weight: 600; }
+html.fx .tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(17, 17, 24, .1); }
+html.fx .chip { background: var(--surface-2); color: var(--ink); border-radius: 99px; font-weight: 600; }
+html.fx .lvl-badge { background: var(--lv, var(--ink)); color: #fff; border-radius: 8px; font-family: var(--display); font-weight: 700; }
+html.fx .bar { background: var(--track); border-radius: 99px; }
+html.fx .bar > div { background: var(--lv, var(--ink)); border-radius: 99px; }
+html.fx .pill-input, html.fx #app .pill-input, html.fx .sheet .pill-input, html.fx #lesson .pill-input, html.fx #tutorPanel .pill-input { border-radius: 14px; }
+html.fx .pill-input:focus { border-color: var(--c1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c1) 22%, transparent); }
+html.fx .icon-btn { border-radius: 12px; }
+html.fx .sheet { border-radius: 26px; }
+html.fx .stat-pill { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+html.fx #lesson .opt { border-radius: 16px; }
+html.fx #lesson .opt.sel { border-color: var(--lv); box-shadow: inset 0 0 0 1px var(--lv); background: var(--lvs, var(--surface)); }
+html.fx #lesson .progress > div { background: var(--lv); }
+html.fx #lesson .ls-kind { color: var(--lvd); }
+html.fx #lesson .hl, html.fx .ls-q .hl { background: var(--lvs); color: var(--lvd); box-shadow: inset 0 -2px 0 var(--lv); border-radius: 6px; }
+
+/* ---------- Kabuk ---------- */
+@media (min-width: 961px) {
+  html.fx #app { grid-template-columns: 232px minmax(0, 1fr); }
+  html.fx #sidebar { background: var(--ground); border-right: 1px solid var(--rule); padding: 26px 14px 16px; }
+  html.fx .brand b { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
+  html.fx .brand-logo { background: var(--ink); color: var(--ground); border-radius: 12px; }
+  html.fx #sideNav .nav-item { height: 42px; border-radius: 12px; font-weight: 500; color: var(--muted); }
+  html.fx #sideNav .nav-item i { color: var(--faint); }
+  html.fx #sideNav .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+  html.fx #sideNav .nav-item.active, html.fx.dark #sideNav .nav-item.active { background: var(--ink); color: var(--ground); box-shadow: none; }
+  html.fx #sideNav .nav-item.active i { color: var(--ground); }
+  html.fx #main { padding: 30px 40px 80px; }
+}
+@media (max-width: 960px) {
+  html.fx #topbar, html.fx.dark #topbar { position: sticky; top: 0; z-index: 40; background: var(--fx-glass); -webkit-backdrop-filter: saturate(1.6) blur(18px); backdrop-filter: saturate(1.6) blur(18px); border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent); }
+  html.fx #topbar .page-title { font-size: 22px; }
+  html.fx #bottomNav, html.fx.dark #bottomNav { background: var(--fx-glass) !important; -webkit-backdrop-filter: saturate(1.6) blur(20px); backdrop-filter: saturate(1.6) blur(20px); border: 1px solid color-mix(in srgb, var(--border) 80%, transparent); box-shadow: 0 10px 30px -12px rgba(17, 17, 24, .28); border-radius: 24px; }
+  html.fx .bn-item { color: var(--faint); font-weight: 600; }
+  html.fx .bn-item.active, html.fx.dark .bn-item.active { color: var(--ink); }
+  html.fx .bn-item.active i { color: var(--ink); }
+  html.fx .bn-item::before { background: var(--ink); }
+}
+
+/* ---------- Akış: tam ekran slaytlar, dikey yapışarak kayar ---------- */
+.fx-feed { position: relative; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; display: grid; grid-auto-rows: calc(100% - 30px); gap: 10px; border-radius: 26px; scrollbar-width: none; -webkit-overflow-scrolling: touch; outline: none; }
+.fx-feed::-webkit-scrollbar { display: none; }
+.fx-slide { position: relative; scroll-snap-align: start; scroll-snap-stop: always; border-radius: 26px; overflow: hidden; min-height: 0; isolation: isolate; }
+/* Renk alanı: seviyenin rengi, ünitenin kendi kelimeleri dev harflerle doku olur */
+.fx-field { background: var(--f); color: var(--fi); }
+.fx-field::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(120% 70% at 85% 0%, rgba(255, 255, 255, .22), transparent 60%), linear-gradient(to top, rgba(0, 0, 0, var(--scrim, .26)), transparent 58%); }
+.fx-words { position: absolute; inset: 22px 18px auto 22px; z-index: -1; font: 800 clamp(30px, 8.4vw, 46px)/.95 var(--display); letter-spacing: -.04em; color: var(--fi); opacity: .13; overflow: hidden; max-height: 54%; overflow-wrap: anywhere; pointer-events: none; }
+.fx-words span { display: block; white-space: nowrap; }
+.fx-cap { position: absolute; left: 20px; right: 84px; bottom: 20px; }
+.fx-author { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font: 600 13px/1.2 var(--sans); margin-top: 14px; }
+.fx-lv { font: 800 13px/1 var(--display); padding: 6px 8px; border-radius: 8px; background: var(--fi); color: var(--f); letter-spacing: 0; }
+.fx-title { font: 800 clamp(40px, 11.5vw, 72px)/.94 var(--display); letter-spacing: -.04em; margin: 0 0 10px; color: var(--fi); text-wrap: balance; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
+.fx-sub { font-size: 15px; line-height: 1.4; margin: 0; opacity: .92; }
+.fx-segs { display: flex; gap: 4px; margin-top: 12px; }
+.fx-segs i { flex: 1; height: 4px; border-radius: 4px; background: color-mix(in srgb, var(--fi) 28%, transparent); }
+.fx-segs i.on { background: var(--fi); }
+.fx-segs i.cur { background: color-mix(in srgb, var(--fi) 62%, transparent); }
+.fx-go { margin-top: 16px; width: 100%; height: 52px; border-radius: 16px; border: 0; background: var(--fi); color: var(--fd2, var(--f)); font: 700 16px var(--sans); display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: transform .14s var(--ease-out); }
+.fx-go:active { transform: scale(.97); }
+.fx-rail { position: absolute; right: 12px; bottom: 96px; display: flex; flex-direction: column; gap: 14px; }
+.fx-rb { display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: var(--fi); font: 600 11px/1 var(--sans); cursor: pointer; padding: 0; }
+.fx-rb i { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; background: color-mix(in srgb, var(--fi) 18%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: transform .16s var(--ease-out), background-color .16s, color .16s; }
+.fx-rb:active i, .fx-rb.on i { transform: scale(.92); background: var(--fi); color: var(--f); }
+.fx-slide.lock { --f: var(--fs) !important; --fi: var(--fdk) !important; --fd2: var(--fs); --scrim: 0; }
+.fx-slide.lock .fx-words { opacity: .07; }
+.fx-slide.lock .fx-title { color: var(--fdk); }
+.fx-new { display: inline-flex; align-items: center; gap: 6px; font: 700 12px/1 var(--sans); padding: 6px 10px; border-radius: 99px; background: var(--fi); color: var(--f); }
+.fx-hint { position: absolute; left: 0; right: 0; top: 14px; text-align: center; font: 600 12px var(--sans); color: var(--fi); opacity: .8; }
+/* Açık slayt: içerik ağırlıklı (tekrar, deyim, görevler, yolculuk) */
+.fx-plain { background: var(--surface); border: 1px solid var(--border); color: var(--ink); padding: 26px 22px 22px; display: flex; flex-direction: column; }
+.fx-plain h2 { font: 800 clamp(30px, 8vw, 40px)/1 var(--display); letter-spacing: -.035em; margin: 0; }
+.fx-plain .fx-lead { color: var(--muted); font-size: 15px; line-height: 1.45; margin: 8px 0 0; max-width: 40ch; }
+.fx-plain .fx-foot { margin-top: auto; display: flex; gap: 8px; }
+.fx-plain .fx-foot .btn { flex: 1; }
+.fx-stack { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.fx-stack li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.fx-stack b { font: 700 24px/1.1 var(--display); letter-spacing: -.02em; }
+.fx-stack span { color: var(--muted); font-size: 14px; text-align: right; }
+.fx-tint { background: var(--c2s); border-color: transparent; }
+.fx-idiom { font: 800 clamp(34px, 9.5vw, 50px)/1.02 var(--display); letter-spacing: -.035em; margin: 22px 0 10px; color: var(--c2d); text-wrap: balance; }
+.fx-q { display: grid; grid-template-columns: minmax(0, 1fr) 90px auto; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); font-weight: 500; }
+.fx-q .bar { height: 6px; }
+.fx-q.done { color: var(--faint); }
+.fx-q .q-n { font: 500 13px var(--mono); color: var(--muted); }
+
+/* ---------- Yolculuk: A1 → C2 seviye rayı ---------- */
+.fx-jour { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fx-jl { display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 12px; row-gap: 8px; align-items: center; width: 100%; text-align: left; padding: 12px 14px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); cursor: pointer; transition: border-color .2s, background-color .2s; }
+.fx-jl:hover { border-color: var(--f); }
+.fx-jl .fx-jb { grid-row: span 2; width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--f); color: var(--fi); font: 800 17px/1 var(--display); }
+.fx-jl .fx-jt { font-weight: 600; font-size: 15px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-jl .fx-jn { font: 500 13px var(--mono); color: var(--muted); }
+.fx-jl .fx-jbar { grid-column: 2 / 4; height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.fx-jl .fx-jbar i { display: block; height: 100%; border-radius: 6px; background: var(--f); }
+.fx-jl.locked .fx-jb { background: var(--fs); color: var(--fdk); }
+.fx-jl.on { border-color: var(--f); box-shadow: inset 0 0 0 1px var(--f); }
+.fx-total { display: flex; align-items: baseline; gap: 10px; margin: 18px 0 14px; }
+.fx-total b { font: 800 44px/1 var(--display); letter-spacing: -.04em; }
+.fx-total span { color: var(--muted); font-size: 14px; }
+
+/* ---------- Ana sayfa ve Öğren düzeni ---------- */
+.fx-home, .fx-learn { display: grid; gap: 28px; }
+.fx-side h2 { font: 800 26px/1.05 var(--display); letter-spacing: -.03em; margin: 0; }
+.fx-side .fx-lead { color: var(--muted); margin: 6px 0 0; }
+.fx-side section + section { margin-top: 30px; }
+.fx-greet { font: 800 clamp(34px, 3.4vw, 48px)/1 var(--display); letter-spacing: -.04em; margin: 0 0 6px; }
+@media (min-width: 961px) {
+  .fx-home { grid-template-columns: minmax(360px, 440px) minmax(0, 1fr); align-items: start; gap: 44px; }
+  .fx-learn { grid-template-columns: minmax(240px, 300px) minmax(360px, 460px); justify-content: center; align-items: start; gap: 40px; }
+  .fx-learn .fx-jour { position: sticky; top: 30px; }
+  .fx-slide.m-only { display: none; }
+  .fx-home .fx-feed, .fx-learn .fx-feed { order: 0; }
+}
+@media (max-width: 960px) {
+  .fx-home .fx-side { display: none; }
+  .fx-home, .fx-learn { gap: 12px; grid-template-columns: minmax(0, 1fr); }
+  .fx-home > *, .fx-learn > * { min-width: 0; }
+  .fx-learn .fx-jour { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 0 16px; scroll-snap-type: x proximity; }
+  .fx-learn .fx-jour::-webkit-scrollbar { display: none; }
+  .fx-learn .fx-jl { display: flex; flex-direction: column; align-items: stretch; gap: 6px; width: auto; flex: 0 0 auto; min-width: 74px; padding: 8px 10px; border-radius: 14px; scroll-snap-align: start; }
+  .fx-learn .fx-jl .fx-jb { width: auto; height: auto; background: none; color: var(--ink); font-size: 17px; place-items: start; }
+  .fx-learn .fx-jl.locked .fx-jb { color: var(--fdk); }
+  .fx-learn .fx-jl .fx-jb { color: var(--fdk); }
+  .fx-learn .fx-jl .fx-jbar { background: var(--fs); }
+  .fx-learn .fx-jl .fx-jt { display: none; }
+  .fx-learn .fx-jl .fx-jn { font-size: 11.5px; }
+  .fx-learn .fx-jl .fx-jbar { height: 4px; }
+  .fx-learn .fx-total { display: none; }
+  .fx-feed { margin: 0 -4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-feed { scroll-behavior: auto; }
+  .fx-go, .fx-rb i, html.fx .btn { transition: none; }
+}
+
+.ds-pick.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 560px) { .ds-pick.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ds-prev.fxp { background: #f4f4f7; gap: 6px; }
+.ds-prev.fxp i { display: block; width: 14px; height: 30px; border-radius: 5px; }
+
+/* Ünite penceresi: başlık alanı seviyenin rengini taşır (akıştaki kartın devamı) */
+html.fx .us-head { background: var(--lv); color: var(--lvi, #fff); border-bottom: 0; }
+html.fx .us-top .smallcaps { color: inherit; font: 800 13px/1 var(--display); letter-spacing: 0; text-transform: none; padding: 7px 9px; border-radius: 9px; background: color-mix(in srgb, var(--lvi, #fff) 18%, transparent); }
+html.fx .us-x { background: color-mix(in srgb, var(--lvi, #fff) 18%, transparent); color: inherit; }
+html.fx .us-de { font: 800 clamp(30px, 4.4vw, 42px)/1 var(--display); letter-spacing: -.035em; color: inherit; margin-top: 14px; }
+html.fx .us-tr, html.fx .us-meta, html.fx .us-meta i { color: inherit; opacity: .9; }
+html.fx .us-tabs { background: color-mix(in srgb, var(--lvi, #fff) 16%, transparent); }
+html.fx .us-tabs .tab { color: inherit; }
+html.fx .us-tabs .tab.active { background: var(--lvi, #fff); color: var(--lvd2, var(--lv)); box-shadow: none; }
+html.fx .us-ai { background: var(--lvs); border-radius: 18px; }
+html.fx .us-ai-t { color: var(--lvd); }
+html.fx .us-s { border-radius: 16px; }
+html.fx .us-s-de, html.fx .us-w-de { font-family: var(--display); font-weight: 700; letter-spacing: -.02em; }
+html.fx .us-pc > i:first-child { background: var(--lvs); color: var(--lvd); border-radius: 12px; }
+html.fx .us-skip { color: var(--ink); }
+html.fx .guide .tip { border-left: 0; border-radius: 16px; background: var(--b1s); color: var(--ink); font-weight: 500; padding: 14px 16px; }
+html.fx .guide .ex { border-radius: 16px; }
+
+/* ---------- İnceleme düzeltmeleri ---------- */
+html.fx { accent-color: var(--c1); }
+.fx-feed { height: calc(var(--vvh, 100dvh) - 200px); }
+@media (min-width: 961px) {
+  /* Yolculuk: altı seviye tek kesintisiz renkli ray; dolu kısım ilerleme, şu anki seviye büyük */
+  .fx-jour { gap: 0; }
+  .fx-jl { border: 0; border-radius: 0; background: none; padding: 10px 0 10px 30px; min-height: calc(var(--n) * 13px); position: relative; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; align-items: start; align-content: start; row-gap: 2px; }
+  .fx-jl::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: linear-gradient(to bottom, var(--f) var(--p), var(--fs) var(--p)); }
+  .fx-jl:first-child::before { border-radius: 8px 8px 0 0; } .fx-jl:last-child::before { border-radius: 0 0 8px 8px; }
+  .fx-jl:hover { border-color: transparent; background: none; }
+  .fx-jl:hover .fx-jt { text-decoration: underline; text-underline-offset: 3px; }
+  .fx-jl .fx-jb { grid-row: auto; width: auto; height: auto; background: none !important; color: var(--fdk); font-size: 15px; place-items: start; grid-column: 1; }
+  .fx-jl .fx-jt { grid-column: 1; font-size: 14px; color: var(--muted); font-weight: 500; margin-top: -4px; }
+  .fx-jl .fx-jn { grid-column: 2; grid-row: 1; }
+  .fx-jl .fx-jbar { display: none; }
+  .fx-jl.now .fx-jb { font-size: 34px; letter-spacing: -.03em; color: var(--f); }
+  .fx-jl.now .fx-jt { color: var(--ink); font-size: 16px; font-weight: 600; }
+  .fx-jl.on { box-shadow: none; }
+  .fx-jl.on .fx-jb { color: var(--f); }
+  .fx-side { padding-bottom: 96px; }
+}
+/* Ders: üst şerit seviyenin renk alanı; etkinlik türü şeridin içinde küçük bir etiket */
+html.fx #lesson .ls-top { background: var(--lv); color: var(--lvi, #fff); padding-top: max(12px, env(safe-area-inset-top)); padding-bottom: 12px; }
+html.fx #lesson .ls-top .icon-btn { background: color-mix(in srgb, var(--lvi, #fff) 18%, transparent); color: inherit; border: 0; }
+html.fx #lesson .ls-top #lsCount { color: inherit; opacity: .9; font-family: var(--mono); font-weight: 500; }
+html.fx #lesson .progress { background: color-mix(in srgb, var(--lvi, #fff) 26%, transparent); }
+html.fx #lesson .progress > div { background: var(--lvi, #fff); }
+html.fx #lesson .ls-body .ls-kind { display: none; }
+.fx-kind { font: 600 12px/1 var(--sans); padding: 7px 10px; border-radius: 99px; background: color-mix(in srgb, var(--lvi, #fff) 18%, transparent); white-space: nowrap; }
+html.fx #lesson .ls-q { font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; }
+/* Ünite penceresi: seviye etiketi başlığın üstünden meta satırına */
+html.fx .us-top { justify-content: flex-end; }
+html.fx .us-top .smallcaps { display: none; }
+html.fx .us-meta .fx-lvm { font: 800 12px/1 var(--display); padding: 5px 7px; border-radius: 7px; background: var(--lvi, #fff); color: var(--lvd2, var(--lv)); }
+html.fx .guide .hl { padding: 0; margin: 0; }
+html.fx .guide .tip i.fa-solid, html.fx .guide th i.fa-solid { color: var(--b1d); margin-right: 6px; }
+/* Ayarlar: tasarım seçenekleri kartın içinde ikinci kart olmasın */
+html.fx .ds-opt { border: 0; background: var(--surface-2); border-radius: 16px; }
+html.fx .ds-opt.on { background: var(--surface); box-shadow: inset 0 0 0 2px var(--ink); }
+
+/* ---------- İnceleme düzeltmeleri (2. tur) ---------- */
+html.fx #lesson { background: var(--lvs, var(--ground)); }
+html.fx #lesson .ls-foot:not(.ok):not(.bad) { background: var(--lvs, var(--ground)); border-top-color: color-mix(in srgb, var(--lv) 18%, transparent); }
+html.fx #lesson .ls-q { font: 800 clamp(28px, 7.6vw, 40px)/1.05 var(--display); letter-spacing: -.035em; }
+html.fx #lesson .wx-src { font: 700 clamp(20px, 5.4vw, 26px)/1.25 var(--display); letter-spacing: -.02em; color: var(--lvd); }
+html.fx input[type=checkbox], html.fx input[type=radio], html.fx input[type=range] { accent-color: var(--c1); }
+html.fx .ds-opt { background: none; padding: 0; border-radius: 12px; box-shadow: none !important; }
+html.fx .ds-opt .ds-prev { border-radius: 14px; transition: box-shadow .2s var(--ease-out); }
+html.fx .ds-opt.on .ds-prev { box-shadow: 0 0 0 2px var(--ground), 0 0 0 4px var(--ink); }
+html.fx .ds-opt.on { background: none; font-weight: 700; }
+.fx-slide.lock::before { display: none; }
+html.fx-fp #main { padding-bottom: 0 !important; }
+html.fx-fp #view { margin-bottom: 0; padding-bottom: 0; }
+
+/* =====================================================================
+   APPLE TARZI TASARIM (html.am) — kullanıcının isteği: Apple Music ve Apple uygulamaları gibi.
+   Büyük kalın başlıklar, kapak rafları, albüm sayfası gibi ünite listesi, cam alt menü ve mini oynatıcı,
+   SF yazı tipi, iOS gruplu listeler. Briefmarke'nin düz bileşen katmanının (html.bm) üstüne kurulur.
+   ===================================================================== */
+html.am {
+  --ground: #ffffff; --surface: #f2f2f7; --surface-2: #e9e9ef; --raised: #ffffff;
+  --border: #e5e5ea; --rule: #e5e5ea; --control: #d1d1d6;
+  --ink: #000000; --muted: #6c6c70; --faint: #8e8e93;
+  --accent: #fa2d48; --accent-ink: #ffffff; --accent-soft: #feecef; --accd: #d01b35;
+  --track: #e5e5ea; --grey: #8e8e93;
+  --positive: #248a3d; --negative: #d70015; --pos-bg: #e8f8ec; --neg-bg: #ffebee;
+  --btn-ink: #ffffff;
+  --sf: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --display: var(--sf); --sans: var(--sf); --serif: var(--sf);
+  --a1: #ff3b30; --a1d: #c4261c; --a1s: #ffeceb;
+  --a2: #ff9500; --a2d: #b86b00; --a2s: #fff4e5;
+  --b1: #ffcc00; --b1d: #8f6f00; --b1s: #fff9db;
+  --b2: #34c759; --b2d: #1f8a3b; --b2s: #e8f8ec;
+  --c1: #007aff; --c1d: #0058c4; --c1s: #e6f1ff;
+  --c2: #af52de; --c2d: #8338ad; --c2s: #f6ecfb;
+  --st1: #f2f2f7; --st2: #e5e5ea; --st3: #c7c7cc; --st4: #8e8e93; --st5: #fa2d48;
+  --am-glass: rgba(249, 249, 251, .72);
+  --am-spring: cubic-bezier(.32, .72, 0, 1);
+  accent-color: var(--accent);
+}
+html.am.dark {
+  --ground: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --raised: #1c1c1e;
+  --border: #38383a; --rule: #2c2c2e; --control: #48484a;
+  --ink: #ffffff; --muted: #98989f; --faint: #8d8d93;
+  --accent: #ff375f; --accent-ink: #ffffff; --accent-soft: #3a1520; --accd: #ff6482;
+  --track: #38383a; --positive: #30d158; --negative: #ff453a; --pos-bg: #0f2e18; --neg-bg: #3a1311;
+  --a1: #ff453a; --a2: #ff9f0a; --b1: #ffd60a; --b2: #30d158; --c1: #0a84ff; --c2: #bf5af2;
+  --a1d: #ff8079; --a1s: #3a1311; --a2d: #ffbf5c; --a2s: #3a2606; --b1d: #ffe066; --b1s: #362c03;
+  --b2d: #6ce38a; --b2s: #0f2e18; --c1d: #66b0ff; --c1s: #0a2340; --c2d: #d79bf7; --c2s: #2c1438;
+  --st1: #1c1c1e; --st2: #2c2c2e; --st3: #48484a; --st4: #8d8d93; --st5: #ff375f;
+  --am-glass: rgba(28, 28, 30, .72);
+}
+html.am.dark.oled { --ground: #000; --surface: #121214; --surface-2: #1c1c1e; --raised: #121214; }
+html.am[data-accent] { --accent: #fa2d48; --accd: #d01b35; --accent-soft: #feecef; }
+html.am.dark[data-accent] { --accent: #ff375f; --accd: #ff6482; --accent-soft: #3a1520; }
+
+/* ---------- Yazı: SF, büyük başlık ---------- */
+html.am body { font-family: var(--sf); font-size: 16px; letter-spacing: -.01em; background: var(--ground); -webkit-font-smoothing: antialiased; }
+html.am h1, html.am h2, html.am h3, html.am .font-display { font-family: var(--sf); font-weight: 700; letter-spacing: -.022em; }
+html.am .page-title { font-family: var(--sf); font-weight: 700; font-size: 34px; letter-spacing: -.025em; line-height: 1.1; }
+html.am .tabular, html.am .stat-pill { font-variant-numeric: tabular-nums; }
+html.am ::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+html.am :focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; border-radius: 10px; }
+html.am body { caret-color: var(--accent); }
+
+/* ---------- iOS bileşenleri ---------- */
+html.am .glass, html.am .panel, html.am .k-tile { background: var(--surface); border: 0; border-radius: 14px; box-shadow: none; }
+html.am .row-card { background: var(--surface); border: 0; border-radius: 12px; }
+html.am .row-card .rc-ic { width: 32px; height: 32px; border-radius: 8px; background: var(--accent); color: #fff; }
+html.am .row-card.hot { background: var(--accent-soft); }
+html.am .panel-head h2 { font-family: var(--sf); font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+html.am .btn, html.am .btn-red, html.am .btn-ghost { font-family: var(--sf); font-weight: 600; border-radius: 999px; min-height: 48px; font-size: 16px; letter-spacing: -.01em; transition: transform .2s var(--am-spring), opacity .2s; }
+html.am .btn:active { transform: scale(.96); opacity: .85; }
+html.am .btn:not(.btn-ghost):not(.btn-red) { background: var(--accent); color: #fff; }
+html.am .btn.btn-ghost, html.am .btn-ghost, html.am.dark .btn-ghost { background: var(--surface-2); color: var(--accent); }
+html.am .btn-sm { min-height: 34px; font-size: 14px; }
+html.am .tabs { background: var(--surface-2); border-radius: 10px; padding: 2px; }
+html.am .tab { border-radius: 8px; font-weight: 600; font-size: 14px; }
+html.am .tab.active { background: var(--ground); color: var(--ink); box-shadow: 0 3px 8px rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.04); }
+html.am.dark .tab.active { background: #636366; }
+html.am .chip { background: var(--surface-2); color: var(--ink); border-radius: 999px; font-weight: 600; }
+html.am .lvl-badge { background: var(--lv, var(--accent)); color: #fff; border-radius: 6px; font-weight: 700; }
+html.am .bar { background: var(--track); border-radius: 99px; }
+html.am .bar > div { background: var(--accent); border-radius: 99px; }
+html.am .pill-input, html.am #app .pill-input, html.am .sheet .pill-input, html.am #lesson .pill-input, html.am #tutorPanel .pill-input { border-radius: 12px; background: var(--surface); border: 1px solid transparent; }
+html.am .pill-input:focus { border-color: var(--accent); box-shadow: none; background: var(--ground); }
+html.am .icon-btn { border-radius: 999px; background: var(--surface); border: 0; color: var(--accent); }
+html.am .sheet { border-radius: 14px 14px 0 0; }
+@media (min-width: 961px) { html.am .sheet { border-radius: 16px; } }
+html.am .stat-pill { background: none; border: 0; font-weight: 600; font-size: 15px; padding: 0 4px; }
+html.am .guide .tip { border-left: 0; border-radius: 12px; background: var(--b1s); color: var(--ink); font-weight: 500; }
+html.am .guide .hl { padding: 0; }
+html.am .ds-pick.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 560px) { html.am .ds-pick.five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+html.am .ds-opt { border: 0; background: none; padding: 0; box-shadow: none !important; font-weight: 500; }
+html.am .ds-opt .ds-prev { border-radius: 12px; }
+html.am .ds-opt.on .ds-prev { box-shadow: 0 0 0 2px var(--ground), 0 0 0 4px var(--accent); }
+html.am .ds-opt.on { color: var(--accent); font-weight: 600; }
+.ds-prev.amp { background: linear-gradient(135deg, #ff5e62, #fa2d48 45%, #af52de); position: relative; }
+.ds-prev.amp i { position: absolute; left: 10%; right: 10%; bottom: 8px; height: 12px; border-radius: 99px; background: rgba(255,255,255,.75); }
+
+/* ---------- Kabuk: Mac'teki gibi yarı saydam kenar çubuğu, telefonda yüzen cam menü ---------- */
+@media (min-width: 961px) {
+  html.am #app { grid-template-columns: 240px minmax(0, 1fr); }
+  html.am #sidebar { background: color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter: blur(30px); backdrop-filter: blur(30px); border-right: 1px solid var(--rule); padding: 22px 10px 16px; }
+  html.am .brand b { font-family: var(--sf); font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+  html.am .brand-logo { background: linear-gradient(160deg, #ff5e62, var(--accent)); color: #fff; border-radius: 10px; }
+  html.am .nav-group { font: 600 12px/1 var(--sf); color: var(--faint); letter-spacing: 0; text-transform: none; padding: 16px 12px 6px; }
+  html.am #sideNav .nav-item { height: 34px; border-radius: 8px; font-weight: 500; font-size: 14.5px; color: var(--ink); gap: 10px; }
+  html.am #sideNav .nav-item i { color: var(--accent); width: 18px; text-align: center; }
+  html.am #sideNav .nav-item:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  html.am #sideNav .nav-item.active, html.am.dark #sideNav .nav-item.active { background: color-mix(in srgb, var(--ink) 9%, transparent); color: var(--ink); box-shadow: none; font-weight: 600; }
+  html.am #sideNav .nav-item.active i { color: var(--accent); }
+  html.am #main { padding: 26px 40px 130px; max-width: 1400px; }
+  html.am #tutorFab { background: var(--am-glass); color: var(--accent); -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8); border: 1px solid color-mix(in srgb, var(--border) 70%, transparent); box-shadow: 0 10px 30px -10px rgba(0,0,0,.25); }
+}
+@media (max-width: 960px) {
+  html.am #topbar, html.am.dark #topbar { background: var(--ground); border: 0; padding-top: 6px; }
+  html.am #topbar .page-title { font-size: 34px; }
+  html.am #bottomNav, html.am.dark #bottomNav { left: 16px; right: 16px; background: var(--am-glass) !important; -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); border: 1px solid color-mix(in srgb, var(--border) 60%, transparent); border-radius: 999px; box-shadow: 0 12px 34px -12px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.5); }
+  html.am.dark #bottomNav { box-shadow: 0 12px 34px -12px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08); }
+  html.am .bn-item { color: var(--ink); font-weight: 500; font-size: 10.5px; border-radius: 999px; }
+  html.am .bn-item.active, html.am.dark .bn-item.active { color: var(--accent); background: color-mix(in srgb, var(--ink) 7%, transparent); }
+  html.am .bn-item.active i { color: var(--accent); }
+  html.am .bn-item::before { display: none; }
+}
+
+/* ---------- Kapaklar: her ünitenin seviye renginden albüm kapağı ---------- */
+.am-cv { position: relative; display: block; aspect-ratio: 1; border-radius: 10px; overflow: hidden; color: #fff; isolation: isolate; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 22px -12px rgba(0,0,0,.35); }
+.am-cv::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(0,0,0,.32), transparent 55%); }
+.am-cv-lv { position: absolute; left: 10px; top: 9px; font: 800 13px/1 var(--sf); letter-spacing: -.01em; opacity: .95; }
+.am-cv-t { position: absolute; left: 10px; right: 10px; bottom: 10px; font: 700 17px/1.08 var(--sf); letter-spacing: -.025em; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.am-cv i.fa-solid { position: absolute; right: 10px; top: 10px; font-size: 16px; opacity: .9; }
+.am-cv.xl { border-radius: 14px; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 24px 50px -24px rgba(0,0,0,.45); }
+.am-cv.xl .am-cv-lv { left: 18px; top: 16px; font-size: 22px; }
+.am-cv.xl .am-cv-t { left: 18px; right: 18px; bottom: 16px; font-size: 30px; }
+.am-cv.sm { border-radius: 8px; box-shadow: 0 2px 6px -2px rgba(0,0,0,.3); }
+.am-cv.sm .am-cv-lv { left: 5px; top: 5px; font-size: 9px; }
+.am-cv.sm .am-cv-t { display: none; }
+.am-cv.lock { filter: saturate(.25) brightness(1.08); opacity: .75; }
+
+/* ---------- Ana sayfa: öne çıkan + raflar ---------- */
+.am-home { display: grid; gap: 30px; }
+.am-hero { position: relative; display: block; width: 100%; min-height: 300px; border-radius: 16px; overflow: hidden; color: #fff; text-align: left; padding: 22px; border: 0; cursor: pointer; isolation: isolate; box-shadow: 0 30px 60px -36px rgba(0,0,0,.55); transition: transform .35s var(--am-spring); }
+.am-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(0,0,0,.4), transparent 62%); }
+.am-hero:active { transform: scale(.985); }
+.am-hero .am-hw { position: absolute; inset: 18px 18px auto 22px; z-index: -1; font: 800 clamp(40px, 9vw, 76px)/.9 var(--sf); letter-spacing: -.05em; opacity: .16; overflow: hidden; max-height: 55%; }
+.am-hero h2 { position: absolute; left: 22px; right: 22px; bottom: 92px; font: 800 clamp(32px, 6vw, 46px)/1 var(--sf); letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.am-hero p { position: absolute; left: 22px; right: 22px; bottom: 66px; margin: 0; font-size: 15px; font-weight: 500; opacity: .9; }
+.am-play { position: absolute; left: 22px; bottom: 18px; height: 40px; padding: 0 18px 0 14px; border-radius: 999px; background: rgba(255,255,255,.92); color: #000; display: inline-flex; align-items: center; gap: 8px; font: 600 15px var(--sf); }
+.am-play i { color: var(--accent); }
+.am-sh { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 12px; }
+.am-sh h2 { font: 700 22px/1.15 var(--sf); letter-spacing: -.022em; margin: 0; display: flex; align-items: center; gap: 6px; }
+.am-sh h2 i { font-size: 14px; color: var(--faint); }
+.am-sh button { border: 0; background: none; color: var(--accent); font: 500 16px var(--sf); cursor: pointer; padding: 4px 0; }
+.am-row { display: grid; grid-auto-flow: column; grid-auto-columns: 160px; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -16px; padding: 0 16px 6px; scroll-padding: 0 16px; }
+.am-row::-webkit-scrollbar { display: none; }
+.am-it { scroll-snap-align: start; display: block; text-align: left; border: 0; background: none; padding: 0; color: var(--ink); cursor: pointer; min-width: 0; }
+.am-it:active .am-cv { transform: scale(.97); }
+.am-it .am-cv { transition: transform .3s var(--am-spring); }
+.am-it b { display: block; font: 500 14px/1.25 var(--sf); margin-top: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.01em; }
+.am-it small { display: block; font: 400 13px/1.25 var(--sf); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.am-it .am-pg { display: block; height: 3px; border-radius: 3px; background: var(--track); margin-top: 7px; overflow: hidden; }
+.am-it .am-pg i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.am-mix { display: block; aspect-ratio: 1; border-radius: 10px; position: relative; overflow: hidden; color: #fff; padding: 12px; box-shadow: 0 8px 22px -12px rgba(0,0,0,.35); }
+.am-mix b { position: absolute; left: 12px; right: 12px; bottom: 12px; font: 800 22px/1 var(--sf); letter-spacing: -.035em; }
+.am-mix span { position: absolute; left: 12px; top: 12px; font: 600 12px var(--sf); opacity: .9; }
+.am-mix i.fa-solid { position: absolute; right: 12px; top: 12px; font-size: 18px; opacity: .9; }
+/* iOS gruplu liste */
+.am-list { background: var(--surface); border-radius: 12px; overflow: hidden; }
+.am-li { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 16px; border: 0; background: none; color: var(--ink); text-align: left; font: 400 16px var(--sf); position: relative; cursor: pointer; }
+.am-li + .am-li::before { content: ""; position: absolute; left: 60px; right: 0; top: 0; height: 1px; background: var(--rule); }
+.am-li .am-ic { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-size: 15px; flex-shrink: 0; }
+.am-li .am-lm { flex: 1; min-width: 0; }
+.am-li .am-lm small { display: block; color: var(--muted); font-size: 13px; margin-top: 1px; }
+.am-li .am-le { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
+.am-li .am-le i { font-size: 13px; color: var(--faint); }
+.am-li.done .am-lm b { color: var(--muted); text-decoration: line-through; }
+.am-idiom { font: 700 26px/1.12 var(--sf); letter-spacing: -.025em; margin: 0 0 6px; }
+
+/* ---------- Öğren: seviye albümü ---------- */
+.am-seg { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px 22px; padding: 0 16px; }
+.am-seg::-webkit-scrollbar { display: none; }
+.am-seg button { flex: 0 0 auto; height: 34px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--surface); color: var(--ink); font: 600 15px var(--sf); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.am-seg button i { font-size: 11px; color: var(--faint); }
+.am-seg button.on { background: var(--ink); color: var(--ground); }
+.am-seg button.on i { color: var(--ground); }
+.am-album { display: grid; gap: 22px; }
+.am-ah { display: grid; gap: 18px; justify-items: center; text-align: center; }
+.am-ah .am-cv { width: min(64vw, 270px); }
+.am-ah h2 { font: 700 24px/1.15 var(--sf); letter-spacing: -.022em; margin: 0; }
+.am-ah .am-by { color: var(--accent); font: 500 20px/1.2 var(--sf); margin-top: 2px; letter-spacing: -.02em; }
+.am-ah .am-meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.am-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 420px; }
+.am-acts .btn, .am-acts .btn-ghost { border-radius: 12px !important; background: var(--surface) !important; color: var(--accent) !important; min-height: 48px; }
+.am-tracks { border-top: 1px solid var(--rule); }
+.am-tr { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; padding: 12px 2px; border: 0; border-bottom: 1px solid var(--rule); background: none; color: var(--ink); text-align: left; cursor: pointer; font-family: var(--sf); }
+.am-tr .am-tn { color: var(--muted); font-size: 16px; text-align: center; font-variant-numeric: tabular-nums; }
+.am-tr .am-tm b { display: block; font-weight: 400; font-size: 16px; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.am-tr .am-tm small { display: block; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.am-tr .am-te { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 10px; }
+.am-tr .am-te .fa-ellipsis { color: var(--accent); font-size: 16px; }
+.am-tr.cur .am-tm b { color: var(--accent); font-weight: 600; }
+.am-tr.done .am-tn { color: var(--accent); }
+.am-tr.lock { cursor: default; }
+.am-tr.lock .am-tm b, .am-tr.lock .am-tn { color: var(--faint); }
+.am-tr:hover:not(.lock) { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.am-foot { color: var(--muted); font-size: 13px; line-height: 1.5; }
+/* Çalıyor göstergesi: ekolayzer çubukları */
+.am-eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.am-eq i { width: 3px; height: 100%; border-radius: 1px; background: var(--accent); transform-origin: bottom; animation: amEq 1.1s ease-in-out infinite; }
+.am-eq i:nth-child(2) { animation-delay: -.4s; } .am-eq i:nth-child(3) { animation-delay: -.75s; }
+@keyframes amEq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+@media (min-width: 961px) {
+  .am-album { grid-template-columns: 300px minmax(0, 1fr); align-items: start; gap: 40px; }
+  .am-ah { justify-items: start; text-align: left; position: sticky; top: 26px; }
+  .am-ah .am-cv { width: 300px; }
+  .am-acts { grid-template-columns: 1fr 1fr; }
+  .am-row { grid-auto-columns: 184px; gap: 20px; margin: 0; padding: 0 0 6px; }
+  .am-hero { min-height: 360px; }
+  .am-home .am-two { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: start; }
+}
+
+/* ---------- Mini oynatıcı ---------- */
+#amMini { position: fixed; z-index: 58; left: 16px; right: 16px; bottom: calc(var(--nav-h) + 18px + env(safe-area-inset-bottom)); height: 58px; border-radius: 16px; display: flex; align-items: center; gap: 12px; padding: 0 8px 0 9px; background: var(--am-glass); -webkit-backdrop-filter: blur(26px) saturate(1.8); backdrop-filter: blur(26px) saturate(1.8); border: 1px solid color-mix(in srgb, var(--border) 60%, transparent); box-shadow: 0 14px 34px -14px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.45); color: var(--ink); cursor: pointer; animation: amUp .45s var(--am-spring) both; }
+#amMini .am-cv { width: 40px; flex-shrink: 0; }
+#amMini .am-mm { flex: 1; min-width: 0; }
+#amMini .am-mm b { display: block; font: 600 15px/1.2 var(--sf); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.01em; }
+#amMini .am-mm small { display: block; font: 400 13px/1.2 var(--sf); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#amMini button { width: 44px; height: 44px; border-radius: 50%; border: 0; background: none; color: var(--ink); font-size: 20px; cursor: pointer; display: grid; place-items: center; }
+#amMini button:active { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+@keyframes amUp { from { transform: translateY(18px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (min-width: 961px) { #amMini { left: calc(240px + 40px); right: auto; width: min(460px, calc(100vw - 240px - 260px)); bottom: 24px; } }
+html.dark #amMini { box-shadow: 0 14px 34px -14px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08); }
+
+/* ---------- Ünite penceresi: kapak renginde başlık, segment sekmeler ---------- */
+html.am .us-head { color: #fff; border-bottom: 0; }
+html.am .us-top .smallcaps { color: #fff; opacity: .9; font: 700 13px var(--sf); letter-spacing: 0; text-transform: none; }
+html.am .us-x { background: rgba(255,255,255,.22); color: #fff; }
+html.am .us-de { font: 800 clamp(30px, 4.4vw, 40px)/1.02 var(--sf); letter-spacing: -.035em; color: #fff; }
+html.am .us-tr, html.am .us-meta, html.am .us-meta i { color: rgba(255,255,255,.9); }
+html.am .us-tabs { background: rgba(255,255,255,.2); border-radius: 10px; }
+html.am .us-tabs .tab { color: #fff; }
+html.am .us-tabs .tab.active { background: #fff; color: #000; box-shadow: 0 3px 8px rgba(0,0,0,.15); }
+html.am .us-s, html.am .us-pc { background: var(--surface); border: 0; border-radius: 12px; }
+html.am .us-s-de, html.am .us-w-de { font-family: var(--sf); font-weight: 600; letter-spacing: -.015em; }
+html.am .us-pc > i:first-child { background: var(--accent); color: #fff; border-radius: 8px; }
+html.am .us-ai { background: var(--surface); border-radius: 12px; }
+html.am .us-ai-t { color: var(--ink); }
+html.am .us-skip { color: var(--accent); }
+html.am .us-foot { background: var(--am-glass); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+
+/* ---------- Ders ekranı: sade beyaz, ince ilerleme, kapsül düğmeler ---------- */
+html.am #lesson { background: var(--ground); }
+html.am #lesson .progress { height: 4px; background: var(--track); }
+html.am #lesson .progress > div { background: var(--accent); }
+html.am #lesson .ls-kind { color: var(--muted); font: 600 13px var(--sf); letter-spacing: 0; text-transform: none; }
+html.am #lesson .ls-q { font: 700 clamp(24px, 6.4vw, 32px)/1.15 var(--sf); letter-spacing: -.025em; }
+html.am #lesson .opt, html.am #gameArea .opt { background: var(--surface); border: 0; border-radius: 14px; font-weight: 500; }
+html.am #lesson .opt.sel { box-shadow: inset 0 0 0 2px var(--accent); background: var(--accent-soft); }
+html.am #lesson .hl, html.am .ls-q .hl { background: var(--accent-soft); color: var(--accd); box-shadow: none; border-radius: 6px; }
+html.am .tok { border-radius: 10px; border: 0; background: var(--surface); box-shadow: none; font-weight: 600; }
+html.am #lesson .ls-foot.ok { background: var(--pos-bg); }
+html.am #lesson .ls-foot.bad { background: var(--neg-bg); }
+@media (prefers-reduced-motion: reduce) {
+  .am-eq i { animation: none; transform: scaleY(.7); }
+  #amMini { animation: none; }
+  .am-hero, .am-it .am-cv, html.am .btn { transition: none; }
+}
+
+html.am .am-home { grid-template-columns: minmax(0, 1fr); }
+html.am .am-home > *, html.am .am-album > * { min-width: 0; }
+html.am #topbar .page-title { font-weight: 700 !important; letter-spacing: -.025em; }
+
+html.am #lesson .ls-body .ls-kind { display: none; }
+html.am .fx-kind { font: 600 13px/1 var(--sf); padding: 7px 11px; border-radius: 999px; background: var(--surface); color: var(--muted); white-space: nowrap; }
+html.am .us-top { justify-content: flex-end; }
+html.am .us-top .smallcaps { display: none; }
+html.am .us-meta .fx-lvm { font: 700 12px/1 var(--sf); padding: 5px 8px; border-radius: 6px; background: rgba(255,255,255,.95); color: #000; }
+
+/* ---------- İnceleme düzeltmeleri (Cam) ---------- */
+.am-lt { display: none; font: 700 34px/1.1 var(--sf); letter-spacing: -.025em; margin: 0 0 -8px; }
+@media (min-width: 961px) { .am-lt { display: block; } }
+.am-hero h2 { letter-spacing: -.03em; right: 22px; }
+.am-hcv { display: none; }
+@media (min-width: 961px) {
+  .am-hero h2, .am-hero p { right: 340px; }
+  .am-hcv { display: block; position: absolute; right: 34px; top: 50%; width: 270px; transform: translateY(-50%); }
+  .am-hcv .am-cv { box-shadow: 0 30px 60px -20px rgba(0,0,0,.55); }
+  .am-row { grid-auto-columns: minmax(180px, 1fr); grid-auto-flow: column; }
+  .am-row:has(> :nth-child(6)) { grid-auto-columns: 184px; }
+}
+/* Seviye düğmeleri: kendi rengi + ilerleme */
+.am-seg button { height: auto; padding: 8px 14px 9px; flex-direction: column; align-items: flex-start; gap: 2px; border-radius: 14px; position: relative; min-width: 76px; font-size: 16px; }
+.am-seg button .am-sd { position: absolute; right: 10px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--h); }
+.am-seg button small { font: 500 12px var(--sf); color: var(--muted); font-variant-numeric: tabular-nums; }
+.am-seg button small i { font-size: 10px; }
+.am-seg .am-sp { display: block; width: 100%; height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--h) 18%, transparent); overflow: hidden; margin-top: 4px; }
+.am-seg .am-sp i { display: block; height: 100%; background: var(--h); }
+.am-seg button.on { background: color-mix(in srgb, var(--h) 14%, var(--ground)); color: var(--ink); box-shadow: inset 0 0 0 2px var(--h); }
+.am-seg button.on small { color: var(--muted); }
+/* iOS anahtarları */
+html.am input[type=checkbox] { -webkit-appearance: none; appearance: none; width: 51px; height: 31px; border-radius: 999px; background: var(--surface-2); position: relative; cursor: pointer; flex-shrink: 0; transition: background-color .25s var(--am-spring); margin: 0; border: 0; }
+html.am input[type=checkbox]::after { content: ""; position: absolute; left: 2px; top: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,.15), 0 1px 1px rgba(0,0,0,.16); transition: transform .3s var(--am-spring); }
+html.am input[type=checkbox]:checked { background: var(--positive); }
+html.am input[type=checkbox]:checked::after { transform: translateX(20px); }
+html.am.dark input[type=checkbox] { background: #39393d; }
+html.am.dark input[type=checkbox]:checked { background: var(--positive); }
+/* Ayarlar satırları: iOS gruplu liste */
+html.am label.between { margin-top: 0 !important; padding: 11px 0; border-bottom: 1px solid var(--rule); min-height: 44px; }
+html.am label.between b { font-weight: 400; }
+html.am .section-title { font: 600 13px var(--sf); color: var(--muted); text-transform: uppercase; letter-spacing: .02em; }
+/* Pratik ve Araçlar: tek parça gruplu liste */
+html.am .hub { gap: 0 !important; background: var(--surface); border-radius: 12px; overflow: hidden; }
+html.am .hub .row-card { border-radius: 0; background: none; position: relative; min-height: 60px; }
+html.am .hub .row-card::before { content: ""; position: absolute; left: 60px; right: 0; top: 0; height: 1px; background: var(--rule); }
+html.am .hub .row-card:first-child::before { display: none; }
+@media (min-width: 961px) { html.am .hub .row-card:nth-child(2)::before { display: none; } }
+html.am .hub .row-card:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+html.am .hub-h { font: 600 13px var(--sf); color: var(--muted); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 8px 16px; }
+/* Ders: dokunmatikte kısayol numaraları gizli; ünite penceresinde meta satırı kırılmasın */
+@media (hover: none) { html.am #lesson .opt .k { display: none; } }
+html.am .us-meta { gap: 6px 12px; }
+html.am .us-meta span { white-space: nowrap; }
+
+/* Masaüstünde mini oynatıcı Mac'teki gibi üst şeritte, içeriğin üstünde yüzmez */
+@media (min-width: 961px) { #amMini { top: 14px; bottom: auto; left: calc(240px + (100vw - 240px) / 2); transform: translateX(-50%); width: min(440px, calc(100vw - 240px - 420px)); height: 52px; animation: none; } }
+@media (max-width: 420px) { html.am .us-meta span:last-child { display: none; } }
+
+/* AI Öğretmen: masaüstünde de üst şeritte bir simge, içeriğin üstünde yüzen düğme yok */
+html.am #tutorFab { display: none !important; }
+html.am .tutor-top { display: inline-flex !important; background: var(--surface) !important; color: var(--accent) !important; }
+
+/* Okunurluk: açık modda pembe yazılar bir ton koyu (AA) */
+html.am:not(.dark) .am-sh button, html.am:not(.dark) .am-ah .am-by, html.am:not(.dark) .am-tr.cur .am-tm b, html.am:not(.dark) .btn.btn-ghost, html.am:not(.dark) .btn-ghost,
+html.am:not(.dark) .us-skip, html.am:not(.dark) .ds-opt.on, html.am:not(.dark) .bn-item.active, html.am:not(.dark) .icon-btn { color: var(--accd); }
+html.am:not(.dark) .am-acts .btn, html.am:not(.dark) .am-acts .btn-ghost { color: var(--accd) !important; }
+html.am .nav-group { color: var(--muted); }
 </style>
 
 
@@ -5763,6 +6370,321 @@ async function freeAI() {
   try { box.innerHTML = `<div class="ai-box">${md(await aiText(`Öğrenci “${f.u.t}” (${f.u.de}, ${f.L.id}) ünitesinde şu Almanca metni yazdı:\n"""${r.given}"""\nHedef kelimeler: ${r.it.a}.\n1) Metnin düzeltilmiş hâlini yaz. 2) Her hatayı Türkçe, kısa maddelerle açıkla (kural + doğru biçim). Hata yoksa öv. 3) Metni bu ünitenin konusuyla zenginleştiren bir örnek cümle öner (Almanca + Türkçe). Kısa tut.`, tutorSys()))}</div>`; }
   catch (e) { box.innerHTML = `<div class="ai-box">${aiErr(e)}</div>`; }
 }
+
+/* =====================================================================
+   AKIŞ ekranları (html.fx): dikey akış. Her ünite ekranı tek başına doldurur, sıradaki bir kaydırma ötede.
+   Yeni varsayılan tasarım; Briefmarke, Bauhaus ve Herbaryum Ayarlar > Tasarım'dan seçilebilir.
+   ===================================================================== */
+const isFx = () => document.documentElement.classList.contains('fx');
+// Her seviye alanında yazı rengi (fi) ve beyaz düğme üstündeki koyu ton (d); B1 sarısında yazı koyu
+const FX_TONE = { a1: ['#fff', '#a3201a'], a2: ['#fff', '#9a4304'], b1: ['#1a1400', '#f2b200'], b2: ['#fff', '#07683b'], c1: ['#fff', '#1c3dcc'], c2: ['#fff', '#5925c2'] };
+const fxVars = L => { const [fi, d] = FX_TONE[L.color] || FX_TONE.a1; return `--f:var(--${L.color});--fs:var(--${L.color}s);--fdk:var(--${L.color}d);--fi:${fi};--fd2:${d};--lv:var(--${L.color});--lvd:var(--${L.color}d);--lvs:var(--${L.color}s)`; };
+const fxReduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fxWords = u => `<div class="fx-words" aria-hidden="true">${u.v.slice(0, 5).map(v => `<span>${esc(v[0])}</span>`).join('')}</div>`;
+function fxOpen(id, k) { openUnit(id); const t = document.querySelectorAll('.us-tabs .tab')[{ g: 0, v: 1, s: 2, p: 3 }[k]]; if (t) unitTab(t, k); }
+function fxRail(u) {
+  const b = (ic, t, js, extra = '') => `<button class="fx-rb" ${extra} onclick="${js}" aria-label="${t}"><i class="fa-solid ${ic}"></i>${t}</button>`;
+  return `<div class="fx-rail">${b('fa-volume-high', 'Dinle', 'this.classList.add(\'on\');say(this.dataset.say);setTimeout(()=>this.classList.remove(\'on\'),900)', `data-say="${esc(u.s[0][0])}"`)}${b('fa-book-open', 'Konu', `fxOpen('${u.id}','g')`)}${b('fa-spell-check', 'Kelime', `fxOpen('${u.id}','v')`)}${b('fa-pen-nib', 'Pratik', `fxOpen('${u.id}','p')`)}</div>`;
+}
+// Ünite slaytı: renk alanı + dev başlık + altta açıklama ve ilerleme + sağda simge rayı
+function fxUnitSlide(L, li, u, ui, nu) {
+  const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, cur = nu && !nu.boss && nu.u.id === u.id;
+  const seen = (D.fxSeen || {})[u.id], fresh = cur && !seen;
+  const segs = L.units.map((x, i) => `<i class="${D.done[x.id] != null ? 'on' : i === ui ? 'cur' : ''}"></i>`).join('');
+  const n = un ? buildUnitItems(u, L).length : 0;
+  const act = !un ? `<button class="fx-go" onclick="toast('Önce önceki üniteyi geç','warn')"><i class="fa-solid fa-lock"></i> Kilitli</button>`
+    : `<button class="fx-go" onclick="fxSeen('${u.id}');openUnit('${u.id}')">${dn ? '<i class="fa-solid fa-rotate"></i> Tekrar çalış' : '<i class="fa-solid fa-play"></i> ' + (cur ? 'Devam et' : 'Başla')}</button>`;
+  return `<section class="fx-slide fx-field ${un ? '' : 'lock'} ${cur ? 'cur' : ''}" data-li="${li}" data-id="${u.id}" style="${fxVars(L)}" aria-label="${esc(u.de)} · ${esc(u.t)}">
+    ${fxWords(u)}
+    <div class="fx-cap"><h2 class="fx-title" lang="de">${esc(u.de)}</h2>
+      <p class="fx-sub">${esc(u.t)}${un ? ` · ${n} etkinlik · ~${Math.max(3, Math.round(n * .6))} dk` : ' · önceki üniteyi %80 ile geçince açılır'}</p>
+      <div class="fx-author"><span class="fx-lv">${L.id}</span>${esc(L.tr)} · ${ui + 1}/${L.units.length}${dn ? ` · <span class="tabular">%${Math.round(D.done[u.id] * 100)}</span> <i class="fa-solid fa-circle-check"></i>` : ''}${fresh ? ' <span class="fx-new">Yeni</span>' : ''}</div>
+      <div class="fx-segs" aria-hidden="true">${segs}</div>${act}</div>
+    ${un ? fxRail(u) : ''}</section>`;
+}
+function fxBossSlide(L, li, nu) {
+  const open = bossUnlocked(li), done = !!D.boss[L.id], cur = nu && nu.boss && nu.li === li, sc = D.bossScore && D.bossScore[L.id];
+  return `<section class="fx-slide fx-field ${open ? '' : 'lock'} ${cur ? 'cur' : ''}" data-li="${li}" style="${fxVars(L)}" aria-label="${L.id} seviye sonu sınavı">
+    <div class="fx-words" aria-hidden="true"><span>Prüfung</span><span>${L.id}</span><span>${esc(L.name.split(' ')[0])}</span></div>
+    <div class="fx-cap" style="right:20px"><h2 class="fx-title" lang="de">Abschlussprüfung ${L.id}</h2>
+      <p class="fx-sub">15 soru · baraj %80 · ${LEVELS[li + 1] ? 'geçince ' + LEVELS[li + 1].id + ' açılır' : 'geçince Almanca ustası olursun'}</p>
+      <div class="fx-author"><span class="fx-lv">${L.id}</span>Seviye sonu${done ? ' · geçildi' + (sc ? ` · <span class="tabular">%${sc.score}</span>` : '') : ''}</div>
+      ${open ? `<button class="fx-go" onclick="startBoss(${li})"><i class="fa-solid fa-award"></i> ${done ? 'Yeniden gir' : 'Sınava gir'}</button>${done ? `<button class="fx-go" style="margin-top:8px;background:transparent;color:var(--fi);box-shadow:inset 0 0 0 1.5px var(--fi)" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i> Sertifika</button>` : ''}`
+        : `<button class="fx-go" onclick="toast('Sınav için bütün üniteleri geç','warn')"><i class="fa-solid fa-lock"></i> Bütün üniteleri geçince açılır</button>`}</div></section>`;
+}
+function fxSeen(id) { if (RO || !D) return; D.fxSeen = D.fxSeen || {}; if (!D.fxSeen[id]) { D.fxSeen[id] = 1; save(); } }
+// Yolculuk rayı: telefonda yatay seviye çipleri, masaüstünde dikey liste
+function fxJourney(onClick) {
+  return `<div class="fx-jour" role="list">${LEVELS.map((L, li) => {
+    const open = levelUnlocked(li), n = L.units.filter(u => D.done[u.id] != null).length + (D.boss[L.id] ? 1 : 0), tot = L.units.length + 1;
+    return `<button class="fx-jl ${open ? '' : 'locked'} ${li === currentLevelIdx() ? 'now' : ''}" role="listitem" data-li="${li}" style="${fxVars(L)};--p:${Math.round(n / tot * 100)}%;--n:${tot}" onclick="${onClick ? onClick(li) : `go('learn');setTimeout(()=>fxJump(${li}),60)`}" aria-label="${L.id} ${L.tr}: ${n}/${tot}"><span class="fx-jb">${L.id}</span><span class="fx-jt">${esc(L.tr)}</span><span class="fx-jn">${open ? n + '/' + tot : '<i class="fa-solid fa-lock"></i>'}</span><span class="fx-jbar"><i style="width:${Math.round(n / tot * 100)}%"></i></span></button>`;
+  }).join('')}</div>`;
+}
+function fxTotals() { const tot = LEVELS.reduce((a, L) => a + L.units.length, 0), d = lessonsDone(D); return `<div class="fx-total"><b class="tabular">${d}/${tot}</b><span>ünite · %${Math.round(d / tot * 100)} yol alındı</span></div>`; }
+
+/* ---------- Ana sayfa: akış ---------- */
+const _homeFx = VIEWS.home;
+VIEWS.home = () => {
+  if (!isFx()) return _homeFx();
+  ensureQuests();
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, h = new Date().getHours(), hi = h < 11 ? 'Guten Morgen' : h < 18 ? 'Guten Tag' : 'Guten Abend';
+  const nu = nextUnit(), dueC = D.cards.filter(c => c.due <= Date.now()), dailyDone = D.daily && D.daily[today()] != null;
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length];
+  const first = !nu ? `<section class="fx-slide fx-plain"><h2>Bütün yol bitti.</h2><p class="fx-lead">A1'den C2'ye bütün üniteleri ve sınavları geçtin. Tekrar kutusu ve pratikler seni bekliyor.</p><div class="fx-foot"><button class="btn" onclick="go('review')">Tekrara geç</button></div></section>`
+    : nu.boss ? fxBossSlide(LEVELS[nu.li], nu.li, nu) : fxUnitSlide(LEVELS[nu.li], nu.li, nu.u, nu.ui, nu);
+  const review = `<section class="fx-slide fx-plain"><h2>${dueC.length ? 'Tekrar zamanı' : 'Tekrar kutusu boş'}</h2>
+    <p class="fx-lead">${dueC.length ? `<span class="tabular">${dueC.length}</span> kart unutulmadan önce seni bekliyor.` : 'Yeni kartlar ünite bitirdikçe gelir. Şimdilik dinlen.'}</p>
+    ${dueC.length ? `<ul class="fx-stack">${dueC.slice(0, 4).map(c => `<li><b lang="de">${esc(c.de)}</b><span>${esc(c.tr)}</span></li>`).join('')}</ul>` : ''}
+    <div class="fx-foot"><button class="btn" onclick="go('review')"><i class="fa-solid fa-layer-group"></i> ${dueC.length ? 'Tekrara başla' : 'Kutuyu aç'}</button></div></section>`;
+  const daily = `<section class="fx-slide fx-plain" style="background:var(--c1s);border-color:transparent"><h2>Günün dersi</h2>
+    <p class="fx-lead">Tekrar kartların, son yanlışların ve sıradaki konudan karışık, yaklaşık 5 dakikalık bir set.</p>
+    <ul class="fx-stack"><li><b>Tekrar</b><span>${dueC.length} kart</span></li><li><b>Yanlışlar</b><span>${D.wrong.length} soru</span></li><li><b>Yeni konu</b><span lang="de">${nu && !nu.boss ? esc(nu.u.de) : '—'}</span></li></ul>
+    <div class="fx-foot"><button class="btn" onclick="startDaily()">${dailyDone ? '<i class="fa-solid fa-check"></i> Bugün yapıldı · tekrar' : '<i class="fa-solid fa-play"></i> 5 dakikaya başla'}</button></div></section>`;
+  const id = `<section class="fx-slide fx-plain fx-tint"><h2>Günün deyimi</h2>
+    <div class="fx-idiom" lang="de">${esc(idiom.de)}</div><p class="fx-lead" style="color:var(--ink);font-weight:600;font-size:17px">${esc(idiom.tr)}</p><p class="fx-lead">Kelimesi kelimesine: “${esc(idiom.lit)}”</p>
+    <div class="fx-foot"><button class="btn btn-ghost" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i> Dinle</button><button class="btn" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></div></section>`;
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); return d ? `<div class="fx-q ${q.p >= d.goal ? 'done' : ''}"><span>${d.t}</span><span class="bar"><div style="width:${Math.min(100, Math.round(q.p / d.goal * 100))}%"></div></span><span class="q-n">${q.p}/${d.goal}</span></div>` : ''; }).join('');
+  const qs = `<section class="fx-slide fx-plain m-only"><h2>Bugünün görevleri</h2><p class="fx-lead">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan. Kalkan: <span class="tabular">${D.shields}/3</span></p><div style="margin-top:14px">${quests}</div></section>`;
+  const jour = `<section class="fx-slide fx-plain m-only"><h2>Yolculuk</h2>${fxTotals()}${fxJourney()}</section>`;
+  return `<div class="fx-home">
+    <div class="fx-feed" tabindex="0" aria-label="Akış: kaydırarak sıradakine geç">${first}${review}${daily}${id}${qs}${jour}</div>
+    <aside class="fx-side">
+      <section><h1 class="fx-greet">${hi}, ${esc(p.name)}.</h1><p class="fx-lead">${nu ? (nu.boss ? `${LEVELS[nu.li].id} seviye sonu sınavı seni bekliyor.` : `Sıradaki: <b lang="de">${esc(nu.u.de)}</b>. Akışı kaydırarak bugünün tekrarına ve deyimine geç.`) : 'Bütün müfredat tamam.'}</p></section>
+      <section><h2>Yolculuk</h2>${fxTotals()}${fxJourney()}</section>
+      <section><h2>Bugünün görevleri</h2><p class="fx-lead">Kalkan <span class="tabular">${D.shields}/3</span> · üçü bitince +20 XP</p><div style="margin-top:8px">${quests}</div></section>
+    </aside></div>`;
+};
+const _goFx = go;
+go = function (p) { document.documentElement.classList.remove('fx-fp'); return _goFx.apply(this, arguments); };
+const _afterHomeFx = AFTER.home;
+AFTER.home = () => { if (!isFx()) { if (_afterHomeFx) _afterHomeFx(); return; } fxSize(); };
+
+/* ---------- Öğren: bütün müfredat tek akışta ---------- */
+const _learnFx = VIEWS.learn;
+VIEWS.learn = () => {
+  if (!isFx()) return _learnFx();
+  const nu = nextUnit();
+  const slides = LEVELS.map((L, li) => levelUnlocked(li)
+    ? L.units.map((u, ui) => fxUnitSlide(L, li, u, ui, nu)).join('') + fxBossSlide(L, li, nu)
+    : `<section class="fx-slide fx-field lock" data-li="${li}" style="${fxVars(L)}"><div class="fx-words" aria-hidden="true">${L.units.slice(0, 5).map(u => `<span>${esc(u.de)}</span>`).join('')}</div>
+        <div class="fx-cap" style="right:20px"><h2 class="fx-title" lang="de">${esc(L.name)}</h2>
+        <p class="fx-sub">${li ? LEVELS[li - 1].id + ' seviye sonu sınavını geçince açılır.' : ''}</p><div class="fx-author"><span class="fx-lv">${L.id}</span>${esc(L.tr)} · ${L.units.length} ünite</div>
+        <button class="fx-go" onclick="startPlacement()"><i class="fa-solid fa-compass"></i> Seviye tespitiyle atla</button></div></section>`).join('');
+  return `<div class="fx-learn"><div>${fxTotals()}${fxJourney(li => `fxJump(${li})`)}</div>
+    <div class="fx-feed" tabindex="0" aria-label="Müfredat akışı: kaydırarak üniteler arasında geç">${slides}</div></div>`;
+};
+let fxObs = null;
+const _afterLearnFx = AFTER.learn;
+AFTER.learn = () => {
+  if (!isFx()) { if (_afterLearnFx) _afterLearnFx(); return; }
+  fxSize();
+  const feed = document.querySelector('.fx-learn .fx-feed'); if (!feed) return;
+  const c = feed.querySelector('.fx-slide.cur'); if (c) feed.scrollTop = c.offsetTop;
+  // Kaydırınca hangi seviyedeysen rayda o seviye seçili olur
+  if (fxObs) fxObs.disconnect();
+  fxObs = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const li = e.target.dataset.li; document.querySelectorAll('.fx-learn .fx-jl').forEach(b => { const on = b.dataset.li === li; b.classList.toggle('on', on); if (on && innerWidth <= 960) b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' }); }); }), { root: feed, threshold: .6 });
+  feed.querySelectorAll('.fx-slide').forEach(s => fxObs.observe(s));
+};
+function fxJump(li) { const feed = document.querySelector('.fx-learn .fx-feed'), s = feed && feed.querySelector(`.fx-slide[data-li="${li}"]`); if (s) feed.scrollTo({ top: s.offsetTop, behavior: fxReduce() ? 'auto' : 'smooth' }); }
+// Akış, üst çubuk ile alt menü arasındaki alanı tam doldurur
+function fxSize() {
+  document.documentElement.classList.toggle('fx-fp', !!document.querySelector('.fx-feed'));
+  document.querySelectorAll('.fx-feed').forEach(f => {
+    const vh = window.visualViewport ? visualViewport.height : innerHeight, bn = $('#bottomNav');
+    const top = f.getBoundingClientRect().top, limit = innerWidth <= 960 && bn ? bn.getBoundingClientRect().top - 10 : vh - 30;
+    f.style.height = Math.max(440, Math.round(limit - Math.max(0, top))) + 'px';
+  });
+  // Telefonda sayfanın kendisi kaymasın: yalnızca akış kayar
+  const extra = document.documentElement.scrollHeight - (window.visualViewport ? visualViewport.height : innerHeight);
+  if (innerWidth <= 960 && extra > 0) document.querySelectorAll('.fx-feed').forEach(f => { f.style.height = Math.max(440, f.offsetHeight - extra) + 'px'; });
+}
+addEventListener('resize', () => { if (isFx() && document.querySelector('.fx-feed')) fxSize(); });
+// Klavye: akış odaktayken yukarı/aşağı ok bir slayt ilerler
+document.addEventListener('keydown', e => {
+  const f = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('fx-feed') ? document.activeElement : null;
+  if (!f || !['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp'].includes(e.key)) return;
+  e.preventDefault(); const dir = /Down/.test(e.key) ? 1 : -1, step = f.clientHeight + 12;
+  f.scrollTo({ top: Math.round(f.scrollTop / step + dir) * step, behavior: 'auto' });
+});
+
+// Akış: seviye alanında yazı rengi ve beyaz yüzey üstündeki koyu ton da geçsin (B1 sarısında yazı koyu)
+const _lvStyleFx = lvStyle;
+lvStyle = function (color) { const k = LV_COLORS[color] ? color : 'a1', t = FX_TONE[k]; return _lvStyleFx(color) + (isFx() ? `;--lvi:${t[0]};--lvd2:${t[1]}` : ''); };
+// Ders: etkinlik türü üst şeride taşınır (başlığın üstünde etiket olmasın)
+const _renderItemFx = renderItem;
+renderItem = function () {
+  _renderItemFx.apply(this, arguments);
+  if (!(isFx() || isAm()) || !LSN) return;
+  const k = document.querySelector('#lsBody .ls-kind'), top = document.querySelector('#lesson .ls-top'); if (!k || !top) return;
+  let pill = document.getElementById('fxKind'); if (!pill) { pill = document.createElement('span'); pill.id = 'fxKind'; pill.className = 'fx-kind'; top.insertBefore(pill, document.getElementById('lsCount')); }
+  pill.textContent = k.textContent;
+};
+// Ünite penceresi: seviye etiketi meta satırına, içerikteki emojiler simgeye
+const _openUnitFx = openUnit;
+openUnit = function (id) {
+  const el = _openUnitFx.apply(this, arguments);
+  if (!(isFx() || isAm()) || !el) return el;
+  const sc = el.querySelector('.us-top .smallcaps'), meta = el.querySelector('.us-meta');
+  if (sc && meta) meta.insertAdjacentHTML('afterbegin', `<span class="fx-lvm">${esc(sc.textContent.trim())}</span>`);
+  el.querySelectorAll('.guide').forEach(g => { g.innerHTML = g.innerHTML.replace(/💡\s*/g, '<i class="fa-solid fa-lightbulb" aria-hidden="true"></i>').replace(/⚡/g, '<i class="fa-solid fa-bolt" aria-hidden="true"></i>'); });
+  return el;
+};
+/* ---------- Üst çubuk: ana sayfada selam ---------- */
+const _renderTopbarFx = renderTopbar;
+renderTopbar = function () {
+  _renderTopbarFx.apply(this, arguments);
+  if (!isFx() || !D || PAGE !== 'home' || innerWidth > 960) return;
+  const t = document.querySelector('#topbar .page-title'), p = PROFILES.find(x => x.id === PID); const h = new Date().getHours();
+  if (t && p) t.textContent = (h < 11 ? 'Guten Morgen' : h < 18 ? 'Guten Tag' : 'Guten Abend') + ', ' + p.name;
+};
+
+/* ---------- Ayarlar: dört tasarım, Akış varsayılan ---------- */
+setDesign = function (d) {
+  try { localStorage.setItem('df_design', d); } catch (e) {}
+  const h = document.documentElement; h.classList.toggle('bh', d === 'bh'); h.classList.toggle('bm', d === 'bm' || d === 'fx'); h.classList.toggle('fx', d === 'fx');
+  bhPosterDrawn = false; bhLearnSeen = false; bmAlbumDrawn = false; bmLearnSeen = false; renderNav(); go(PAGE);
+  toast('Tasarım: ' + ({ fx: 'Akış', bh: 'Bauhaus', bm: 'Briefmarke', herb: 'Herbaryum' }[d] || d));
+};
+const _settingsFx = VIEWS.settings;
+VIEWS.settings = () => {
+  const cur = isFx() ? 'fx' : isBm() ? 'bm' : isBh() ? 'bh' : 'herb';
+  const opt = (k, prev, t) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}${t}</button>`;
+  return _settingsFx().replace(/<div class="ds-pick three">[\s\S]*?Herbaryum<\/button><\/div>/, `<div class="ds-pick four">${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış')}${opt('bm', '<div class="ds-prev bm"><span></span></div>', 'Briefmarke')}${opt('bh', '<div class="ds-prev bh"><i></i><i></i><i></i></div>', 'Bauhaus')}${opt('herb', '<div class="ds-prev hb">Blatt</div>', 'Herbaryum')}</div>`);
+};
+
+/* =====================================================================
+   APPLE TARZI ekranlar (html.am): Ana Sayfa rafları, seviye albümü, mini oynatıcı.
+   Varsayılan tasarım; Akış, Briefmarke, Bauhaus ve Herbaryum Ayarlar > Tasarım'dan seçilebilir.
+   ===================================================================== */
+const isAm = () => document.documentElement.classList.contains('am');
+const AM_HUE = { a1: 4, a2: 30, b1: 44, b2: 146, c1: 214, c2: 276 };
+// Kapak: seviyenin tonundan, ünitenin sırasına göre kayan iki ışıklı renk alanı
+function amBg(L, i = 0) {
+  const h = AM_HUE[L.color] + ((i % 6) - 2) * 8, l = L.color === 'b1' ? 46 : L.color === 'b2' ? 40 : 52;
+  return `background:radial-gradient(130% 95% at 0% 0%,hsl(${h + 26} 96% ${l + 16}%) 0,transparent 58%),radial-gradient(115% 115% at 100% 100%,hsl(${h - 20} 88% ${l - 18}%) 0,transparent 62%),hsl(${h} 86% ${l}%)`;
+}
+const amCover = (L, i, title, cls = '', icon = '') => `<span class="am-cv ${cls}" style="${amBg(L, i)}" aria-hidden="true"><span class="am-cv-lv">${L.id}</span>${icon ? `<i class="fa-solid ${icon}"></i>` : ''}<span class="am-cv-t" lang="de">${esc(title)}</span></span>`;
+const amEq = '<span class="am-eq" aria-label="sıradaki"><i></i><i></i><i></i></span>';
+const amMins = (u, L) => Math.max(3, Math.round(buildUnitItems(u, L).length * .6));
+// Sıradaki ünite (yoksa sınav) için ortak bilgiler
+function amNext() {
+  const nu = nextUnit(); if (!nu) return null; const L = LEVELS[nu.li];
+  return nu.boss ? { nu, L, i: L.units.length, title: 'Abschlussprüfung ' + L.id, sub: `${L.id} seviye sonu sınavı · 15 soru`, open: `startBoss(${nu.li})`, start: `startBoss(${nu.li})` }
+    : { nu, L, i: nu.ui, title: nu.u.de, sub: `${nu.u.t} · ${L.id} · ${nu.ui + 1}/${L.units.length}`, open: `openUnit('${nu.u.id}')`, start: `startUnit('${nu.u.id}')` };
+}
+
+/* ---------- Ana Sayfa ---------- */
+const _homeAm = VIEWS.home;
+VIEWS.home = () => {
+  if (!isAm()) return _homeAm();
+  ensureQuests();
+  const n = amNext(), due = D.cards.filter(c => c.due <= Date.now()), dailyDone = D.daily && D.daily[today()] != null;
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length];
+  const hero = n ? `<button class="am-hero" style="${amBg(n.L, n.i)}" onclick="${n.open}" aria-label="Sıradaki: ${esc(n.title)}">
+      <span class="am-hcv">${amCover(n.L, n.i, '', 'xl')}</span>
+      <h2 lang="de">${esc(n.title)}</h2><p>${esc(n.sub)}</p><span class="am-play"><i class="fa-solid fa-play"></i> Devam et</span></button>`
+    : `<div class="am-hero" style="${amBg(LEVELS[5], 2)}"><h2>Bütün yol bitti</h2><p>A1'den C2'ye her şeyi geçtin.</p></div>`;
+  const mix = (bg, ic, top, big, sub, js) => `<button class="am-it" onclick="${js}"><span class="am-mix" style="background:${bg}"><span>${top}</span><i class="fa-solid ${ic}"></i><b>${big}</b></span><b>${big}</b><small>${sub}</small></button>`;
+  const forYou = [
+    mix('linear-gradient(150deg,#ff6a88,#fa2d48 55%,#c21a5b)', 'fa-calendar-day', 'Her gün', 'Günün Dersi', dailyDone ? 'Bugün yapıldı' : '5 dakikalık karışık set', 'startDaily()'),
+    mix('linear-gradient(150deg,#5ac8fa,#007aff 55%,#3a3adb)', 'fa-layer-group', `${due.length} kart`, 'Tekrar Karışımı', due.length ? due.slice(0, 3).map(c => c.de).join(', ') : 'Şimdilik boş', "go('review')"),
+    mix('linear-gradient(150deg,#ffd60a,#ff9f0a 55%,#ff6b00)', 'fa-triangle-exclamation', `${D.wrong.length} soru`, 'Yanlışlarım', 'Hata yaptığın sorular', "go('errors')"),
+    mix('linear-gradient(150deg,#bf5af2,#7d3cff 55%,#4b2bd6)', 'fa-pen-nib', 'Pratik', 'Yazma Pratiği', n && !n.nu.boss ? n.nu.u.de : 'Serbest yazma', n && !n.nu.boss ? `startPractice('${n.nu.u.id}','yaz')` : "go('writing')")
+  ].join('');
+  // Son çalışılanlar: biten üniteler (en yeniler önde) + sıradaki
+  const doneU = []; LEVELS.forEach((L, li) => L.units.forEach((u, ui) => { if (D.done[u.id] != null) doneU.push({ L, li, u, ui }); }));
+  const recent = doneU.reverse().slice(0, 10).map(({ L, u, ui }) => `<button class="am-it" onclick="openUnit('${u.id}')">${amCover(L, ui, u.de)}<b lang="de">${esc(u.de)}</b><small>${esc(u.t)} · %${Math.round(D.done[u.id] * 100)}</small></button>`).join('');
+  const levels = LEVELS.map((L, li) => { const open = levelUnlocked(li), d = L.units.filter(u => D.done[u.id] != null).length; return `<button class="am-it" onclick="amLv=${li};go('learn')">${amCover(L, 2, L.tr, open ? '' : 'lock', open ? '' : 'fa-lock')}<b>${L.id} · ${esc(L.tr)}</b><small>${open ? `${d}/${L.units.length} ünite` : 'Kilitli'}</small><span class="am-pg"><i style="width:${Math.round(d / L.units.length * 100)}%"></i></span></button>`; }).join('');
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); if (!d) return ''; const ok = q.p >= d.goal; return `<div class="am-li ${ok ? 'done' : ''}"><span class="am-ic" style="background:${ok ? 'var(--positive)' : 'var(--accent)'}"><i class="fa-solid ${ok ? 'fa-check' : 'fa-bullseye'}"></i></span><span class="am-lm"><b style="font-weight:400">${d.t}</b></span><span class="am-le">${q.p}/${d.goal}</span></div>`; }).join('');
+  return `<div class="am-home"><h1 class="am-lt">Ana Sayfa</h1>${hero}
+    <section><div class="am-sh"><h2>Senin İçin</h2></div><div class="am-row">${forYou}</div></section>
+    ${recent ? `<section><div class="am-sh"><h2>Son Çalıştıkların</h2><button onclick="go('learn')">Tümü</button></div><div class="am-row">${recent}</div></section>` : ''}
+    <section><div class="am-sh"><h2>Seviyeler <i class="fa-solid fa-chevron-right"></i></h2><button onclick="go('learn')">${lessonsDone(D)}/${LEVELS.reduce((a, L) => a + L.units.length, 0)}</button></div><div class="am-row">${levels}</div></section>
+    <div class="am-two">
+      <section><div class="am-sh"><h2>Bugünün Görevleri</h2><button onclick="go('badges')">Kalkan ${D.shields}/3</button></div><div class="am-list">${quests}</div></section>
+      <section><div class="am-sh"><h2>Günün Deyimi</h2></div><div class="am-list" style="padding:16px">
+        <p class="am-idiom" lang="de">${esc(idiom.de)}</p><p style="margin:0;font-weight:500">${esc(idiom.tr)}</p><p class="am-foot" style="margin:4px 0 12px">Kelimesi kelimesine: “${esc(idiom.lit)}”</p>
+        <div class="row" style="gap:8px"><button class="btn btn-ghost btn-sm" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-play"></i> Dinle</button><button class="btn btn-ghost btn-sm" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></div></div></section>
+    </div></div>`;
+};
+
+/* ---------- Öğren: her seviye bir albüm, üniteler şarkı listesi ---------- */
+let amLv = null;
+const _learnAm = VIEWS.learn;
+VIEWS.learn = () => {
+  if (!isAm()) return _learnAm();
+  const nu = nextUnit(), li = amLv != null ? amLv : currentLevelIdx(), L = LEVELS[li], open = levelUnlocked(li);
+  const d = L.units.filter(u => D.done[u.id] != null).length, bossDone = !!D.boss[L.id];
+  const seg = LEVELS.map((x, i) => { const dd = x.units.filter(u => D.done[u.id] != null).length; return `<button class="${i === li ? 'on' : ''}" style="--h:var(--${x.color})" onclick="amLv=${i};go('learn')" aria-pressed="${i === li}"><span class="am-sd"></span>${x.id}<small>${levelUnlocked(i) ? dd + '/' + x.units.length : '<i class="fa-solid fa-lock"></i>'}</small><span class="am-sp"><i style="width:${Math.round(dd / x.units.length * 100)}%"></i></span></button>`; }).join('');
+  const target = L.units.find((u, ui) => D.done[u.id] == null && unitUnlocked(li, ui)) || L.units[0];
+  const tracks = L.units.map((u, ui) => {
+    const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, cur = nu && !nu.boss && nu.u.id === u.id;
+    return `<button class="am-tr ${dn ? 'done' : ''} ${cur ? 'cur' : ''} ${un ? '' : 'lock'}" onclick="${un ? `openUnit('${u.id}')` : `toast('Önce önceki üniteyi geç','warn')`}" ${un ? '' : 'aria-disabled="true"'}>
+      <span class="am-tn">${cur ? amEq : dn ? '<i class="fa-solid fa-check"></i>' : ui + 1}</span>
+      <span class="am-tm"><b lang="de">${esc(u.de)}</b><small>${esc(u.t)}</small></span>
+      <span class="am-te">${dn ? '%' + Math.round(D.done[u.id] * 100) : un ? amMins(u, L) + ' dk' : '<i class="fa-solid fa-lock"></i>'}${un ? '<i class="fa-solid fa-ellipsis"></i>' : ''}</span></button>`;
+  }).join('');
+  const bOpen = bossUnlocked(li), bCur = nu && nu.boss && nu.li === li, sc = D.bossScore && D.bossScore[L.id];
+  const boss = `<button class="am-tr ${bossDone ? 'done' : ''} ${bCur ? 'cur' : ''} ${bOpen ? '' : 'lock'}" onclick="${bOpen ? `startBoss(${li})` : `toast('Sınav için bütün üniteleri geç','warn')`}">
+      <span class="am-tn">${bCur ? amEq : bossDone ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-award"></i>'}</span>
+      <span class="am-tm"><b lang="de">Abschlussprüfung ${L.id}</b><small>Seviye sonu sınavı · 15 soru · baraj %80</small></span>
+      <span class="am-te">${bossDone && sc ? '%' + sc.score : bOpen ? '12 dk' : '<i class="fa-solid fa-lock"></i>'}</span></button>`;
+  const acts = open ? `<div class="am-acts"><button class="btn" onclick="openUnit('${target.id}')"><i class="fa-solid fa-play"></i> ${d ? 'Devam et' : 'Başla'}</button><button class="btn btn-ghost" onclick="startPractice('${(L.units.slice().reverse().find(u => D.done[u.id] != null) || target).id}','karisik')"><i class="fa-solid fa-shuffle"></i> Karışık</button></div>`
+    : `<div class="am-acts"><button class="btn" onclick="startPlacement()"><i class="fa-solid fa-compass"></i> Seviye tespiti</button><button class="btn btn-ghost" onclick="amLv=${Math.max(0, li - 1)};go('learn')"><i class="fa-solid fa-arrow-left"></i> ${li ? LEVELS[li - 1].id : ''}</button></div>`;
+  return `<div class="am-seg" role="tablist">${seg}</div>
+  <div class="am-album"><div class="am-ah">${amCover(L, 2, L.name, 'xl ' + (open ? '' : 'lock'), open ? '' : 'fa-lock')}
+      <div><h2>${esc(L.tr)}</h2><div class="am-by">${L.id} · Almanca</div><div class="am-meta">${L.units.length} ünite · 1 sınav · ${d}/${L.units.length} tamam${bossDone ? ' · sınav geçildi' : ''}</div></div>${acts}</div>
+    <div><div class="am-tracks">${tracks}${boss}</div>
+      <p class="am-foot" style="margin-top:14px">${open ? `Her üniteyi en az %80 ile geçince sıradaki açılır. ${L.units.length} ünitenin sonundaki sınavı geçince ${LEVELS[li + 1] ? LEVELS[li + 1].id + ' açılır' : 'müfredat tamamlanır'}.` : `${li ? LEVELS[li - 1].id + ' seviye sonu sınavını geçince' : ''} bu seviye açılır. Seviye tespitiyle atlayabilirsin.`}</p>
+      ${bossDone ? `<button class="btn btn-ghost btn-sm" style="margin-top:6px" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i> Sertifika</button>` : ''}</div></div>`;
+};
+
+/* ---------- Mini oynatıcı: sıradaki ünite her sayfada alt menünün üstünde ---------- */
+function amMini() {
+  let m = document.getElementById('amMini');
+  const n = isAm() && D && !$('#app').hidden ? amNext() : null;
+  if (!n) { if (m) m.remove(); return; }
+  if (!m) { m = document.createElement('div'); m.id = 'amMini'; m.setAttribute('role', 'region'); m.setAttribute('aria-label', 'Sıradaki ders'); document.body.appendChild(m); }
+  m.onclick = e => { if (!e.target.closest('button')) new Function(n.open)(); };
+  m.innerHTML = `${amCover(n.L, n.i, n.title, 'sm')}<span class="am-mm"><b lang="de">${esc(n.title)}</b><small>${esc(n.sub)}</small></span>
+    <button aria-label="Derse başla" onclick="${n.start}"><i class="fa-solid fa-play"></i></button><button aria-label="Ayrıntılar" onclick="${n.open}"><i class="fa-solid fa-forward"></i></button>`;
+}
+const _goAm = go;
+go = function () { const r = _goAm.apply(this, arguments); amMini(); return r; };
+const _renderGateAm = renderGate;
+renderGate = async function () { const m = document.getElementById('amMini'); if (m) m.remove(); return _renderGateAm.apply(this, arguments); };
+
+/* ---------- Ünite penceresi: başlık alanı ünitenin kapağı ---------- */
+const _openUnitAm = openUnit;
+openUnit = function (id) {
+  const el = _openUnitAm.apply(this, arguments);
+  if (!isAm() || !el) return el;
+  const f = findUnit(id), head = el.querySelector('.us-head'); if (f && head) head.style.cssText += ';' + amBg(f.L, f.ui);
+  el.querySelectorAll('.guide').forEach(g => { g.innerHTML = g.innerHTML.replace(/💡\s*/g, '<i class="fa-solid fa-lightbulb" aria-hidden="true" style="color:var(--b1d);margin-right:6px"></i>').replace(/⚡/g, '<i class="fa-solid fa-bolt" aria-hidden="true"></i>'); });
+  return el;
+};
+
+// Üst şerit: AI Öğretmen her ekranda simge olarak (yüzen düğme yerine)
+const _renderTopbarAm = renderTopbar;
+renderTopbar = function () {
+  _renderTopbarAm.apply(this, arguments);
+  if (!isAm() || !D) return;
+  const row = document.querySelector('#topbar .tb-row, #topbar .row'); if (!row || row.querySelector('.tutor-top')) return;
+  row.insertAdjacentHTML('beforeend', '<button class="icon-btn tutor-top" title="AI Öğretmen" aria-label="AI Öğretmen" onclick="toggleTutor()"><i class="fa-solid fa-robot"></i></button>');
+};
+/* ---------- Ayarlar: beş tasarım, Apple tarzı varsayılan ---------- */
+setDesign = function (d) {
+  try { localStorage.setItem('df_design', d); } catch (e) {}
+  const h = document.documentElement; h.classList.toggle('bh', d === 'bh'); h.classList.toggle('bm', ['bm', 'fx', 'am'].includes(d)); h.classList.toggle('fx', d === 'fx'); h.classList.toggle('am', d === 'am');
+  bhPosterDrawn = false; bhLearnSeen = false; bmAlbumDrawn = false; bmLearnSeen = false; renderNav(); go(PAGE);
+  toast('Tasarım: ' + ({ am: 'Cam', fx: 'Akış', bh: 'Bauhaus', bm: 'Briefmarke', herb: 'Herbaryum' }[d] || d));
+};
+const _settingsAm = VIEWS.settings;
+VIEWS.settings = () => {
+  const cur = isAm() ? 'am' : isFx() ? 'fx' : isBm() ? 'bm' : isBh() ? 'bh' : 'herb';
+  const opt = (k, prev, t) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}${t}</button>`;
+  return _settingsAm().replace(/<div class="ds-pick four">[\s\S]*?Herbaryum<\/button><\/div>/, `<div class="ds-pick five">${opt('am', '<div class="ds-prev amp"><i></i></div>', 'Cam')}${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış')}${opt('bm', '<div class="ds-prev bm"><span></span></div>', 'Briefmarke')}${opt('bh', '<div class="ds-prev bh"><i></i><i></i><i></i></div>', 'Bauhaus')}${opt('herb', '<div class="ds-prev hb">Blatt</div>', 'Herbaryum')}</div>`);
+};
 
 /* ---------- Başlat ---------- */
 applyTheme();
