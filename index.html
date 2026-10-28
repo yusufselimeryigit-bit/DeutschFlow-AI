@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
+<script>try{var dd=localStorage.getItem("df_design");if(dd==="bh")document.documentElement.classList.add("bh");else if(dd!=="herb")document.documentElement.classList.add("bm")}catch(e){document.documentElement.classList.add("bm")}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -13,7 +14,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Geist+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Manrope:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@500;700;800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com/3.4.3"></script>
 <script>tailwind.config = { darkMode: 'class', corePlugins: { preflight: false } };</script>
@@ -1295,6 +1296,507 @@ html.kb-open #bottomNav, html.kb-open #tutorFab { display: none !important; }
 }
 html.dys .us-de, html.dys .us-w-de, html.dys .us-s-de { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
 </style>
+<style id="bauhaus">
+/* =====================================================================
+   BAUHAUS TASARIMI (html.bh) — Herbaryum'a Ayarlar > Tasarım'dan dönülebilir
+   design-taste (app sheet "achromatic-ledger", seed 1108514159): arayüzde renk yok; birincil işlem mürekkep,
+   ikincil gri kapsül; tek renk (kobalt) yalnızca ana veri öğesinde: şu anki ünite, bugünün çubuğu, ilerleme.
+   Yüz: Bauhaus — seviyeler renkle değil geometriyle ayrılır (daire, kare, üçgen, yarım daire, çeyrek, eşkenar dörtgen).
+   ui-ux-pro-max yazı eşleşmesi "Bauhaus Geometric": Outfit başlık; metin Geist, rakamlar Geist Mono (defter sütunu).
+   dataviz: kobalt #1d5fbf / koyu #7aa7f7, gri #8a8a8a / #6b6b6b ile ayrışma doğrulandı.
+   ===================================================================== */
+html.bh {
+  --ground: #f3f2ef; --surface: #ffffff; --surface-2: #ececea; --raised: #ffffff;
+  --border: #e3e2de; --rule: #ebeae6; --control: #d4d3cf;
+  --ink: #141414; --muted: #66665f; --faint: #8a8a84;
+  --accent: #141414; --accent-ink: #ffffff; --accent-soft: #ececea; --accd: #141414;
+  --cobalt: #1d5fbf; --cobalt-soft: #e5ecf8; --grey: #8a8a8a;
+  --positive: #2e7d32; --negative: #c4242a; --warning: #92400e;
+  --pos-bg: #e6f4e7; --neg-bg: #fdecea; --warn-bg: #fff6e5;
+  --btn-ink: #ffffff;
+  --radius-card: 8px; --radius-row: 6px; --row-h: 56px;
+  --serif: 'Outfit', 'Geist', system-ui, sans-serif;
+  --sans: 'Geist', 'Inter', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --a1: #141414; --a1d: #141414; --a1s: #ececea; --a2: #141414; --a2d: #141414; --a2s: #ececea;
+  --b1: #141414; --b1d: #141414; --b1s: #ececea; --b2: #141414; --b2d: #141414; --b2s: #ececea;
+  --c1: #141414; --c1d: #141414; --c1s: #ececea; --c2: #141414; --c2d: #141414; --c2s: #ececea;
+  --st1: #e5ecf8; --st2: #b9cdee; --st3: #86a7de; --st4: #4f7fcd; --st5: #1d5fbf;
+}
+html.bh.dark {
+  --ground: #111111; --surface: #1a1a1a; --surface-2: #232323; --raised: #1a1a1a;
+  --border: #2b2b2b; --rule: #242424; --control: #3a3a3a;
+  --ink: #ececec; --muted: #a3a39c; --faint: #75756f;
+  --accent: #ececec; --accent-ink: #111111; --accent-soft: #232323; --accd: #ececec;
+  --cobalt: #7aa7f7; --cobalt-soft: #17233a; --grey: #6b6b6b;
+  --positive: #7cc58f; --negative: #ee8b78; --pos-bg: #16301a; --neg-bg: #3a1714; --warn-bg: #33250f;
+  --btn-ink: #111111;
+  --a1: #ececec; --a1d: #ececec; --a1s: #232323; --a2: #ececec; --a2d: #ececec; --a2s: #232323;
+  --b1: #ececec; --b1d: #ececec; --b1s: #232323; --b2: #ececec; --b2d: #ececec; --b2s: #232323;
+  --c1: #ececec; --c1d: #ececec; --c1s: #232323; --c2: #ececec; --c2d: #ececec; --c2s: #232323;
+  --st1: #17233a; --st2: #24395f; --st3: #3a5a91; --st4: #5a82c9; --st5: #7aa7f7;
+}
+html.bh.dark.oled { --ground: #000; --surface: #0c0c0c; --surface-2: #161616; --raised: #0c0c0c; --border: #222; }
+html.bh[data-accent] { --accent: #141414; --accd: #141414; --accent-soft: #ececea; }
+html.bh.dark[data-accent] { --accent: #ececec; --accd: #ececec; --accent-soft: #232323; }
+
+/* ---------- Yazı ---------- */
+html.bh body { font-family: var(--sans); font-size: 15px; letter-spacing: -.006em; background: var(--ground); }
+html.bh h1, html.bh h2, html.bh h3, html.bh .font-display { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; }
+html.bh .tabular, html.bh .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+html.bh .smallcaps { font-family: var(--sans); text-transform: none; letter-spacing: 0; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+html.bh .page-title { font-family: var(--serif); font-weight: 500; font-size: 24px; letter-spacing: -.02em; }
+html.bh .page-sub { font-size: 14.5px; color: var(--muted); }
+
+/* ---------- Yüzeyler: beyaz kart, ince kenar, 8px köşe, gölge yok ---------- */
+html.bh .glass, html.bh .panel, html.bh .k-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: none; }
+html.bh .row-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; min-height: 56px; }
+html.bh .row-card:hover { border-color: var(--control); }
+html.bh .row-card .rc-ic { width: 32px; height: 32px; border-radius: 6px; background: var(--surface-2); color: var(--ink); font-size: 13px; }
+html.bh .row-card.hot { background: var(--surface); border-color: var(--border); box-shadow: inset 2px 0 0 var(--cobalt); }
+html.bh .row-card.hot .rc-ic { background: var(--cobalt); color: #fff; }
+html.bh.dark .row-card.hot .rc-ic { color: #111; }
+html.bh .row-card.hot .rc-end { color: var(--cobalt); }
+html.bh .panel-head h2 { font-family: var(--sans); font-size: 14px; font-weight: 600; letter-spacing: -.005em; }
+html.bh #tutorPanel, html.bh #wordPop, html.bh #tbMenu { border-radius: 10px; box-shadow: 0 18px 50px -24px rgba(0,0,0,.35); }
+
+/* ---------- Kabuk: masaüstünde ikon rayı (56px), telefonda alt çubuk ---------- */
+@media (min-width: 961px) {
+  html.bh #app { grid-template-columns: 60px minmax(0, 1fr); }
+  html.bh #sidebar { padding: 18px 8px 14px; align-items: center; background: var(--ground); border-right: 1px solid var(--rule); }
+  html.bh .brand { padding: 0 0 22px; justify-content: center; }
+  html.bh .brand > div:not(.brand-logo) { display: none; }
+  html.bh .brand-logo { width: 36px; height: 36px; border-radius: 8px; background: var(--ink); color: var(--ground); }
+  html.bh #sideNav { align-items: center; gap: 6px; width: 100%; }
+  html.bh #sideNav .nav-item { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 0; border-radius: 8px; color: var(--muted); position: relative; }
+  html.bh #sideNav .nav-item i { font-size: 17px; width: auto; color: var(--muted); }
+  html.bh #sideNav .nav-item:hover { background: var(--surface-2); }
+  html.bh #sideNav .nav-item:hover i { color: var(--ink); }
+  html.bh #sideNav .nav-item.active, html.bh.dark #sideNav .nav-item.active { background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+  html.bh #sideNav .nav-item.active i { color: var(--ink); }
+  html.bh #sideNav .nav-item.active::before { content: ''; position: absolute; left: -8px; top: 12px; bottom: 12px; width: 2px; border-radius: 2px; background: var(--cobalt); }
+  html.bh #sideNav .nav-item::after { content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%; transform: translate(-4px, -50%); opacity: 0; pointer-events: none; white-space: nowrap;
+    font: 500 13px/1 var(--sans); color: var(--ground); background: var(--ink); padding: 7px 10px; border-radius: 6px; transition: opacity .15s, transform .15s; z-index: 60; }
+  html.bh #sideNav .nav-item:hover::after, html.bh #sideNav .nav-item:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
+  html.bh .side-foot { width: 100%; display: flex; justify-content: center; }
+  html.bh .side-prof { width: 44px; height: 44px; padding: 0; justify-content: center; border-radius: 50%; }
+  html.bh .side-prof .side-pn, html.bh .side-prof > i { display: none; }
+  html.bh .side-av { width: 34px; height: 34px; }
+  html.bh #main { padding: 32px 40px 120px; max-width: 1560px; width: 100%; margin: 0 auto; box-sizing: border-box; } /* kenarlarda boşluk kalmasın: içerik ekranı kullanır */
+}
+@media (max-width: 960px) {
+  html.bh #topbar, html.bh.dark #topbar { background: var(--ground); border-bottom: 1px solid var(--rule); }
+  html.bh #topbar .page-title { font-family: var(--serif); font-size: 19px; font-weight: 500; }
+  html.bh #bottomNav, html.bh.dark #bottomNav { background: var(--ground) !important; border-top: 1px solid var(--rule); }
+  html.bh .bn-item { color: var(--faint); font-family: var(--sans); font-weight: 500; }
+  html.bh .bn-item.active, html.bh.dark .bn-item.active { color: var(--ink); }
+  html.bh .bn-item::before { background: var(--cobalt); }
+}
+
+/* ---------- Düğmeler: birincil mürekkep, ikincil gri kapsül ---------- */
+html.bh .btn, html.bh .btn-red, html.bh .btn-ghost { font-family: var(--sans); font-weight: 500; font-size: 14.5px; border-radius: 8px; min-height: 42px; padding: 10px 18px; letter-spacing: -.005em; }
+html.bh .btn { background: var(--ink); color: var(--ground); }
+html.bh.dark .btn { color: #111; }
+html.bh .btn:hover { filter: none; background: color-mix(in srgb, var(--ink) 86%, var(--ground)); }
+html.bh .btn-ghost, html.bh.dark .btn-ghost { background: var(--surface-2); color: var(--ink); }
+html.bh .btn-ghost:hover { background: var(--control); }
+html.bh .btn-red { background: var(--negative); color: #fff; }
+html.bh .btn-sm { min-height: 34px; padding: 6px 12px; font-size: 13.5px; border-radius: 6px; }
+html.bh .icon-btn { border-radius: 8px; background: var(--surface); border: 1px solid var(--border); }
+html.bh .tabs { background: var(--surface-2); border-radius: 8px; padding: 3px; }
+html.bh .tab { border-radius: 6px; font-family: var(--sans); font-weight: 500; }
+html.bh .tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--border); }
+html.bh .chip { border-radius: 6px; background: var(--surface-2); font-family: var(--sans); font-weight: 500; }
+html.bh .lvl-badge { background: var(--surface-2); color: var(--ink); border-radius: 4px; font-family: var(--mono); font-weight: 500; letter-spacing: 0; }
+html.bh .bar { height: 4px; border-radius: 2px; background: var(--surface-2); }
+html.bh .bar > div { background: var(--ink); border-radius: 2px; }
+html.bh .pill-input, html.bh #app .pill-input, html.bh .sheet .pill-input, html.bh #lesson .pill-input, html.bh #tutorPanel .pill-input { border-radius: 8px; border: 1px solid var(--border); background: var(--surface); }
+html.bh .pill-input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px var(--surface-2); }
+html.bh :focus-visible { outline-color: var(--cobalt) !important; }
+html.bh .sheet { border-radius: 12px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.35); }
+html.bh .sheet-head h3 { font-family: var(--serif); font-weight: 500; }
+html.bh .toast { border-radius: 8px; font-family: var(--sans); }
+
+/* ---------- Ana sayfa ---------- */
+.bh-home { max-width: none; margin: 0; }
+.bh-hero { display: block; margin: 28px 0 40px; } /* afiş kaldırıldı: selamlama tek sütun */
+.bh-date { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.bh-greet { font-family: var(--serif); font-weight: 500; font-size: clamp(40px, 5.6vw, 64px); line-height: 1; letter-spacing: -.035em; margin: 0; color: var(--ink); }
+.bh-lead { font-size: 16px; line-height: 1.55; color: var(--muted); margin: 18px 0 0; max-width: 52ch; }
+.bh-lead b { color: var(--ink); font-weight: 500; }
+.bh-acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+.bh-poster { display: block; width: 100%; text-align: left; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 16px 12px; transition: border-color .2s, transform .15s cubic-bezier(.3,.7,.4,1); }
+.bh-poster:hover { border-color: var(--control); }
+.bh-poster:active { transform: scale(.99); }
+.bh-poster svg { display: block; width: 100%; height: auto; }
+.bh-poster .shp { pointer-events: none; }
+.bh-poster .shp .o { fill: none; stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.bh-poster .shp .f { fill: var(--ink); }
+.bh-poster .shp.cur .f { fill: var(--cobalt); }
+.bh-poster .shp.cur .o { stroke: var(--cobalt); }
+.bh-poster .shp.lock .o { stroke: var(--control); stroke-dasharray: 3 4; }
+.bh-poster .shp text { font: 500 11px var(--mono); fill: var(--muted); }
+.bh-poster .shp.cur text { fill: var(--cobalt); }
+.bh-cap { display: flex; }
+.bh-poster .clipr { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .9s cubic-bezier(.22, 1, .36, 1) var(--d, 0ms); }
+.bh-poster.prep .clipr { transform: scaleY(0); }
+.bh-cap { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 12.5px; color: var(--muted); }
+.bh-cap b { color: var(--ink); font-weight: 500; font-family: var(--mono); }
+.bh-tiles { grid-column: span 12; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.bh-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; min-height: 120px; display: flex; flex-direction: column; }
+.bh-tile .l { font-size: 13px; color: var(--muted); }
+.bh-tile .v { font-family: var(--mono); font-weight: 400; font-size: 30px; letter-spacing: -.03em; margin-top: auto; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.bh-tile .v small { font-family: var(--sans); font-size: 13px; color: var(--muted); margin-left: 4px; letter-spacing: 0; }
+.bh-tile .c { font-size: 12.5px; color: var(--muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bh-tile.zero .v { color: var(--faint); }
+html.bh .bh-home .grid12 { gap: 12px; }
+html.bh .bh-home .idiom-de { font-family: var(--serif); font-style: normal; font-weight: 400; font-size: 26px; letter-spacing: -.02em; }
+html.bh .bh-home .q-line .bar > div { background: var(--ink); }
+
+/* ---------- Öğrenme yolu: defter satırları ---------- */
+.bh-lv { margin-bottom: 36px; }
+.bh-lvh { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding-bottom: 14px; margin-bottom: 4px; border-bottom: 1px solid var(--ink); }
+.bh-lvh svg { width: 40px; height: 40px; }
+.bh-lvh h2 { font-family: var(--serif); font-weight: 500; font-size: 24px; letter-spacing: -.02em; margin: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.bh-lvh h2 .id { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0; color: var(--muted); }
+.bh-lvh .sub { font-size: 13px; color: var(--muted); margin-top: 4px; display: flex; align-items: center; gap: 10px; }
+.bh-lvh .sub .bar { width: 120px; }
+.bh-lvh .sub .bar > div { background: var(--cobalt); }
+.bh-lvh .sub .mono { color: var(--ink); }
+.bh-lvh .acts { display: flex; gap: 6px; }
+.bh-lv.locked .bh-lvh { border-bottom-color: var(--border); }
+.bh-lv.locked h2 { color: var(--faint); }
+.bh-lv.locked { margin-bottom: 18px; }
+.bh-lv.locked .bh-lvh { padding-bottom: 10px; }
+.bh-lv.locked .sub .bar, .bh-lv.locked .sub .mono { display: none; }
+.bh-lvh .sub span[lang] { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.bh-lock { padding-top: 8px; }
+.bh-lock { font-size: 13.5px; color: var(--faint); padding: 12px 0 0 60px; }
+.bh-rows { list-style: none; margin: 0; padding: 0; }
+.bh-r > button { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto 18px; align-items: center; gap: 16px; width: 100%; min-height: 58px; padding: 8px 0; text-align: left; color: var(--ink); border-bottom: 1px solid var(--rule); transition: background-color .15s; position: relative; }
+.bh-r > button:hover { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+.bh-no { font-family: var(--mono); font-size: 13px; color: var(--faint); text-align: center; }
+.bh-t { min-width: 0; display: flex; align-items: baseline; gap: 14px; }
+.bh-t b { font-family: var(--serif); font-weight: 400; font-size: 17.5px; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bh-t small { font-size: 13.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bh-st { font-family: var(--mono); font-size: 13px; color: var(--muted); white-space: nowrap; }
+.bh-r .chev { color: var(--faint); font-size: 11px; }
+.bh-r.done .bh-st { color: var(--ink); }
+.bh-r.current > button { box-shadow: inset 2px 0 0 var(--cobalt); }
+.bh-r.current .bh-no { color: var(--cobalt); }
+.bh-r.current .bh-st { font-family: var(--sans); font-weight: 500; font-size: 12.5px; color: #fff; background: var(--cobalt); padding: 4px 9px; border-radius: 4px; }
+html.bh.dark .bh-r.current .bh-st { color: #111; }
+.bh-r.locked .bh-t b, .bh-r.locked .bh-t small { color: var(--faint); }
+.bh-r.locked > button { cursor: default; }
+.bh-r.exam .bh-t b { font-family: var(--sans); font-weight: 500; font-size: 15px; }
+.bh-r.done .bh-no::before { content: '●'; font-size: 7px; vertical-align: middle; margin-right: 5px; color: var(--ink); }
+@media (max-width: 960px) {
+  .bh-hero { grid-template-columns: minmax(0, 1fr); gap: 22px; margin: 14px 0 26px; }
+  .bh-greet { font-size: 40px; }
+  .bh-poster { max-width: 420px; }
+  .bh-acts { display: grid; grid-template-columns: 1fr 1fr; }
+  .bh-acts .btn:nth-child(3) { grid-column: 1 / -1; }
+  .bh-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bh-tile { min-height: 104px; padding: 14px; }
+  .bh-tile .v { font-size: 26px; }
+  .bh-lvh { grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; }
+  .bh-lvh svg { width: 32px; height: 32px; }
+  .bh-lvh h2 { font-size: 21px; }
+  .bh-lvh .acts .btn { width: 40px; height: 40px; min-height: 40px; padding: 0; }
+  .bh-lvh .acts .bt { display: none; }
+  .bh-lock { padding-left: 48px; }
+  .bh-r > button { grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; min-height: 62px; }
+  .bh-r .chev { display: none; }
+  .bh-t { flex-direction: column; gap: 1px; align-items: flex-start; }
+  .bh-t b { font-size: 17px; max-width: 100%; }
+  .bh-t small { font-size: 12.5px; max-width: 100%; }
+}
+
+/* ---------- Ünite ön izlemesi, ders, tekrar, grafikler ---------- */
+html.bh .sheet.us-sheet { border-radius: 12px; }
+html.bh .us-top .smallcaps { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+html.bh .us-de { font-family: var(--serif); font-weight: 500; letter-spacing: -.03em; }
+html.bh .us-meta { font-family: var(--mono); font-size: 12px; }
+html.bh .us-meta i { color: var(--ink); }
+html.bh .us-x { border-radius: 8px; }
+html.bh .us-w-de, html.bh .us-s-de { font-family: var(--serif); font-weight: 400; }
+html.bh .us-s { border-radius: 8px; background: var(--surface); }
+html.bh .us-ai { background: var(--surface-2); border-radius: 8px; }
+html.bh .us-ai-t { color: var(--ink); }
+html.bh .us-skip { color: var(--cobalt); }
+html.bh .us-ib { border-radius: 8px; }
+html.bh #lesson .progress > div { background: var(--cobalt); }
+html.bh .ls-kind { color: var(--muted); font-family: var(--mono); text-transform: none; letter-spacing: 0; font-weight: 500; }
+html.bh .ls-q { font-family: var(--serif); font-weight: 500; letter-spacing: -.025em; }
+html.bh #lesson .opt, html.bh #gameArea .opt, html.bh .opt { border-radius: 8px; font-family: var(--sans); font-weight: 500; }
+html.bh #lesson .opt.sel, html.bh #gameArea .opt.sel { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: var(--surface); }
+html.bh .opt .k { border-radius: 4px; font-family: var(--mono); }
+html.bh .tok { border-radius: 6px; }
+html.bh .fb-title { font-family: var(--serif); font-weight: 500; }
+html.bh #lesson .hl, html.bh .ls-q .hl { background: var(--cobalt-soft); color: var(--cobalt); box-shadow: inset 0 -2px 0 var(--cobalt); border-radius: 4px; }
+html.bh .flash-f, html.bh .flash-b { border-radius: 12px; }
+html.bh .flash-b { background: var(--ink); color: var(--ground); }
+html.bh .flash .big { font-family: var(--serif); font-weight: 500; }
+html.bh .box-grid .box-col { border-radius: 8px; }
+html.bh .box-grid .box-col b { font-family: var(--mono); font-weight: 400; }
+html.bh .msg { border-radius: 10px; }
+html.bh .msg.me { background: var(--ink); color: var(--ground); }
+html.bh .mic-btn, html.bh #tutorFab { background: var(--ink); color: var(--ground); }
+html.bh .badge:not(.locked) .b-ic { background: var(--ink) !important; color: var(--ground) !important; }
+html.bh .wk7-c .b { background: var(--grey); border-radius: 2px 2px 0 0; }
+html.bh .wk7-c.now .b { background: var(--cobalt); }
+html.bh .wk7-c .v, html.bh .wk7-c .d { font-family: var(--mono); }
+html.bh .wk7-max { position: absolute; left: 0; top: 0; font: 400 11px var(--mono); color: var(--faint); }
+html.bh .wk7::before { content: ''; position: absolute; left: 0; right: 0; top: 22px; border-top: 1px dashed var(--rule); }
+html.bh .ready-bar > div { background: var(--cobalt); }
+html.bh .ready-v { font-family: var(--mono); }
+html.bh .hm i { border-radius: 2px; }
+html.bh .tour-ic { background: var(--ink); color: var(--ground); border-radius: 10px; }
+html.bh .remed { background: var(--surface-2); border-radius: 8px; }
+html.bh .label-card, html.bh .next-m { border-radius: 8px; }
+
+@media (min-width: 961px) { html.bh .page-sub { max-width: 72ch; } html.bh .hub.wide { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
+@media (min-width: 1400px) { html.bh .hub { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } }
+/* ---------- Ayarlar: tasarım seçimi ---------- */
+html.bh div:has(> .swatch), html.bh b:has(+ div > .swatch) { display: none !important; } /* Bauhaus renksizdir: tema rengi yalnızca Herbaryum'da */
+.ds-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.ds-opt { border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: left; background: var(--surface); color: var(--ink); font-weight: 500; }
+.ds-opt.on { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.ds-prev { height: 58px; border-radius: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.ds-prev.bh { background: #f3f2ef; }
+.ds-prev.bh i { display: block; width: 16px; height: 16px; background: #141414; }
+.ds-prev.bh i:nth-child(1) { border-radius: 50%; } .ds-prev.bh i:nth-child(2) { background: #1d5fbf; } .ds-prev.bh i:nth-child(3) { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.ds-prev.hb { background: #f6f4ee; font: 400 22px 'Fraunces', serif; color: #2f5d46; }
+
+/* ---------- Hareket: kısa ve sakin (Emil + Jakub); döngü yok ---------- */
+html.bh .enter { animation: bhIn .32s cubic-bezier(.22, 1, .36, 1) both; animation-delay: var(--ed, 0ms); }
+@keyframes bhIn { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .bh-poster .clipr { transition: none; } .bh-poster.prep .clipr { transform: none; } html.bh .enter { animation: none; } }
+html.dys.bh .bh-greet, html.dys.bh .bh-t b, html.dys.bh .bh-lvh h2 { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+</style>
+<style id="briefmarke">
+/* =====================================================================
+   BRIEFMARKE TASARIMI (html.bm) — pul albümü
+   design-taste (app sheet "accent-ladder"): tek renk (karmin) tam gücüyle yalnızca küçük işaretlerde
+   (tek dolu düğme, veri serisi, etkin menü simgesi); açık tonları bütün alanları taşır. Zemin o rengin en açık tonuna yakın.
+   Yüz: dersler kendi resmiyle — her ünite tırtıllı kenarlı bir pul, bitince üstüne posta damgası basılır.
+   ui-ux-pro-max yazı eşleşmesi "Classic Elegant": Playfair Display başlık; metin DM Sans (sheet).
+   dataviz: karmin #a3213f / koyu #f07d96, gri #6b7280 / #6f7682 ayrışması doğrulandı.
+   ===================================================================== */
+html.bm {
+  --ground: #fbf7f8; --surface: #ffffff; --surface-2: #f5eef0; --raised: #ffffff;
+  --border: #ece3e6; --rule: #f3ebee; --control: #d9ced2;
+  --ink: #1f1a1d; --muted: #6a6266; --faint: #958b90;
+  --accent: #a3213f; --accent-ink: #ffffff; --accent-soft: #fdf1f4; --accd: #6b1428;
+  --track: #f7dbe2; --grey: #6b7280; --stamp-face: #fffdfd;
+  --positive: #247b50; --negative: #c4242a; --pos-bg: #e3f5ea; --neg-bg: #fdecea;
+  --btn-ink: #ffffff;
+  --radius-card: 8px; --radius-row: 6px;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --a1: #a3213f; --a1d: #6b1428; --a1s: #fdf1f4; --a2: #a3213f; --a2d: #6b1428; --a2s: #fdf1f4;
+  --b1: #a3213f; --b1d: #6b1428; --b1s: #fdf1f4; --b2: #a3213f; --b2d: #6b1428; --b2s: #fdf1f4;
+  --c1: #a3213f; --c1d: #6b1428; --c1s: #fdf1f4; --c2: #a3213f; --c2d: #6b1428; --c2s: #fdf1f4;
+  --st1: #fdf1f4; --st2: #f7dbe2; --st3: #eaa8b8; --st4: #cf5f7c; --st5: #a3213f;
+}
+html.bm.dark {
+  --ground: #151113; --surface: #1d181a; --surface-2: #261f22; --raised: #1d181a;
+  --border: #33292d; --rule: #2a2225; --control: #44383d;
+  --ink: #f1eaec; --muted: #b0a5a9; --faint: #7d7276;
+  --accent: #f07d96; --accent-ink: #1a0d11; --accent-soft: #2c1a20; --accd: #f6b3c2;
+  --track: #43252e; --grey: #6f7682; --stamp-face: #211b1d;
+  --positive: #7cc58f; --negative: #ee8b78; --pos-bg: #16301a; --neg-bg: #3a1714;
+  --btn-ink: #1a0d11;
+  --a1: #f07d96; --a1d: #f6b3c2; --a1s: #2c1a20; --a2: #f07d96; --a2d: #f6b3c2; --a2s: #2c1a20;
+  --b1: #f07d96; --b1d: #f6b3c2; --b1s: #2c1a20; --b2: #f07d96; --b2d: #f6b3c2; --b2s: #2c1a20;
+  --c1: #f07d96; --c1d: #f6b3c2; --c1s: #2c1a20; --c2: #f07d96; --c2d: #f6b3c2; --c2s: #2c1a20;
+  --st1: #2c1a20; --st2: #43252e; --st3: #6e3546; --st4: #b45a72; --st5: #f07d96;
+}
+html.bm.dark.oled { --ground: #000; --surface: #0e0b0c; --surface-2: #181314; --raised: #0e0b0c; --border: #2a2224; }
+html.bm[data-accent] { --accent: #a3213f; --accd: #6b1428; --accent-soft: #fdf1f4; }
+html.bm.dark[data-accent] { --accent: #f07d96; --accd: #f6b3c2; --accent-soft: #2c1a20; }
+
+/* ---------- Yazı ---------- */
+html.bm body { font-family: var(--sans); font-size: 15px; letter-spacing: -.005em; background: var(--ground); }
+html.bm h1, html.bm h2, html.bm h3, html.bm .font-display { font-family: var(--serif); font-weight: 500; letter-spacing: -.01em; }
+html.bm .page-title { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -.01em; }
+html.bm .smallcaps { font-family: var(--sans); letter-spacing: .08em; }
+
+/* ---------- Yüzeyler ---------- */
+html.bm .glass, html.bm .panel, html.bm .k-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: none; }
+html.bm .row-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+html.bm .row-card .rc-ic { width: 34px; height: 34px; border-radius: 6px; background: var(--accent-soft); color: var(--accd); }
+html.bm .row-card.hot { background: var(--accent-soft); border-color: var(--track); }
+html.bm .row-card.hot .rc-ic { background: var(--accent); color: var(--accent-ink); }
+html.bm .row-card.hot .rc-end { color: var(--accd); }
+html.bm .panel-head h2 { font-family: var(--sans); font-size: 15px; font-weight: 600; letter-spacing: 0; }
+
+/* ---------- Kabuk: etiketli yan menü (230px), etkin satır açık tonla ---------- */
+@media (min-width: 961px) {
+  html.bm #app { grid-template-columns: 230px minmax(0, 1fr); }
+  html.bm #sidebar { background: var(--ground); border-right: 1px solid var(--rule); padding: 26px 12px 16px; }
+  html.bm .brand b { font-family: var(--serif); font-weight: 500; font-size: 19px; }
+  html.bm .brand-logo { background: var(--accent); color: var(--accent-ink); border-radius: 8px; }
+  html.bm #sideNav .nav-item { height: 40px; border-radius: 6px; font-weight: 500; color: var(--muted); }
+  html.bm #sideNav .nav-item i { color: var(--faint); }
+  html.bm #sideNav .nav-item:hover { background: var(--surface-2); color: var(--ink); }
+  html.bm #sideNav .nav-item.active, html.bm.dark #sideNav .nav-item.active { background: var(--accent-soft); color: var(--accd); box-shadow: none; }
+  html.bm #sideNav .nav-item.active i { color: var(--accent); }
+  html.bm #main { padding: 34px 40px 120px; max-width: 1560px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+}
+@media (max-width: 960px) {
+  html.bm #topbar, html.bm.dark #topbar { background: var(--ground); border-bottom: 1px solid var(--rule); }
+  html.bm #topbar .page-title { font-size: 20px; }
+  html.bm #bottomNav, html.bm.dark #bottomNav { background: var(--ground) !important; border-top: 1px solid var(--rule); }
+  html.bm .bn-item.active, html.bm.dark .bn-item.active { color: var(--accd); }
+  html.bm .bn-item.active i { color: var(--accent); }
+  html.bm .bn-item::before { background: var(--accent); }
+}
+
+/* ---------- Düğmeler: tek dolu stil karmin; ikincil açık ton ---------- */
+html.bm .btn, html.bm .btn-red, html.bm .btn-ghost { font-family: var(--sans); font-weight: 600; border-radius: 8px; min-height: 42px; font-size: 14.5px; }
+html.bm .btn { background: var(--lvd, var(--accent)); color: var(--btn-ink); }
+html.bm .btn:not(.btn-ghost):not(.btn-red) { background: var(--accent); color: var(--accent-ink); }
+html.bm .btn.btn-ghost { background: var(--surface-2); color: var(--ink); }
+html.bm.dark .btn { color: var(--accent-ink); }
+html.bm .btn-ghost, html.bm.dark .btn-ghost { background: var(--surface-2); color: var(--ink); }
+html.bm .btn-ghost:hover { background: var(--track); }
+html.bm .btn-sm { min-height: 34px; border-radius: 6px; font-size: 13.5px; }
+html.bm .tabs { background: var(--surface-2); border-radius: 8px; }
+html.bm .tab { border-radius: 6px; font-weight: 600; }
+html.bm .tab.active { background: var(--surface); color: var(--accd); }
+html.bm .chip { background: var(--accent-soft); color: var(--accd); border-radius: 6px; }
+html.bm .lvl-badge { background: var(--accent-soft); color: var(--accd); border-radius: 4px; }
+html.bm .bar { background: var(--track); }
+html.bm .bar > div { background: var(--accent); }
+html.bm .pill-input, html.bm #app .pill-input, html.bm .sheet .pill-input, html.bm #lesson .pill-input, html.bm #tutorPanel .pill-input { border-radius: 8px; }
+html.bm .pill-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+html.bm .icon-btn { border-radius: 8px; background: var(--surface); border: 1px solid var(--border); }
+html.bm .sheet { border-radius: 12px; }
+
+/* ---------- Pul ---------- */
+.stp { position: relative; display: block; padding: 9px; background: var(--stamp-face);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, radial-gradient(circle, transparent 3.2px, #000 3.7px) -6px -6px / 12px 12px;
+  -webkit-mask-composite: source-over; mask: linear-gradient(#000 0 0) content-box, radial-gradient(circle, transparent 3.2px, #000 3.7px) -6px -6px / 12px 12px; mask-composite: add; }
+.stp-wrap, .album > li > button, .bm-card .stp-hold { filter: drop-shadow(0 0 .6px rgba(60, 20, 30, .45)) drop-shadow(0 3px 6px rgba(60, 20, 30, .07)); }
+html.bm.dark .album > li > button, html.bm.dark .bm-card .stp-hold { filter: drop-shadow(0 0 .6px rgba(255, 220, 230, .35)); }
+.stp-in { position: relative; z-index: 1; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; padding: 12px 12px 10px; border: 1px solid var(--track); background: var(--stamp-face); }
+.stp-top { display: flex; justify-content: space-between; align-items: baseline; font: 600 11px/1 var(--sans); letter-spacing: .08em; color: var(--accd); }
+.stp-val { font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: 0; line-height: 1; color: var(--accent); }
+.stp-de { font-family: var(--serif); font-size: 17px; line-height: 1.2; color: var(--ink); margin-top: 12px; -webkit-hyphens: auto; hyphens: auto; overflow-wrap: break-word; }
+.stp-tr { font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+.stp-foot { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; font: 600 10.5px/1 var(--sans); letter-spacing: .1em; color: var(--faint); text-transform: uppercase; }
+.stp.done .stp-in { background: var(--accent-soft); border-color: var(--track); }
+.stp.cur .stp-in { border: 1.5px solid var(--accent); }
+.stp.cur .stp-foot { color: var(--accent); }
+.stp.lock { opacity: 1; }
+.stp.lock .stp-de, .stp.lock .stp-tr, .stp.lock .stp-foot { color: var(--faint); }
+.album > li > button[aria-disabled="true"] { filter: drop-shadow(0 0 .6px rgba(60, 20, 30, .25)); }
+.stp.lock .stp-in { border-style: dashed; border-color: var(--control); background: var(--stamp-face); }
+.stp.lock .stp-val, .stp.lock .stp-top { color: var(--faint); }
+.pmk { position: absolute; z-index: 2; right: -6px; bottom: 14px; width: 92px; height: 60px; pointer-events: none; transform: rotate(-12deg); opacity: .82; }
+.pmk circle, .pmk path { fill: none; stroke: var(--accd); stroke-width: 1.4; }
+.pmk text { fill: var(--accd); font: 700 11px var(--sans); letter-spacing: .04em; }
+.album { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 16px; }
+.album > li > button { position: relative; display: block; width: 100%; height: 100%; text-align: left; color: inherit; transition: transform .18s cubic-bezier(.3,.7,.4,1); }
+.album > li > button:hover { transform: translateY(-2px) rotate(-.4deg); }
+.album > li > button:active { transform: scale(.98); }
+.album > li > button[aria-disabled="true"] { cursor: default; }
+.album > li > button[aria-disabled="true"]:hover { transform: none; }
+.album .stp { height: 100%; min-height: 200px; }
+.album.prep .pmk { opacity: 0; transform: rotate(-30deg) scale(1.5); }
+.album .pmk { transition: opacity .28s ease-out var(--d, 0ms), transform .34s cubic-bezier(.2, 1.4, .4, 1) var(--d, 0ms); }
+.bm-pg { margin-bottom: 40px; }
+.bm-pgh { display: flex; align-items: flex-end; gap: 16px; padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--border); }
+.bm-pgh .no { font-family: var(--serif); font-size: 46px; line-height: .9; color: var(--accent); }
+.bm-pgh h2 { font-family: var(--serif); font-weight: 500; font-size: 24px; margin: 0; }
+.bm-pgh .sub { font-size: 13px; color: var(--muted); margin-top: 4px; display: flex; gap: 10px; align-items: center; }
+.bm-pgh .sub .bar { width: 120px; height: 5px; }
+.bm-pgh .acts { margin-left: auto; display: flex; gap: 6px; }
+.bm-pg.locked .bm-pgh .no, .bm-pg.locked .bm-pgh h2 { color: var(--faint); }
+.bm-lock { font-size: 13.5px; color: var(--faint); margin: -6px 0 0; }
+.bm-exam { grid-column: 1 / -1; }
+.bm-exam .stp { min-height: 0; }
+.bm-exam .stp-in { flex-direction: row; align-items: center; gap: 16px; padding: 14px 16px; }
+
+/* ---------- Ana sayfa ---------- */
+.bm-home { max-width: none; }
+.bm-hero { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 30vw, 420px); gap: 44px; align-items: center; margin: 18px 0 40px; }
+.bm-date { font-size: 13.5px; color: var(--muted); letter-spacing: .02em; }
+.bm-greet { font-family: var(--serif); font-weight: 500; font-size: clamp(42px, 5.6vw, 68px); line-height: 1.02; letter-spacing: -.015em; margin: 10px 0 0; }
+.bm-greet em { color: var(--accent); }
+.bm-lead { font-size: 16px; line-height: 1.55; color: var(--muted); margin: 16px 0 0; max-width: 54ch; }
+.bm-lead b { color: var(--ink); font-weight: 600; }
+.bm-acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+.bm-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; display: grid; grid-template-columns: minmax(0, 1fr) 112px; gap: 16px; min-height: 196px; text-align: left; color: inherit; width: 100%;
+  background-image: repeating-linear-gradient(-45deg, var(--accent) 0 10px, transparent 10px 20px, transparent 20px 20px); background-size: 100% 6px; background-repeat: no-repeat; background-position: 0 0; padding-top: 26px; }
+.bm-card .lbl { font: 600 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+.bm-card .to { font-family: var(--serif); font-size: 24px; line-height: 1.15; margin-top: 10px; }
+.bm-card .tr { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
+.bm-card .lines { margin-top: 16px; display: grid; gap: 9px; }
+.bm-card .lines i { display: block; height: 1px; background: var(--border); }
+.bm-card .stp-hold { align-self: start; transform: rotate(3deg); }
+.bm-card .stp { min-height: 0; width: 100%; aspect-ratio: 4 / 5; }
+.bm-card .stp .stp-in { padding: 10px; justify-content: space-between; align-items: flex-start; }
+.bm-card .stp .stp-val { font-size: 40px; }
+.bm-card .stp .stp-lv { font: 600 11px/1 var(--sans); letter-spacing: .1em; color: var(--accd); }
+.bm-tiles { grid-column: span 12; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.bm-tile { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; min-height: 116px; display: flex; flex-direction: column; }
+.bm-tile.hi { background: var(--accent-soft); border-color: var(--track); }
+.bm-tile .l { font-size: 13px; color: var(--muted); }
+.bm-tile .v { font-family: var(--serif); font-size: 32px; line-height: 1.1; margin-top: auto; font-variant-numeric: lining-nums tabular-nums; }
+.bm-tile .v small { font-family: var(--sans); font-size: 13px; color: var(--muted); margin-left: 4px; }
+.bm-tile.hi .v { color: var(--accd); }
+.bm-tile .c { font-size: 12.5px; color: var(--muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.bm .bm-home .grid12 { gap: 12px; }
+html.bm .bm-home .idiom-de { font-family: var(--serif); font-style: italic; font-size: 26px; }
+
+/* ---------- Grafikler, tekrar, ders ---------- */
+html.bm .wk7-c .b { background: var(--grey); border-radius: 3px 3px 0 0; opacity: .55; }
+html.bm .wk7-c.now .b { background: var(--accent); opacity: 1; }
+html.bm .ready-bar > div { background: var(--accent); }
+html.bm #lesson .progress > div { background: var(--accent); }
+html.bm .ls-q { font-family: var(--serif); font-weight: 500; }
+html.bm .ls-kind { color: var(--accd); }
+html.bm #lesson .opt, html.bm #gameArea .opt, html.bm .opt { border-radius: 8px; }
+html.bm #lesson .opt.sel, html.bm #gameArea .opt.sel { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+html.bm #lesson .hl, html.bm .ls-q .hl { background: var(--accent-soft); color: var(--accd); box-shadow: inset 0 -2px 0 var(--accent); border-radius: 4px; }
+html.bm .flash-b { background: var(--accent); color: var(--accent-ink); }
+html.bm .msg.me { background: var(--accent); color: var(--accent-ink); }
+html.bm .mic-btn, html.bm #tutorFab { background: var(--accent); color: var(--accent-ink); }
+html.bm .us-top .smallcaps, html.bm .us-meta i, html.bm .us-skip { color: var(--accent); }
+html.bm .us-ai { background: var(--accent-soft); }
+html.bm .us-ai-t { color: var(--accd); }
+html.bm .sheet.us-sheet { border-radius: 12px; }
+html.bm div:has(> .swatch), html.bm b:has(+ div > .swatch) { display: none !important; }
+.ds-pick.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+html.bm input, html.bm progress { accent-color: var(--accent); }
+html.bh input, html.bh progress { accent-color: var(--ink); }
+.ds-prev.bm { background: #fbf7f8; }
+.ds-prev.bm span { width: 30px; height: 36px; background: #fff; outline: 1.5px solid #a3213f; outline-offset: -5px; box-shadow: 0 0 0 1px #ece3e6; }
+
+@media (max-width: 960px) {
+  .bm-hero { grid-template-columns: minmax(0, 1fr); gap: 22px; margin: 10px 0 26px; }
+  .bm-greet { font-size: 40px; }
+  .bm-acts { display: grid; grid-template-columns: 1fr 1fr; }
+  .bm-acts .btn:nth-child(3) { grid-column: 1 / -1; }
+  .bm-card { grid-template-columns: minmax(0, 1fr) 96px; padding: 24px 16px 16px; }
+  .bm-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .album { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .album .stp { min-height: 184px; }
+  .stp-de { font-size: 15.5px; }
+  .pmk { width: 78px; right: -4px; }
+  .bm-pgh { flex-wrap: nowrap; align-items: center; gap: 12px; }
+  .bm-pgh .no { font-size: 36px; }
+  .bm-pgh h2 { font-size: 20px; }
+  .bm-pgh .acts .btn { width: 40px; height: 40px; min-height: 40px; padding: 0; }
+  .bm-pgh .acts .bt { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .album .pmk { transition: none; } .album.prep .pmk { opacity: .82; transform: rotate(-12deg); } .album > li > button { transition: none; } }
+html.dys.bm .bm-greet, html.dys.bm .stp-de, html.dys.bm .bm-pgh h2 { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+</style>
+
+
 
 </head>
 <body>
@@ -2130,6 +2632,10 @@ function aiErr(e) { const m = String(e.message || e); toast('AI hatası: ' + m.s
 
 /* ---------- Durum (profil verisi) ---------- */
 let CFG = LS.get('df_cfg', {});
+// Bulut senkronizasyonu: DeutschFlow'un kendi Firebase projesi (YKS Takip'ten ayrı). Bu web ayarı gizli bir şifre değildir;
+// erişimi veritabanı kuralları sınırlar (yalnızca "deutschflow" alanı açık). Ayarlar'dan başka bir projeyle değiştirilebilir.
+const DEFAULT_FB = { apiKey: 'AIzaSyDrpjrF3TdaBPx1sycTpdccCryTksZ4vtI', authDomain: 'deutschflow-f8eed.firebaseapp.com', databaseURL: 'https://deutschflow-f8eed-default-rtdb.europe-west1.firebasedatabase.app', projectId: 'deutschflow-f8eed', storageBucket: 'deutschflow-f8eed.firebasestorage.app', messagingSenderId: '303691937383', appId: '1:303691937383:web:877bfb33b36f681f4b46c2' };
+if (CFG.fbConfig === undefined) CFG.fbConfig = JSON.stringify(DEFAULT_FB);   // kullanıcı Ayarlar'dan boşaltırsa kapalı kalır
 if (CFG.model === 'gemini-3.0-flash') { delete CFG.model; LS.set('df_cfg', CFG); }
 let PROFILES = LS.get('df_profiles', []);
 let PID = null, D = null, RO = false, PAGE = 'home';
@@ -3115,7 +3621,14 @@ async function listModels() {
   } catch (e) { o.innerHTML = aiErr(e); }
 }
 async function testAI() { const o = $('#aiTest'); o.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>'; CFG.apiKey = $('#stKey').value.trim(); CFG.model = $('#stModel').value.trim() || DEFAULT_MODEL; saveCfg(); try { const t = await aiText('Sag in einem kurzen Satz Hallo auf Deutsch.'); o.innerHTML = `<span style="color:var(--a1);font-weight:800">✓ Çalışıyor:</span> ${esc(t.trim())}`; } catch (e) { o.innerHTML = aiErr(e); } }
-async function saveFb() { const v = $('#stFb').value.trim(); if (!v) return; try { JSON.parse(v); } catch (e) { toast('Geçerli bir JSON değil', 'err'); return; } CFG.fbConfig = v; saveCfg(); fb = null; const db = await fbInit(); if (db) { toast('Firebase bağlandı'); fbPushProfiles(); save(); } go('settings'); }
+// Firebase konsolunun verdiği kodu olduğu gibi kabul et: "const firebaseConfig = { apiKey: "..." };" ya da düz JSON
+function parseFbConfig(v) {
+  const m = v.match(/firebaseConfig\s*=\s*(\{[\s\S]*?\})/), a = v.indexOf('{'), b = v.lastIndexOf('}');
+  if (!m && (a < 0 || b < a)) throw new Error('{ … } bulunamadı');
+  let t = (m ? m[1] : v.slice(a, b + 1)).replace(/^\s*\/\/.*$/gm, '').replace(/'([^']*)'/g, '"$1"').replace(/([{,]\s*)([A-Za-z_$][\w$]*)\s*:/g, '$1"$2":').replace(/,\s*}/g, '}');
+  const o = JSON.parse(t); if (!o.databaseURL) throw new Error('databaseURL yok: önce Realtime Database oluştur, sonra yapılandırmayı tekrar kopyala'); return o;
+}
+async function saveFb() { const v = $('#stFb').value.trim(); if (!v) return; let o; try { o = parseFbConfig(v); } catch (e) { toast('Firebase ayarı okunamadı: ' + e.message, 'err'); return; } CFG.fbConfig = JSON.stringify(o); $('#stFb').value = JSON.stringify(o, null, 1); saveCfg(); fb = null; const db = await fbInit(); if (db) { toast('Firebase bağlandı'); fbPushProfiles(); save(); } go('settings'); }
 function renameProfile() { if (!canEdit()) return; const p = PROFILES.find(x => x.id === PID), n = $('#stName').value.trim(); if (!n) return; p.name = n; p.updatedAt = Date.now(); saveProfiles(); toast('Ad güncellendi'); renderTopbar(); }
 function changePin() {
   if (!canEdit()) return; const p = PROFILES.find(x => x.id === PID);
@@ -4588,7 +5101,7 @@ openUnit = function (id) {
   const el = modal(`<div class="us" style="${lvStyle(L.color)}">
     <header class="us-head"><div class="us-top"><span class="smallcaps">${L.id} · Blatt ${String(ui + 1).padStart(2, '0')}</span><button class="us-x" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>
       <h3 class="us-de" lang="de">${esc(u.de)}</h3><div class="us-tr">${esc(u.t)}</div>
-      <div class="us-meta"><span><i class="fa-solid fa-list-check"></i>${n} etkinlik</span><span><i class="fa-solid fa-spell-check"></i>${u.v.length} kelime</span><span><i class="fa-solid fa-quote-left"></i>${u.s.length} cümle</span><span><i class="fa-regular fa-clock"></i>~${mins} dk</span></div>
+      <div class="us-meta"><span><i class="fa-solid fa-list-check"></i>${n} etkinlik</span><span><i class="fa-solid fa-spell-check"></i>${u.v.length} kelime</span><span><i class="fa-solid fa-quote-left"></i>${u.s.length} cümle</span><span><i class="fa-solid fa-clock"></i>~${mins} dk</span></div>
       <div class="tabs us-tabs" role="tablist">${[['g', 'Konu'], ['v', 'Kelimeler'], ['s', 'Cümleler']].map(([k, t], i) => `<button class="tab ${i ? '' : 'active'}" role="tab" onclick="unitTab(this,'${k}');this.closest('.us').querySelector('.us-body').scrollTop=0">${t}</button>`).join('')}</div></header>
     <div class="us-body">
       <div data-pane="g"><div class="guide">${u.g}</div>
@@ -4606,6 +5119,319 @@ openUnit = function (id) {
   const sh = el.querySelector('.sheet'); sh.classList.add('us-sheet');
   sh.querySelectorAll('.guide table').forEach(t => { if (!t.parentElement.classList.contains('us-tbl')) { const w = document.createElement('div'); w.className = 'us-tbl'; t.before(w); w.appendChild(t); } });
   return el;
+};
+/* =====================================================================
+   BAUHAUS ekranları (html.bh). Herbaryum ekranları silinmedi: Ayarlar > Tasarım'dan geri dönülür.
+   ===================================================================== */
+const isBh = () => document.documentElement.classList.contains('bh');
+// Seviyeler geometriyle ayrılır: A1 daire, A2 kare, B1 üçgen, B2 yarım daire, C1 çeyrek daire, C2 eşkenar dörtgen
+const BH_SHAPES = [
+  'M20 2a18 18 0 1 0 0.01 0Z',
+  'M3 3h34v34H3Z',
+  'M20 2.5 37.5 37H2.5Z',
+  'M2 34A18 18 0 0 1 38 34Z',
+  'M4 37V4a33 33 0 0 1 33 33Z',
+  'M20 1.5 38.5 20 20 38.5 1.5 20Z'
+];
+const lvPct = li => { const L = LEVELS[li], n = L.units.length + 1; return (L.units.filter(u => D.done[u.id] != null).length + (D.boss[L.id] ? 1 : 0)) / n; };
+function bhGlyph(li, state, size = 40) {
+  const p = BH_SHAPES[li % BH_SHAPES.length], col = state === 'cur' ? 'var(--cobalt)' : state === 'lock' ? 'var(--control)' : 'var(--ink)';
+  return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" aria-hidden="true"><path d="${p}" fill="${state === 'done' ? col : 'none'}" stroke="${col}" stroke-width="1.6" ${state === 'lock' ? 'stroke-dasharray="3 3"' : ''}/>${state === 'cur' ? `<path d="${p}" fill="${col}" opacity=".16"/>` : ''}</svg>`;
+}
+// İlerlemenden çizilen Bauhaus afişi: her seviye bir şekil; şeklin dolu kısmı o seviyedeki ilerlemen
+let bhPosterDrawn = false;
+function bhPoster() {
+  const cur = currentLevelIdx(), cells = LEVELS.map((L, li) => {
+    const x = (li % 3) * 92 + 8, y = Math.floor(li / 3) * 112 + 8, pct = lvPct(li), open = levelUnlocked(li), st = !open ? 'lock' : li === cur ? 'cur' : pct >= 1 ? 'done' : '';
+    const id = 'bhc' + li, sc = 2.05, p = BH_SHAPES[li];
+    return `<g class="shp ${st}" transform="translate(${x} ${y})">
+      <title>${L.id} · ${L.tr} — %${Math.round(pct * 100)}</title>
+      <clipPath id="${id}"><rect class="clipr" style="--d:${li * 90}ms" x="-1" y="${(40 * (1 - pct)).toFixed(2)}" width="42" height="${(40 * pct + 0.4).toFixed(2)}"/></clipPath>
+      <g transform="scale(${sc})"><path class="f" d="${p}" clip-path="url(#${id})"/><path class="o" d="${p}"/></g>
+      <text x="0" y="100">${L.id}</text><text x="82" y="100" text-anchor="end">${Math.round(pct * 100)}%</text></g>`;
+  }).join('');
+  const total = LEVELS.reduce((a, x) => a + x.units.length, 0);
+  return `<button type="button" class="bh-poster ${bhPosterDrawn ? '' : 'prep'}" onclick="go('learn')" aria-label="Seviye afişi: ${LEVELS.map((L, li) => L.id + ' yüzde ' + Math.round(lvPct(li) * 100)).join(', ')}. Öğrenme yolunu aç"><svg viewBox="0 0 284 226" aria-hidden="true">${cells}</svg>
+    <span class="bh-cap"><span>İlerlemenden çizildi</span><span><b>${lessonsDone(D)}</b> / ${total} ünite</span></span></button>`;
+}
+
+/* ---------- Ana sayfa ---------- */
+const _homeHerb = VIEWS.home;
+VIEWS.home = () => {
+  if (!isBh()) return _homeHerb();
+  ensureQuests();
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, h = new Date().getHours();
+  const hi = h < 11 ? 'Günaydın' : h < 18 ? 'İyi günler' : 'İyi akşamlar';
+  const nu = nextUnit(), L = LEVELS[currentLevelIdx()], due = D.cards.filter(c => c.due <= Date.now()).length;
+  const total = LEVELS.reduce((a, x) => a + x.units.length, 0), wk = weekXP(D.days), tier = TIERS.find(t => wk >= t[0]);
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length], dailyDone = D.daily && D.daily[today()] != null, studied = D.lastDay === today();
+  const next = nu ? (nu.boss ? { de: LEVELS[nu.li].id + ' seviye sonu sınavı', t: '15 soru · baraj %80', go: `startBoss(${nu.li})` } : { de: nu.u.de, t: nu.u.t, go: `openUnit('${nu.u.id}')`, n: buildUnitItems(nu.u, LEVELS[nu.li]).length }) : null;
+  const g = D.goal ? goalInfo() : null;
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); return d ? `<div class="q-line ${q.p >= d.goal ? 'done' : ''}"><span class="q-t">${d.t}</span><span class="bar"><div style="width:${Math.round(q.p / d.goal * 100)}%"></div></span><span class="q-n tabular">${q.p}/${d.goal}</span></div>` : ''; }).join('');
+  const date = new Date().toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const tile = (l, v, u, c) => `<div class="bh-tile ${+v ? '' : 'zero'}"><span class="l">${l}</span><span class="v">${v}<small>${u}</small></span><span class="c">${c}</span></div>`;
+  return `<div class="bh-home">
+  <section class="bh-hero"><div style="min-width:0">
+    <div class="bh-date">${date}</div>
+    <h1 class="bh-greet">${hi}, ${esc(p.name)}.</h1>
+    <p class="bh-lead">${next ? `Sıradaki: <b lang="de">${esc(next.de)}</b> — ${esc(next.t)}.` : 'A1’den C2’ye bütün seviyeleri bitirdin.'}${!studied && h >= 17 && displayStreak() ? ` ${displayStreak()} günlük serin bugün seni bekliyor.` : ''}</p>
+    <div class="bh-acts">${next ? `<button class="btn" onclick="${next.go}"><i class="fa-solid fa-play"></i> Devam et</button>` : ''}<button class="btn btn-ghost" onclick="startDaily()">${dailyDone ? 'Günün dersi ✓' : 'Günün dersi · 5 dk'}</button>${!D.placementDone && !RO ? `<button class="btn btn-ghost" onclick="startPlacement()">Seviye tespit sınavı</button>` : ''}</div>
+  </div></section>
+  <div class="grid12">
+    <div class="bh-tiles">${tile('Seri', displayStreak(), 'gün', 'Seri kalkanı ' + D.shields + '/3')}${tile('Bu hafta', wk, 'XP', tier[1].replace(/^\S+\s/, '') + ' ligi')}${tile('Tekrar bekleyen', due, 'kart', due ? 'Hazır olduğunda başla' : 'Bugünlük kutu boş')}${tile('Tamamlanan', lessonsDone(D), '/ ' + total, L.id + ' · ' + L.tr)}</div>
+    <section class="panel s8"><div class="panel-head"><h2>Bugün</h2><button class="lnk" onclick="go('learn')">Öğrenme yolu →</button></div>
+      ${next ? `<button class="row-card hot m-hide" onclick="${next.go}"><span class="rc-ic"><i class="fa-solid fa-play"></i></span><span class="rc-main"><span class="rc-t" style="display:block" lang="de">${esc(next.de)}</span><span class="rc-s" style="display:block">${esc(next.t)}${next.n ? ' · ' + next.n + ' etkinlik' : ''}</span></span><span class="rc-end">Sıradaki</span></button>` : ''}
+      <button class="row-card m-hide" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti' : '5 dk'}</span></button>
+      <button class="row-card" onclick="go('review')"><span class="rc-ic"><i class="fa-solid fa-layer-group"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Tekrar kutusu</span><span class="rc-s" style="display:block">${D.cards.length} kart · aralıklı tekrar</span></span><span class="rc-end tabular">${due} bekliyor</span></button>
+      ${g ? `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(D.goal.exam)}</span><span class="rc-s" style="display:block">Hedefe ilerleme %${g.pct}</span></span><span class="rc-end tabular">${Math.max(0, g.days)} gün</span></button>` : `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hedefi koy</span><span class="rc-s" style="display:block">Tarihi gir, kalan üniteler günlere bölünsün</span></span><span class="rc-end">Plan</span></button>`}
+    </section>
+    <section class="panel s4"><div class="panel-head"><h2>Günün deyimi</h2><button class="icon-btn" style="width:34px;height:34px" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high" style="font-size:12px"></i></button></div>
+      <div class="idiom-de" lang="de">${esc(idiom.de)}</div><div style="font-weight:500;margin-top:6px">${esc(idiom.tr)}</div><div class="muted m-hide" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></section>
+    <section class="panel s6"><div class="panel-head"><h2>Günlük görevler</h2><span class="chip tabular">Kalkan ${D.shields}/3</span></div>${quests}<p class="note">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan.</p></section>
+    <section class="panel s6 m-hide"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
+  </div></div>`;
+};
+const _afterHomeBh = AFTER.home;
+AFTER.home = () => {
+  if (_afterHomeBh) _afterHomeBh();
+  const pst = document.querySelector('.bh-poster.prep'); if (!pst) return;
+  // İmza hareketi: afişteki şekiller oturumda bir kez, sırayla dolar
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pst.classList.remove('prep'); bhPosterDrawn = true; return; }
+  requestAnimationFrame(() => requestAnimationFrame(() => pst.classList.remove('prep'))); setTimeout(() => { bhPosterDrawn = true; }, 1400);
+};
+
+/* ---------- Öğrenme yolu: defter satırları ---------- */
+const _learnHerb = VIEWS.learn;
+VIEWS.learn = () => {
+  if (!isBh()) return _learnHerb();
+  const nu = nextUnit(), cur = currentLevelIdx();
+  return `<p class="page-sub">Her seviye bir şekil. Üniteyi %80 ile geç; seviyenin sonundaki sınavı geçince sıradaki seviye açılır.</p>` + LEVELS.map((L, li) => {
+    const open = levelUnlocked(li), doneN = L.units.filter(u => D.done[u.id] != null).length, bossOpen = bossUnlocked(li), bossDone = !!D.boss[L.id];
+    const st = !open ? 'lock' : li === cur ? 'cur' : lvPct(li) >= 1 ? 'done' : '';
+    const rows = L.units.map((u, ui) => {
+      const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, c = nu && !nu.boss && nu.u.id === u.id;
+      const cls = dn ? 'done' : c ? 'current' : un ? 'open' : 'locked';
+      return `<li class="bh-r ${cls}"><button onclick="${un ? `openUnit('${u.id}')` : `toast('Önce önceki üniteyi geç','warn')`}" ${un ? '' : 'aria-disabled="true"'}><span class="bh-no">${String(ui + 1).padStart(2, '0')}</span><span class="bh-t"><b lang="de">${esc(u.de)}</b><small>${esc(u.t)}</small></span><span class="bh-st">${dn ? '%' + Math.round(D.done[u.id] * 100) : c ? 'Sıradaki' : un ? 'Açık' : '<i class="fa-solid fa-lock"></i>'}</span><i class="fa-solid fa-chevron-right chev"></i></button></li>`;
+    }).join('');
+    const bc = nu && nu.boss && nu.li === li;
+    const exam = `<li class="bh-r exam ${bossDone ? 'done' : bc ? 'current' : bossOpen ? 'open' : 'locked'}"><button onclick="${bossOpen ? `startBoss(${li})` : `toast('Sınav için bütün üniteleri geç','warn')`}" ${bossOpen ? '' : 'aria-disabled="true"'}><span class="bh-no"><i class="fa-solid fa-award"></i></span><span class="bh-t"><b>Seviye sonu sınavı</b><small>15 soru · baraj %80${bossDone && D.bossScore && D.bossScore[L.id] ? ' · sonuç %' + D.bossScore[L.id].score : ''}</small></span><span class="bh-st">${bossDone ? 'Geçildi' : bc ? 'Sıradaki' : bossOpen ? 'Hazır' : '<i class="fa-solid fa-lock"></i>'}</span><i class="fa-solid fa-chevron-right chev"></i></button></li>`;
+    return `<section class="bh-lv ${open ? '' : 'locked'}">
+      <header class="bh-lvh">${bhGlyph(li, st)}<div style="min-width:0"><h2>${L.tr} <span class="id">${L.id}</span></h2><div class="sub"><span lang="de">${esc(L.name)}</span><span class="bar"><div style="width:${Math.round(lvPct(li) * 100)}%"></div></span><span class="mono">${doneN}/${L.units.length}</span></div></div>
+        <div class="acts">${bossDone ? `<button class="btn btn-ghost btn-sm" aria-label="Sertifika" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i><span class="bt"> Sertifika</span></button>` : ''}<button class="btn btn-ghost btn-sm" aria-label="${L.id} notları" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i><span class="bt"> Notlar</span></button></div></header>
+      ${open ? `<ol class="bh-rows">${rows}${exam}</ol>` : `<p class="bh-lock">${L.units.length} ünite · önceki seviyenin sınavını geçince açılır</p>`}</section>`;
+  }).join('');
+};
+const _afterLearnBh = AFTER.learn;
+let bhLearnSeen = false;
+AFTER.learn = () => {
+  if (!isBh()) { if (_afterLearnBh) _afterLearnBh(); return; }
+  if (bhLearnSeen) return; bhLearnSeen = true;
+  const c = document.querySelector('.bh-r.current'); if (c) setTimeout(() => c.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }), 250);
+};
+
+/* ---------- Masaüstü ikon rayı: ipuçları ve erişilebilir adlar ---------- */
+const _renderNavBh = renderNav;
+renderNav = function () { _renderNavBh.apply(this, arguments); document.querySelectorAll('#sideNav .nav-item').forEach(b => { const t = b.textContent.trim(); if (t) { b.dataset.tip = t; b.setAttribute('aria-label', t); } }); };
+
+/* ---------- Rapor grafiği: y ölçeği (en yüksek değer) ---------- */
+const _afterReportBh = AFTER.report;
+AFTER.report = () => { if (_afterReportBh) _afterReportBh(); const w = document.querySelector('.wk7'); if (w && isBh() && !w.querySelector('.wk7-max')) { const mx = Math.max(20, ...[...w.querySelectorAll('.wk7-c .tip')].map(t => +(t.textContent.match(/·\s*(\d+)\s*XP/) || [0, 0])[1])); w.insertAdjacentHTML('afterbegin', `<span class="wk7-max">${mx} XP</span>`); } };
+
+/* ---------- Ayarlar: Tasarım seçimi (Bauhaus / Herbaryum) ---------- */
+function setDesign(d) {
+  try { localStorage.setItem('df_design', d); } catch (e) {}
+  document.documentElement.classList.toggle('bh', d === 'bh');
+  bhPosterDrawn = false; bhLearnSeen = false; renderNav(); go(PAGE);
+  toast(d === 'bh' ? 'Tasarım: Bauhaus' : 'Tasarım: Herbaryum');
+}
+const _settingsBh = VIEWS.settings;
+VIEWS.settings = () => `<div class="panel" style="margin-bottom:16px"><div class="panel-head" style="margin-bottom:4px"><h2>Tasarım</h2></div><p class="note" style="margin:0">Uygulamanın görünümünü seç. Verilerin değişmez.</p>
+  <div class="ds-pick"><button class="ds-opt ${isBh() ? 'on' : ''}" onclick="setDesign('bh')" aria-pressed="${isBh()}"><div class="ds-prev bh"><i></i><i></i><i></i></div>Bauhaus</button>
+  <button class="ds-opt ${isBh() ? '' : 'on'}" onclick="setDesign('herb')" aria-pressed="${!isBh()}"><div class="ds-prev hb">Blatt</div>Herbaryum</button></div></div>` + _settingsBh();
+
+/* =====================================================================
+   BRIEFMARKE ekranları (html.bm): pul albümü. Bauhaus ve Herbaryum duruyor; Ayarlar > Tasarım'dan seçilir.
+   ===================================================================== */
+const isBm = () => document.documentElement.classList.contains('bm');
+// Posta damgası: çift halka + ortada puan + yanında dalgalı iptal çizgileri
+const bmPostmark = (txt, d = 0) => `<svg class="pmk" style="--d:${d}ms" viewBox="0 0 92 60" aria-hidden="true"><circle cx="30" cy="30" r="26"/><circle cx="30" cy="30" r="21"/><text x="30" y="34" text-anchor="middle">${txt}</text><path d="M58 18c6-4 12 4 18 0s12 4 16 0M58 30c6-4 12 4 18 0s12 4 16 0M58 42c6-4 12 4 18 0s12 4 16 0"/></svg>`;
+function bmStamp(L, ui, u, st, extra = '') {
+  return `<span class="stp ${st}"><span class="stp-in"><span class="stp-top"><span>${L.id}</span><span class="stp-val">${String(ui + 1).padStart(2, '0')}</span></span>
+    <span class="stp-de" lang="de">${esc(u.de)}</span><span class="stp-tr">${esc(u.t)}</span>
+    <span class="stp-foot">${extra || 'DeutschFlow'}</span></span></span>`;
+}
+
+/* ---------- Ana sayfa ---------- */
+const _homeBm = VIEWS.home;
+VIEWS.home = () => {
+  if (!isBm()) return _homeBm();
+  ensureQuests();
+  const p = PROFILES.find(x => x.id === PID) || { name: '' }, h = new Date().getHours();
+  const hi = h < 11 ? 'Guten Morgen' : h < 18 ? 'Guten Tag' : 'Guten Abend';
+  const nu = nextUnit(), L = LEVELS[currentLevelIdx()], due = D.cards.filter(c => c.due <= Date.now()).length;
+  const total = LEVELS.reduce((a, x) => a + x.units.length, 0), wk = weekXP(D.days), tier = TIERS.find(t => wk >= t[0]);
+  const idiom = IDIOMS[hashStr(today()) % IDIOMS.length], dailyDone = D.daily && D.daily[today()] != null, studied = D.lastDay === today();
+  const g = D.goal ? goalInfo() : null;
+  const quests = (D.quests ? D.quests.list : []).map(q => { const d = QUEST_POOL.find(x => x.id === q.id); return d ? `<div class="q-line ${q.p >= d.goal ? 'done' : ''}"><span class="q-t">${d.t}</span><span class="bar"><div style="width:${Math.round(q.p / d.goal * 100)}%"></div></span><span class="q-n tabular">${q.p}/${d.goal}</span></div>` : ''; }).join('');
+  const date = new Date().toLocaleDateString('tr-TR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const nl = nu ? LEVELS[nu.li] : null;
+  // Kartpostal: sıradaki ünite, köşesinde pulu
+  const card = nu ? `<button class="bm-card" onclick="${nu.boss ? `startBoss(${nu.li})` : `openUnit('${nu.u.id}')`}" aria-label="Sıradaki: ${esc(nu.boss ? nl.id + ' sınavı' : nu.u.de)}">
+      <span style="min-width:0"><span class="lbl">Sıradaki mektup · ${nl.id}</span><span class="to" style="display:block" lang="de">${esc(nu.boss ? 'Abschlussprüfung ' + nl.id : nu.u.de)}</span><span class="tr" style="display:block">${esc(nu.boss ? '15 soru · baraj %80' : nu.u.t + ' · ' + buildUnitItems(nu.u, nl).length + ' etkinlik')}</span><span class="lines"><i></i><i></i><i></i></span></span>
+      ${nu.boss ? '' : `<span class="stp-hold"><span class="stp cur"><span class="stp-in"><span class="stp-lv">${nl.id}</span><span class="stp-val">${String(nu.ui + 1).padStart(2, '0')}</span></span></span></span>`}</button>` : `<div class="bm-card"><span><span class="lbl">Albüm tamam</span><span class="to" style="display:block">Bütün pullar toplandı.</span></span></div>`;
+  const tile = (l, v, u, c, hiT) => `<div class="bm-tile ${hiT ? 'hi' : ''}"><span class="l">${l}</span><span class="v">${v}<small>${u}</small></span><span class="c">${c}</span></div>`;
+  return `<div class="bm-home">
+  <section class="bm-hero"><div style="min-width:0"><div class="bm-date">${date}</div>
+    <h1 class="bm-greet">${hi},<br><em>${esc(p.name)}</em>.</h1>
+    <p class="bm-lead">${nu ? `Albümüne eklenecek sıradaki pul: <b lang="de">${esc(nu.boss ? nl.id + ' sınavı' : nu.u.de)}</b>.` : 'A1’den C2’ye bütün albüm sayfalarını doldurdun.'}${!studied && h >= 17 && displayStreak() ? ` ${displayStreak()} günlük serin bugün seni bekliyor.` : ''}</p>
+    <div class="bm-acts">${nu ? `<button class="btn" onclick="${nu.boss ? `startBoss(${nu.li})` : `openUnit('${nu.u.id}')`}"><i class="fa-solid fa-play"></i> Devam et</button>` : ''}<button class="btn btn-ghost" onclick="startDaily()">${dailyDone ? 'Günün dersi ✓' : 'Günün dersi · 5 dk'}</button>${!D.placementDone && !RO ? `<button class="btn btn-ghost" onclick="startPlacement()">Seviye tespit sınavı</button>` : ''}</div>
+  </div>${card}</section>
+  <div class="grid12">
+    <div class="bm-tiles">${tile('Seri', displayStreak(), 'gün', 'Seri kalkanı ' + D.shields + '/3', true)}${tile('Bu hafta', wk, 'XP', tier[1].replace(/^\S+\s/, '') + ' ligi')}${tile('Tekrar bekleyen', due, 'kart', due ? 'Hazır olduğunda başla' : 'Bugünlük kutu boş')}${tile('Albüm', lessonsDone(D), '/ ' + total + ' pul', L.id + ' · ' + L.tr)}</div>
+    <section class="panel s8"><div class="panel-head"><h2>Bugün</h2><button class="lnk" onclick="go('learn')">Albümü aç →</button></div>
+      <button class="row-card m-hide" onclick="startDaily()"><span class="rc-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Günün dersi</span><span class="rc-s" style="display:block">Tekrar kartları, son yanlışlar ve sıradaki konudan karışık</span></span><span class="rc-end">${dailyDone ? 'Bitti' : '5 dk'}</span></button>
+      <button class="row-card" onclick="go('review')"><span class="rc-ic"><i class="fa-solid fa-layer-group"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Tekrar kutusu</span><span class="rc-s" style="display:block">${D.cards.length} kart · aralıklı tekrar</span></span><span class="rc-end tabular">${due} bekliyor</span></button>
+      ${g ? `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(D.goal.exam)}</span><span class="rc-s" style="display:block">Hedefe ilerleme %${g.pct}</span></span><span class="rc-end tabular">${Math.max(0, g.days)} gün</span></button>` : `<button class="row-card" onclick="go('plan')"><span class="rc-ic"><i class="fa-solid fa-flag-checkered"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Sınav hedefi koy</span><span class="rc-s" style="display:block">Tarihi gir, kalan üniteler günlere bölünsün</span></span><span class="rc-end">Plan</span></button>`}
+    </section>
+    <section class="panel s4"><div class="panel-head"><h2>Günün deyimi</h2><button class="icon-btn" style="width:34px;height:34px" data-say="${esc(idiom.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high" style="font-size:12px"></i></button></div>
+      <div class="idiom-de" lang="de">${esc(idiom.de)}</div><div style="font-weight:600;margin-top:6px">${esc(idiom.tr)}</div><div class="muted m-hide" style="font-size:13px;margin-top:4px">Kelimesi kelimesine: “${esc(idiom.lit)}”</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" data-de="${esc(idiom.de)}" data-tr="${esc(idiom.tr)}" onclick="addCard(this.dataset.de,this.dataset.tr,'idiom')"><i class="fa-solid fa-plus"></i> Kutuya ekle</button></section>
+    <section class="panel s6"><div class="panel-head"><h2>Günlük görevler</h2><span class="chip tabular">Kalkan ${D.shields}/3</span></div>${quests}<p class="note">Üçü de bitince +20 XP ve seriyi koruyan bir kalkan.</p></section>
+    <section class="panel s6 m-hide"><div class="panel-head"><h2>Pratik</h2><button class="lnk" onclick="go('practice')">Hepsi →</button></div>${hubTiles(['stories', 'listen', 'roleplay', 'games'])}</section>
+  </div></div>`;
+};
+
+/* ---------- Öğrenme yolu: pul albümü ---------- */
+const _learnBm = VIEWS.learn;
+let bmAlbumDrawn = false, bmLearnSeen = false;
+VIEWS.learn = () => {
+  if (!isBm()) return _learnBm();
+  const nu = nextUnit();
+  let k = 0;
+  return `<p class="page-sub">Her seviye bir albüm sayfası, her ünite bir pul. Üniteyi %80 ile geçince pulun üstüne damga basılır; sayfanın sonundaki sınavla sıradaki sayfa açılır.</p>` + LEVELS.map((L, li) => {
+    const open = levelUnlocked(li), doneN = L.units.filter(u => D.done[u.id] != null).length, bossOpen = bossUnlocked(li), bossDone = !!D.boss[L.id];
+    const stamps = L.units.map((u, ui) => {
+      const un = unitUnlocked(li, ui), dn = D.done[u.id] != null, c = nu && !nu.boss && nu.u.id === u.id;
+      const st = dn ? 'done' : c ? 'cur' : un ? 'open' : 'lock';
+      return `<li><button onclick="${un ? `openUnit('${u.id}')` : `toast('Önce önceki üniteyi geç','warn')`}" ${un ? '' : 'aria-disabled="true"'} aria-label="${esc(u.de)} · ${esc(u.t)}${dn ? ' · %' + Math.round(D.done[u.id] * 100) : ''}">${bmStamp(L, ui, u, st, dn ? '' : c ? 'Sıradaki' : un ? 'Açık' : '<i class="fa-solid fa-lock"></i>')}${dn ? bmPostmark('%' + Math.round(D.done[u.id] * 100), (k++) * 80) : ''}</button></li>`;
+    }).join('');
+    const bc = nu && nu.boss && nu.li === li;
+    const exam = `<li class="bm-exam"><button onclick="${bossOpen ? `startBoss(${li})` : `toast('Sınav için bütün üniteleri geç','warn')`}" ${bossOpen ? '' : 'aria-disabled="true"'}><span class="stp ${bossDone ? 'done' : bc ? 'cur' : bossOpen ? 'open' : 'lock'}"><span class="stp-in"><span class="stp-val"><i class="fa-solid fa-award"></i></span><span style="flex:1;min-width:0"><span class="stp-de" style="display:block;margin:0">Abschlussprüfung ${L.id}</span><span class="stp-tr" style="display:block">15 soru · baraj %80${bossDone && D.bossScore && D.bossScore[L.id] ? ' · sonuç %' + D.bossScore[L.id].score : ''}</span></span><span class="stp-foot" style="margin:0;padding:0">${bossDone ? 'Geçildi' : bc ? 'Sıradaki' : bossOpen ? 'Hazır' : '<i class="fa-solid fa-lock"></i>'}</span></span></span></button></li>`;
+    return `<section class="bm-pg ${open ? '' : 'locked'}"><header class="bm-pgh"><span class="no">${L.id}</span><div style="min-width:0"><h2>${L.tr}</h2><div class="sub"><span lang="de">${esc(L.name)}</span><span class="bar"><div style="width:${Math.round(doneN / L.units.length * 100)}%"></div></span><span class="tabular">${doneN}/${L.units.length}</span></div></div>
+      <div class="acts">${bossDone ? `<button class="btn btn-ghost btn-sm" aria-label="Sertifika" onclick="certPdf('${L.id}')"><i class="fa-solid fa-certificate"></i><span class="bt"> Sertifika</span></button>` : ''}<button class="btn btn-ghost btn-sm" aria-label="${L.id} notları" onclick="go('guides');setTimeout(()=>{const e=document.getElementById('g-${L.id}');e&&e.scrollIntoView({behavior:'smooth'})},120)"><i class="fa-solid fa-book"></i><span class="bt"> Notlar</span></button></div></header>
+      ${open ? `<ol class="album ${bmAlbumDrawn ? '' : 'prep'}">${stamps}${exam}</ol>` : `<p class="bm-lock">${L.units.length} pul · önceki sayfanın sınavını geçince açılır</p>`}</section>`;
+  }).join('');
+};
+const _afterLearnBm = AFTER.learn;
+AFTER.learn = () => {
+  if (!isBm()) { if (_afterLearnBm) _afterLearnBm(); return; }
+  // İmza hareketi: albüm oturumda ilk açıldığında damgalar sırayla basılır (seyrek olduğu için ifadeli olabilir)
+  const al = document.querySelectorAll('.album.prep'), reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (al.length) { if (reduce) { al.forEach(a => a.classList.remove('prep')); bmAlbumDrawn = true; } else { requestAnimationFrame(() => requestAnimationFrame(() => al.forEach(a => a.classList.remove('prep')))); setTimeout(() => { bmAlbumDrawn = true; }, 1600); } }
+  if (!bmLearnSeen) { bmLearnSeen = true; const c = document.querySelector('.stp.cur'); if (c) setTimeout(() => c.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }), 300); }
+};
+
+/* ---------- Ayarlar: üç tasarım ---------- */
+setDesign = function (d) {
+  try { localStorage.setItem('df_design', d); } catch (e) {}
+  const h = document.documentElement; h.classList.toggle('bh', d === 'bh'); h.classList.toggle('bm', d === 'bm');
+  bhPosterDrawn = false; bhLearnSeen = false; bmAlbumDrawn = false; bmLearnSeen = false; renderNav(); go(PAGE);
+  toast('Tasarım: ' + ({ bh: 'Bauhaus', bm: 'Briefmarke', herb: 'Herbaryum' }[d] || d));
+};
+const _settingsBm = VIEWS.settings;
+VIEWS.settings = () => {
+  const cur = isBm() ? 'bm' : isBh() ? 'bh' : 'herb';
+  const opt = (k, prev, t) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}${t}</button>`;
+  return _settingsBm().replace(/<div class="ds-pick">[\s\S]*?<\/button><\/div><\/div>/, `<div class="ds-pick three">${opt('bm', '<div class="ds-prev bm"><span></span></div>', 'Briefmarke')}${opt('bh', '<div class="ds-prev bh"><i></i><i></i><i></i></div>', 'Bauhaus')}${opt('herb', '<div class="ds-prev hb">Blatt</div>', 'Herbaryum')}</div></div>`);
+};
+
+/* =====================================================================
+   SENKRON: tekrarlar, cihazlar ve sekmeler arasında veri hep aynı kalsın
+   ===================================================================== */
+// 1) Kart bazında birleştirme: aynı kart iki yerde değiştiyse en son tekrar edilen kazanır; hiçbir kart kaybolmaz
+const cardStamp = c => Math.max(c.last || 0, c.added || 0);
+function mergeData(a, b) {
+  if (!a) return b; if (!b) return a;
+  const [base, other] = (b.updatedAt || 0) > (a.updatedAt || 0) ? [b, a] : [a, b], out = JSON.parse(JSON.stringify(base));
+  const byId = new Map((out.cards || []).map(c => [c.id, c]));
+  (other.cards || []).forEach(c => { const m = byId.get(c.id) || (out.cards || []).find(x => norm(x.de) === norm(c.de)); if (!m) { out.cards.push(JSON.parse(JSON.stringify(c))); } else if (cardStamp(c) > cardStamp(m)) Object.assign(m, JSON.parse(JSON.stringify(c))); });
+  out.done = out.done || {}; Object.entries(other.done || {}).forEach(([k, v]) => { if (out.done[k] == null || v > out.done[k]) out.done[k] = v; });
+  out.boss = Object.assign({}, other.boss || {}, out.boss || {});
+  out.days = out.days || {}; Object.entries(other.days || {}).forEach(([k, v]) => { const o = out.days[k]; if (!o) out.days[k] = v; else Object.keys(v).forEach(f => { if (typeof v[f] === 'number' && v[f] > (o[f] || 0)) o[f] = v[f]; }); });
+  out.daily = Object.assign({}, other.daily || {}, out.daily || {});
+  out.xp = Math.max(out.xp || 0, other.xp || 0);
+  if (out.stats && other.stats) Object.keys(other.stats).forEach(k => { if (typeof other.stats[k] === 'number' && other.stats[k] > (out.stats[k] || 0)) out.stats[k] = other.stats[k]; });
+  out.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
+  return out;
+}
+// 2) Ekranı yenile: ders/tekrar sırasında araya girme, bitince yenile
+let syncDirty = false;
+const busyUI = () => !!(document.querySelector('#lessonRoot #lesson') || (typeof rv !== 'undefined' && rv) || (typeof HF !== 'undefined' && HF) || $('#modalRoot').children.length);
+function refreshAfterSync() { if (!D) return; if (busyUI()) { syncDirty = true; return; } syncDirty = false; try { renderNav(); renderTopbar(); } catch (e) {} go(PAGE); }
+const _closeModalSync = closeModal; closeModal = function () { _closeModalSync.apply(this, arguments); if (syncDirty) setTimeout(refreshAfterSync, 50); };
+// 3) Buluttan çek ve birleştir (uygulamaya dönünce, odaklanınca ve dakikada bir)
+let syncPulling = false;
+async function syncPull() {
+  if (!D || !PID || !CFG.fbConfig || syncPulling) return; syncPulling = true;
+  try { const remote = await fbPull(PID); if (remote && (remote.updatedAt || 0) > (D.updatedAt || 0)) { D = migrate(mergeData(D, remote)); LS.set('df_data_' + PID, D); refreshAfterSync(); } } finally { syncPulling = false; }
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) syncPull(); });
+addEventListener('focus', () => syncPull());
+setInterval(() => { if (!document.hidden) syncPull(); }, 60000);
+// 4) Buluta yazmadan önce birleştir: bir cihaz diğerinin tekrarlarını silmesin
+fbPushLater = function () {
+  if (!CFG.fbConfig || RO) return; clearTimeout(fbTimer);
+  fbTimer = setTimeout(async () => {
+    const db = await fbInit(); if (!db || !D) return;
+    try { const snap = await db.ref('deutschflow/data/' + PID).get(), remote = snap.val();
+      if (remote) { const before = JSON.stringify(D.cards), merged = migrate(mergeData(D, remote)); merged.updatedAt = Date.now(); D = merged; LS.set('df_data_' + PID, D); if (JSON.stringify(D.cards) !== before) refreshAfterSync(); }
+      await db.ref('deutschflow/data/' + PID).set(JSON.parse(JSON.stringify(D)));
+    } catch (e) { toast('Senkronizasyon hatası: ' + e.message, 'err'); }
+  }, 1500);
+};
+// 5) Aynı cihazda açık başka sekmede yapılan değişiklik buraya da gelsin
+addEventListener('storage', e => { if (!D || !PID || e.key !== 'df_data_' + PID || !e.newValue) return; try { const other = JSON.parse(e.newValue); if ((other.updatedAt || 0) > (D.updatedAt || 0)) { D = migrate(mergeData(D, other)); refreshAfterSync(); } } catch (x) {} });
+
+// 6) "Eller serbest" yalnız dinleyerek yapılınca da kart ilerlesin (cevabı duyduğun için "Zor" sayılır)
+hfLoop = async function () {
+  while (HF && HF.run && HF.i < HF.list.length) {
+    const c = HF.list[HF.i], set = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
+    set('hfCount', `${HF.i + 1}/${HF.list.length} · ✓ ${HF.ok}`); set('hfWord', `${wordEmoji(c.de, c)} ${esc(c.de)}`); set('hfTr', ''); set('hfStat', '🔊 Dinle…');
+    await speakP(c.de, 'de-DE'); if (!HF || !HF.run) break;
+    if (HF.sr) {
+      set('hfStat', '🎙️ Türkçesini söyle…'); const heard = await listenP('tr-TR', 5500); if (!HF || !HF.run) break;
+      const ok = trMatch(heard, c.tr); set('hfTr', esc(c.tr)); set('hfStat', heard ? `Duyduğum: “${esc(heard)}”` : 'Ses duyamadım');
+      fsrsReview(c, ok ? 3 : 1); D.stats.reviews++; questProgress('review', 1); if (ok) HF.ok++; save();
+      await speakP(ok ? 'Doğru!' : 'Doğrusu: ' + c.tr, 'tr-TR'); if (!ok) await speakP(c.de, 'de-DE', .8);
+    } else { await new Promise(r => setTimeout(r, 2500)); if (!HF || !HF.run) break; set('hfTr', esc(c.tr)); await speakP(c.tr, 'tr-TR'); fsrsReview(c, 2); D.stats.reviews++; questProgress('review', 1); save(); }
+    HF.i++; await new Promise(r => setTimeout(r, 600));
+  }
+  if (HF && HF.run) { const n = HF.list.length, ok = HF.ok; HF = null; closeModal(); addXP(Math.max(3, ok)); toast(`🎧 Eller serbest tekrar bitti${SR ? `: ${ok}/${n} doğru` : ''}`); go(PAGE); }
+};
+const _stopHFSync = stopHF; stopHF = function () { _stopHFSync(); go(PAGE); };
+// 7) "Tekrar" işareti kalıcı olmasın; oturum bitince kaç kart kaldığı söylensin
+const _startReviewSync = startReview;
+startReview = function (free) { if (D) D.cards.forEach(c => { delete c._relearn; }); _startReviewSync(free); };
+const _rvGradeSync = rvGrade;
+rvGrade = function (g) { const c = rv && rv.list[rv.i]; _rvGradeSync(g); if (c && g > 1) delete c._relearn; };
+rvAnswer = ok => rvGrade(ok ? 3 : 1);
+const _rrcSync = renderReviewCard;
+renderReviewCard = function () {
+  const ending = rv && !rv.list[rv.i];
+  if (ending) rv.list.forEach(c => { delete c._relearn; });
+  _rrcSync.apply(this, arguments);
+  if (ending && D) { const left = D.cards.filter(c => c.due <= Date.now()).length; if (left) setTimeout(() => toast(`${left} kart daha tekrar bekliyor`), 900); }
+};
+/* ---------- Bulut beklemesi açılışı durdurmasın (internet yavaş ya da yoksa) ---------- */
+const withTimeout = (p, ms, fallback = null) => Promise.race([p, new Promise(r => setTimeout(() => r(fallback), ms))]);
+const _fbPullT = fbPull; fbPull = id => withTimeout(_fbPullT(id), 6000, null);
+const _renderGateT = renderGate;
+renderGate = async function () {
+  const cfg = CFG.fbConfig; CFG.fbConfig = null; const first = _renderGateT(); CFG.fbConfig = cfg; await first;   // önce yerel profillerle hemen çiz
+  if (!cfg) return;
+  const before = JSON.stringify(PROFILES); await withTimeout(fbPullProfiles(), 8000);
+  if (JSON.stringify(PROFILES) !== before && !$('#gate').hidden && !D) { CFG.fbConfig = null; const again = _renderGateT(); CFG.fbConfig = cfg; await again; }
 };
 /* ---------- Eski ekranlarda sakin yazı: çok kalın satır içi yazılar ve süs bayrakları yumuşatılır ---------- */
 const calmHtml = h => typeof h === 'string' ? h.replace(/font-weight:\s?(800|900)/g, 'font-weight:600').replace(/font-weight:\s?700/g, 'font-weight:600').replace(/🇩🇪 ?/g, '').replace(/🇹🇷 ?/g, '') : h;
