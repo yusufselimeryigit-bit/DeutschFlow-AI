@@ -273,7 +273,9 @@ table.gt tr:nth-child(even) td { background: var(--soft); }
 
 /* ============ PROFİL / PIN EKRANI ============ */
 #gate { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--bg); overflow-y: auto; }
-.prof { width: 132px; padding: 18px 10px; border-radius: 24px; text-align: center; }
+.prof { width: 132px; padding: 18px 10px; border-radius: 24px; text-align: center; position: relative; }
+.prof-del { position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); font-size: 13px; cursor: pointer; opacity: .55; transition: opacity .2s, color .2s, background-color .2s; }
+.prof-del:hover, .prof-del:focus-visible { opacity: 1; color: var(--red, #dc2626); background: color-mix(in srgb, var(--red, #dc2626) 12%, transparent); }
 .prof .av { width: 76px; height: 76px; margin: 0 auto 10px; border-radius: 26px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit'; font-size: 32px; font-weight: 800; color: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.18); }
 .pin-dots { display: flex; gap: 14px; justify-content: center; margin: 18px 0; }
 .pin-dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--muted); transition: background .15s, transform .15s; }
@@ -1252,7 +1254,7 @@ html.kb-open #bottomNav, html.kb-open #tutorFab { display: none !important; }
 .us-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .us-meta span { display: inline-flex; align-items: center; gap: 6px; }
 .us-meta i { color: var(--lvd); font-size: 12px; }
-.us-tabs { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 16px 0 14px; }
+.us-tabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 16px 0 14px; }
 .us-tabs .tab { min-height: 40px; white-space: nowrap; padding: 0 6px; }
 .us-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 18px 24px 24px; }
 .us-body .guide { font-size: 15.5px; line-height: 1.6; }
@@ -1276,6 +1278,36 @@ html.kb-open #bottomNav, html.kb-open #tutorFab { display: none !important; }
 .us-ai-t { font-weight: 600; color: var(--lvd); }
 .us-ai-s { font-size: 13.5px; color: var(--muted); margin: 2px 0 12px; }
 .us-ai .row { gap: 8px; }
+.us-p-sub { font-size: 14px; color: var(--muted); margin: 0 0 14px; }
+.us-prac { display: grid; gap: 10px; }
+.us-pc { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--rule); color: var(--ink); font: inherit; cursor: pointer; transition: border-color .2s var(--ease-out), transform .12s var(--ease-press); }
+.us-pc:hover { border-color: var(--lv); }
+.us-pc:active { transform: scale(.985); }
+.us-pc > i:first-child { width: 40px; height: 40px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: var(--lvs); color: var(--lvd); flex-shrink: 0; }
+.us-pc > div { flex: 1; min-width: 0; }
+.us-pc b { display: block; font-weight: 600; }
+.us-pc span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.us-pc > i:last-child { color: var(--muted); font-size: 13px; }
+.wx-sub { font-size: 14px; margin: -8px 0 14px; }
+.wx-src { font-size: 19px; font-weight: 600; margin: -6px 0 16px; color: var(--ink, var(--text)); }
+.wx-hint { margin-top: 12px; font-size: 14px; font-weight: 600; color: var(--lvd); padding: 6px 2px; background: none; border: 0; cursor: pointer; }
+.wx-hint-out { margin-top: 6px; font-size: 19px; letter-spacing: .04em; }
+.wx-hint-out .tok { display: inline-block; margin: 0 6px 6px 0; padding: 6px 10px; font-size: 15px; letter-spacing: 0; }
+.wx-words { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+.wx-w small { font-weight: 500; opacity: .7; margin-left: 6px; font-size: 13px; }
+.wx-w.on { border-color: var(--positive, #16a34a); background: var(--pos-bg, rgba(22,163,74,.12)); }
+.wx-ex { margin: 0 0 14px; font-size: 14px; color: var(--muted); }
+.wx-ex summary { cursor: pointer; font-weight: 600; color: var(--lvd); margin-bottom: 4px; }
+.wx-art { align-self: center; font-weight: 700; font-size: 18px; color: var(--muted); margin-right: 4px; }
+.scr .tok { min-width: 46px; text-align: center; }
+#ansLine.wx-ok .tok { border-color: var(--positive, #16a34a); }
+#ansLine.wx-bad .tok { border-color: var(--negative, #dc2626); }
+.wx-note { font-weight: 700; margin-top: 4px; }
+html.bh .us-pc { border-radius: 8px; }
+html.bh .us-pc > i:first-child { background: var(--surface-2); color: var(--ink); border-radius: 4px; }
+html.bm .us-pc { border-radius: 8px; }
+html.bm .us-pc > i:first-child { background: var(--accent-soft); color: var(--accd); border-radius: 6px; }
+html.bm .wx-hint, html.bm .wx-ex summary { color: var(--accd); }
 .us-foot { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 14px 24px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--rule); background: var(--raised); }
 .us-go { flex: 1; min-height: 48px; font-size: 16px; }
 .us-skip { font-size: 13.5px; color: var(--lvd); font-weight: 600; padding: 8px 4px; white-space: nowrap; }
@@ -2706,14 +2738,25 @@ async function fbInit() {
     fb = app.database(); return fb;
   } catch (e) { console.warn(e); toast('Firebase bağlanamadı: ' + (e.message || e), 'err'); return null; }
 }
+// Silinen profiller "deleted" altında tutulur; başka cihazda kalmış kopyası buluta geri yazılmaz
+let DELETED = LS.get('df_deleted', {}), fbProfilesOk = false;
 async function fbPullProfiles() {
   const db = await fbInit(); if (!db) return;
-  try { const snap = await db.ref('deutschflow/profiles').get(); const remote = snap.val() || {};
-    Object.values(remote).forEach(p => { const i = PROFILES.findIndex(x => x.id === p.id); if (i < 0) PROFILES.push(p); else if ((p.updatedAt || 0) > (PROFILES[i].updatedAt || 0)) PROFILES[i] = p; });
-    LS.set('df_profiles', PROFILES);
+  try {
+    const [snap, del] = await Promise.all([db.ref('deutschflow/profiles').get(), db.ref('deutschflow/deleted').get()]);
+    const remote = snap.val() || {}; Object.assign(DELETED, del.val() || {}); LS.set('df_deleted', DELETED);
+    Object.values(remote).forEach(p => { if (!p || !p.id || DELETED[p.id]) return; const i = PROFILES.findIndex(x => x.id === p.id); if (i < 0) PROFILES.push(p); else if ((p.updatedAt || 0) > (PROFILES[i].updatedAt || 0)) PROFILES[i] = p; });
+    PROFILES.filter(p => DELETED[p.id]).forEach(p => localStorage.removeItem('df_data_' + p.id));
+    PROFILES = PROFILES.filter(p => !DELETED[p.id]); LS.set('df_profiles', PROFILES); fbProfilesOk = true;
+    // Bu cihazda olup bulutta olmayan profiller (çevrimdışı oluşturulmuş) buluta eklenir
+    if (PROFILES.some(p => !remote[p.id])) fbPushProfiles();
   } catch (e) { console.warn('fb profiles', e); }
 }
-async function fbPushProfiles() { const db = await fbInit(); if (!db) return; const o = {}; PROFILES.forEach(p => o[p.id] = p); db.ref('deutschflow/profiles').set(o).catch(e => console.warn(e)); }
+async function fbPushProfiles() {
+  const db = await fbInit(); if (!db) return; const o = {};
+  PROFILES.forEach(p => { if (!DELETED[p.id]) o[p.id] = p; });
+  if (Object.keys(o).length) db.ref('deutschflow/profiles').update(o).catch(e => console.warn(e));   // update: diğer cihazların profillerini silmez
+}
 async function fbPull(id) {
   const db = await fbInit(); if (!db) return null;
   try { const snap = await db.ref('deutschflow/data/' + id).get(); return snap.val(); } catch (e) { console.warn(e); return null; }
@@ -2736,12 +2779,14 @@ async function renderGate() {
         <button class="press" onclick="chooseProfile('${p.id}')" style="width:100%"><div class="av" style="background:${p.color}">${esc(p.name.charAt(0).toUpperCase())}</div>
         <div style="font-weight:900;font-size:17px">${esc(p.name)}</div><div class="muted" style="font-size:12px;font-weight:800;margin-top:2px">${p.pin ? '<i class="fa-solid fa-lock"></i> PIN korumalı' : 'Açık profil'}</div></button>
         <button class="btn btn-ghost btn-sm" style="margin-top:10px;width:100%" onclick="openProfile('${p.id}', true)"><i class="fa-solid fa-eye"></i> İzle</button>
+        <button class="prof-del" aria-label="${esc(p.name)} profilini sil" title="Profili sil" onclick="deleteProfileById('${p.id}')"><i class="fa-solid fa-trash-can"></i></button>
       </div>`).join('')}
       <button class="prof glass press" onclick="newProfileForm()"><div class="av" style="background:var(--soft);color:var(--muted);box-shadow:none"><i class="fa-solid fa-plus"></i></div><div style="font-weight:900">Profil ekle</div></button>
     </div>
     <p class="muted" style="font-size:13px;font-weight:700;margin-top:26px"><i class="fa-solid fa-eye"></i> “İzle” = Salt okunur mod: veriler görüntülenir, değiştirilemez.</p>
   </div>`;
-  if (!PROFILES.length) newProfileForm(true);
+  if (!PROFILES.length && window.__gateWait) g.firstElementChild.insertAdjacentHTML('beforeend', '<p class="muted" id="gateWait" style="font-weight:700;margin-top:18px"><span class="typing"><i></i><i></i><i></i></span> Profillerin buluttan yükleniyor…</p>');
+  else if (!PROFILES.length) newProfileForm(true);
 }
 function newProfileForm(first) {
   modal(`<div class="sheet-head"><h3>${first ? 'Hoş geldin! İlk profilini oluştur' : 'Yeni profil'}</h3>${first ? '' : '<button class="icon-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>'}</div>
@@ -2757,6 +2802,9 @@ async function createProfile() {
   const name = $('#npName').value.trim(), pin = $('#npPin').value.trim(), color = ($('#npColors .swatch.on') || {}).dataset.c || PROFILE_COLORS[0];
   if (!name) { toast('Bir ad yaz', 'warn'); return; }
   if (pin && !/^\d{4}$/.test(pin)) { toast('PIN tam 4 rakam olmalı', 'warn'); return; }
+  if (CFG.fbConfig) await withTimeout(fbPullProfiles(), 6000);
+  const same = PROFILES.find(x => x.name.trim().toLocaleLowerCase('tr') === name.toLocaleLowerCase('tr'));
+  if (same) { closeModal(); renderGate(); toast(`“${same.name}” profili zaten var, onu seç`, 'warn'); return; }
   const p = { id: 'p' + uid(), name, color, pin: pin ? await sha(pin) : null, updatedAt: Date.now() };
   PROFILES.push(p); saveProfiles(); closeModal(); LS.set('df_data_' + p.id, defaultData()); openProfile(p.id, false);
 }
@@ -3155,7 +3203,7 @@ function retryLesson() { const o = LSN.opts; if (o.kind === 'unit') startUnit(o.
 
 /* ---------- Grammatik-Guide kütüphanesi ---------- */
 VIEWS.guides = () => `<p class="page-sub">Tüm konu anlatımları, tablolar ve Türkçe açıklamalar.</p><input class="pill-input" placeholder="🔍 Konu ara (ör. Dativ, Perfekt, Konjunktiv)…" oninput="filterGuides(this.value)" style="margin-bottom:18px">` +
-  LEVELS.map(L => `<div id="g-${L.id}" style="${lvStyle(L.color)};margin-bottom:22px"><div class="section-title"><span class="lvl-badge">${L.id}</span>${L.tr}</div><div class="grid-3">${L.units.map(u => `<button class="glass card press g-item" data-s="${esc(norm(u.t + ' ' + u.de + ' ' + u.g.replace(/<[^>]+>/g, ' ')))}" style="text-align:left;padding:16px" onclick="openUnit('${u.id}')"><i class="fa-solid ${u.ic}" style="color:var(--lv);font-size:20px"></i><div style="font-weight:900;margin-top:8px">${esc(u.t)}</div><div class="muted" style="font-size:13px;font-weight:700">${esc(u.de)} · ${u.v.length} kelime · ${u.q.length + 6} etkinlik</div></button>`).join('')}</div></div>`).join('');
+  LEVELS.map(L => `<div id="g-${L.id}" style="${lvStyle(L.color)};margin-bottom:22px"><div class="section-title"><span class="lvl-badge">${L.id}</span>${L.tr}</div><div class="grid-3">${L.units.map(u => `<button class="glass card press g-item" data-s="${esc(norm(u.t + ' ' + u.de + ' ' + u.g.replace(/<[^>]+>/g, ' ')))}" style="text-align:left;padding:16px" onclick="openUnit('${u.id}')"><i class="fa-solid ${u.ic}" style="color:var(--lv);font-size:20px"></i><div style="font-weight:900;margin-top:8px">${esc(u.t)}</div><div class="muted" style="font-size:13px;font-weight:700">${esc(u.de)} · ${u.v.length} kelime · ${u.q.length + 11} etkinlik</div></button>`).join('')}</div></div>`).join('');
 function filterGuides(q) { q = norm(q); document.querySelectorAll('.g-item').forEach(b => b.style.display = !q || b.dataset.s.includes(q) ? '' : 'none'); }
 
 /* ---------- Leitner kutusu ---------- */
@@ -3638,7 +3686,20 @@ function changePin() {
 function exportData() { const b = new Blob([JSON.stringify({ app: 'DeutschFlow', v: 1, profile: PROFILES.find(x => x.id === PID), data: D }, null, 1)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'deutschflow-' + (PROFILES.find(x => x.id === PID) || {}).name + '-' + today() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
 function importData(inp) { if (!canEdit()) return; const f = inp.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const j = JSON.parse(r.result); if (!j.data) throw 0; if (!confirm('Bu profilin verisi yedekle değiştirilsin mi?')) return; D = migrate(j.data); save(); toast('Yedek yüklendi'); go('home'); } catch (e) { toast('Geçersiz yedek dosyası', 'err'); } }; r.readAsText(f); }
 function resetProgress() { if (!canEdit()) return; const p = PROFILES.find(x => x.id === PID); const go2 = () => { if (!confirm('Tüm ilerleme silinecek. Emin misin?')) return; D = defaultData(); save(); toast('Sıfırlandı'); go('home'); }; if (p.pin) pinPad(p, go2, 'Sıfırlamak için PIN'); else go2(); }
-function deleteProfile() { if (!canEdit()) return; const p = PROFILES.find(x => x.id === PID); const del = () => { if (!confirm(p.name + ' profili ve tüm verisi silinsin mi?')) return; PROFILES = PROFILES.filter(x => x.id !== PID); saveProfiles(); localStorage.removeItem('df_data_' + PID); if (fb) fb.ref('deutschflow/data/' + PID).remove(); logout(); }; if (p.pin) pinPad(p, del, 'Silmek için PIN'); else del(); }
+function deleteProfile() { if (!canEdit()) return; deleteProfileById(PID); }
+function deleteProfileById(id) {
+  const p = PROFILES.find(x => x.id === id); if (!p) return;
+  const del = async () => {
+    closeModal(); if (!confirm(`“${p.name}” profili ve tüm ilerlemesi BÜTÜN cihazlardan silinsin mi? Bu geri alınamaz.`)) return;
+    DELETED[id] = Date.now(); LS.set('df_deleted', DELETED);
+    PROFILES = PROFILES.filter(x => x.id !== id); LS.set('df_profiles', PROFILES); localStorage.removeItem('df_data_' + id);
+    const db = await fbInit();
+    if (db) { try { await db.ref('deutschflow').update({ ['deleted/' + id]: DELETED[id], ['profiles/' + id]: null, ['data/' + id]: null }); } catch (e) { toast('Buluttan silinemedi: ' + e.message, 'err'); } }
+    toast(`“${p.name}” silindi`);
+    if (PID === id) logout(); else if (!D) renderGate();
+  };
+  if (p.pin) pinPad(p, del, 'Silmek için PIN'); else del();
+}
 
 /* =====================================================================
    EK ÖZELLİKLER: Günün Dersi · Hata Türleri · Sözlü Sınav · Yazma Atölyesi
@@ -4762,7 +4823,7 @@ function skillInfo(k) { const a = ((D.skill || {})[k] || []).slice(-24); if (!a.
 const _fi3 = finishItem;
 finishItem = function (ok, skipped) {
   const it = LSN && LSN.items[LSN.i], was = LSN && LSN.checked; _fi3(ok, skipped); if (was || !it) return;
-  logSkill(it.k === 'dict' ? 'horen' : it.k === 'build' || it.k === 'spot' ? 'schreiben' : 'lesen', ok ? 1 : 0);
+  logSkill(it.sk || (it.k === 'dict' ? 'horen' : ['build', 'spot', 'ww', 'wr', 'scr', 'free'].includes(it.k) ? 'schreiben' : 'lesen'), ok ? 1 : 0);
   const f = $('#lsFoot'); if (f) { f.setAttribute('role', 'status'); f.setAttribute('aria-live', 'polite'); }
 };
 const _checkDict3 = checkDict;
@@ -5102,7 +5163,7 @@ openUnit = function (id) {
     <header class="us-head"><div class="us-top"><span class="smallcaps">${L.id} · Blatt ${String(ui + 1).padStart(2, '0')}</span><button class="us-x" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>
       <h3 class="us-de" lang="de">${esc(u.de)}</h3><div class="us-tr">${esc(u.t)}</div>
       <div class="us-meta"><span><i class="fa-solid fa-list-check"></i>${n} etkinlik</span><span><i class="fa-solid fa-spell-check"></i>${u.v.length} kelime</span><span><i class="fa-solid fa-quote-left"></i>${u.s.length} cümle</span><span><i class="fa-solid fa-clock"></i>~${mins} dk</span></div>
-      <div class="tabs us-tabs" role="tablist">${[['g', 'Konu'], ['v', 'Kelimeler'], ['s', 'Cümleler']].map(([k, t], i) => `<button class="tab ${i ? '' : 'active'}" role="tab" onclick="unitTab(this,'${k}');this.closest('.us').querySelector('.us-body').scrollTop=0">${t}</button>`).join('')}</div></header>
+      <div class="tabs us-tabs" role="tablist">${[['g', 'Konu'], ['v', 'Kelimeler'], ['s', 'Cümleler'], ['p', 'Pratik']].map(([k, t], i) => `<button class="tab ${i ? '' : 'active'}" role="tab" onclick="unitTab(this,'${k}');this.closest('.us').querySelector('.us-body').scrollTop=0">${t}</button>`).join('')}</div></header>
     <div class="us-body">
       <div data-pane="g"><div class="guide">${u.g}</div>
         <div class="us-ai"><div class="us-ai-t">Anlamadığın yer mi var?</div><div class="us-ai-s">Yapay zekâ konuyu başka örneklerle anlatsın ya da yeni alıştırmalar üretsin.</div>
@@ -5110,6 +5171,8 @@ openUnit = function (id) {
           <div id="aiUnitOut" class="ai-box" style="max-width:none;margin-top:14px" hidden></div></div></div>
       <div data-pane="v" hidden><div class="us-words">${words}</div></div>
       <div data-pane="s" hidden>${sents}</div>
+      <div data-pane="p" hidden><p class="us-p-sub">Konuyu pekiştir. Pratikler ünite puanını etkilemez; her açışta yeni sorular gelir.</p>
+        <div class="us-prac">${PRACTICE.map(m => `<button class="us-pc" onclick="closeModal();startPractice('${u.id}','${m.k}')"><i class="fa-solid ${m.ic}"></i><div><b>${m.t}</b><span>${m.d}</span></div><i class="fa-solid fa-chevron-right"></i></button>`).join('')}</div></div>
     </div>
     <footer class="us-foot">${canSkip ? `<button class="us-skip" onclick="startTestOut('${u.id}')"><i class="fa-solid fa-forward-fast"></i> Biliyorum, hızlı geç</button>` : ''}
       <button class="btn us-go" onclick="closeModal();startUnit('${u.id}')"><i class="fa-solid fa-play"></i> Derse başla</button>
@@ -5428,10 +5491,11 @@ const withTimeout = (p, ms, fallback = null) => Promise.race([p, new Promise(r =
 const _fbPullT = fbPull; fbPull = id => withTimeout(_fbPullT(id), 6000, null);
 const _renderGateT = renderGate;
 renderGate = async function () {
-  const cfg = CFG.fbConfig; CFG.fbConfig = null; const first = _renderGateT(); CFG.fbConfig = cfg; await first;   // önce yerel profillerle hemen çiz
+  const cfg = CFG.fbConfig; CFG.fbConfig = null; window.__gateWait = !!cfg; const first = _renderGateT(); CFG.fbConfig = cfg; await first;   // önce yerel profillerle hemen çiz
   if (!cfg) return;
-  const before = JSON.stringify(PROFILES); await withTimeout(fbPullProfiles(), 8000);
-  if (JSON.stringify(PROFILES) !== before && !$('#gate').hidden && !D) { CFG.fbConfig = null; const again = _renderGateT(); CFG.fbConfig = cfg; await again; }
+  const before = JSON.stringify(PROFILES); await withTimeout(fbPullProfiles(), 10000); window.__gateWait = false;
+  if ((JSON.stringify(PROFILES) !== before || !PROFILES.length) && !$('#gate').hidden && !D) { CFG.fbConfig = null; const again = _renderGateT(); CFG.fbConfig = cfg; await again; }
+  if (!fbProfilesOk && !$('#gate').hidden && !D) toast('Buluta bağlanılamadı; sadece bu cihazdaki profiller gösteriliyor', 'warn');
 };
 /* ---------- Eski ekranlarda sakin yazı: çok kalın satır içi yazılar ve süs bayrakları yumuşatılır ---------- */
 const calmHtml = h => typeof h === 'string' ? h.replace(/font-weight:\s?(800|900)/g, 'font-weight:600').replace(/font-weight:\s?700/g, 'font-weight:600').replace(/🇩🇪 ?/g, '').replace(/🇹🇷 ?/g, '') : h;
@@ -5477,6 +5541,229 @@ document.addEventListener('focusin', e => {
 document.addEventListener('focusout', () => setTimeout(() => { if (!isTextField(document.activeElement)) { document.documentElement.classList.remove('kb-open'); syncViewport(); } }, 150));
 // Yazı boyutu küçültülmüşse de yazı kutuları 16px'in altına inmesin (iPhone kendiliğinden yakınlaştırmasın)
 const _applyThemeKb = applyTheme; applyTheme = function () { _applyThemeKb.apply(this, arguments); document.documentElement.style.setProperty('--zf', String(CFG.zoom && CFG.zoom < 1 ? CFG.zoom : 1)); };
+/* ---------- Ek örnek cümleler: her ünitede konuyu işleyen 5 cümle daha ---------- */
+const EXTRA_S = {
+  a1u1: [["Hallo, ich bin Murat.", "Merhaba, ben Murat."], ["Guten Abend, Frau Weber!", "İyi akşamlar, Weber Hanım!"], ["Wie geht es Ihnen?", "Nasılsınız?"], ["Ich bin zwanzig Jahre alt.", "Yirmi yaşındayım."], ["Tschüss, bis morgen!", "Hoşça kal, yarın görüşürüz!"]],
+  a1u2: [["Der Vater kocht heute.", "Baba bugün yemek pişiriyor."], ["Die Schwester ist zwölf Jahre alt.", "Kız kardeş on iki yaşında."], ["Das Mädchen heißt Lena.", "Kızın adı Lena."], ["Der Sohn und die Tochter sind in der Schule.", "Oğul ve kız okulda."], ["Meine Großeltern wohnen in Izmir.", "Büyükannemle büyükbabam İzmir'de oturuyor."]],
+  a1u3: [["Er ist sehr glücklich.", "O çok mutlu."], ["Wir sind heute müde.", "Bugün yorgunuz."], ["Habt ihr einen Hund?", "Köpeğiniz var mı?"], ["Du hast viel Zeit.", "Çok vaktin var."], ["Sie ist meine Lehrerin.", "O benim öğretmenim."]],
+  a1u4: [["Er isst gern Äpfel.", "O elma yemeyi sever."], ["Trinkst du Milch oder Wasser?", "Süt mü içersin yoksa su mu?"], ["Meine Mutter kocht jeden Tag.", "Annem her gün yemek pişirir."], ["Wir lernen zusammen Deutsch.", "Birlikte Almanca öğreniyoruz."], ["Ihr arbeitet heute lange.", "Bugün uzun çalışıyorsunuz."]],
+  a1u5: [["Der Stuhl ist neu.", "Sandalye yeni."], ["Ich sehe den Stuhl.", "Sandalyeyi görüyorum."], ["Sie sucht ihre Tasche.", "Çantasını arıyor."], ["Er kauft einen Apfel und eine Tasche.", "Bir elma ve bir çanta satın alıyor."], ["Wir brauchen einen Tisch für die Küche.", "Mutfak için bir masaya ihtiyacımız var."]],
+  a1u6: [["Wo wohnst du?", "Nerede oturuyorsun?"], ["Wann beginnt der Kurs?", "Kurs ne zaman başlıyor?"], ["Warum lernst du Deutsch?", "Neden Almanca öğreniyorsun?"], ["Ich trinke keinen Kaffee.", "Kahve içmem."], ["Er kommt heute nicht.", "O bugün gelmiyor."]],
+  a2u1: [["Ich gebe dem Kind einen Apfel.", "Çocuğa bir elma veriyorum."], ["Der Film gefällt mir sehr.", "Film çok hoşuma gidiyor."], ["Kannst du mir bitte helfen?", "Bana yardım edebilir misin lütfen?"], ["Ich danke dir für das Geschenk.", "Hediye için sana teşekkür ederim."], ["Nach dem Unterricht gehe ich zu meiner Oma.", "Dersten sonra büyükanneme gidiyorum."]],
+  a2u2: [["Wann stehst du am Sonntag auf?", "Pazar günü ne zaman kalkıyorsun?"], ["Abends sehe ich oft fern.", "Akşamları sık sık televizyon izlerim."], ["Der Zug kommt um zehn Uhr an.", "Tren saat onda varıyor."], ["Ich rufe meine Mutter jeden Tag an.", "Annemi her gün ararım."], ["Morgens frühstücke ich mit meiner Familie.", "Sabahları ailemle kahvaltı yaparım."]],
+  a2u3: [["Ich muss heute lange arbeiten.", "Bugün uzun süre çalışmak zorundayım."], ["Willst du mit uns ins Kino gehen?", "Bizimle sinemaya gitmek ister misin?"], ["Kinder dürfen hier spielen.", "Çocuklar burada oynayabilir."], ["Du sollst mehr Wasser trinken.", "Daha çok su içmelisin."], ["Kannst du Deutsch sprechen?", "Almanca konuşabiliyor musun?"]],
+  a2u4: [["Ich habe gestern einen Kuchen gekauft.", "Dün bir pasta satın aldım."], ["Sie ist letzte Woche nach Berlin gefahren.", "Geçen hafta Berlin'e gitti."], ["Wir haben am Wochenende viel gemacht.", "Hafta sonu çok şey yaptık."], ["Bist du heute früh aufgestanden?", "Bugün erken kalktın mı?"], ["Er hat den ganzen Tag Deutsch gelernt.", "Bütün gün Almanca çalıştı."]],
+  a2u5: [["Die Katze schläft unter dem Bett.", "Kedi yatağın altında uyuyor."], ["Ich stelle die Blumen auf den Tisch.", "Çiçekleri masanın üstüne koyuyorum."], ["Das Bild hängt an der Wand.", "Resim duvarda asılı."], ["Wir gehen in die Küche.", "Mutfağa gidiyoruz."], ["Der Schrank steht neben dem Fenster.", "Dolap pencerenin yanında duruyor."]],
+  a2u6: [["Im Sommer ist es in Antalya sehr warm.", "Yazın Antalya'da hava çok sıcak."], ["Der Kaffee ist hier teurer als im Supermarkt.", "Kahve burada süpermarkettekinden daha pahalı."], ["Ich finde das blaue Kleid am schönsten.", "Mavi elbiseyi en güzel buluyorum."], ["Morgen scheint die Sonne.", "Yarın güneş açacak."], ["Haben Sie das auch kleiner?", "Bunun daha küçüğü var mı?"]],
+  b1u1: [["Mein Großvater war Lehrer.", "Büyükbabam öğretmendi."], ["Letztes Jahr schrieb ich viele Bewerbungen.", "Geçen yıl birçok iş başvurusu yazdım."], ["Sie kündigte, weil das Gehalt zu niedrig war.", "Maaş çok düşük olduğu için istifa etti."], ["Nach der Ausbildung fand er schnell eine Stelle.", "Meslek eğitiminden sonra hızla bir iş buldu."], ["Der Chef kam gestern spät ins Büro.", "Patron dün ofise geç geldi."]],
+  b1u2: [["Ich bleibe zu Hause, weil ich krank bin.", "Hasta olduğum için evde kalıyorum."], ["Wenn das Wetter schön ist, gehen wir spazieren.", "Hava güzel olursa yürüyüşe çıkarız."], ["Er sagt, dass er keine Zeit hat.", "Vakti olmadığını söylüyor."], ["Obwohl sie müde war, lernte sie weiter.", "Yorgun olmasına rağmen çalışmaya devam etti."], ["Als ich klein war, wohnten wir in Ankara.", "Ben küçükken Ankara'da oturuyorduk."]],
+  b1u3: [["Ich muss mich nach der Arbeit erholen.", "İşten sonra dinlenmem lazım."], ["Kinder, wascht euch die Hände!", "Çocuklar, ellerinizi yıkayın!"], ["Ich habe einen Termin beim Arzt.", "Doktordan randevum var."], ["Sie interessiert sich für Medizin.", "Tıpla ilgileniyor."], ["Du hast Fieber, du musst dich hinlegen.", "Ateşin var, uzanman lazım."]],
+  b1u4: [["In dieser Schule wird viel Sport gemacht.", "Bu okulda çok spor yapılır."], ["Das Haus wurde 1990 gebaut.", "Ev 1990'da inşa edildi."], ["Die Prüfungen werden im Juni geschrieben.", "Sınavlar haziranda yapılır."], ["Neue Medikamente werden an der Universität erforscht.", "Yeni ilaçlar üniversitede araştırılıyor."], ["Das Auto muss repariert werden.", "Arabanın tamir edilmesi gerekiyor."]],
+  b1u5: [["Das Zeugnis meiner Schwester ist sehr gut.", "Kız kardeşimin karnesi çok iyi."], ["Trotz des Regens spielten die Kinder draußen.", "Yağmura rağmen çocuklar dışarıda oynadı."], ["Der Name des Lehrers ist Herr Schmidt.", "Öğretmenin adı Bay Schmidt."], ["Wegen der Prüfung kann ich heute nicht kommen.", "Sınav yüzünden bugün gelemem."], ["Am Ende des Schuljahres bekommen wir die Noten.", "Okul yılının sonunda notları alıyoruz."]],
+  b1u6: [["Das ist der Kollege, den ich gestern getroffen habe.", "Bu, dün karşılaştığım iş arkadaşı."], ["Die Firma, bei der ich arbeite, ist sehr groß.", "Çalıştığım şirket çok büyük."], ["Das Projekt, das wir planen, beginnt im Mai.", "Planladığımız proje mayısta başlıyor."], ["Die Frau, der ich geholfen habe, war sehr dankbar.", "Yardım ettiğim kadın çok minnettardı."], ["Ich suche einen Job, in dem ich viel Erfahrung sammeln kann.", "Çok tecrübe kazanabileceğim bir iş arıyorum."]],
+  b2u1: [["Wenn alle weniger Müll produzieren würden, wäre die Umwelt sauberer.", "Herkes daha az çöp üretse çevre daha temiz olurdu."], ["Ich würde gern mehr für den Klimaschutz tun.", "İklimi korumak için daha çok şey yapmak isterdim."], ["An deiner Stelle würde ich mit dem Fahrrad fahren.", "Senin yerinde olsam bisikletle giderdim."], ["Hätten wir mehr Solarenergie, bräuchten wir weniger Öl.", "Daha çok güneş enerjimiz olsaydı daha az petrole ihtiyaç duyardık."], ["Wir sollten keine Energie verschwenden.", "Enerjiyi israf etmemeliyiz."]],
+  b2u2: [["Die sinkende Nachfrage ist ein Problem für das Unternehmen.", "Azalan talep şirket için bir sorun."], ["Das investierte Geld brachte hohe Gewinne.", "Yatırılan para yüksek kâr getirdi."], ["Die steigende Inflation beunruhigt die Bürger.", "Artan enflasyon vatandaşları endişelendiriyor."], ["Der im März gestiegene Umsatz überraschte alle.", "Martta artan ciro herkesi şaşırttı."], ["Die streikenden Arbeiter fordern mehr Lohn.", "Grev yapan işçiler daha fazla ücret talep ediyor."]],
+  b2u3: [["Angesichts der hohen Kosten wurde die Ausstellung verschoben.", "Yüksek maliyetler karşısında sergi ertelendi."], ["Bezüglich Ihrer Anfrage melden wir uns morgen.", "Talebinizle ilgili yarın size döneceğiz."], ["Innerhalb des Museums ist Fotografieren verboten.", "Müzenin içinde fotoğraf çekmek yasak."], ["Aufgrund des großen Interesses wird die Ausstellung verlängert.", "Büyük ilgi nedeniyle sergi uzatılıyor."], ["Das Gemälde hängt seit hundert Jahren in diesem Saal.", "Tablo yüz yıldır bu salonda asılı."]],
+  b2u4: [["Sie sagte, sie komme morgen.", "Yarın geleceğini söyledi."], ["Er fragte, ob ich Zeit habe.", "Vaktim olup olmadığını sordu."], ["Laut dem Bericht sei die Arbeitslosigkeit gesunken.", "Rapora göre işsizlik azalmış."], ["Angeblich habe der Politiker gelogen.", "İddiaya göre politikacı yalan söylemiş."], ["Die Zeitung berichtet, es gebe neue Probleme.", "Gazete yeni sorunlar olduğunu bildiriyor."]],
+  b2u5: [["Ein großer Vorteil ist, dass man flexibel arbeiten kann.", "Büyük bir avantaj, esnek çalışabilmektir."], ["Ein Nachteil dagegen sind die hohen Kosten.", "Buna karşın bir dezavantaj yüksek maliyetlerdir."], ["Ich bin davon überzeugt, dass Bildung der Schlüssel ist.", "Eğitimin anahtar olduğuna inanıyorum."], ["Im Gegensatz zu dir finde ich diese Entwicklung positiv.", "Senin aksine bu gelişmeyi olumlu buluyorum."], ["Ich stimme dir teilweise zu.", "Sana kısmen katılıyorum."]],
+  c1u1: [["Bitte nehmen Sie Rücksicht auf die Nachbarn.", "Lütfen komşuları dikkate alın."], ["Die Opposition übte scharfe Kritik an dem Plan.", "Muhalefet plana sert eleştiri yöneltti."], ["Viele Bürger nehmen diese Hilfe in Anspruch.", "Birçok vatandaş bu yardımdan yararlanıyor."], ["Er brachte seine Dankbarkeit zum Ausdruck.", "Minnettarlığını ifade etti."], ["Die Ergebnisse stellen die alte Theorie in Frage.", "Sonuçlar eski teoriyi sorguluyor."]],
+  c1u2: [["Die Polizei teilte mit, der Täter sei gefasst worden.", "Polis failin yakalandığını bildirdi."], ["Der Sprecher betonte, es gebe keinen Grund zur Sorge.", "Sözcü endişe için bir neden olmadığını vurguladı."], ["Dem Bericht zufolge habe die Firma Verluste gemacht.", "Rapora göre şirket zarar etmiş."], ["Der Minister erklärte, er wisse nichts davon.", "Bakan bundan haberi olmadığını açıkladı."], ["Sie sagte, sie habe keine Zeit gehabt.", "Vakti olmadığını söyledi."]],
+  c1u3: [["Wir fahren nicht weg, zumal das Wetter schlecht ist.", "Hava da kötü olduğundan bir yere gitmiyoruz."], ["Sofern Sie einverstanden sind, beginnen wir morgen.", "Kabul ederseniz yarın başlıyoruz."], ["Er mag weder Kaffee noch Tee.", "Ne kahve ne de çay sever."], ["Sie arbeitet gern im Team, wohingegen er lieber allein arbeitet.", "Kadın ekip çalışmasını severken adam yalnız çalışmayı tercih ediyor."], ["Je früher wir anfangen, desto schneller sind wir fertig.", "Ne kadar erken başlarsak o kadar çabuk bitiririz."]],
+  c1u4: [["Vor der Abreise müssen alle Zimmer kontrolliert werden.", "Ayrılıştan önce tüm odalar kontrol edilmeli."], ["Die Durchführung des Projekts dauerte zwei Jahre.", "Projenin uygulanması iki yıl sürdü."], ["Nach eingehender Untersuchung wurde der Fehler gefunden.", "Ayrıntılı bir incelemeden sonra hata bulundu."], ["Unter Berücksichtigung aller Faktoren treffen wir eine Entscheidung.", "Tüm etkenleri dikkate alarak bir karar veriyoruz."], ["Die Zunahme des Verkehrs belastet die Stadt.", "Trafiğin artışı şehri zorluyor."]],
+  c1u5: [["Anbei sende ich Ihnen meinen Lebenslauf.", "Ekte size özgeçmişimi gönderiyorum."], ["Für Rückfragen stehe ich Ihnen gern zur Verfügung.", "Ek sorularınız için memnuniyetle hizmetinizdeyim."], ["Bezugnehmend auf Ihre Anfrage teilen wir Ihnen Folgendes mit.", "Talebinize istinaden size şunları bildiririz."], ["Die Ergebnisse bestätigen die aufgestellte Hypothese.", "Sonuçlar ortaya konan hipotezi doğruluyor."], ["Abschließend lässt sich folgende Schlussfolgerung ziehen.", "Son olarak şu sonuç çıkarılabilir."]],
+  c2u1: [["Bei dieser Erklärung verstehe ich nur Bahnhof.", "Bu açıklamadan hiçbir şey anlamıyorum."], ["Mit dieser Bemerkung ist er ins Fettnäpfchen getreten.", "Bu sözüyle pot kırdı."], ["Du hast den Nagel auf den Kopf getroffen.", "Tam üstüne bastın."], ["Hast du Tomaten auf den Augen?", "Gözün görmüyor mu?"], ["Er wollte mir einen Bären aufbinden.", "Beni kandırmaya çalıştı."]],
+  c2u2: [["Mach mal das Fenster auf, bitte.", "Pencereyi bir açıver lütfen."], ["Das weißt du doch!", "Bunu biliyorsun ya!"], ["Er ist wohl krank.", "Herhalde hasta."], ["Das ist ja interessant!", "Bu ne ilginçmiş!"], ["Keine Sorge, das schaffst du schon.", "Merak etme, sen bunu başarırsın elbet."]],
+  c2u3: [["Gestern hat mir mein Bruder das Buch gegeben.", "Dün kardeşim bana kitabı verdi."], ["Ihm habe ich das nicht gesagt.", "Bunu ona söylemedim."], ["Die seit Jahren geplante Brücke wird endlich gebaut.", "Yıllardır planlanan köprü nihayet inşa ediliyor."], ["Ob er kommt, weiß ich nicht.", "Gelip gelmeyeceğini bilmiyorum."], ["Gelesen habe ich das Buch noch nicht.", "Kitabı henüz okumadım."]],
+  c2u4: [["Der Roman erzählt die Geschichte einer Familie.", "Roman bir ailenin hikâyesini anlatıyor."], ["Die Handlung spielt im Berlin der Zwanzigerjahre.", "Olay örgüsü 1920'lerin Berlin'inde geçiyor."], ["Der Dichter verwendet eine kühne Metapher.", "Şair cesur bir metafor kullanıyor."], ["Jeder Vers endet mit einem Reim.", "Her dize bir kafiyeyle bitiyor."], ["Die Erzählung lässt den Leser ratlos zurück.", "Öykü okuru şaşkın bırakıyor."]]
+};
+LEVELS.forEach(L => L.units.forEach(u => (EXTRA_S[u.id] || []).forEach(s => { if (!u.s.some(x => x[0] === s[0])) u.s.push(s); })));
+
+/* ---------- Yazma ve pratik etkinlikleri: her ünitenin kelime ve cümlelerinden üretilir ---------- */
+Object.assign(KIND_NAMES, { ww: 'Kelimeyi yaz', wr: 'Çeviriyi yaz', scr: 'Harfleri diz', free: 'Serbest yazma' });
+const WX_KINDS = ['ww', 'wr', 'scr', 'free'];
+const deFold = s => norm(s).replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss');
+const ART_RE = /^(der|die|das)\s+/i, PUNCT_RE = /[.,!?;:„“”"]/g;
+const wordForms = de => String(de).split('/').map(x => x.replace(/\(.*?\)/g, '').trim()).filter(Boolean);
+const coreWord = de => wordForms(de)[0].replace(ART_RE, '').replace(/^sich\s+/i, '');
+const okVocab = u => u.v.filter(v => !/…/.test(v[0]));
+// İsimleri küçük harfle yazdıysa (doğru olsa bile) hatırlatır
+function capNote(typed, target) {
+  const tw = String(typed).split(/\s+/).map(w => w.replace(PUNCT_RE, '')), miss = [];
+  String(target).split(/\s+/).forEach((w, i) => { w = w.replace(PUNCT_RE, ''); if (i > 0 && /^[A-ZÄÖÜ]/.test(w) && tw.includes(w.toLowerCase()) && !tw.includes(w)) miss.push(w); });
+  return miss.length ? 'Almancada isimler büyük harfle başlar: ' + miss.join(', ') : '';
+}
+function gradeWord(typed, de) {
+  const forms = wordForms(de);
+  if (forms.some(f => norm(f) === norm(typed))) return { ok: true };
+  if (forms.some(f => deFold(f) === deFold(typed))) return { ok: true, note: 'Doğru! Umlaut yerine ae/oe/ue yazdın; asıl yazılışı: ' + forms[0] };
+  const f0 = forms.find(f => ART_RE.test(f));
+  if (f0 && norm(f0.replace(ART_RE, '')) === norm(String(typed).replace(ART_RE, ''))) return { ok: false, note: ART_RE.test(typed) ? `Kelime doğru, artikel yanlış: “${f0.match(ART_RE)[1]}” olmalı.` : 'Kelime doğru ama artikeli unuttun: ' + f0 };
+  if (forms.some(f => similarity(f, typed) >= .8)) return { ok: false, note: 'Çok yaklaştın, küçük bir yazım hatası var.' };
+  return { ok: false };
+}
+function gradeSentence(typed, de) {
+  if (norm(typed) === norm(de)) return { ok: true };
+  if (deFold(typed) === deFold(de)) return { ok: true, note: 'Doğru! Umlaut yerine ae/oe/ue yazdın; ä, ö, ü tuşlarını kullanmayı dene.' };
+  const sim = similarity(typed, de);
+  if (sim >= .95) return { ok: true, diff: true, note: 'Küçük bir yazım hatası var, aşağıda işaretli.' };
+  return { ok: false, diff: true, note: sim >= .75 ? 'Yaklaştın! Farkları aşağıda görebilirsin.' : '' };
+}
+// Serbest yazmada hedef kelime kullanıldı mı? Çekimli hâlleri de sayılır (trinken → trinke, trinkt)
+function freeHas(text, de) {
+  const w = deFold(de).split(' ').filter(x => !/^(der|die|das|sich|ein|eine|den|dem|zum|zur|in|auf|um|nur)$/.test(x)).sort((a, b) => b.length - a.length)[0] || deFold(de);
+  const stem = w.length > 5 ? w.replace(/(en|n|e)$/, '') : w;
+  return deFold(text).split(' ').some(t => t.startsWith(stem));
+}
+
+function makeWW(u, v) { return v && { k: 'ww', q: v[1], a: v[0], art: ART_RE.test(wordForms(v[0])[0]), id: u.id + ':ww:' + v[0], unit: u.id, card: v }; }
+function makeWR(u, s) { return s && { k: 'wr', q: s[1], a: s[0], id: u.id + ':wr:' + hashStr(s[0]), unit: u.id }; }
+function makeScr(u, v) {
+  if (!v) return null; const w = coreWord(v[0]); if (!/^[A-Za-zÄÖÜäöüß]{4,10}$/.test(w)) return null;
+  return { k: 'scr', q: v[1], a: w, art: (wordForms(v[0])[0].match(ART_RE) || [])[1] || '', id: u.id + ':scr:' + w, unit: u.id, card: v };
+}
+function makeGap(u, s) {
+  if (!s) return null; const toks = s[0].split(' ');
+  const cand = toks.map((w, i) => ({ i, c: w.replace(/[.,!?;:„“"]+$/, '') })).filter(x => x.i > 0 && /^[A-Za-zÄÖÜäöüß]{4,}$/.test(x.c)).sort((a, b) => b.c.length - a.c.length).slice(0, 3);
+  if (!cand.length) return null; const x = pick(cand, 1)[0], q = toks.slice(); q[x.i] = '___' + toks[x.i].slice(x.c.length);
+  return { k: 'fill', q: q.join(' ') + ` (${x.c[0]}… · “${s[1]}”)`, a: [x.c], e: 'Tam cümle: ' + s[0], id: u.id + ':gap:' + hashStr(s[0] + x.i), unit: u.id, lbl: 'Eksik kelimeyi yaz', sk: 'schreiben' };
+}
+function makeListen(u, L, v) {
+  if (!v) return null; const o = shuffle([v[1]].concat(pick(L.units.flatMap(x => x.v).filter(w => w[1] !== v[1]), 2).map(w => w[1])));
+  return { k: 'mc', q: 'Duyduğun kelime ne demek?', say: v[0], listen: true, lbl: 'Dinle ve seç', o, a: o.indexOf(v[1]), e: `${v[0]} = ${v[1]}`, id: u.id + ':lmc:' + v[0], unit: u.id, card: v, sk: 'horen' };
+}
+function makeMeaning(u, L, v) {
+  if (!v) return null; const o = shuffle([v[1]].concat(pick(L.units.flatMap(x => x.v).filter(w => w[1] !== v[1]), 2).map(w => w[1])));
+  return { k: 'mc', q: `“${v[0]}” ne demek?`, say: v[0], o, a: o.indexOf(v[1]), e: `${v[0]} = ${v[1]}`, id: u.id + ':v:' + v[0], unit: u.id, card: v };
+}
+function makeTrans(u, L, s) {
+  if (!s) return null; const pool = L.units.flatMap(x => x.s).filter(x => x[1] !== s[1]); if (pool.length < 2) return null;
+  const o = shuffle([s[1]].concat(pick(pool, 2).map(x => x[1])));
+  return { k: 'mc', q: s[0], say: s[0], lbl: 'Doğru çeviriyi seç', o, a: o.indexOf(s[1]), e: '', id: u.id + ':tmc:' + hashStr(s[0]), unit: u.id };
+}
+function makeFree(u) { const ws = pick(okVocab(u), 3); return { k: 'free', q: 'Serbest yazma: ' + ws.map(w => w[0]).join(', '), words: ws, a: ws.map(w => w[0]).join(', '), id: u.id + ':free', unit: u.id }; }
+const mkBuild = (u, s) => ({ k: 'build', q: s[1], a: s[0], id: u.id + ':b:' + hashStr(s[0]), unit: u.id });
+const mkDict = (u, s) => ({ k: 'dict', a: s[0], tr: s[1], id: u.id + ':d:' + hashStr(s[0]), unit: u.id });
+
+// Ana derse 4 yeni etkinlik: kelime yazma, eksik kelime, çeviri yazma ve bir dinleme/çeviri/harf etkinliği
+const _buildUnitItemsW = buildUnitItems;
+buildUnitItems = function (u, L) {
+  const items = _buildUnitItemsW(u, L), used = items.filter(x => x.k === 'build' || x.k === 'dict').map(x => x.a);
+  const free = shuffle(u.s.filter(s => !used.includes(s[0]))), vs = okVocab(u);
+  const extra = [makeWW(u, pick(vs, 1)[0]), makeGap(u, free[0]), makeWR(u, free[1]), pick([makeListen(u, L, pick(vs, 1)[0]), free[2] && makeTrans(u, L, free[2]), makeScr(u, pick(vs, 1)[0])].filter(Boolean), 1)[0]].filter(Boolean);
+  extra.forEach(x => items.splice(Math.floor(Math.random() * (items.length + 1)), 0, x));
+  return items;
+};
+
+const PRACTICE = [
+  { k: 'yaz', ic: 'fa-pen-nib', t: 'Yazma pratiği', d: 'Kelime ve cümleleri kendin yaz, sonunda kısa bir metin oluştur' },
+  { k: 'kelime', ic: 'fa-spell-check', t: 'Kelime pratiği', d: 'Dinle, eşleştir, harfleri diz, kelimeyi yaz' },
+  { k: 'cumle', ic: 'fa-quote-left', t: 'Cümle pratiği', d: 'Doğru çeviriyi seç, cümle kur, hatayı bul, eksik kelimeyi yaz' },
+  { k: 'karisik', ic: 'fa-shuffle', t: 'Karışık tekrar', d: 'Konunun bütün etkinlik türlerinden rastgele bir set' }
+];
+function practiceItems(u, L, mode) {
+  const vs = okVocab(u), V = n => pick(vs, n), S = n => pick(u.s, n), scr = n => V(6).map(v => makeScr(u, v)).filter(Boolean).slice(0, n);
+  let out;
+  if (mode === 'yaz') out = [...V(3).map(v => makeWW(u, v)), ...scr(2), ...S(2).map(s => makeGap(u, s)), ...S(3).map(s => makeWR(u, s)), mkDict(u, S(1)[0])];
+  else if (mode === 'kelime') out = [...V(2).map(v => makeListen(u, L, v)), ...V(2).map(v => makeMeaning(u, L, v)), { k: 'match', pairs: pick(u.v, 4), id: u.id + ':match', unit: u.id }, ...scr(2), ...V(3).map(v => makeWW(u, v))];
+  else if (mode === 'cumle') out = [...S(2).map(s => makeTrans(u, L, s)), ...S(2).map(s => mkBuild(u, s)), makeSpot(u), ...S(2).map(s => makeGap(u, s)), ...S(2).map(s => makeWR(u, s)), mkDict(u, S(1)[0])];
+  else out = [...pick(qItems(u), 4), makeWW(u, V(1)[0]), makeWR(u, S(1)[0]), makeGap(u, S(1)[0]), makeListen(u, L, V(1)[0]), makeTrans(u, L, S(1)[0]), ...scr(1), mkBuild(u, S(1)[0]), makeSpot(u)];
+  out = shuffle(out.filter(Boolean)); if (mode === 'yaz') out.push(makeFree(u));
+  return out;
+}
+function startPractice(id, mode) {
+  const f = findUnit(id), m = PRACTICE.find(x => x.k === mode); if (!f || !m) return;
+  startLesson(practiceItems(f.u, f.L, mode), { title: m.t + ' · ' + f.u.t, color: f.L.color, kind: 'practice', unitId: id, mode, pass: 0 });
+}
+const _lessonSummaryW = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts; _lessonSummaryW.apply(this, arguments);
+  if (o && o.kind === 'practice') { const f = $('#lsFoot .ls-foot-in'); if (f) f.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost" onclick="startPractice('${o.unitId}','${o.mode}')"><i class="fa-solid fa-rotate"></i> Yeni set</button>`); }
+};
+
+const _renderItemW = renderItem;
+renderItem = function () {
+  const it = LSN.items[LSN.i];
+  if (!WX_KINDS.includes(it.k)) {
+    _renderItemW();
+    if (it.lbl) { const k = $('#lsBody .ls-kind'); if (k) k.textContent = it.lbl; }
+    if (it.listen) setTimeout(() => { if (LSN && LSN.items[LSN.i] === it) speak(it.say); }, 400);
+    return;
+  }
+  LSN.sel = null; LSN.built = []; LSN.checked = false; LSN.hint = 0;
+  $('#lsBar').style.width = (LSN.i / LSN.items.length * 100) + '%'; $('#lsCount').textContent = (LSN.i + 1) + '/' + LSN.items.length;
+  const enter = `onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();if(LSN.sel)checkItem()}"`;
+  let h = `<div class="ls-kind">${KIND_NAMES[it.k]}</div>`;
+  if (it.k === 'ww') h += `<h2 class="ls-q">Almancasını yaz: <span class="hl">${esc(it.q)}</span></h2>${it.art ? '<div class="muted wx-sub">İsim olduğu için artikeliyle yaz (der / die / das)</div>' : ''}
+    <input id="fillIn" class="pill-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Almanca yaz…" oninput="LSN.sel=this.value.trim()||null;footCheck()" ${enter}>${umlautBar('fillIn')}
+    <button class="wx-hint" onclick="wxHint()"><i class="fa-regular fa-lightbulb"></i> İpucu</button><div id="wxHint" class="wx-hint-out"></div>`;
+  else if (it.k === 'wr') h += `<h2 class="ls-q">Almancaya çevir ve yaz</h2><div class="wx-src">“${esc(it.q)}”</div>
+    <textarea id="fillIn" class="pill-input" rows="3" autocomplete="off" spellcheck="false" placeholder="Almanca cümleyi yaz…" oninput="LSN.sel=this.value.trim()||null;footCheck()" ${enter}></textarea>${umlautBar('fillIn')}
+    <button class="wx-hint" onclick="wxHint()"><i class="fa-regular fa-lightbulb"></i> Kelimeleri göster</button><div id="wxHint" class="wx-hint-out"></div>`;
+  else if (it.k === 'scr') {
+    let letters = it.a.split(''); for (let n = 0; n < 6 && letters.join('') === it.a; n++) letters = shuffle(letters);
+    LSN.tokens = letters.map((w, i) => ({ w, i }));
+    h += `<div class="scr"><h2 class="ls-q">Harfleri doğru sıraya diz: <span class="hl">${esc(it.q)}</span></h2><div class="answer-line" id="ansLine">${it.art ? `<span class="wx-art">${esc(it.art)}</span>` : ''}</div><div class="bank" id="bank">${LSN.tokens.map((t, k) => `<button class="tok press" data-k="${k}" onclick="tapTok(${k})">${esc(t.w)}</button>`).join('')}</div></div>`;
+  } else {
+    const f = findUnit(it.unit), ex = f && f.u.s[0];
+    h += `<h2 class="ls-q">Kısa bir metin yaz</h2><p class="muted wx-sub" style="margin-top:-6px">Aşağıdaki kelimelerden en az 2'sini kullanarak 2–3 cümle yaz. Bu ünitenin kuralını uygulamaya çalış.</p>
+      <div class="wx-words">${it.words.map((w, i) => `<button class="tok press wx-w" data-i="${i}" data-say="${esc(w[0])}" onclick="say(this.dataset.say)">${esc(w[0])}<small>${esc(w[1])}</small></button>`).join('')}</div>
+      ${ex ? `<details class="wx-ex"><summary>Örnek cümle göster</summary><div lang="de">${esc(ex[0])}</div><div>${esc(ex[1])}</div></details>` : ''}
+      <textarea id="fillIn" class="pill-input" rows="5" autocomplete="off" spellcheck="false" placeholder="Almanca yaz…" oninput="freeInput(this.value)"></textarea>${umlautBar('fillIn')}
+      <div id="wxCount" class="muted wx-sub" style="margin-top:10px">0 kelime · 0/${it.words.length} hedef kelime</div>`;
+  }
+  $('#lsBody').innerHTML = h;
+  footCheck(); enterLesson();
+  const fi = $('#fillIn'); if (fi && it.k === 'ww') setTimeout(() => fi.focus(), 200);
+};
+function wxHint() {
+  if (!LSN || LSN.checked) return; const it = LSN.items[LSN.i], o = $('#wxHint'); if (!o) return; LSN.hint++;
+  if (it.k === 'ww') { const full = wordForms(it.a)[0], art = (full.match(ART_RE) || [])[0] || '', w = full.slice(art.length), n = Math.min(w.length - 1, LSN.hint); o.textContent = art + w.slice(0, n) + w.slice(n).replace(/\S/g, ' _'); }
+  else o.innerHTML = `<div class="muted" style="font-size:13px;margin-bottom:6px">Kullanacağın kelimeler (karışık):</div>` + shuffle(tokenize(it.a.replace(PUNCT_RE, ''))).map(w => `<span class="tok">${esc(w)}</span>`).join('');
+}
+function freeInput(v) {
+  const it = LSN && LSN.items[LSN.i]; if (!it || LSN.checked) return;
+  const n = tokenize(v).length, used = it.words.map(w => freeHas(v, w[0]));
+  document.querySelectorAll('.wx-w').forEach((b, i) => b.classList.toggle('on', used[i]));
+  $('#wxCount').textContent = `${n} kelime · ${used.filter(Boolean).length}/${it.words.length} hedef kelime`;
+  LSN.sel = n >= 5 ? v.trim() : null; footCheck();
+}
+const _footCheckW = footCheck;
+footCheck = function () { const it = LSN && LSN.items[LSN.i]; if (it && it.k === 'scr' && !LSN.checked) LSN.sel = LSN.built.length ? 1 : null; _footCheckW(); };
+const _checkItemW = checkItem;
+checkItem = function () {
+  if (!LSN || LSN.checked || !LSN.items[LSN.i]) return;
+  const it = LSN.items[LSN.i]; if (!WX_KINDS.includes(it.k)) return _checkItemW();
+  const typed = it.k === 'scr' ? LSN.built.map(k => LSN.tokens[k].w).join('') : LSN.sel;
+  let g;
+  if (it.k === 'ww') g = gradeWord(typed, it.a);
+  else if (it.k === 'wr') g = gradeSentence(typed, it.a);
+  else if (it.k === 'scr') g = { ok: typed === it.a };
+  else { const n = tokenize(typed).length, used = it.words.filter(w => freeHas(typed, w[0])).length; g = { ok: used >= 2 && n >= 8, note: `${n} kelime yazdın, ${used}/${it.words.length} hedef kelimeyi kullandın.${used < 2 ? ' En az 2 hedef kelime kullan.' : n < 8 ? ' Biraz daha uzun yaz (en az 8 kelime).' : ''}` }; }
+  finishItem(g.ok, false);
+  const notes = [g.note, it.k === 'ww' || it.k === 'wr' ? capNote(typed, it.a) : ''].filter(Boolean), title = $('#lsFoot .fb-title');
+  if (title) {
+    if (it.k === 'free') title.innerHTML = `<i class="fa-solid ${g.ok ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>${g.ok ? 'Güzel metin!' : 'Biraz daha geliştir'}`;
+    title.insertAdjacentHTML('afterend', notes.map(n => `<div class="fb-text wx-note">${esc(n)}</div>`).join('') + (g.diff && (!g.ok || g.note) ? `<div class="fb-text" style="margin-top:6px">Senin yazdığın: ${charDiff(typed, it.a)}</div>` : ''));
+  }
+  const row = $('#lsFoot .row');
+  if (row && it.k !== 'free') { const de = it.k === 'scr' ? (it.art ? it.art + ' ' : '') + it.a : wordForms(it.a)[0]; row.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost btn-sm" data-say="${esc(de)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i> Dinle</button>`); }
+  if (row && it.k === 'free') row.innerHTML = `<button class="btn btn-ghost btn-sm" onclick="freeAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> Yapay zekâ metnimi düzeltsin</button>`;
+  if (it.k === 'scr') { const a = $('#ansLine'); if (a) a.classList.add(g.ok ? 'wx-ok' : 'wx-bad'); }
+};
+// Serbest yazmanın tek doğru cevabı yok: Yanlış Deposu'na girmez
+const _finishItemW = finishItem;
+finishItem = function (ok, skipped) { const it = LSN && LSN.items[LSN.i]; _finishItemW(ok, skipped); if (it && it.k === 'free') D.wrong = D.wrong.filter(w => w.id !== it.id); };
+const _answerTextW = answerText;
+answerText = it => it.k === 'scr' ? (it.art ? it.art + ' ' : '') + it.a : it.k === 'free' ? 'Hedef kelimeler: ' + it.a : _answerTextW(it);
+const _givenTextW = givenText;
+givenText = it => it.k === 'scr' ? (LSN.built.map(k => LSN.tokens[k].w).join('') || '(boş)') : _givenTextW(it);
+async function freeAI() {
+  const r = LSN && LSN.results[LSN.results.length - 1], box = $('#whyBox'); if (!r || !box) return;
+  const f = findUnit(r.it.unit); box.innerHTML = '<div class="ai-box"><span class="typing"><i></i><i></i><i></i></span></div>';
+  try { box.innerHTML = `<div class="ai-box">${md(await aiText(`Öğrenci “${f.u.t}” (${f.u.de}, ${f.L.id}) ünitesinde şu Almanca metni yazdı:\n"""${r.given}"""\nHedef kelimeler: ${r.it.a}.\n1) Metnin düzeltilmiş hâlini yaz. 2) Her hatayı Türkçe, kısa maddelerle açıkla (kural + doğru biçim). Hata yoksa öv. 3) Metni bu ünitenin konusuyla zenginleştiren bir örnek cümle öner (Almanca + Türkçe). Kısa tut.`, tutorSys()))}</div>`; }
+  catch (e) { box.innerHTML = `<div class="ai-box">${aiErr(e)}</div>`; }
+}
+
 /* ---------- Başlat ---------- */
 applyTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!CFG.theme) applyTheme(); });
