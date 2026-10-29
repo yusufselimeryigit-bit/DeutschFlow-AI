@@ -2538,7 +2538,6 @@ html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
 .srch-bar span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .srch-k { font-size: 12px; padding: 2px 7px; border-radius: 6px; background: var(--raised); color: var(--muted); font-variant-numeric: tabular-nums; }
 @media (max-width: 960px) { .srch-k { display: none; } .srch-bar { margin-bottom: 12px; } }
-@media (min-width: 961px) { html.fx .srch-bar { display: none; } } /* Akış, bilgisayar: üst çubuktaki arama simgesi yeterli */
 .sheet.srch-sheet { max-width: 620px; padding: 0; display: flex; flex-direction: column; max-height: min(80vh, 720px); overflow: hidden; }
 .overlay:has(> .srch-sheet) { align-items: flex-start; padding-top: max(16px, 8vh); }
 .srch-top { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--rule); flex-shrink: 0; }
@@ -2556,6 +2555,11 @@ html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
 .srch-it mark { background: none; color: var(--accd); font-weight: 700; }
 .srch-empty { padding: 28px 16px; text-align: center; color: var(--muted); }
 @media (max-width: 640px) { .overlay:has(> .srch-sheet) { padding: 0; } .sheet.srch-sheet { max-width: none; height: var(--vvh, 100dvh); max-height: none; border-radius: 0; } .srch-top { padding-top: calc(12px + env(safe-area-inset-top)); } }
+@media (max-width: 640px) {
+  html.srch-open, html.srch-open body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+  html.srch-open #app, html.srch-open #bottomNav, html.srch-open #amMini, html.srch-open #tutorFab { display: none !important; }
+  .overlay:has(> .srch-sheet) { background: var(--ground); top: var(--vvt, 0px); bottom: auto; height: var(--vvh, 100dvh); }
+}
 </style>
 <style id="ek4">
 /* Kelime listesi, deneme, metinden kelime, dinleme bağlantıları, düello, haftalık özet, kelime ayrıntısı */
@@ -7084,11 +7088,15 @@ function srchFind(q) {
   }).filter(Boolean).sort((a, b) => b.sc - a.sc).slice(0, 40).map(r => r.x);
 }
 const srchMark = (t, q) => { let h = esc(t); sFold(q).split(' ').filter(w => w.length > 1).forEach(w => { const i = sFold(t).indexOf(w); if (i >= 0 && sFold(t).length === t.length) h = esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + w.length)) + '</mark>' + esc(t.slice(i + w.length)); }); return h; };
-let SR_LIST = [], SR_ON = 0;
+let SR_LIST = [], SR_ON = 0, SR_Y = 0;
+// Arama kapanınca (telefonda) arkadaki uygulama geri gelir, kaldığın yere dönülür
+const _closeModalSr = closeModal;
+closeModal = function () { const was = document.documentElement.classList.contains('srch-open'); document.documentElement.classList.remove('srch-open'); _closeModalSr.apply(this, arguments); if (was) { window.scrollTo(0, SR_Y); if (isFx()) fxSize(); } };
 function openSearch() {
   if (!D) return;
   const el = modal(`<div class="srch-top"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="srIn" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ders, kelime, araç, hikâye, fiil ara…" aria-label="Ara" oninput="srchRender(this.value)" onkeydown="srchKey(event)"><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="srch-list" id="srList" role="listbox"></div>`);
   el.querySelector('.sheet').classList.add('srch-sheet'); srchRender('');
+  if (innerWidth <= 640) { SR_Y = window.scrollY; document.documentElement.classList.add('srch-open'); syncViewport(); }
   setTimeout(() => { const i = $('#srIn'); i && i.focus(); }, 60);
 }
 function srchRender(q) {
@@ -7129,12 +7137,7 @@ renderTopbar = function () {
   const row = document.querySelector('#topbar .tb-row, #topbar .row'); if (!row || row.querySelector('.srch-ic')) return;
   row.insertAdjacentHTML('afterbegin', '<button class="icon-btn srch-ic" title="Ara (⌘K)" aria-label="Ara" onclick="openSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>');
 };
-// Ana ekranda arama çubuğu
-const _afterHomeS = AFTER.home;
-AFTER.home = () => {
-  const v = $('#view'); if (v && !v.querySelector('.srch-bar')) v.insertAdjacentHTML('afterbegin', `<button class="srch-bar" onclick="openSearch()" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i><span>Ara: ders, kelime, araç, hikâye, fiil…</span><kbd class="srch-k">${/Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl K'}</kbd></button>`);
-  if (_afterHomeS) _afterHomeS();
-};
+
 
 /* ===== SIK KULLANILAN KELİMELER (A1 → B1, sırayla tekrar kutusuna gelir) ===== */
 const FREQ_RAW = {
