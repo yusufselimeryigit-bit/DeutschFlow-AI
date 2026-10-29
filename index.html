@@ -2437,6 +2437,157 @@ html.am .nav-group { color: var(--muted); }
 
 
 
+<style id="ders2">
+/* =====================================================================
+   DERS 2: sistematik konu anlatımı + Akış'ta nötr ders ekranı (kırmızı zemin yok)
+   impeccable (polish): tek vurgu seviyenin rengi, numaralı adımlar yalnızca öğrenme sırasını taşır
+   ===================================================================== */
+.gd-map { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+.gd-map button { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 5px 12px 5px 5px; border-radius: 999px; background: var(--surface-2); color: var(--ink); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background-color .2s; }
+.gd-map button:hover { background: var(--control); }
+.gd-map b { width: 26px; height: 26px; border-radius: 50%; display: inline-grid; place-items: center; background: var(--raised); color: var(--lvd, var(--accd)); font-size: 12px; font-variant-numeric: tabular-nums; }
+.gd-map i { font-size: 11px; }
+.gd-sec { padding: 22px 0 6px; border-top: 1px solid var(--rule); scroll-margin-top: 8px; }
+.gd-map + .gd-sec { border-top: 0; padding-top: 16px; }
+.gd-sh { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.gd-n { flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--lvs, var(--accent-soft)); color: var(--lvd, var(--accd)); font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+.us-body .guide .gd-sh h4, .guide .gd-sh h4 { margin: 0 !important; font-size: 18px; font-weight: 700; letter-spacing: -.015em; line-height: 1.25; }
+.gd-body > p:first-child { margin-top: 0; }
+.gd-body p { max-width: 68ch; }
+.gd-tip { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; padding: 13px 15px; border-radius: 14px; background: var(--warn-bg, #fff6e5); color: var(--ink); margin: 12px 0; line-height: 1.55; }
+.gd-tip > i { color: var(--warning, #92400e); font-size: 15px; margin-top: 3px; }
+.gd-tip > div > b:first-child { display: inline; }
+.gd-ex { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: center; padding: 12px 8px 12px 15px; border-radius: 14px; background: var(--surface); margin: 8px 0; }
+.dark .gd-ex { background: var(--surface-2); }
+.gd-de { font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+.gd-tr { grid-column: 1; font-size: 14px; color: var(--muted); line-height: 1.4; }
+.gd-ex .us-ib { grid-row: 1 / span 2; grid-column: 2; }
+.gd-words { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 14px; }
+.gd-w { display: inline-flex; flex-direction: column; align-items: flex-start; padding: 8px 13px; border-radius: 12px; background: var(--surface); text-align: left; cursor: pointer; transition: transform .12s; }
+.dark .gd-w { background: var(--surface-2); }
+.gd-w:active { transform: scale(.97); }
+.gd-w b { font-weight: 600; font-size: 15px; color: var(--ink); }
+.gd-w span { font-size: 12.5px; color: var(--muted); }
+.gd-q { padding: 14px 0; }
+.gd-q + .gd-q { border-top: 1px solid var(--rule); }
+.gd-qt { font-weight: 600; margin-bottom: 10px; line-height: 1.45; }
+.gd-os { display: flex; flex-wrap: wrap; gap: 8px; }
+.gd-o { min-height: 44px; padding: 8px 16px; border-radius: 12px; background: var(--surface-2); color: var(--ink); font-weight: 600; font-size: 15px; cursor: pointer; border: 1.5px solid transparent; transition: background-color .2s, border-color .2s; }
+.gd-o.ok { background: var(--pos-bg); border-color: var(--positive); color: var(--positive); }
+.gd-o.bad { background: var(--neg-bg); border-color: var(--negative); color: var(--negative); }
+.gd-o:disabled { cursor: default; }
+.gd-qe { font-size: 14px; color: var(--muted); margin-top: 8px; line-height: 1.45; }
+.gd-go { margin-top: 14px; }
+/* Konuş etkinliği */
+.spk-sent { font-size: clamp(22px, 5vw, 30px); font-weight: 600; line-height: 1.3; margin: 4px 0 4px; }
+.spk-tr { color: var(--muted); margin-bottom: 18px; }
+.spk-pad { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 10px; }
+.spk-pad .mic-btn { width: 96px; height: 96px; font-size: 34px; }
+.spk-res { font-size: 19px; font-weight: 600; line-height: 1.7; text-align: center; min-height: 30px; }
+.spk-res .w-ok { color: var(--positive); } .spk-res .w-bad { color: var(--negative); text-decoration: underline wavy; text-underline-offset: 4px; }
+/* ---------- Akış: ders ve ünite penceresi nötr; kırmızı zemin kaldırıldı ---------- */
+html.fx #lesson, html.fx #lesson .ls-foot:not(.ok):not(.bad) { background: var(--ground); }
+html.fx #lesson .ls-foot:not(.ok):not(.bad) { border-top-color: var(--rule); }
+html.fx #lesson .ls-top { background: var(--ground); color: var(--ink); border-bottom: 1px solid var(--rule); }
+html.fx #lesson .ls-top .icon-btn { background: var(--surface-2); color: var(--ink); }
+html.fx #lesson .progress { background: var(--surface-2); }
+html.fx #lesson .progress > div { background: var(--lv); }
+html.fx .fx-kind { background: var(--surface-2); color: var(--muted); }
+html.fx #lesson .wx-src { color: var(--ink); }
+html.fx .us-head { background: var(--raised); color: var(--ink); border-bottom: 1px solid var(--rule); }
+html.fx .us-x { background: var(--surface-2); color: var(--ink); }
+html.fx .us-tr, html.fx .us-meta, html.fx .us-meta i { color: var(--muted); opacity: 1; }
+html.fx .us-tabs { background: var(--surface-2); }
+html.fx .us-tabs .tab { color: var(--muted); }
+html.fx .us-tabs .tab.active { background: var(--raised); color: var(--ink); box-shadow: 0 1px 3px rgba(17,17,24,.12); }
+html.fx .us-meta .fx-lvm { background: var(--lv); color: #fff; }
+html.fx .us-meta .fx-lvm.lv-b1 { color: #1a1400; }
+/* Akış slaytları: siyah zemin, seviyenin rengi yalnızca köşede bir ışık ve küçük işaretlerde */
+html.fx .fx-field { --fi: #fff; --fd2: #121218; color: #fff; background: radial-gradient(110% 70% at 100% 0%, color-mix(in srgb, var(--f) 34%, transparent), transparent 62%), #121218; }
+html.fx.dark .fx-field { background: radial-gradient(110% 70% at 100% 0%, color-mix(in srgb, var(--f) 30%, transparent), transparent 62%), #17171e; }
+html.fx .fx-field::before { background: linear-gradient(to top, rgba(0,0,0,.4), transparent 58%); }
+html.fx .fx-words { color: var(--f); opacity: .2; }
+html.fx .fx-lv { background: var(--f); color: #fff; }
+html.fx .fx-slide[data-li="2"] .fx-lv { color: #1a1400; }
+html.fx .fx-segs i { background: rgba(255,255,255,.18); }
+html.fx .fx-segs i.on { background: var(--f); }
+html.fx .fx-segs i.cur { background: rgba(255,255,255,.7); }
+html.fx .fx-go { background: #fff; color: #121218; }
+html.fx .fx-rb { color: #fff; }
+html.fx .fx-rb i { background: rgba(255,255,255,.12); }
+html.fx .fx-rb:active i, html.fx .fx-rb.on i { background: #fff; color: #121218; }
+html.fx .fx-slide.lock { --fi: rgba(255,255,255,.72) !important; --fd2: #121218; }
+html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
+@media (prefers-reduced-motion: reduce) { .gd-o, .gd-w { transition: none; } }
+</style>
+<style id="akis-sayfalar">
+/* Akış: Tekrar, Pratik ve Araçlar sayfaları da kaydırmalı kart */
+.fx-ic { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--f); color: #fff; font-size: 22px; margin-bottom: 16px; }
+.fx-slide[data-li="2"] .fx-ic { color: #1a1400; }
+.fx-pl { margin: 0 0 16px; color: var(--muted); line-height: 1.5; }
+.fx-stages { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-top: 16px; }
+.fx-stages span { display: flex; flex-direction: column; gap: 2px; padding: 8px 6px; border-radius: 12px; background: rgba(255,255,255,.1); font-size: 11.5px; color: rgba(255,255,255,.75); text-align: center; }
+.fx-stages b { font: 700 20px/1.1 var(--display, inherit); color: #fff; }
+@media (max-width: 960px) { .fx-pl { display: none; } .fx-page .fx-jl .fx-jb { font-size: 15px; } }
+@media (min-width: 961px) { .fx-page .fx-jl:not(.now) .fx-jb { color: var(--fdk); } }
+</style>
+<style id="arama">
+/* Arama: ana ekranda çubuk, üst çubukta simge, ⌘K / Ctrl+K ile açılır */
+.srch-bar { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 46px; padding: 0 14px; margin: 0 0 18px; border-radius: 14px; background: var(--surface-2); color: var(--muted); font: inherit; font-size: 15.5px; text-align: left; cursor: text; transition: background-color .2s; }
+.srch-bar:hover { background: var(--control); }
+.srch-bar span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srch-k { font-size: 12px; padding: 2px 7px; border-radius: 6px; background: var(--raised); color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 960px) { .srch-k { display: none; } .srch-bar { margin-bottom: 12px; } }
+@media (min-width: 961px) { html.fx .srch-bar { display: none; } } /* Akış, bilgisayar: üst çubuktaki arama simgesi yeterli */
+.sheet.srch-sheet { max-width: 620px; padding: 0; display: flex; flex-direction: column; max-height: min(80vh, 720px); overflow: hidden; }
+.overlay:has(> .srch-sheet) { align-items: flex-start; padding-top: max(16px, 8vh); }
+.srch-top { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--rule); flex-shrink: 0; }
+.srch-top > i { color: var(--muted); }
+.srch-top input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: inherit; font-size: 17px; color: var(--ink); min-height: 40px; }
+.srch-list { overflow-y: auto; overscroll-behavior: contain; padding: 6px 8px 12px; }
+.srch-h { font-size: 12.5px; font-weight: 600; color: var(--muted); padding: 12px 10px 6px; }
+.srch-it { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 8px 10px; border-radius: 12px; background: none; border: 0; color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
+.srch-it:hover, .srch-it.on { background: var(--surface-2); }
+.srch-it .si { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accd); flex-shrink: 0; font-size: 14px; }
+.srch-it.lock { opacity: .55; }
+.srch-it .sm { flex: 1; min-width: 0; }
+.srch-it b { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srch-it small { display: block; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srch-it mark { background: none; color: var(--accd); font-weight: 700; }
+.srch-empty { padding: 28px 16px; text-align: center; color: var(--muted); }
+@media (max-width: 640px) { .overlay:has(> .srch-sheet) { padding: 0; } .sheet.srch-sheet { max-width: none; height: var(--vvh, 100dvh); max-height: none; border-radius: 0; } .srch-top { padding-top: calc(12px + env(safe-area-inset-top)); } }
+</style>
+<style id="ek4">
+/* Kelime listesi, deneme, metinden kelime, dinleme bağlantıları, düello, haftalık özet, kelime ayrıntısı */
+.fq-row { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--rule); color: inherit; font: inherit; cursor: pointer; }
+.fq-row:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.fq-lv { flex-shrink: 0; font-size: 11.5px; font-weight: 700; padding: 3px 7px; border-radius: 6px; background: var(--surface-2); color: var(--muted); font-variant-numeric: tabular-nums; }
+.mk-row, .dl-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 11px 0; border-top: 1px solid var(--rule); }
+.mk-row:first-of-type, .dl-row:first-of-type { border-top: 0; }
+.mk-sc { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; }
+.mk-sc span { padding: 3px 8px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.mk-sc .ok { background: var(--pos-bg); color: var(--positive); } .mk-sc .no { background: var(--neg-bg); color: var(--negative); }
+.dl-row > span:nth-child(2) { flex: 1; font-weight: 600; }
+.ex-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.ex-de b { display: block; font-weight: 600; margin-bottom: 4px; }
+.ex-de .pill-input { min-height: 38px; padding: 7px 10px; }
+.lk-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--rule); }
+.lk-m b { display: block; font-weight: 600; } .lk-m span { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.4; }
+.lk-a { display: flex; gap: 6px; }
+@media (max-width: 640px) { .lk-row { grid-template-columns: auto minmax(0, 1fr); } .lk-a { grid-column: 1 / -1; } }
+.wk-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.wk-t { padding: 14px; border-radius: 14px; background: var(--surface-2); display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.wk-t span { font-size: 13px; color: var(--muted); } .wk-t b { font-size: 28px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; } .wk-t small { font-size: 12px; color: var(--muted); min-height: 15px; }
+.wk-tip { margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); line-height: 1.5; }
+@media (max-width: 520px) { .wk-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.wd-top { display: flex; align-items: center; gap: 14px; }
+.wd-emo { font-size: 40px; line-height: 1; }
+.wd-de { font-size: clamp(26px, 6vw, 34px); font-weight: 700; letter-spacing: -.02em; line-height: 1.1; overflow-wrap: anywhere; }
+.wd-tr { font-size: 16px; color: var(--muted); margin-top: 4px; }
+.wd-facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.wd-facts span { display: flex; flex-direction: column; padding: 8px 12px; border-radius: 12px; background: var(--surface-2); min-width: 84px; }
+.wd-facts small { font-size: 11.5px; color: var(--muted); } .wd-facts b { font-weight: 600; }
+</style>
 </head>
 <body>
 <div id="toast"></div>
@@ -6684,6 +6835,642 @@ VIEWS.settings = () => {
   const cur = isAm() ? 'am' : isFx() ? 'fx' : isBm() ? 'bm' : isBh() ? 'bh' : 'herb';
   const opt = (k, prev, t) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}${t}</button>`;
   return _settingsAm().replace(/<div class="ds-pick four">[\s\S]*?Herbaryum<\/button><\/div>/, `<div class="ds-pick five">${opt('am', '<div class="ds-prev amp"><i></i></div>', 'Cam')}${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış')}${opt('bm', '<div class="ds-prev bm"><span></span></div>', 'Briefmarke')}${opt('bh', '<div class="ds-prev bh"><i></i><i></i><i></i></div>', 'Bauhaus')}${opt('herb', '<div class="ds-prev hb">Blatt</div>', 'Herbaryum')}</div>`);
+};
+
+/* =====================================================================
+   DERS 2: daha çok ve daha çeşitli etkinlik + sistematik konu anlatımı
+   ===================================================================== */
+KIND_NAMES.speak = 'Sesli söyle';
+const ARTS3 = ['der', 'die', 'das'], GRAM_W = ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einen', 'einem', 'einer'];
+function makeArt(u, v) {
+  if (!v) return null; const m = wordForms(v[0])[0].match(/^(der|die|das)\s+([A-ZÄÖÜ]\S*)$/); if (!m) return null;
+  return { k: 'mc', q: `___ ${m[2]} (${v[1]})`, lbl: 'Artikeli seç', o: ARTS3, a: ARTS3.indexOf(m[1]), e: `${m[1]} ${m[2]} = ${v[1]}`, id: u.id + ':art:' + m[2], unit: u.id, cat: 'hal' };
+}
+function makeRev(u, L, v) {
+  if (!v) return null; const pool = L.units.flatMap(x => x.v).filter(w => w[0] !== v[0] && w[1] !== v[1]); if (pool.length < 2) return null;
+  const o = shuffle([v[0]].concat(pick(pool, 2).map(w => w[0])));
+  return { k: 'mc', q: `“${v[1]}” Almancada hangisi?`, lbl: 'Almancasını seç', o, a: o.indexOf(v[0]), e: `${v[1]} = ${v[0]}`, id: u.id + ':rev:' + v[0], unit: u.id, card: v };
+}
+function makeGapMc(u, L, s) {
+  if (!s) return null; const toks = s[0].split(' '), clean = w => w.replace(/[.,!?;:„“"]+$/, '');
+  const gram = toks.map((w, i) => ({ i, c: clean(w) })).filter(x => GRAM_W.includes(x.c.toLowerCase()));
+  const lex = toks.map((w, i) => ({ i, c: clean(w) })).filter(x => /^[A-Za-zÄÖÜäöüß]{3,}$/.test(x.c) && !GRAM_W.includes(x.c.toLowerCase()));
+  const x = (gram.length && Math.random() < .55 ? pick(gram, 1) : pick(lex, 1))[0]; if (!x) return null;
+  let others;
+  if (GRAM_W.includes(x.c.toLowerCase())) others = shuffle(GRAM_W.filter(w => w !== x.c.toLowerCase())).slice(0, 2).map(w => x.c[0] === x.c[0].toUpperCase() ? w[0].toUpperCase() + w.slice(1) : w);
+  else { const pool = [...new Set(L.units.flatMap(y => y.s).flatMap(y => y[0].split(' ').map(clean)).filter(w => /^[A-Za-zÄÖÜäöüß]{3,}$/.test(w) && w !== x.c && /^[A-ZÄÖÜ]/.test(w) === /^[A-ZÄÖÜ]/.test(x.c)))]; if (pool.length < 2) return null; others = pick(pool, 2); }
+  const q = toks.slice(); q[x.i] = '___' + toks[x.i].slice(x.c.length); const o = shuffle([x.c].concat(others));
+  return { k: 'mc', q: q.join(' '), lbl: 'Boşluğa uyanı seç', o, a: o.indexOf(x.c), e: `${s[0]} — ${s[1]}`, id: u.id + ':gmc:' + hashStr(s[0] + x.i), unit: u.id };
+}
+function makeTfTr(u, s) {
+  if (!s) return null; const other = pick(u.s.filter(x => x[1] !== s[1]), 1)[0], right = !other || Math.random() < .5;
+  return { k: 'tf', q: `„${s[0]}” = “${right ? s[1] : other[1]}”`, a: right, lbl: 'Çeviri doğru mu?', e: 'Doğru çeviri: ' + s[1], id: u.id + ':tft:' + hashStr(s[0]), unit: u.id };
+}
+function makeListenS(u, s) {
+  if (!s) return null; const others = pick(u.s.filter(x => x[0] !== s[0]), 2); if (others.length < 2) return null;
+  const o = shuffle([s[0]].concat(others.map(x => x[0])));
+  return { k: 'mc', q: 'Duyduğun cümle hangisi?', say: s[0], listen: true, lbl: 'Dinle ve cümleyi seç', o, a: o.indexOf(s[0]), e: s[1], id: u.id + ':ls:' + hashStr(s[0]), unit: u.id, sk: 'horen' };
+}
+function makeListenW(u, v) { return v && { k: 'dict', a: wordForms(v[0])[0], tr: v[1], word: true, lbl: 'Dinle ve kelimeyi yaz', id: u.id + ':lw:' + v[0], unit: u.id, sk: 'horen' }; }
+function makeSpeak(u, s) { return s && { k: 'speak', q: s[1], a: s[0], tr: s[1], id: u.id + ':spk:' + hashStr(s[0]), unit: u.id, sk: 'sprechen' }; }
+
+// Ana derse 7 yeni etkinlik: artikel, ters anlam, boşluğa uyan seçenek, çeviri doğru/yanlış, cümle dinleme, kelime dinleyip yazma, sesli söyleme
+const _buildUnitItemsD2 = buildUnitItems;
+buildUnitItems = function (u, L) {
+  const items = _buildUnitItemsD2(u, L), vs = okVocab(u), ss = shuffle(u.s);
+  const nouns = vs.filter(v => /^(der|die|das)\s+[A-ZÄÖÜ]/.test(wordForms(v[0])[0]));
+  const extra = [makeArt(u, pick(nouns, 1)[0]), makeRev(u, L, pick(vs, 1)[0]), makeGapMc(u, L, ss[0]), makeTfTr(u, ss[1]), makeListenS(u, ss[2] || ss[0]), makeListenW(u, pick(vs, 1)[0]), makeSpeak(u, ss[3] || ss[1])].filter(Boolean);
+  extra.forEach(x => items.splice(Math.floor(Math.random() * (items.length + 1)), 0, x));
+  return items;
+};
+
+// Yeni pratik setleri
+PRACTICE.push(
+  { k: 'dinle', ic: 'fa-headphones', t: 'Dinleme pratiği', d: 'Duyduğun kelimeyi ve cümleyi seç, sonra yazarak doğrula' },
+  { k: 'konus', ic: 'fa-microphone', t: 'Konuşma pratiği', d: 'Cümleleri sesli söyle, hangi kelimeleri doğru dediğini gör' },
+  { k: 'artikel', ic: 'fa-tags', t: 'Artikel ve kelime', d: 'der / die / das seç, Türkçeden Almancaya kelime bul' },
+  { k: 'gramer', ic: 'fa-scale-balanced', t: 'Dilbilgisi pratiği', d: 'Konunun kuralını sorularla, boşluk ve hata avıyla dene' }
+);
+const _practiceItemsD2 = practiceItems;
+practiceItems = function (u, L, mode) {
+  const vs = okVocab(u), V = n => pick(vs, n), S = n => pick(u.s, n);
+  let out;
+  if (mode === 'dinle') out = [...S(3).map(s => makeListenS(u, s)), ...V(2).map(v => makeListen(u, L, v)), ...V(2).map(v => makeListenW(u, v)), ...S(2).map(s => mkDict(u, s))];
+  else if (mode === 'konus') out = S(6).map(s => makeSpeak(u, s));
+  else if (mode === 'artikel') { const nouns = vs.filter(v => /^(der|die|das)\s+[A-ZÄÖÜ]/.test(wordForms(v[0])[0])); out = [...pick(nouns, 6).map(v => makeArt(u, v)), ...V(3).map(v => makeRev(u, L, v)), ...V(2).map(v => makeWW(u, v))]; }
+  else if (mode === 'gramer') out = [...qItems(u), ...S(3).map(s => makeGapMc(u, L, s)), ...S(2).map(s => makeTfTr(u, s)), makeSpot(u), makeGap(u, S(1)[0])];
+  else return _practiceItemsD2(u, L, mode);
+  return shuffle(out.filter(Boolean));
+};
+
+// Sesli söyle: mikrofon yoksa kendi değerlendirmesiyle geçilir
+const _renderItemD2 = renderItem;
+renderItem = function () {
+  _renderItemD2.apply(this, arguments);
+  const it = LSN && LSN.items[LSN.i]; if (!it) return;
+  if (it.k === 'dict' && it.word) { const h = $('#lsBody .ls-q'); if (h) h.textContent = 'Duyduğun kelimeyi yaz'; }
+  if (it.k !== 'speak') return;
+  LSN.selfOk = null;
+  $('#lsBody').insertAdjacentHTML('beforeend', `<h2 class="ls-q">Bu cümleyi sesli söyle</h2><div class="spk-sent" lang="de">${esc(it.a)}</div><div class="spk-tr">${esc(it.tr)}</div>
+    <div class="row"><button class="btn btn-ghost btn-sm" onclick="speak(LSN.items[LSN.i].a)"><i class="fa-solid fa-volume-high"></i> Örneği dinle</button><button class="btn btn-ghost btn-sm" onclick="speak(LSN.items[LSN.i].a,{rate:.65})"><i class="fa-solid fa-gauge-simple-low"></i> Yavaş</button></div>
+    <div class="spk-pad">${SR ? `<button class="mic-btn" id="spkMic" aria-label="Konuş" onclick="spkListen()"><i class="fa-solid fa-microphone"></i></button><div class="muted" id="spkStat">Dokun ve cümleyi söyle</div>`
+      : `<div class="muted" style="text-align:center;max-width:42ch">Bu tarayıcı konuşma tanımayı desteklemiyor. Örneği dinle, yüksek sesle tekrar et, sonra kendini değerlendir.</div><div class="row"><button class="btn btn-ghost" onclick="spkSelf(false)">Zorlandım</button><button class="btn" onclick="spkSelf(true)">Rahat söyledim</button></div>`}
+      <div class="spk-res" id="spkRes"></div></div>`);
+};
+function spkListen() {
+  if (!LSN || LSN.checked) return; const it = LSN.items[LSN.i], b = $('#spkMic'), st = $('#spkStat'); if (rec) { rec.stop(); return; }
+  b.classList.add('on'); st.textContent = 'Dinliyorum…';
+  rec = listen('de-DE', heard => {
+    const r = wordMatch(it.a, heard); LSN.sel = heard;
+    $('#spkRes').innerHTML = r.words.map(w => `<span class="${w.ok ? 'w-ok' : 'w-bad'}">${esc(w.w)}</span>`).join(' ');
+    st.textContent = `Duyduğum: “${heard}” · %${Math.round(r.score * 100)}`; footCheck();
+  }, () => { rec = null; const bb = $('#spkMic'); if (bb) bb.classList.remove('on'); });
+}
+function spkSelf(ok) { if (!LSN || LSN.checked) return; LSN.selfOk = ok; LSN.sel = ok ? '(rahat söyledim)' : '(zorlandım)'; checkItem(); }
+const _checkItemD2 = checkItem;
+checkItem = function () {
+  if (!LSN || LSN.checked || !LSN.items[LSN.i]) return; const it = LSN.items[LSN.i];
+  if (it.k !== 'speak') return _checkItemD2();
+  finishItem(LSN.selfOk != null ? LSN.selfOk : wordMatch(it.a, LSN.sel || '').score >= .7, false);
+  const row = $('#lsFoot .row'); if (row) row.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost btn-sm" data-say="${esc(it.a)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i> Dinle</button>`);
+};
+
+/* ---------- Konu anlatımı: konu haritası → numaralı adımlar → özet → kendini dene ---------- */
+function structGuide(g, u) {
+  if (!g || g.dataset.sg) return; g.dataset.sg = '1';
+  const nodes = [...g.childNodes].filter(n => n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim()));
+  const secs = []; let cur = null;
+  nodes.forEach(n => { if (n.nodeType === 1 && n.tagName === 'H4') { cur = { t: n.textContent.trim(), n: [] }; secs.push(cur); } else { if (!cur) { cur = { t: null, n: [] }; secs.push(cur); } cur.n.push(n); } });
+  if (secs[0] && !secs[0].t) secs[0].t = secs.length > 1 ? 'Temel kural' : 'Kural';
+  g.innerHTML = '';
+  const all = secs.map(s => s.t).concat(['Özet', 'Kendini dene']);
+  g.insertAdjacentHTML('beforeend', `<nav class="gd-map" aria-label="Konu haritası">${all.map((t, i) => `<button type="button" onclick="gdJump(this,${i})"><b>${i + 1}</b>${esc(t)}</button>`).join('')}</nav>`);
+  secs.forEach((s, i) => {
+    const sec = document.createElement('section'); sec.className = 'gd-sec'; sec.dataset.i = i;
+    sec.innerHTML = `<header class="gd-sh"><span class="gd-n">${i + 1}</span><h4>${esc(s.t)}</h4></header><div class="gd-body"></div>`;
+    const body = sec.lastElementChild; s.n.forEach(n => body.appendChild(n)); g.appendChild(sec);
+  });
+  g.querySelectorAll('.tip').forEach(t => {
+    const lead = t.querySelector('i.fa-lightbulb'); if (lead) lead.remove();
+    const d = document.createElement('div'); d.className = 'gd-tip'; d.innerHTML = `<i class="fa-solid fa-lightbulb" aria-hidden="true"></i><div>${t.innerHTML.replace(/^\s*(💡|⚠️)\s*/, '')}</div>`; t.replaceWith(d);
+  });
+  g.querySelectorAll('.ex').forEach(e => {
+    const tr = e.querySelector(':scope > i'), trT = tr ? tr.textContent.trim() : ''; if (tr) tr.remove();
+    const de = e.textContent.trim(), d = document.createElement('div'); d.className = 'gd-ex';
+    d.innerHTML = `<div class="gd-de" lang="de">${e.innerHTML.trim()}</div>${trT ? `<div class="gd-tr">${esc(trT)}</div>` : ''}<button class="us-ib" aria-label="Dinle" data-say="${esc(de.replace(/\(.*?\)/g, ''))}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button>`;
+    e.replaceWith(d);
+  });
+  const n = secs.length;
+  const sum = document.createElement('section'); sum.className = 'gd-sec'; sum.dataset.i = n;
+  sum.innerHTML = `<header class="gd-sh"><span class="gd-n">${n + 1}</span><h4>Özet</h4></header><div class="gd-body"><p style="margin:0 0 4px">Bu konunun anahtar kelimeleri. Dokununca okunuşunu duyarsın.</p>
+    <div class="gd-words">${u.v.map(v => `<button class="gd-w" data-say="${esc(v[0])}" onclick="say(this.dataset.say)"><b lang="de">${esc(v[0])}</b><span>${esc(v[1])}</span></button>`).join('')}</div>
+    ${u.s.slice(0, 2).map(s => `<div class="gd-ex"><div class="gd-de" lang="de">${esc(s[0])}</div><div class="gd-tr">${esc(s[1])}</div><button class="us-ib" aria-label="Dinle" data-say="${esc(s[0])}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button></div>`).join('')}</div>`;
+  g.appendChild(sum);
+  const qs = qItems(u).filter(q => q.k === 'mc' || q.k === 'tf').slice(0, 3);
+  const chk = document.createElement('section'); chk.className = 'gd-sec'; chk.dataset.i = n + 1;
+  chk.innerHTML = `<header class="gd-sh"><span class="gd-n">${n + 2}</span><h4>Kendini dene</h4></header><div class="gd-body">${qs.map((q, k) => {
+    const opts = q.k === 'mc' ? q.o.map((o, j) => [o, j === q.a]) : [['Doğru', q.a === true], ['Yanlış', q.a === false]];
+    return `<div class="gd-q"><div class="gd-qt">${esc(q.q)}</div><div class="gd-os">${opts.map(([o, ok]) => `<button class="gd-o" data-ok="${ok ? 1 : 0}" onclick="gdPick(this)">${esc(o)}</button>`).join('')}</div><div class="gd-qe" hidden>${esc(q.e || '')}</div></div>`;
+  }).join('')}<button class="btn gd-go" onclick="closeModal();startUnit('${u.id}')"><i class="fa-solid fa-play"></i> Hazırım, derse başla</button></div>`;
+  g.appendChild(chk);
+}
+function gdJump(b, i) { const s = b.closest('.guide').querySelector(`.gd-sec[data-i="${i}"]`), body = b.closest('.us-body'); if (s && body) body.scrollTo({ top: s.offsetTop - body.offsetTop - 4, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+function gdPick(b) {
+  const q = b.closest('.gd-q'); if (q.dataset.done) return; q.dataset.done = '1';
+  q.querySelectorAll('.gd-o').forEach(o => { o.disabled = true; if (o.dataset.ok === '1') o.classList.add('ok'); });
+  if (b.dataset.ok !== '1') { b.classList.add('bad'); sfxBad(); } else sfxOk();
+  const e = q.querySelector('.gd-qe'); if (e && e.textContent) e.hidden = false;
+}
+const _openUnitD2 = openUnit;
+openUnit = function (id) {
+  const el = _openUnitD2.apply(this, arguments), f = findUnit(id); if (!el || !f) return el;
+  structGuide(el.querySelector('[data-pane="g"] .guide'), f.u);
+  const lvm = el.querySelector('.fx-lvm'); if (lvm && f.L.color === 'b1') lvm.classList.add('lv-b1');
+  return el;
+};
+
+/* =====================================================================
+   AKIŞ: Tekrar, Pratik ve Araçlar da Ana Sayfa ile Öğren gibi kaydırmalı akış
+   ===================================================================== */
+const FXK = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
+const fxVarsK = k => `--f:var(--${k});--fs:var(--${k}s);--fdk:var(--${k}d);--fi:#fff;--fd2:#121218;--lv:var(--${k});--lvd:var(--${k}d);--lvs:var(--${k}s)`;
+const FX_DE = { stories: 'Lesen Geschichte Wort', listen: 'Hören Lied Untertitel', shadow: 'Nachsprechen Rhythmus', dictation: 'Diktat Hören Schreiben', camera: 'Kamera Schild Menü', friend: 'Lena Berlin Freundin', roleplay: 'Rollenspiel Café Arzt', voice: 'Sprechen Stimme', exam: 'Prüfung Goethe Sprechen', writing: 'Schreiben Brief Text', diary: 'Tagebuch Heute Abend', games: 'Spiele Wörter Spaß', bridge: 'Brücke Türkisch Deutsch',
+  ready: 'Prüfung Bereit Können', plan: 'Plan Kalender Ziel', report: 'Bericht Woche Fortschritt', league: 'Liga Punkte Woche', badges: 'Abzeichen Erfolg', guides: 'Grammatik Regeln', conj: 'Verben Konjugation', artikel: 'der die das', notes: 'Notizen Zeichnen', focus: 'Fokus Pomodoro Zeit', settings: 'Einstellungen Design' };
+// gs: [[grup adı, kısa ad, renk, [[başlık, alt, ikon, js, düğme, Almanca doku, ek html]]]]
+function fxFeedPage(gs, lead) {
+  let n = 0;
+  const slides = gs.map(([g, , k, items], gi) => items.map(([t, sub, ic, js, btn, de, extra]) => `<section class="fx-slide fx-field" data-g="${gi}" data-li="${FXK.indexOf(k)}" style="${fxVarsK(k)}" aria-label="${esc(t)}">
+      <div class="fx-words" aria-hidden="true">${String(de || '').split(' ').map(w => `<span>${esc(w)}</span>`).join('')}</div>
+      <div class="fx-cap" style="right:20px"><span class="fx-ic"><i class="fa-solid ${ic}"></i></span><h2 class="fx-title">${esc(t)}</h2><p class="fx-sub">${sub}</p>
+        <div class="fx-author"><span class="fx-lv">${esc(g)}</span>${++n} / ${gs.reduce((a, x) => a + x[3].length, 0)}</div>${extra || ''}
+        <button class="fx-go" onclick="${js}"><i class="fa-solid fa-arrow-right"></i> ${esc(btn || 'Aç')}</button></div></section>`).join('')).join('');
+  const jour = `<div class="fx-jour" role="list">${gs.map(([g, short, k, items], gi) => `<button class="fx-jl" role="listitem" data-g="${gi}" style="${fxVarsK(k)};--p:100%;--n:${Math.max(3, items.length + 1)}" onclick="fxJumpG(${gi})"><span class="fx-jb">${esc(short)}</span><span class="fx-jt">${esc(g)}</span><span class="fx-jn tabular">${items.length}</span><span class="fx-jbar"><i style="width:100%"></i></span></button>`).join('')}</div>`;
+  return `<div class="fx-learn fx-page"><div><p class="fx-lead fx-pl">${lead}</p>${jour}</div><div class="fx-feed" tabindex="0" aria-label="Kaydırarak sıradakine geç">${slides}</div></div>`;
+}
+const fxTool = p => [PAGES[p][0], esc(HUB_DESC[p] || ''), PAGES[p][1], `go('${p}')`, 'Aç', FX_DE[p]];
+function fxJumpG(gi) { const feed = document.querySelector('.fx-page .fx-feed'), s = feed && feed.querySelector(`.fx-slide[data-g="${gi}"]`); if (s) feed.scrollTo({ top: s.offsetTop, behavior: fxReduce() ? 'auto' : 'smooth' }); }
+let fxObsG = null;
+function fxAfterPage() {
+  if (!isFx()) return; fxSize();
+  const feed = document.querySelector('.fx-page .fx-feed'); if (!feed) return;
+  if (fxObsG) fxObsG.disconnect();
+  fxObsG = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const g = e.target.dataset.g; document.querySelectorAll('.fx-page .fx-jl').forEach(b => { const on = b.dataset.g === g; b.classList.toggle('on', on); b.classList.toggle('now', on); if (on && innerWidth <= 960) b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' }); }); }), { root: feed, threshold: .6 });
+  feed.querySelectorAll('.fx-slide').forEach(s => fxObsG.observe(s));
+}
+
+const _practiceFx = VIEWS.practice;
+VIEWS.practice = () => !isFx() ? _practiceFx() : fxFeedPage([
+  ['Okuma ve dinleme', 'Oku', 'a2', ['stories', 'listen', 'shadow', 'dictation', 'camera'].map(fxTool)],
+  ['Konuşma', 'Konuş', 'c2', ['friend', 'roleplay', 'voice', 'exam'].map(fxTool)],
+  ['Yazma ve kelime', 'Yaz', 'b2', ['writing', 'diary', 'games', 'bridge'].map(fxTool)]
+], 'Okuyarak, dinleyerek, konuşarak ve yazarak pratik yap. Kaydır, birini seç.');
+const _moreFx = VIEWS.more;
+VIEWS.more = () => !isFx() ? _moreFx() : fxFeedPage([
+  ['İlerleme', 'İlerleme', 'c1', ['ready', 'plan', 'report', 'league', 'badges'].map(fxTool)],
+  ['Rehberler', 'Rehber', 'b1', ['guides', 'conj', 'artikel'].map(fxTool)],
+  ['Araçlar', 'Araç', 'a2', ['notes', 'focus', 'settings'].map(fxTool)]
+], 'İlerlemen, dilbilgisi rehberleri ve araçlar tek akışta.');
+const _reviewFx = VIEWS.review;
+VIEWS.review = () => {
+  if (!isFx()) return _reviewFx();
+  const now = Date.now(), due = D.cards.filter(c => c.due <= now), words = (due.length ? due : D.cards).slice(0, 4).map(c => bareWord(c.de)).join(' ') || 'Wörter Karten';
+  const stages = `<div class="fx-stages">${[1, 2, 3, 4, 5].map(b => { const n = D.cards.filter(c => c.box === b).length; return `<span><b class="tabular">${n}</b>${STAGES[b - 1][0]}</span>`; }).join('')}</div>`;
+  const kinds = {}; D.wrong.forEach(w => { const c = errCat(w.item); kinds[c] = (kinds[c] || 0) + 1; });
+  const topKind = Object.entries(kinds).sort((a, b) => b[1] - a[1])[0];
+  return fxFeedPage([
+    ['Tekrar kutusu', 'Kutu', 'a2', [
+      [due.length ? `${due.length} kart seni bekliyor` : 'Bugünlük tekrar bitti', `Akıllı tekrar her kelimeyi tam unutmak üzereyken sorar. Toplam <span class="tabular">${D.cards.length}</span> kart.`, 'fa-layer-group', due.length ? 'startReview()' : D.cards.length ? 'startReview(true)' : "go('deck')", due.length ? 'Tekrara başla' : D.cards.length ? 'Serbest tekrar (20 kart)' : 'Kelime ekle', words, stages],
+      ['Eller serbest', 'Almanca kelimeyi dinle, Türkçesini sesli söyle. Yolda ya da yürürken tekrar et.', 'fa-headphones', 'handsFree()', 'Başlat', 'Hören Sagen Wiederholen']]],
+    ['Yanlışlarım', 'Hata', 'b1', [
+      [`${D.wrong.length} yanlış soru`, D.wrong.length ? `En çok zorlandığın tür: ${esc((ERR_CATS[topKind[0]] || ERR_CATS.diger)[0])} (${topKind[1]}). Türüne göre çalış ya da yapay zekâya yeni soru ürettir.` : 'Henüz yanlış yok. Ders çözdükçe yanlışların burada türüne göre toplanır.', 'fa-bug', "go('errors')", 'Yanlış Deposu', 'Fehler Regel Übung']]],
+    ['Kelime listesi', 'Liste', 'c1', [
+      ['Sık kullanılan kelimeler', `Almancanın en sık kelimeleri sırayla kutuna gelir. ${freqAll().filter(w => inCards(w.de)).length}/${freqAll().length} kelime kutunda.`, 'fa-list-ol', "go('words')", 'Listeyi aç', 'Wortschatz Wörter']]],
+    ['Kelime defteri', 'Defter', 'b2', [
+      ['Kelime defteri ve telaffuz', `${D.cards.length} kelime. Yeni kelime ekle, telaffuzunu mikrofonla dene.`, 'fa-book', "go('deck')", 'Defteri aç', 'Wörterbuch Aussprache']]]
+  ], 'Kelimelerin tam unutmadan önce karşına çıkar. Kaydır: kutu, yanlışlar, defter.');
+};
+['practice', 'more', 'review'].forEach(p => { const a = AFTER[p]; AFTER[p] = () => { if (a) a(); fxAfterPage(); }; });
+
+/* =====================================================================
+   ARAMA: sayfalar, üniteler, kelimeler, hikâyeler, fiiller, rol yapma ve hızlı işlemler
+   ===================================================================== */
+const sFold = s => String(s || '').toLocaleLowerCase('tr').replace(/ı/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ç/g, 'c').replace(/[öô]/g, 'o').replace(/[üû]/g, 'u').replace(/[âä]/g, 'a').replace(/ß/g, 'ss').replace(/<[^>]+>/g, ' ').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+let SRCH_IDX = null;
+function srchIndex() {
+  if (SRCH_IDX) return SRCH_IDX; const a = [];
+  const add = (g, t, s, ic, js, body, li, ui) => a.push({ g, t, s, ic, js, ft: sFold(t), fs: sFold(s), fb: sFold(body || ''), li, ui });
+  [['startDaily()', 'Günün dersi', '5 dakikalık karışık set', 'fa-calendar-day'], ['startReview(true)', 'Serbest tekrar', '20 kart', 'fa-layer-group'], ['handsFree()', 'Eller serbest tekrar', 'Dinle ve Türkçesini söyle', 'fa-headphones'], ['toggleTheme()', 'Tema değiştir', 'Koyu / açık tema', 'fa-moon'], ['startPlacement()', 'Seviye tespit sınavı', '18 soruluk test', 'fa-compass'], ['toggleTutor()', 'AI Öğretmen', 'Yapay zekâya soru sor', 'fa-robot']].forEach(([js, t, s, ic]) => add('İşlemler', t, s, ic, js));
+  Object.keys(PAGES).filter(p => !['practice', 'more'].includes(p)).forEach(p => add('Bölümler', PAGES[p][0], HUB_DESC[p] || '', PAGES[p][1], `go('${p}')`));
+  LEVELS.forEach((L, li) => L.units.forEach((u, ui) => {
+    add('Dersler', u.t, `${L.id} · ${u.de}`, u.ic || 'fa-book', `openUnit('${u.id}')`, u.g, li, ui);
+    u.v.forEach(v => add('Kelimeler', v[0], `${v[1]} · ${L.id} ${u.t}`, 'fa-spell-check', `wordDetail(${JSON.stringify(v[0])})`));
+    add('Seviye sonu sınavları', `${L.id} seviye sonu sınavı`, `${L.tr} · 15 soru`, 'fa-award', `startBoss(${li})`, '', li, -1);
+  }));
+  { const seen = new Set(a.filter(x => x.g === 'Kelimeler').map(x => norm(x.t))); freqAll().forEach(w => { if (!seen.has(norm(w.de))) add('Kelimeler', w.de, `${w.tr} · ${w.lv} sık kelime`, 'fa-list-ol', `wordDetail(${JSON.stringify(w.de)})`); }); }
+  STORIES.forEach(s => add('Hikâyeler', s.t, `${s.lv} · ${s.de}`, 'fa-book-open', `go('stories');setTimeout(()=>openStory('${s.id}'),60)`, s.s.map(x => x[0] + ' ' + x[1]).join(' ')));
+  VERBS.forEach(v => add('Fiiller', v.i, `${v.tr} · çekim tablosu`, 'fa-table', `CJ='${v.i}';go('conj')`));
+  ROLEPLAYS.forEach(r => add('Rol yapma', r.t, `${r.lv} · ${r.goal}`, r.ic, `startRP('${r.id}')`));
+  IDIOMS.forEach(d => add('Deyimler', d.de, d.tr, 'fa-quote-left', `addCard(${JSON.stringify(d.de)},${JSON.stringify(d.tr)},'idiom')`, d.lit));
+  return (SRCH_IDX = a);
+}
+const srchLocked = x => x.li != null && (x.ui === -1 ? !bossUnlocked(x.li) : !unitUnlocked(x.li, x.ui));
+function srchFind(q) {
+  const f = sFold(q); if (!f) return [];
+  const ws = f.split(' ');
+  return srchIndex().map(x => {
+    let sc = 0;
+    for (const w of ws) { const s = x.ft.startsWith(w) ? 100 : x.ft.split(' ').some(t => t.startsWith(w)) ? 70 : x.ft.includes(w) ? 50 : x.fs.includes(w) ? 30 : x.fb.includes(w) ? 8 : 0; if (!s) return null; sc += s; }
+    return { x, sc: sc + (x.g === 'Bölümler' || x.g === 'Dersler' ? 6 : 0) };
+  }).filter(Boolean).sort((a, b) => b.sc - a.sc).slice(0, 40).map(r => r.x);
+}
+const srchMark = (t, q) => { let h = esc(t); sFold(q).split(' ').filter(w => w.length > 1).forEach(w => { const i = sFold(t).indexOf(w); if (i >= 0 && sFold(t).length === t.length) h = esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + w.length)) + '</mark>' + esc(t.slice(i + w.length)); }); return h; };
+let SR_LIST = [], SR_ON = 0;
+function openSearch() {
+  if (!D) return;
+  const el = modal(`<div class="srch-top"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="srIn" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ders, kelime, araç, hikâye, fiil ara…" aria-label="Ara" oninput="srchRender(this.value)" onkeydown="srchKey(event)"><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="srch-list" id="srList" role="listbox"></div>`);
+  el.querySelector('.sheet').classList.add('srch-sheet'); srchRender('');
+  setTimeout(() => { const i = $('#srIn'); i && i.focus(); }, 60);
+}
+function srchRender(q) {
+  const box = $('#srList'); if (!box) return;
+  if (!sFold(q)) {
+    const nu = nextUnit(), sug = [srchIndex()[0], ...(nu && !nu.boss ? [srchIndex().find(x => x.g === 'Dersler' && x.li === nu.li && x.ui === nu.ui)] : []), ...['review', 'errors', 'stories', 'conj', 'settings'].map(p => srchIndex().find(x => x.js === `go('${p}')`))].filter(Boolean);
+    SR_LIST = sug; SR_ON = 0;
+    box.innerHTML = `<div class="srch-h">Hızlı erişim</div>` + sug.map((x, i) => srchRow(x, i, '')).join('') + `<p class="srch-empty" style="padding:16px 10px 4px;text-align:left">Örnek: <b>Dativ</b>, <b>Perfekt</b>, <b>Apfel</b>, <b>elma</b>, <b>gehen</b>, <b>dikte</b>, <b>tema</b>.</p>`;
+    return;
+  }
+  SR_LIST = srchFind(q); SR_ON = 0;
+  if (!SR_LIST.length) { box.innerHTML = `<div class="srch-empty">“${esc(q)}” için sonuç yok. Başka bir kelimeyle dene (Türkçe ya da Almanca).</div>`; return; }
+  const order = [...new Set(SR_LIST.map(x => x.g))]; let i = 0, h = '';
+  order.forEach(g => { h += `<div class="srch-h">${g}</div>`; SR_LIST.filter(x => x.g === g).forEach(x => { h += srchRow(x, SR_LIST.indexOf(x), q); i++; }); });
+  box.innerHTML = h; srchHl();
+}
+function srchRow(x, i, q) { const lk = srchLocked(x); return `<button class="srch-it ${lk ? 'lock' : ''}" role="option" data-i="${i}" onclick="srchGo(${i})" onmousemove="SR_ON=${i};srchHl()"><span class="si"><i class="fa-solid ${lk ? 'fa-lock' : x.ic}"></i></span><span class="sm"><b>${srchMark(x.t, q)}</b><small>${esc(x.s)}</small></span></button>`; }
+function srchHl() { document.querySelectorAll('#srList .srch-it').forEach(b => b.classList.toggle('on', +b.dataset.i === SR_ON)); const on = document.querySelector('#srList .srch-it.on'); on && on.scrollIntoView({ block: 'nearest' }); }
+function srchKey(e) {
+  if (e.key === 'ArrowDown') { e.preventDefault(); SR_ON = Math.min(SR_LIST.length - 1, SR_ON + 1); srchHl(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); SR_ON = Math.max(0, SR_ON - 1); srchHl(); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (SR_LIST[SR_ON]) srchGo(SR_ON); }
+}
+function srchGo(i) {
+  const x = SR_LIST[i]; if (!x) return;
+  if (srchLocked(x)) { toast(x.ui === -1 ? 'Sınav için o seviyenin bütün ünitelerini geç' : 'Bu ünite henüz kilitli; önce önceki üniteyi geç', 'warn'); return; }
+  closeModal(); setTimeout(() => { try { new Function(x.js)(); } catch (e) { console.warn(e); } }, 20);
+}
+addEventListener('keydown', e => {
+  if (!D || $('#app').hidden || LSN) return;
+  const typing = /INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '');
+  if (((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') || (e.key === '/' && !typing && !$('#modalRoot').innerHTML)) { e.preventDefault(); if (!$('#srIn')) openSearch(); }
+});
+// Üst çubukta arama simgesi (her sayfada)
+const _renderTopbarS = renderTopbar;
+renderTopbar = function () {
+  _renderTopbarS.apply(this, arguments); if (!D) return;
+  const row = document.querySelector('#topbar .tb-row, #topbar .row'); if (!row || row.querySelector('.srch-ic')) return;
+  row.insertAdjacentHTML('afterbegin', '<button class="icon-btn srch-ic" title="Ara (⌘K)" aria-label="Ara" onclick="openSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>');
+};
+// Ana ekranda arama çubuğu
+const _afterHomeS = AFTER.home;
+AFTER.home = () => {
+  const v = $('#view'); if (v && !v.querySelector('.srch-bar')) v.insertAdjacentHTML('afterbegin', `<button class="srch-bar" onclick="openSearch()" aria-label="Ara"><i class="fa-solid fa-magnifying-glass"></i><span>Ara: ders, kelime, araç, hikâye, fiil…</span><kbd class="srch-k">${/Mac|iPhone|iPad/.test(navigator.platform) ? '⌘K' : 'Ctrl K'}</kbd></button>`);
+  if (_afterHomeS) _afterHomeS();
+};
+
+/* ===== SIK KULLANILAN KELİMELER (A1 → B1, sırayla tekrar kutusuna gelir) ===== */
+const FREQ_RAW = {
+A1: `der Mann=adam|die Frau=kadın; hanım|der Junge=erkek çocuk|die Familie=aile|die Eltern=anne baba|der Onkel=amca; dayı|die Tante=teyze; hala|die Tochter=kız evlat|der Name=isim|das Baby=bebek|der Nachbar=komşu|die Leute=insanlar|das Haus=ev|die Tür=kapı|das Fenster=pencere|der Schlüssel=anahtar|die Lampe=lamba|das Bad=banyo|der Garten=bahçe|die Straße=sokak; cadde|die Stadt=şehir|das Dorf=köy|das Land=ülke; kırsal|das Essen=yemek|das Frühstück=kahvaltı|das Mittagessen=öğle yemeği|das Abendessen=akşam yemeği|der Tee=çay|der Saft=meyve suyu|das Bier=bira|der Wein=şarap|der Käse=peynir|die Butter=tereyağı|das Ei=yumurta|das Fleisch=et|der Fisch=balık|das Huhn=tavuk|der Reis=pirinç|die Nudeln=makarna|die Kartoffel=patates|die Tomate=domates|das Gemüse=sebze|das Obst=meyve|die Banane=muz|der Zucker=şeker|das Salz=tuz|der Kuchen=kek; pasta|der Tag=gün|die Woche=hafta|der Monat=ay|das Jahr=yıl|die Stunde=saat (süre)|die Minute=dakika|der Morgen=sabah|der Abend=akşam|die Nacht=gece|heute=bugün|morgen=yarın|gestern=dün|jetzt=şimdi|immer=her zaman|oft=sık sık|manchmal=bazen|nie=asla|früh=erken|spät=geç|der Montag=pazartesi|der Dienstag=salı|der Mittwoch=çarşamba|der Donnerstag=perşembe|der Freitag=cuma|der Samstag=cumartesi|der Sonntag=pazar|das Wochenende=hafta sonu|kommen=gelmek|gehen=gitmek|machen=yapmak|sagen=söylemek|geben=vermek|nehmen=almak|sehen=görmek|hören=duymak; dinlemek|sprechen=konuşmak|lesen=okumak|schreiben=yazmak|spielen=oynamak|wohnen=oturmak (ikamet)|arbeiten=çalışmak|lernen=öğrenmek|fragen=sormak|antworten=cevap vermek|kaufen=satın almak|bezahlen=ödemek|kosten=(fiyatı) tutmak|öffnen=açmak|schließen=kapatmak|schlafen=uyumak|fahren=(araçla) gitmek|laufen=yürümek; koşmak|finden=bulmak|suchen=aramak|warten=beklemek|wissen=bilmek|kennen=tanımak|verstehen=anlamak|mögen=sevmek; hoşlanmak|lieben=sevmek (aşkla)|brauchen=ihtiyaç duymak|bleiben=kalmak|beginnen=başlamak|tanzen=dans etmek|singen=şarkı söylemek|reisen=seyahat etmek|besuchen=ziyaret etmek|helfen=yardım etmek|zeigen=göstermek|bringen=getirmek|heißen=adı olmak|sitzen=oturmak (sandalyede)|stehen=ayakta durmak|liegen=uzanmak; yatmak|tragen=taşımak; giymek|waschen=yıkamak|groß=büyük|klein=küçük|gut=iyi|schlecht=kötü|neu=yeni|alt=eski; yaşlı|jung=genç|schön=güzel|lang=uzun|kurz=kısa|schnell=hızlı|langsam=yavaş|heiß=çok sıcak|leicht=kolay; hafif|schwer=zor; ağır|viel=çok|wenig=az|richtig=doğru|falsch=yanlış|krank=hasta|gesund=sağlıklı|lecker=lezzetli|nett=nazik; hoş|ruhig=sakin|laut=gürültülü|voll=dolu|leer=boş|offen=açık|geschlossen=kapalı|wichtig=önemli|frei=boş; serbest|rot=kırmızı|blau=mavi|grün=yeşil|gelb=sarı|schwarz=siyah|weiß=beyaz|grau=gri|braun=kahverengi|die Schule=okul|das Büro=ofis|das Geschäft=dükkân; iş|das Restaurant=restoran|der Bahnhof=tren istasyonu|der Flughafen=havalimanı|die Post=postane|der Park=park|das Kino=sinema|das Krankenhaus=hastane|die Kirche=kilise|die Haltestelle=durak|der Zug=tren|das Auto=araba|das Fahrrad=bisiklet|die Fahrkarte=bilet|das Handy=cep telefonu|der Computer=bilgisayar|die Zeitung=gazete|der Brief=mektup|die Kleidung=giysi|die Hose=pantolon|das Hemd=gömlek|das Kleid=elbise|die Jacke=ceket|der Schuh=ayakkabı|die Arbeit=iş|die Zeit=zaman|das Wetter=hava durumu|der Körper=vücut|der Kopf=baş|die Hand=el|das Auge=göz|der Fuß=ayak|der Arm=kol|das Bein=bacak|und=ve|oder=veya|aber=ama|sehr=çok|auch=de / da|noch=hâlâ; daha|schon=zaten; çoktan|hier=burada|dort=orada|links=solda|rechts=sağda|geradeaus=dümdüz|ja=evet|nein=hayır|vielleicht=belki|zusammen=birlikte|allein=yalnız|gern=seve seve|alle=hepsi; herkes|etwas=bir şey|nichts=hiçbir şey|hundert=yüz|tausend=bin`,
+A2: `die Reise=seyahat|der Urlaub=tatil|das Meer=deniz|der Berg=dağ|der Strand=plaj|die Miete=kira|der Vermieter=ev sahibi|die Heizung=kalorifer|der Kühlschrank=buzdolabı|die Waschmaschine=çamaşır makinesi|der Herd=ocak|der Teppich=halı|das Regal=raf|der Spiegel=ayna|der Schmerz=ağrı|die Kopfschmerzen=baş ağrısı|die Tablette=hap|das Rezept=reçete; tarif|die Krankenkasse=sağlık sigortası|die Versicherung=sigorta|der Zahn=diş|der Bauch=karın|der Rücken=sırt|der Hals=boğaz; boyun|husten=öksürmek|der Kurs=kurs|die Hausaufgabe=ödev|die Pause=mola|das Formular=form|die Unterschrift=imza|unterschreiben=imzalamak|ausfüllen=doldurmak (form)|die Adresse=adres|die Telefonnummer=telefon numarası|die E-Mail=e-posta|der Ausweis=kimlik|der Pass=pasaport|das Amt=resmi daire|das Angebot=teklif; indirim|der Preis=fiyat|die Größe=beden; büyüklük|die Kasse=kasa|die Quittung=fiş|umtauschen=(ürün) değiştirmek|das Kaufhaus=büyük mağaza|die Bäckerei=fırın|die Flasche=şişe|das Glas=bardak; cam|die Tasse=fincan|der Teller=tabak|das Messer=bıçak|die Gabel=çatal|der Löffel=kaşık|die Abfahrt=kalkış|der Bahnsteig=peron|umsteigen=aktarma yapmak|die Verspätung=gecikme|verpassen=kaçırmak|die Reservierung=rezervasyon|buchen=rezervasyon yapmak|das Gepäck=bagaj|der Koffer=bavul|die Landkarte=harita|die Ampel=trafik lambası|die Kreuzung=kavşak|die Brücke=köprü|der Schnee=kar|der Wind=rüzgâr|die Wolke=bulut|das Gewitter=fırtına|die Temperatur=sıcaklık|der Frühling=ilkbahar|der Sommer=yaz|der Herbst=sonbahar|der Winter=kış|anfangen=başlamak|aufhören=bırakmak; durmak|vergessen=unutmak|sich erinnern=hatırlamak|erklären=açıklamak|erzählen=anlatmak|verkaufen=satmak|mieten=kiralamak|einladen=davet etmek|feiern=kutlamak|gratulieren=tebrik etmek|schenken=hediye etmek|gewinnen=kazanmak|verlieren=kaybetmek|wechseln=değiştirmek|benutzen=kullanmak|packen=(bavul) hazırlamak|ankommen=varmak|abholen=(birini) almak|zurückkommen=geri gelmek|vorbereiten=hazırlamak|entscheiden=karar vermek|versuchen=denemek|glauben=inanmak; sanmak|denken=düşünmek|hoffen=ummak|wünschen=dilemek|lachen=gülmek|weinen=ağlamak|fliegen=uçmak|schicken=göndermek|bekommen=almak (elde etmek)|passieren=olmak (olay)|treffen=buluşmak|ändern=değiştirmek|putzen=temizlemek|aufräumen=(ortalığı) toplamak|duschen=duş almak|sich anziehen=giyinmek|sich setzen=oturmak|freundlich=nazik; güler yüzlü|traurig=üzgün|wütend=öfkeli|interessant=ilginç|langweilig=sıkıcı|lustig=komik|gefährlich=tehlikeli|sicher=güvenli; emin|sauber=temiz|schmutzig=kirli|bequem=rahat|dunkel=karanlık|hell=aydınlık|eng=dar|breit=geniş|nah=yakın|weit=uzak|fertig=hazır; bitmiş|pünktlich=dakik|ledig=bekâr|verheiratet=evli|geschieden=boşanmış|berühmt=ünlü|ähnlich=benzer|möglich=mümkün|beliebt=sevilen|deshalb=bu yüzden|zuerst=önce|danach=ondan sonra|endlich=sonunda|fast=neredeyse|ungefähr=yaklaşık|genug=yeterli|bestimmt=kesinlikle|wahrscheinlich=muhtemelen|plötzlich=aniden|wieder=tekrar|draußen=dışarıda|drinnen=içeride|oben=yukarıda|unten=aşağıda|überall=her yerde|die Hochzeit=düğün|der Geburtstag=doğum günü|das Geschenk=hediye|das Fest=bayram; şenlik|die Party=parti|das Hobby=hobi|der Sport=spor|die Mannschaft=takım|das Spiel=oyun; maç|das Konzert=konser|das Bild=resim|das Foto=fotoğraf|das Tier=hayvan|der Vogel=kuş|die Katze=kedi|das Pferd=at|die Blume=çiçek|der Baum=ağaç|der Wald=orman|der Fluss=nehir|die Luft=hava (solunan)|das Licht=ışık|die Farbe=renk|die Sprache=dil|das Wort=kelime|der Satz=cümle|die Frage=soru|die Antwort=cevap|die Idee=fikir|das Problem=sorun|der Fehler=hata|die Hilfe=yardım|das Glück=şans; mutluluk|die Liebe=aşk; sevgi|der Spaß=eğlence`,
+B1: `der Lebenslauf=özgeçmiş|das Vorstellungsgespräch=iş görüşmesi|die Fähigkeit=yetenek|die Verantwortung=sorumluluk|die Aufgabe=görev|der Erfolg=başarı|das Ziel=hedef|die Möglichkeit=imkân|die Gelegenheit=fırsat|die Bedingung=şart|die Voraussetzung=ön koşul|die Entscheidung=karar|der Grund=neden|die Folge=sonuç|die Ursache=sebep|die Wirkung=etki|der Unterschied=fark|die Politik=politika|die Regierung=hükümet|das Gesetz=yasa|die Wahl=seçim|der Bürger=vatandaş|die Nachrichten=haberler|die Werbung=reklam|die Sendung=yayın; program|die Technik=teknik|das Gerät=cihaz|die Daten=veriler|die Gesundheit=sağlık|die Ernährung=beslenme|die Bewegung=hareket|das Gewicht=ağırlık|die Krankheit=hastalık|die Behandlung=tedavi|die Rente=emekli maaşı|die Steuer=vergi|die Kündigung=fesih; işten çıkarma|das Einkommen=gelir|die Ausgabe=harcama|sparen=biriktirmek|leihen=ödünç vermek / almak|sich bewerben=başvurmak|sich beschweren=şikâyet etmek|sich entschuldigen=özür dilemek|sich kümmern um=ilgilenmek|sich verabreden=sözleşmek (buluşmak için)|sich unterhalten=sohbet etmek|sich gewöhnen an=alışmak|sich verlassen auf=güvenmek|sich vorstellen=kendini tanıtmak; hayal etmek|vorschlagen=önermek|empfehlen=tavsiye etmek|vergleichen=karşılaştırmak|beschreiben=betimlemek|diskutieren=tartışmak|beweisen=kanıtlamak|verbessern=iyileştirmek|entwickeln=geliştirmek|erreichen=ulaşmak|erwarten=beklemek (beklenti)|erlauben=izin vermek|verbieten=yasaklamak|vermeiden=kaçınmak|verlangen=talep etmek|teilnehmen=katılmak|stattfinden=gerçekleşmek|sich ärgern=sinirlenmek|überraschen=şaşırtmak|enttäuschen=hayal kırıklığına uğratmak|verändern=(köklü) değiştirmek|wachsen=büyümek|sterben=ölmek|gründen=kurmak (şirket)|schaffen=başarmak|erledigen=halletmek|organisieren=düzenlemek|zufrieden=memnun|unzufrieden=memnuniyetsiz|selbstständig=bağımsız; serbest çalışan|ehrlich=dürüst|höflich=kibar|neugierig=meraklı|ängstlich=ürkek|stolz=gururlu|eifersüchtig=kıskanç|notwendig=gerekli|deutlich=açık; net|öffentlich=kamusal|privat=özel|gemeinsam=ortak|ständig=sürekli|regelmäßig=düzenli|aktuell=güncel|bekannt=tanınmış|fremd=yabancı|gleich=aynı|verschieden=farklı|wirklich=gerçekten|eigentlich=aslında|besonders=özellikle|außerdem=ayrıca|allerdings=ancak|jedenfalls=her halükârda|sogar=hatta|kaum=neredeyse hiç|damals=o zamanlar|inzwischen=bu arada|rechtzeitig=zamanında|vorher=önceden|nachher=sonradan|bisher=şimdiye kadar|die Kindheit=çocukluk|die Jugend=gençlik|das Alter=yaş; yaşlılık|die Beziehung=ilişki|die Ehe=evlilik|der Streit=kavga|das Gefühl=duygu|die Angst=korku|die Sorge=endişe|die Freude=sevinç|der Wunsch=dilek|die Hoffnung=umut|das Vertrauen=güven|die Erinnerung=anı; hatıra|die Zukunft=gelecek|die Vergangenheit=geçmiş|die Gegenwart=şimdiki zaman|das Ereignis=olay|die Veranstaltung=etkinlik|die Kultur=kültür|die Tradition=gelenek|die Religion=din|die Heimat=memleket|der Ausländer=yabancı (kişi)|die Integration=uyum`
+};
+const FREQ = {}; Object.entries(FREQ_RAW).forEach(([lv, raw]) => { FREQ[lv] = raw.split('|').map(x => x.trim()).filter(x => x.includes('=')).map(x => { const i = x.indexOf('='); return [x.slice(0, i).trim(), x.slice(i + 1).trim().replace(/;\s*/g, ' / ')]; }); });
+/* =====================================================================
+   EK 4: Kelime listesi · Deneme sınavı · AI okuma · Metinden kelime · Sesli Lena
+   Dinleme bağlantıları · Düello · Haftalık özet · Kelime ayrıntısı · Otomatik gece modu
+   ===================================================================== */
+const jsq = s => JSON.stringify(String(s)).replace(/"/g, '&quot;');   // onclick="" içinde güvenli metin
+Object.assign(PAGES, { words: ['Kelime Listesi', 'fa-list-ol'], mock: ['Deneme Sınavı', 'fa-file-signature'], reader: ['Okuma Üret', 'fa-wand-magic-sparkles'], extract: ['Metinden Kelime', 'fa-highlighter'], duel: ['Düello', 'fa-bolt-lightning'], weekly: ['Haftalık Özet', 'fa-calendar-week'] });
+Object.assign(NAV_PARENT, { words: 'review', mock: 'practice', reader: 'practice', extract: 'practice', duel: 'practice', weekly: 'more' });
+Object.assign(HUB_DESC, { words: 'En sık kullanılan kelimeler, her gün birkaç tane', mock: 'Goethe formatında süreli dört bölüm', reader: 'Seviyende ve sevdiğin konuda yeni metin', extract: 'Yapıştırdığın metindeki bilmediğin kelimeler', duel: 'Aynı 10 soru, kim daha iyi?', weekly: 'Geçen haftanın kısa özeti' });
+Object.assign(FX_DE, { words: 'Wortschatz Wörter Liste', mock: 'Modelltest Goethe Prüfung', reader: 'Lesen Text Thema', extract: 'Text Wörter Markieren', duel: 'Duell Quiz Sieg', weekly: 'Woche Rückblick' });
+const LV_OF = id => LEVELS.find(L => L.id === id) || LEVELS[0];
+
+/* ---------- Pratik, Araçlar ve Tekrar listeleri ---------- */
+const PRAC_GROUPS = [['Okuma ve dinleme', 'Oku', 'a2', ['reader', 'stories', 'listen', 'extract', 'shadow', 'dictation', 'camera']], ['Konuşma', 'Konuş', 'c2', ['friend', 'roleplay', 'voice', 'exam']], ['Yazma, sınav ve oyun', 'Yaz', 'b2', ['mock', 'writing', 'diary', 'duel', 'games', 'bridge']]];
+const MORE_GROUPS = [['İlerleme', 'İlerleme', 'c1', ['weekly', 'ready', 'plan', 'report', 'league', 'badges']], ['Rehberler', 'Rehber', 'b1', ['guides', 'conj', 'artikel']], ['Araçlar', 'Araç', 'a2', ['notes', 'focus', 'settings']]];
+VIEWS.practice = () => isFx() ? fxFeedPage(PRAC_GROUPS.map(([g, s, k, l]) => [g, s, k, l.map(fxTool)]), 'Okuyarak, dinleyerek, konuşarak ve yazarak pratik yap. Kaydır, birini seç.')
+  : `<p class="page-sub">Okuyarak, dinleyerek, konuşarak ve yazarak pratik yap.</p>` + hubGroups(PRAC_GROUPS.map(([g, , , l]) => [g, l]));
+VIEWS.more = () => isFx() ? fxFeedPage(MORE_GROUPS.map(([g, s, k, l]) => [g, s, k, l.map(fxTool)]), 'İlerlemen, dilbilgisi rehberleri ve araçlar tek akışta.')
+  : `<p class="page-sub">İlerlemen, rehberler ve araçlar.</p>` + hubGroups(MORE_GROUPS.map(([g, , , l]) => [g, l]));
+const _reviewE4 = VIEWS.review;
+VIEWS.review = () => { const h = _reviewE4(); return isFx() ? h : h.replace(`<button class="row-card" onclick="go('errors')">`, hubTiles(['words']).replace(/^<div class="hub ?">|<\/div>$/g, '') + `<button class="row-card" onclick="go('errors')">`); };
+
+/* ---------- 1) Sık kullanılan kelimeler ---------- */
+const FREQ_LVS = ['A1', 'A2', 'B1', 'B2', 'C1'];
+const freqLevel = lv => (FREQ[lv] || []).concat(((D && D.freqExtra) || {})[lv] || []);
+function freqAll() { const seen = new Set(), out = []; FREQ_LVS.forEach(lv => freqLevel(lv).forEach(w => { const k = norm(w[0]); if (!seen.has(k)) { seen.add(k); out.push({ de: w[0], tr: w[1], lv }); } })); return out; }
+const inCards = de => !!D && D.cards.some(c => norm(c.de) === norm(de));
+const freqFind = de => freqAll().find(w => norm(w.de) === norm(de));
+const freqNext = n => freqAll().filter(w => !inCards(w.de)).slice(0, n);
+function freqTake(n) {
+  if (!canEdit()) return; const ws = freqNext(n);
+  if (!ws.length) { toast('Listedeki bütün kelimeler kutunda; yapay zekâyla yenilerini üretebilirsin', 'warn'); return; }
+  ws.forEach(w => addCard(w.de, w.tr, 'freq', true));
+  D.freqLog = D.freqLog || {}; D.freqLog[today()] = (D.freqLog[today()] || []).concat(ws.map(w => w.de)); addXP(2); save();
+  toast(ws.length + ' yeni kelime tekrar kutuna eklendi'); go('words');
+}
+const chipOn = on => on ? 'background:var(--ink);color:var(--ground)' : '';
+VIEWS.words = () => {
+  const n = D.freqN || 10, got = (D.freqLog || {})[today()] || [], all = freqAll();
+  const wRow = w => `<div class="us-w"><div class="us-w-main"><div class="us-w-de" lang="de">${esc(w.de)}</div><div class="us-w-tr">${esc(w.tr)}</div></div><button class="us-ib" data-say="${esc(w.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high"></i></button><button class="us-ib" onclick="wordDetail(${jsq(w.de)})" aria-label="Ayrıntı"><i class="fa-solid fa-circle-info"></i></button></div>`;
+  return `<p class="page-sub">Almancada en sık kullanılan kelimeler A1’den başlayarak sırayla tekrar kutuna gelir. Günde kaç yeni kelime alacağını sen seç.</p>
+  <div class="grid12"><section class="panel s8"><div class="panel-head"><h2>Bugünün yeni kelimeleri</h2><span class="chip tabular">${got.length} alındı</span></div>
+    <div class="row" style="margin-bottom:14px"><span class="muted" style="font-size:14px">Günde:</span>${[5, 10, 15, 20].map(k => `<button class="chip" style="cursor:pointer;${chipOn(n === k)}" onclick="if(canEdit()){D.freqN=${k};save();go('words')}">${k} kelime</button>`).join('')}</div>
+    ${got.length ? `<div class="us-words">${got.map(de => wRow(freqFind(de) || { de, tr: '' })).join('')}</div><div class="row" style="margin-top:14px"><button class="btn" onclick="startReview()"><i class="fa-solid fa-play"></i> Şimdi tekrar et</button><button class="btn btn-ghost" onclick="freqTake(5)"><i class="fa-solid fa-plus"></i> 5 kelime daha</button></div>`
+      : `<button class="btn" onclick="freqTake(${n})"><i class="fa-solid fa-plus"></i> Bugün ${n} yeni kelime al</button>`}</section>
+  <section class="panel s4"><div class="panel-head"><h2>İlerleme</h2></div>${FREQ_LVS.filter(lv => freqLevel(lv).length).map(lv => { const a = freqLevel(lv), k = a.filter(w => inCards(w[0])).length; return `<div class="q-line"><span class="q-t">${lv}</span><span class="bar"><div style="width:${Math.round(k / a.length * 100)}%"></div></span><span class="q-n tabular">${k}/${a.length}</span></div>`; }).join('')}
+    <p class="note">Liste bitince yapay zekâ seviyene göre yeni sık kelimeler üretir.</p>
+    <div class="row" style="margin-top:10px;flex-wrap:nowrap"><select id="fqLv" class="pill-input" style="max-width:96px">${FREQ_LVS.map(l => `<option>${l}</option>`).join('')}</select><button class="btn btn-ghost btn-sm" onclick="freqAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> 40 kelime üret</button></div><div id="fqAi"></div></section>
+  <section class="panel" style="grid-column:1/-1"><div class="panel-head"><h2>Bütün liste</h2><span class="chip tabular">${all.length} kelime</span></div>
+    <input class="pill-input" placeholder="Listede ara (Almanca ya da Türkçe)…" oninput="const q=sFold(this.value);document.querySelectorAll('.fq-row').forEach(r=>r.style.display=!q||r.dataset.s.includes(q)?'':'none')" style="margin-bottom:8px">
+    <div class="us-words">${all.map(w => `<button class="us-w fq-row" data-s="${esc(sFold(w.de + ' ' + w.tr))}" onclick="wordDetail(${jsq(w.de)})"><span class="fq-lv">${w.lv}</span><span class="us-w-main"><span class="us-w-de" lang="de" style="display:block">${esc(w.de)}</span><span class="us-w-tr" style="display:block">${esc(w.tr)}</span></span>${inCards(w.de) ? '<i class="fa-solid fa-check" style="color:var(--positive)" aria-label="kutuda"></i>' : ''}</button>`).join('')}</div></section></div>`;
+};
+async function freqAI() {
+  if (!canEdit()) return; const lv = $('#fqLv').value, out = $('#fqAi'); out.innerHTML = '<div class="ai-box" style="max-width:none;margin-top:10px"><span class="typing"><i></i><i></i><i></i></span> Kelimeler üretiliyor…</div>';
+  try {
+    const raw = await aiText(`${lv} seviyesinde, Almancada en sık kullanılan ve aşağıdaki listede OLMAYAN 40 kelime üret. İsimleri artikel ve tekil, fiilleri mastar hâlinde yaz. SADECE JSON dizi döndür: [["Almanca","Türkçe karşılığı"]].\nListede olanlar: ${freqAll().map(w => w.de).slice(-400).join(', ')}`, 'Sen Almanca kelime listesi hazırlayan bir sözlükçüsün. Sadece geçerli JSON döndür.', true);
+    const arr = JSON.parse(raw.replace(/^```(json)?|```$/g, '').trim()).filter(x => Array.isArray(x) && x[0] && x[1] && !freqFind(x[0])).map(x => [String(x[0]).trim(), String(x[1]).trim()]);
+    if (!arr.length) throw new Error('Yeni kelime çıkmadı');
+    D.freqExtra = D.freqExtra || {}; D.freqExtra[lv] = (D.freqExtra[lv] || []).concat(arr); SRCH_IDX = null; save(); toast(arr.length + ' yeni kelime listeye eklendi'); go('words');
+  } catch (e) { out.innerHTML = `<div class="ai-box" style="max-width:none;margin-top:10px">${aiErr(e)}</div>`; }
+}
+
+/* ---------- 2) Goethe formatında deneme sınavı ---------- */
+const MOCK_SECS = [['Lesen', 'Okuma', 12 * 60], ['Hören', 'Dinleme', 10 * 60], ['Schreiben', 'Yazma', 15 * 60], ['Sprechen', 'Konuşma', 8 * 60]];
+let MOCK = null, MOCK_T = null;
+function mockItems(lv, si) {
+  const L = LV_OF(lv), units = L.units, ss = units.flatMap(u => u.s.map(s => ({ u, s }))), vs = units.flatMap(u => okVocab(u).map(v => ({ u, v })));
+  const out = si === 0 ? [...pick(ss, 4).map(x => makeTfTr(x.u, x.s)), ...pick(ss, 4).map(x => makeGapMc(x.u, L, x.s)), ...pick(ss, 3).map(x => makeTrans(x.u, L, x.s)), ...pick(units.flatMap(qItems).filter(q => q.k === 'mc'), 3)]
+    : si === 1 ? [...pick(ss, 4).map(x => makeListenS(x.u, x.s)), ...pick(vs, 3).map(x => makeListen(x.u, L, x.v)), ...pick(ss, 2).map(x => mkDict(x.u, x.s)), ...pick(vs, 2).map(x => makeListenW(x.u, x.v))]
+    : si === 2 ? [...pick(ss, 3).map(x => makeWR(x.u, x.s)), ...pick(ss, 2).map(x => makeGap(x.u, x.s))]
+    : pick(ss, 5).map(x => makeSpeak(x.u, x.s));
+  const items = shuffle(out.filter(Boolean)); if (si === 2) items.push(makeFree(pick(units, 1)[0])); return items;
+}
+function startMock(lv) { if (!canEdit()) return; MOCK = { lv, si: 0, scores: [] }; mockSection(); }
+function mockSection() {
+  if (!MOCK) return; const [de, tr, secs] = MOCK_SECS[MOCK.si];
+  startLesson(mockItems(MOCK.lv, MOCK.si), { title: `Deneme ${MOCK.lv} · ${tr} (${de})`, color: LV_OF(MOCK.lv).color, kind: 'mock', pass: 0 });
+  MOCK.end = Date.now() + secs * 1000; clearInterval(MOCK_T); MOCK_T = setInterval(mockTick, 1000); mockTick();
+}
+function mockTick() {
+  if (!LSN || !LSN.opts || LSN.opts.kind !== 'mock' || !MOCK) { clearInterval(MOCK_T); return; }
+  const left = Math.max(0, Math.round((MOCK.end - Date.now()) / 1000)); let c = $('#mockClock');
+  if (!c) { const top = $('#lesson .ls-top'); if (top) { top.insertAdjacentHTML('beforeend', '<b id="mockClock" class="chip tabular" aria-live="off"></b>'); c = $('#mockClock'); } }
+  if (c) { c.textContent = fmt(left); c.style.color = left < 60 ? 'var(--negative)' : ''; }
+  if (!left) { clearInterval(MOCK_T); toast('Süre doldu, bölüm kapandı', 'warn'); LSN.i = LSN.items.length; lessonSummary(); }
+}
+function mockNext() {
+  if (!MOCK) return; MOCK.si++; quitLesson(true);
+  if (MOCK.si < MOCK_SECS.length) { mockSection(); return; }
+  D.mocks = D.mocks || []; D.mocks.unshift({ lv: MOCK.lv, scores: MOCK.scores, ts: Date.now() }); D.mocks = D.mocks.slice(0, 30);
+  const pass = MOCK.scores.every(s => s >= 60); if (pass) { addXP(40); confettiBurst(true); } else addXP(15); save(); MOCK = null; go('mock');
+}
+function mockRow(m) { const pass = m.scores.every(s => s >= 60); return `<div class="mk-row"><span class="lvl-badge">${m.lv}</span><span class="muted tabular" style="font-size:13px">${new Date(m.ts).toLocaleDateString('tr-TR')}</span><span class="mk-sc">${MOCK_SECS.map(([, tr], i) => `<span class="${m.scores[i] >= 60 ? 'ok' : 'no'}">${tr} %${m.scores[i]}</span>`).join('')}</span><b style="color:${pass ? 'var(--positive)' : 'var(--negative)'}">${pass ? 'Geçti' : 'Kaldı'}</b></div>`; }
+VIEWS.mock = () => {
+  const lvs = LEVELS.filter((_, i) => levelUnlocked(i) && i < 4);
+  return `<p class="page-sub">Goethe sınavının dört bölümü sırayla ve süreli: Okuma, Dinleme, Yazma, Konuşma. Gerçek sınavdaki gibi her bölümden en az %60 almalısın. Konuşma bölümü telefonun mikrofonuyla puanlanır; puanlar resmi değil, hazırlık içindir.</p>
+  ${MOCK && MOCK.si < 4 ? `<button class="row-card hot" style="margin-bottom:16px" onclick="mockSection()"><span class="rc-ic"><i class="fa-solid fa-rotate-right"></i></span><span class="rc-main"><span class="rc-t" style="display:block">Yarım kalan ${MOCK.lv} denemesi</span><span class="rc-s" style="display:block">${MOCK_SECS[MOCK.si][1]} bölümünden devam et</span></span></button>` : ''}
+  <div class="grid12">${lvs.map(L => `<section class="panel s6" style="${lvStyle(L.color)}"><div class="panel-head"><h2>Goethe-Zertifikat ${L.id}</h2><span class="lvl-badge">${L.id}</span></div>${MOCK_SECS.map(([de, tr, s], i) => `<div class="q-line"><span class="q-t" style="width:auto;flex:1">${i + 1}. ${tr} <span class="muted">· ${de}</span></span><span class="q-n tabular" style="width:auto">${s / 60} dk</span></div>`).join('')}<button class="btn" style="margin-top:14px" onclick="startMock('${L.id}')"><i class="fa-solid fa-play"></i> Denemeye başla</button></section>`).join('')}</div>
+  ${(D.mocks || []).length ? `<section class="panel" style="margin-top:16px"><div class="panel-head"><h2>Sonuçların</h2></div>${D.mocks.slice(0, 10).map(mockRow).join('')}</section>` : ''}`;
+};
+
+/* ---------- 3) Yapay zekâyla seviyene uygun okuma metni ---------- */
+const RD_TOPICS = ['Günlük hayat', 'Futbol', 'Teknoloji', 'Yemek', 'Seyahat', 'İş hayatı', 'Bilim', 'Müzik', 'Doğa', 'Tarih', 'Film ve dizi', 'Aile'];
+let RD = { lv: null, topic: 'Günlük hayat' };
+function rdSync() { if (!D) return; for (let i = STORIES.length - 1; i >= 0; i--) if (STORIES[i].ai) STORIES.splice(i, 1); (D.aiStories || []).forEach(s => STORIES.push(s)); }
+VIEWS.reader = () => {
+  rdSync(); const lvs = LEVELS.filter((_, i) => levelUnlocked(i)).map(L => L.id); if (!RD.lv || !lvs.includes(RD.lv)) RD.lv = lvs[lvs.length - 1];
+  return `<p class="page-sub">Yapay zekâ senin seviyende ve seçtiğin konuda kısa bir metin yazar. Bilmediğin kelimeye dokununca çevirisi çıkar ve tek dokunuşla kutuya eklenir.</p>
+  <div class="grid12"><section class="panel s8"><div class="panel-head"><h2>Yeni metin</h2></div>
+    <div class="row" style="margin-bottom:12px"><span class="muted" style="font-size:14px">Seviye:</span>${lvs.map(l => `<button class="chip" style="cursor:pointer;${chipOn(RD.lv === l)}" onclick="RD.lv='${l}';go('reader')">${l}</button>`).join('')}</div>
+    <div class="row" style="margin-bottom:12px">${RD_TOPICS.map(t => `<button class="chip" style="cursor:pointer;${chipOn(RD.topic === t)}" onclick="RD.topic=${jsq(t)};go('reader')">${esc(t)}</button>`).join('')}</div>
+    <input id="rdTopic" class="pill-input" placeholder="ya da kendi konunu yaz (ör. Galatasaray maçı, kahve kültürü)">
+    <div class="row" style="margin-top:12px;flex-wrap:nowrap"><select id="rdLen" class="pill-input" style="max-width:190px"><option value="6">Kısa · 6 cümle</option><option value="10" selected>Orta · 10 cümle</option><option value="14">Uzun · 14 cümle</option></select><button class="btn" onclick="rdGen()"><i class="fa-solid fa-wand-magic-sparkles"></i> Metni yaz</button></div><div id="rdOut"></div></section>
+  <section class="panel s4"><div class="panel-head"><h2>Metinlerin</h2><span class="chip">${(D.aiStories || []).length}</span></div>${(D.aiStories || []).map(s => `<button class="row-card" onclick="openStory('${s.id}')"><span class="rc-main"><span class="rc-t" style="display:block">${esc(s.t)}</span><span class="rc-s" style="display:block">${s.lv} · ${esc(s.de)}</span></span>${D.stories[s.id] ? '<i class="fa-solid fa-check" style="color:var(--positive)"></i>' : ''}</button>`).join('') || '<p class="muted" style="margin:0;font-size:14px">Henüz metin yok. Bir konu seç ve “Metni yaz”a bas.</p>'}</section></div>`;
+};
+async function rdGen() {
+  if (!canEdit()) return; const topic = $('#rdTopic').value.trim() || RD.topic, len = +$('#rdLen').value, out = $('#rdOut');
+  out.innerHTML = '<div class="ai-box" style="max-width:none;margin-top:12px"><span class="typing"><i></i><i></i><i></i></span> Metin yazılıyor…</div>';
+  try {
+    const raw = await aiText(`${RD.lv} seviyesindeki Türk bir öğrenci için “${topic}” konusunda ${len} cümlelik, doğal ve ilginç bir Almanca metin yaz. Kelime ve dilbilgisi kesinlikle ${RD.lv} seviyesinde olsun. SADECE JSON döndür:
+{"baslik":"Türkçe başlık","de":"Almanca başlık","cumleler":[["Almanca cümle","Türkçe çevirisi"]],"sozluk":{"metindeki kelime (küçük harf, metindeki hâliyle)":"Türkçe anlamı"}}
+Sözlükte metindeki en zor 20 kelime olsun.`, 'Sen Almanca okuma metni yazan bir öğretmensin. Sadece geçerli JSON döndür.', true);
+    const j = JSON.parse(raw.replace(/^```(json)?|```$/g, '').trim()); if (!Array.isArray(j.cumleler) || !j.cumleler.length) throw new Error('Metin boş geldi');
+    const gl = {}; Object.entries(j.sozluk || {}).forEach(([k, v]) => { gl[String(k).toLowerCase()] = String(v); });
+    const s = { id: 'ai' + uid(), ai: true, lv: RD.lv, t: String(j.baslik || topic), de: String(j.de || topic), s: j.cumleler.map(x => [String(x[0]), String(x[1] || '')]), gl };
+    D.aiStories = [s].concat(D.aiStories || []).slice(0, 20); save(); rdSync(); go('reader'); openStory(s.id);
+  } catch (e) { out.innerHTML = `<div class="ai-box" style="max-width:none;margin-top:12px">${aiErr(e)}</div>`; }
+}
+
+/* ---------- 4) Metinden kelime çıkarma ---------- */
+let EXW = null, EXT = '';
+const EX_STOP = new Set([...STOP, ...'nicht nach für aus bei über unter noch schon sehr dann denn weil auch wird werden wurde sein haben hatte kann muss will soll darf mich dich sich uns euch ihm ihn ihr ihre ihrem ihren sein seine seinem seinen dein deine unser unsere euer diese dieser dieses diesen jeder jede jedes alle man kein keine keinen nur oder doch mal hier dort wo wann warum wer weg bis ohne gegen durch vom zum zur beim ins ans aufs'.split(' ')]);
+VIEWS.extract = () => `<p class="page-sub">Bir şarkı sözü, haber ya da mesaj yapıştır. Bilmediğin kelimeleri bulup çevirelim; seçtiklerin tek dokunuşla tekrar kutuna eklensin.</p>
+  <div class="grid12"><section class="panel s6"><div class="panel-head"><h2>Metin</h2></div><textarea id="exIn" class="pill-input" rows="11" spellcheck="false" placeholder="Almanca metni buraya yapıştır…">${esc(EXT)}</textarea><div class="row" style="margin-top:12px"><button class="btn" onclick="exScan()"><i class="fa-solid fa-highlighter"></i> Kelimeleri bul</button></div></section>
+  <section class="panel s6"><div class="panel-head"><h2>Bulunan kelimeler</h2>${EXW ? `<span class="chip tabular">${EXW.length}</span>` : ''}</div><div id="exOut">${EXW ? exHtml() : '<p class="muted" style="margin:0">Sonuç burada görünecek. Yapay zekâ anahtarın varsa kelimeler seviyene göre seçilip çevrilir; yoksa uygulamanın sözlüğüyle eşleştirilir.</p>'}</div></section></div>`;
+function exOffline(text) {
+  const dict = {}; allVocab().concat(freqAll()).forEach(v => { const k = bareWord(wordForms(v.de)[0]).toLowerCase(); if (!dict[k]) dict[k] = v; });
+  const seen = new Set(), out = [];
+  (text.match(/[A-Za-zÄÖÜäöüß]{3,}/g) || []).forEach(w => { const k = w.toLowerCase(); if (seen.has(k) || EX_STOP.has(k)) return; seen.add(k); const st = k.replace(/(est|st|et|te|en|e|t)$/, ''), d = dict[k] || dict[st + 'en'] || dict[k + 'n'] || dict[st + 'n'] || dict[st]; const de = d ? wordForms(d.de)[0] : w; if (!inCards(de)) out.push({ de, tr: d ? d.tr : '', on: !!d }); });
+  return out.slice(0, 40);
+}
+async function exScan() {
+  const text = $('#exIn').value.trim(); EXT = text; if ((text.match(/\S+/g) || []).length < 3) { toast('Önce biraz Almanca metin yapıştır', 'warn'); return; }
+  const out = $('#exOut'); out.innerHTML = '<span class="typing"><i></i><i></i><i></i></span> Kelimeler aranıyor…';
+  if ((CFG.apiKey || DEFAULT_API_KEY).trim()) {
+    try {
+      const raw = await aiText(`Öğrencinin seviyesi ${levelName()}. Aşağıdaki Almanca metinde bu öğrencinin büyük olasılıkla bilmediği ya da öğrenmesi gereken en fazla 25 kelimeyi seç. İsimleri artikel ve tekil, fiilleri mastar hâlinde yaz; metindeki anlamına göre Türkçe karşılık ver. SADECE JSON: [{"de":"","tr":""}]\n\n"""${text.slice(0, 6000)}"""`, 'Sen Almanca sözlükçüsün. Sadece geçerli JSON döndür.', true);
+      EXW = JSON.parse(raw.replace(/^```(json)?|```$/g, '').trim()).filter(x => x && x.de && !inCards(x.de)).map(x => ({ de: String(x.de), tr: String(x.tr || ''), on: true }));
+    } catch (e) { toast('Yapay zekâ çalışmadı, uygulamanın sözlüğü kullanıldı', 'warn'); EXW = exOffline(text); }
+  } else EXW = exOffline(text);
+  go('extract');
+}
+function exHtml() {
+  if (!EXW.length) return '<p class="muted" style="margin:0">Yeni kelime bulunamadı; metindeki kelimeler zaten kutunda.</p>';
+  return EXW.map((w, i) => `<div class="ex-row"><input type="checkbox" ${w.on ? 'checked' : ''} onchange="EXW[${i}].on=this.checked" aria-label="${esc(w.de)} seç"><div class="ex-de"><b lang="de">${esc(w.de)}</b><input class="pill-input" value="${esc(w.tr)}" placeholder="Türkçesini yaz" oninput="EXW[${i}].tr=this.value;if(this.value)EXW[${i}].on=true"></div><button class="us-ib" data-say="${esc(w.de)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high"></i></button></div>`).join('')
+    + `<button class="btn" style="margin-top:14px" onclick="exAdd()"><i class="fa-solid fa-plus"></i> Seçilenleri kutuya ekle</button>`;
+}
+function exAdd() {
+  if (!canEdit()) return; let n = 0, miss = 0;
+  EXW.forEach(w => { if (!w.on) return; if (!w.tr.trim()) { miss++; return; } addCard(w.de, w.tr.trim(), 'extract', true); n++; });
+  save(); toast(n ? `${n} kelime tekrar kutuna eklendi${miss ? `; ${miss} kelimenin Türkçesi boş olduğu için eklenmedi` : ''}` : 'Eklemek için kelime seç ve Türkçesini yaz', n ? '' : 'warn');
+  if (n) { EXW = EXW.filter(w => !inCards(w.de)); go('extract'); }
+}
+
+/* ---------- 5) Lena ile sesli sohbet + sohbet sonu düzeltmeler ---------- */
+let LN_VOICE = false, LN_FROM = 0;
+const _friendE4 = VIEWS.friend;
+VIEWS.friend = () => _friendE4().replace(`<button class="btn btn-ghost btn-sm" onclick="lenaRemember()">Sohbeti bitir</button>`,
+  `<div class="row" style="gap:6px"><button class="btn btn-sm ${LN_VOICE ? '' : 'btn-ghost'}" onclick="lnVoice()" aria-pressed="${LN_VOICE}"><i class="fa-solid ${LN_VOICE ? 'fa-stop' : 'fa-headset'}"></i> ${LN_VOICE ? 'Sesli modu kapat' : 'Sesli konuş'}</button><button class="btn btn-ghost btn-sm" onclick="lnErrors()"><i class="fa-solid fa-spell-check"></i> Hatalarım</button><button class="btn btn-ghost btn-sm" onclick="lenaRemember()">Sohbeti bitir</button></div>`);
+function lnVoice() {
+  if (!LN_VOICE && !SR) { toast('Bu tarayıcı konuşma tanımayı desteklemiyor (iPhone’da Safari, bilgisayarda Chrome dene)', 'err'); return; }
+  LN_VOICE = !LN_VOICE; if (LN_VOICE) LN_FROM = D.lena.msgs.length; else stopAllAudio(); go('friend');
+  if (LN_VOICE) { toast('Sesli mod açık: konuş, Lena cevap verince mikrofon kendiliğinden açılır'); setTimeout(() => { if (LN_VOICE && !rec) lenaMic(); }, 400); }
+}
+const _lenaSendE4 = lenaSend;
+lenaSend = async function () {
+  await _lenaSendE4.apply(this, arguments);
+  if (!LN_VOICE) return;
+  const wait = () => { if (!LN_VOICE || PAGE !== 'friend') return; if (window.speechSynthesis && speechSynthesis.speaking) return setTimeout(wait, 300); setTimeout(() => { if (LN_VOICE && PAGE === 'friend' && !rec) lenaMic(); }, 450); };
+  setTimeout(wait, 600);
+};
+const _goE4 = go;
+go = function (p) { if (p !== 'friend' && LN_VOICE) { LN_VOICE = false; stopAllAudio(); } return _goE4.apply(this, arguments); };
+function lnErrors() {
+  const msgs = D.lena.msgs.slice(LN_VOICE || LN_FROM ? LN_FROM : -40), fixes = [];
+  msgs.forEach(m => { if (m.role === 'model') m.text.split('\n').forEach(l => { const t = l.replace(/^[*_\s]+/, ''); if (/^Düzeltme\s*:/i.test(t)) fixes.push(t.replace(/^Düzeltme\s*:\s*/i, '').replace(/\*\*/g, '')); }); });
+  modal(`<div class="sheet-head"><h3>Bu sohbetteki düzeltmeler</h3><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="sheet-body">
+    ${fixes.length ? fixes.map((f, i) => `<div class="gd-ex"><div class="gd-de" style="font-size:15.5px;font-weight:500">${esc(f)}</div><span class="muted tabular">${i + 1}</span></div>`).join('') + `<button class="btn" style="margin-top:14px" onclick="lnSaveNote()"><i class="fa-solid fa-note-sticky"></i> Notlarıma kaydet</button>`
+      : '<p class="muted" style="margin:0">Bu sohbette düzeltilen bir hata yok. Harika!</p>'}</div>`, true, 560);
+  window.__lnFix = fixes;
+}
+function lnSaveNote() { if (!canEdit()) return; D.notes.unshift({ id: uid(), title: 'Lena · düzeltmeler · ' + new Date().toLocaleDateString('tr-TR'), text: (window.__lnFix || []).map((f, i) => (i + 1) + '. ' + f).join('\n'), ts: Date.now() }); save(); closeModal(); toast('Notlarına kaydedildi'); }
+
+/* ---------- 6) Gerçek Almanca dinleme kaynakları ---------- */
+const LISTEN_LINKS = [
+  ['A1–B1', 'DW Deutsch lernen', 'Deutsche Welle’nin ücretsiz kursları: “Nicos Weg” video dizisi, “Top-Thema” ve yavaş okunan haberler.', 'https://learngerman.dw.com/de/overview'],
+  ['A2–B1', 'Slow German', 'Annik Rubens’in yavaş ve net anlattığı kısa podcast bölümleri; günlük hayat ve kültür.', 'https://slowgerman.com'],
+  ['A2–C1', 'Easy German', 'Sokakta insanlarla röportajlar, Almanca ve İngilizce altyazılı YouTube videoları.', 'https://www.youtube.com/@EasyGerman'],
+  ['B1', 'logo! Nachrichten', 'ZDF’nin çocuklar için hazırladığı haberler: sade dil, kısa videolar.', 'https://www.zdf.de/kinder/logo'],
+  ['B2–C1', 'tagesschau', 'Almanya’nın ana haber bülteni; “100 Sekunden” özetleriyle başla.', 'https://www.tagesschau.de']
+];
+const _listenE4 = VIEWS.listen;
+VIEWS.listen = () => { const h = _listenE4(); if (LC) return h; const done = (D.lkLog || {})[today()] || {};
+  return h + `<section class="panel" style="margin-top:16px"><div class="panel-head"><h2>Gerçek Almanca dinle</h2><span class="chip">dış bağlantı</span></div><p class="note" style="margin:0 0 10px">Seviyene uygun ücretsiz kaynaklar yeni sekmede açılır. Dinledikten sonra “Dinledim”e bas, duyduğun yeni kelimeyi kutuya ekle.</p>
+  ${LISTEN_LINKS.map(([lv, t, d, u], i) => `<div class="lk-row"><span class="fq-lv">${lv}</span><div class="lk-m"><b>${esc(t)}</b><span>${esc(d)}</span></div><div class="lk-a"><a class="btn btn-ghost btn-sm" href="${u}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aç</a><button class="btn btn-sm ${done[i] ? 'btn-ghost' : ''}" onclick="lkDone(${i})" ${done[i] ? 'disabled' : ''}>${done[i] ? 'Dinlendi' : 'Dinledim'}</button></div></div>`).join('')}
+  <div class="row" style="margin-top:14px;flex-wrap:nowrap"><input id="lkDe" class="pill-input" placeholder="Duyduğun kelime (Almanca)"><input id="lkTr" class="pill-input" placeholder="Türkçesi"><button class="btn btn-ghost" onclick="const de=$('#lkDe').value.trim(),tr=$('#lkTr').value.trim();if(!de||!tr){toast('İki alanı da doldur','warn');return}addCard(de,tr,'dinleme');$('#lkDe').value='';$('#lkTr').value=''" aria-label="Kutuya ekle"><i class="fa-solid fa-plus"></i></button></div></section>`; };
+function lkDone(i) { if (!canEdit()) return; D.lkLog = D.lkLog || {}; const t = today(); D.lkLog = { [t]: Object.assign({}, D.lkLog[t] || {}, { [i]: 1 }) }; logSkill('horen', .75); questProgress('dict', 1); addXP(5); save(); go('listen'); }
+
+/* ---------- 7) Düello: aynı 10 soru, iki profil ---------- */
+let DUELS = {};
+const pName = id => (PROFILES.find(p => p.id === id) || { name: '?' }).name;
+async function duelLoad() {
+  const local = LS.get('df_duels', {}); let remote = {};
+  if (CFG.fbConfig) { const db = await withTimeout(fbInit(), 5000); if (db) { const sn = await withTimeout(db.ref('deutschflow/duels').get().catch(() => null), 7000); remote = (sn && sn.val && sn.val()) || {}; } }
+  const all = Object.assign({}, local); Object.entries(remote).forEach(([k, d]) => { all[k] = Object.assign({}, local[k] || {}, d, { res: Object.assign({}, (local[k] || {}).res || {}, d.res || {}) }); });
+  DUELS = all; LS.set('df_duels', all); return all;
+}
+async function duelPut(d, onlyRes) {
+  DUELS[d.id] = d; LS.set('df_duels', DUELS); if (!CFG.fbConfig) return; const db = await fbInit(); if (!db) return;
+  try { if (onlyRes) await db.ref(`deutschflow/duels/${d.id}/res/${PID}`).set(d.res[PID]); else await db.ref('deutschflow/duels/' + d.id).set(JSON.parse(JSON.stringify(d))); }
+  catch (e) { toast('Düello buluta kaydedilemedi: ' + e.message, 'err'); }
+}
+function duelItems() { const li = currentLevelIdx(), cur = LEVELS[li].units.filter((u, ui) => unitUnlocked(li, ui)).flatMap(qItems), old = LEVELS.slice(0, li).flatMap(L => L.units.flatMap(qItems)); return JSON.parse(JSON.stringify(shuffle(pick(cur, 7).concat(pick(old.length ? old : cur, 3))))); }
+async function duelNew(opp) { if (!canEdit()) return; const d = { id: 'd' + uid(), from: PID, to: opp, lv: levelName(), items: duelItems(), ts: Date.now(), res: {} }; await duelPut(d); duelPlay(d.id); }
+function duelPlay(id) { const d = DUELS[id]; if (!d || !canEdit()) return; startLesson(JSON.parse(JSON.stringify(d.items)), { title: 'Düello · ' + pName(d.from === PID ? d.to : d.from), color: 'c2', kind: 'duel', duelId: id, pass: 0 }); }
+function duelWinner(d) { const a = (d.res || {})[d.from], b = (d.res || {})[d.to]; if (!a || !b) return null; if (a.score !== b.score) return a.score > b.score ? d.from : d.to; if (a.time !== b.time) return a.time < b.time ? d.from : d.to; return 'tie'; }
+VIEWS.duel = () => `<p class="page-sub">Bir profile 10 soruluk bir düello gönder. İkiniz de aynı soruları çözersiniz; daha çok doğru yapan, eşitlikte daha hızlı olan kazanır.</p><div id="dlBox"><div class="panel"><span class="typing"><i></i><i></i><i></i></span> Düellolar yükleniyor…</div></div>`;
+AFTER.duel = async () => {
+  await duelLoad(); const box = $('#dlBox'); if (!box || PAGE !== 'duel') return;
+  const me = PID, mine = Object.values(DUELS).filter(d => d.from === me || d.to === me).sort((a, b) => b.ts - a.ts), opp = d => d.from === me ? d.to : d.from;
+  const pend = mine.filter(d => !(d.res || {})[me]), wait = mine.filter(d => (d.res || {})[me] && !(d.res || {})[opp(d)]), done = mine.filter(d => duelWinner(d));
+  const others = PROFILES.filter(p => p.id !== me);
+  const r = (d, who) => { const x = (d.res || {})[who]; return x ? `${x.score}/${x.n} · ${x.time} sn` : '—'; };
+  box.innerHTML = `<div class="grid12"><section class="panel s6"><div class="panel-head"><h2>Meydan oku</h2></div>${others.length ? others.map(p => `<button class="row-card" onclick="duelNew('${p.id}')"><span class="side-av" style="background:${p.color}">${esc(p.name.charAt(0).toUpperCase())}</span><span class="rc-main"><span class="rc-t" style="display:block">${esc(p.name)}</span><span class="rc-s" style="display:block">10 soru · senin seviyenden</span></span><span class="rc-end">Gönder</span></button>`).join('') : '<p class="muted" style="margin:0">Düello için başka bir profil gerekiyor. Giriş ekranında “Profil ekle” ile bir arkadaşına profil aç; bulut senkronu açıksa kendi telefonundan oynayabilir.</p>'}</section>
+  <section class="panel s6"><div class="panel-head"><h2>Seni bekleyenler</h2><span class="chip tabular">${pend.length}</span></div>${pend.map(d => `<button class="row-card hot" onclick="duelPlay('${d.id}')"><span class="rc-ic"><i class="fa-solid fa-bolt-lightning"></i></span><span class="rc-main"><span class="rc-t" style="display:block">${esc(pName(opp(d)))} ${d.from === me ? '(senin gönderdiğin)' : 'meydan okudu'}</span><span class="rc-s" style="display:block">${d.lv} · ${d.items.length} soru${(d.res || {})[opp(d)] ? ' · rakibin bitirdi' : ''}</span></span><span class="rc-end">Oyna</span></button>`).join('') || '<p class="muted" style="margin:0">Bekleyen düello yok.</p>'}
+    ${wait.length ? `<div class="hub-h" style="margin-top:16px">Rakibini bekliyor</div>${wait.map(d => `<div class="dl-row"><span>${esc(pName(opp(d)))}</span><span class="muted tabular">Sen: ${r(d, me)}</span></div>`).join('')}` : ''}</section>
+  ${done.length ? `<section class="panel" style="grid-column:1/-1"><div class="panel-head"><h2>Sonuçlar</h2><span class="chip tabular">${done.filter(d => duelWinner(d) === me).length} galibiyet</span></div>${done.slice(0, 12).map(d => { const w = duelWinner(d); return `<div class="dl-row"><b style="color:${w === me ? 'var(--positive)' : w === 'tie' ? 'var(--muted)' : 'var(--negative)'}">${w === me ? 'Kazandın' : w === 'tie' ? 'Berabere' : 'Kaybettin'}</b><span>${esc(pName(opp(d)))}</span><span class="muted tabular">Sen ${r(d, me)} · Rakip ${r(d, opp(d))}</span></div>`; }).join('')}</section>` : ''}</div>`;
+};
+
+/* ---------- 8) Haftalık özet ---------- */
+function weekStats(back) {
+  const ws = weekStart().getTime() - back * 7 * DAY, we = ws + 7 * DAY, s = { xp: 0, lessons: 0, answers: 0, correct: 0, min: 0, days: 0, ws };
+  Object.entries(D.days || {}).forEach(([k, v]) => { const t = new Date(k + 'T12:00:00').getTime(); if (t >= ws && t < we) { s.xp += v.xp || 0; s.lessons += v.lessons || 0; s.answers += v.answers || 0; s.correct += v.correct || 0; s.min += v.min || 0; if (v.xp) s.days++; } });
+  s.words = D.cards.filter(c => (c.added || 0) >= ws && (c.added || 0) < we);
+  const kinds = {}; D.wrong.filter(w => w.ts >= ws && w.ts < we).forEach(w => { const c = errCat(w.item); kinds[c] = (kinds[c] || 0) + 1; });
+  s.weak = Object.entries(kinds).sort((a, b) => b[1] - a[1])[0]; s.acc = s.answers ? Math.round(s.correct / s.answers * 100) : null; return s;
+}
+function weekHtml(back) {
+  const s = weekStats(back), prev = weekStats(back + 1), end = new Date(s.ws + 6 * DAY), dt = d => new Date(d).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+  const tip = !s.days ? 'Bu hafta hiç çalışılmamış. Günde 5 dakikalık günün dersiyle küçük başla.' : s.days < 4 ? `${s.days} gün çalıştın. Hedef: haftada en az 5 gün, kısa da olsa her gün.` : s.weak ? `Düzenlisin! En çok zorlandığın konu ${(ERR_CATS[s.weak[0]] || ERR_CATS.diger)[0]}; bu hafta Yanlış Deposu’ndan o türü çalış.` : 'Düzenli ve hatasız bir hafta. Bir sonraki üniteye geçmenin tam zamanı.';
+  const diff = s.xp - prev.xp;
+  return `<div class="muted" style="font-size:14px;margin-bottom:12px">${dt(s.ws)} – ${dt(end)}</div>
+    <div class="wk-tiles">${[['Çalışılan gün', s.days, '/ 7'], ['XP', s.xp, diff ? (diff > 0 ? '+' : '') + diff + ' önceki haftaya göre' : ''], ['Biten ders', s.lessons, ''], ['Doğruluk', s.acc == null ? '—' : '%' + s.acc, ''], ['Yeni kelime', s.words.length, ''], ['Çalışma', s.min, 'dk']].map(([l, v, c]) => `<div class="wk-t"><span>${l}</span><b class="tabular">${v}</b><small>${c}</small></div>`).join('')}</div>
+    <p class="wk-tip">${esc(tip)}</p>
+    ${s.words.length ? `<div class="hub-h" style="margin:14px 0 8px">Bu hafta öğrendiğin kelimeler</div><div class="gd-words">${s.words.slice(0, 24).map(c => `<button class="gd-w" onclick="wordDetail(${jsq(c.de)})"><b lang="de">${esc(c.de)}</b><span>${esc(c.tr)}</span></button>`).join('')}</div>` : ''}`;
+}
+let WK_BACK = 1;
+VIEWS.weekly = () => `<div class="tabs" style="max-width:360px">${[[1, 'Geçen hafta'], [0, 'Bu hafta']].map(([b, t]) => `<button class="tab ${WK_BACK === b ? 'active' : ''}" onclick="WK_BACK=${b};go('weekly')">${t}</button>`).join('')}</div><section class="panel">${weekHtml(WK_BACK)}</section>`;
+function weeklyAuto() {
+  if (!D || RO) return; const key = new Date(weekStart()).toISOString().slice(0, 10); if (D.weekSeen === key) return;
+  const s = weekStats(1); D.weekSeen = key; save(); if (!s.xp) return;
+  setTimeout(() => { if (LSN || $('#modalRoot').innerHTML) return; modal(`<div class="sheet-head"><h3>Geçen haftanın özeti</h3><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="sheet-body">${weekHtml(1)}<button class="btn" style="margin-top:16px" onclick="closeModal()">Bu haftaya başla</button></div>`, true, 600); }, 1600);
+}
+
+/* ---------- 9) Kelime ayrıntı sayfası ---------- */
+function wdExamples(de) {
+  const w = bareWord(wordForms(de)[0]).split(/\s+/)[0]; if (!w || w.length < 2) return [];
+  const re = new RegExp('(^|[^\\p{L}])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '([^\\p{L}]|$)', 'iu'), seen = new Set();
+  return LEVELS.flatMap(L => L.units.flatMap(u => u.s)).concat(STORIES.flatMap(s => s.s)).filter(x => re.test(x[0]) && !seen.has(x[0]) && seen.add(x[0])).slice(0, 5);
+}
+function wordDetail(de) {
+  if (!D) return; const f = wordForms(de)[0], art = (f.match(ART_RE) || [])[1], bare = bareWord(f).toLowerCase();
+  const card = D.cards.find(c => norm(c.de) === norm(de) || norm(c.de) === norm(f)), fq = freqFind(f);
+  const units = []; LEVELS.forEach(L => L.units.forEach(u => { const v = u.v.find(x => norm(x[0]) === norm(f) || bareWord(wordForms(x[0])[0]).toLowerCase() === bare); if (v) units.push({ L, u, v }); }));
+  const tr = (card && card.tr) || (units[0] && units[0].v[1]) || (fq && fq.tr) || '', ex = wdExamples(f), emo = wordEmoji(f, card);
+  const wr = D.wrong.filter(x => sFold(JSON.stringify(x.item) + ' ' + x.given).includes(sFold(bare))).length;
+  const due = card ? (card.due <= Date.now() ? 'bugün' : fmtIvl(card.due - Date.now()) + ' sonra') : '';
+  modal(`<div class="sheet-head"><h3>Kelime</h3><button class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div><div class="sheet-body">
+    <div class="wd-top">${emo ? `<span class="wd-emo" aria-hidden="true">${emo}</span>` : ''}<div style="flex:1;min-width:0"><div class="wd-de" lang="de">${esc(f)}</div><div class="wd-tr">${esc(tr) || '<span class="muted">Çevirisi yok</span>'}</div></div><button class="icon-btn" data-say="${esc(f)}" onclick="say(this.dataset.say)" aria-label="Dinle"><i class="fa-solid fa-volume-high"></i></button></div>
+    <div class="wd-facts">${art ? `<span><small>Artikel</small><b>${art}</b></span>` : ''}${card ? `<span><small>Aşama</small><b>${STAGES[Math.max(0, (card.box || 1) - 1)][0]}</b></span><span><small>Sıradaki tekrar</small><b>${due}</b></span>` : '<span><small>Tekrar kutusu</small><b>Kutuda değil</b></span>'}<span><small>Yanlış</small><b class="tabular">${wr}</b></span>${fq ? `<span><small>Sık kelime</small><b>${fq.lv}</b></span>` : ''}</div>
+    ${units.length ? `<div class="hub-h" style="margin:16px 0 8px">Geçtiği dersler</div><div class="row">${units.map(x => `<button class="chip" style="cursor:pointer" onclick="closeModal();openUnit('${x.u.id}')">${x.L.id} · ${esc(x.u.t)}</button>`).join('')}</div>` : ''}
+    <div class="hub-h" style="margin:16px 0 8px">Örnek cümleler</div>${ex.length ? ex.map(s => `<div class="gd-ex"><div class="gd-de" lang="de">${esc(s[0])}</div><div class="gd-tr">${esc(s[1] || '')}</div><button class="us-ib" aria-label="Dinle" data-say="${esc(s[0])}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i></button></div>`).join('') : '<p class="muted" style="margin:0">Bu kelime derslerdeki cümlelerde geçmiyor; yapay zekâya örnek ürettirebilirsin.</p>'}
+    <div class="row" style="margin-top:16px">${!card && tr ? `<button class="btn" onclick="addCard(${jsq(f)},${jsq(tr)},'detail');closeModal();wordDetail(${jsq(f)})"><i class="fa-solid fa-plus"></i> Kutuya ekle</button>` : ''}<button class="btn btn-ghost" onclick="closeModal();PRON.target=${jsq(f)};go('deck')"><i class="fa-solid fa-microphone"></i> Telaffuz et</button><button class="btn btn-ghost" onclick="wdAI(${jsq(f)})"><i class="fa-solid fa-wand-magic-sparkles"></i> Çoğul, çekim, örnek</button></div><div id="wdAi"></div></div>`, true, 580);
+}
+async function wdAI(w) { const o = $('#wdAi'); o.innerHTML = '<div class="ai-box" style="max-width:none;margin-top:12px"><span class="typing"><i></i><i></i><i></i></span></div>'; try { o.innerHTML = `<div class="ai-box" style="max-width:none;margin-top:12px">${md(await aiText(`Almanca “${w}”: Türkçe anlamı; isimse artikeli ve çoğulu, fiilse Präsens (er), Präteritum ve Perfekt hâli, sıfatsa karşılaştırma biçimleri; ${levelName()} seviyesinde 3 örnek cümle (Almanca + Türkçe). Çok kısa yaz.`, tutorSys()))}</div>`; } catch (e) { o.innerHTML = `<div class="ai-box">${aiErr(e)}</div>`; } }
+const _afterDeckE4 = AFTER.deck;
+AFTER.deck = () => { if (_afterDeckE4) _afterDeckE4(); document.querySelectorAll('.deck-row b').forEach(b => { b.style.cursor = 'pointer'; b.title = 'Ayrıntı'; b.onclick = () => wordDetail(b.textContent); }); };
+const _openUnitE4 = openUnit;
+openUnit = function (id) { const el = _openUnitE4.apply(this, arguments); if (el) el.querySelectorAll('.us-w-de').forEach(d => { d.style.cursor = 'pointer'; d.onclick = () => wordDetail(d.textContent); }); return el; };
+
+/* ---------- 10) Otomatik gece modu ---------- */
+const hmMin = s => { const [h, m] = String(s || '0:0').split(':').map(Number); return h * 60 + (m || 0); };
+function nightDark() { const n = CFG.night; if (!n || !n.on) return null; const d = new Date(), m = d.getHours() * 60 + d.getMinutes(), f = hmMin(n.from), t = hmMin(n.to); return f < t ? m >= f && m < t : m >= f || m < t; }
+const _applyThemeE4 = applyTheme;
+applyTheme = function () { _applyThemeE4.apply(this, arguments); const d = nightDark(); if (d != null) document.documentElement.classList.toggle('dark', d); };
+const _toggleThemeE4 = toggleTheme;
+toggleTheme = function () { if (CFG.night && CFG.night.on) { CFG.night.on = false; saveCfg(); toast('Otomatik gece modu kapatıldı; temayı artık sen seçiyorsun'); } return _toggleThemeE4.apply(this, arguments); };
+setInterval(() => { if (!CFG.night || !CFG.night.on) return; const was = document.documentElement.classList.contains('dark'); applyTheme(); if (was !== document.documentElement.classList.contains('dark') && D) renderTopbar(); }, 60000);
+const _settingsE4 = VIEWS.settings;
+VIEWS.settings = () => { const n = CFG.night || { on: false, from: '21:00', to: '07:00' }; return `<section class="panel" style="margin-bottom:16px"><div class="panel-head"><h2>Otomatik gece modu</h2></div>
+  <label class="between" style="cursor:pointer"><b>Belirli saatlerde koyu temaya geç</b><input type="checkbox" ${n.on ? 'checked' : ''} onchange="CFG.night=Object.assign({from:'21:00',to:'07:00'},CFG.night||{},{on:this.checked});saveCfg();applyTheme();renderTopbar()"></label>
+  <div class="row" style="margin-top:12px"><span class="muted" style="font-size:14px">Başlangıç</span><input type="time" class="pill-input" style="max-width:140px" value="${n.from}" onchange="CFG.night=Object.assign({on:true,to:'07:00'},CFG.night||{},{from:this.value});saveCfg();applyTheme();renderTopbar()"><span class="muted" style="font-size:14px">Bitiş</span><input type="time" class="pill-input" style="max-width:140px" value="${n.to}" onchange="CFG.night=Object.assign({on:true,from:'21:00'},CFG.night||{},{to:this.value});saveCfg();applyTheme();renderTopbar()"></div>
+  <p class="note">Açıkken tema saate göre kendiliğinden değişir. Üst menüden temayı elle değiştirirsen otomatik mod kapanır.</p></section>` + _settingsE4(); };
+
+/* ---------- Ders sonu: deneme ve düello ---------- */
+const _lsE4 = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts, score = LSN ? LSN.correct / LSN.items.length : 0, secs = LSN ? Math.round((Date.now() - LSN.t0) / 1000) : 0, n = LSN ? LSN.items.length : 0, c = LSN ? LSN.correct : 0;
+  _lsE4.apply(this, arguments); if (!o) return;
+  const foot = $('#lsFoot .ls-foot-in'), body = $('#lsBody > div');
+  if (o.kind === 'mock' && MOCK) {
+    clearInterval(MOCK_T); MOCK.scores[MOCK.si] = Math.round(score * 100); const last = MOCK.si === MOCK_SECS.length - 1, ok = MOCK.scores[MOCK.si] >= 60;
+    if (body) body.insertAdjacentHTML('beforeend', `<div class="remed"><b>${MOCK_SECS[MOCK.si][1]}: %${MOCK.scores[MOCK.si]}</b> ${ok ? 'Bu bölümü geçtin.' : 'Bu bölüm için %60 gerekiyordu.'}</div>`);
+    if (foot) foot.innerHTML = `<span class="muted">${MOCK.si + 1} / ${MOCK_SECS.length} bölüm</span><button class="btn" onclick="mockNext()">${last ? 'Sonuçları gör' : 'Sonraki bölüm: ' + MOCK_SECS[MOCK.si + 1][1]}</button>`;
+  }
+  if (o.kind === 'duel') {
+    const d = DUELS[o.duelId]; if (!d) return; d.res = d.res || {}; d.res[PID] = { score: c, n, time: secs, ts: Date.now() }; duelPut(d, true);
+    const w = duelWinner(d), op = d.from === PID ? d.to : d.from;
+    if (body) body.insertAdjacentHTML('beforeend', `<div class="remed">${w ? `<b>${w === PID ? 'Kazandın!' : w === 'tie' ? 'Berabere.' : 'Bu sefer ' + esc(pName(op)) + ' kazandı.'}</b> Sen ${c}/${n} (${secs} sn), rakibin ${d.res[op].score}/${d.res[op].n} (${d.res[op].time} sn).` : `Sonucun: <b>${c}/${n}</b>, ${secs} sn. ${esc(pName(op))} oynayınca kazanan Düello sayfasında görünür.`}</div>`);
+    if (w === PID) confettiBurst();
+  }
+};
+
+/* ---------- Profil açılınca: okuma metinleri, düello bildirimi, haftalık özet ---------- */
+const _openProfileE4 = openProfile;
+openProfile = async function () {
+  const r = await _openProfileE4.apply(this, arguments); rdSync();
+  if (!RO) { weeklyAuto(); duelLoad().then(() => { const n = Object.values(DUELS).filter(d => d.to === PID && !(d.res || {})[PID]).length; if (n) toast(`${n} düello seni bekliyor · Pratik → Düello`); }).catch(() => {}); }
+  return r;
 };
 
 /* ---------- Başlat ---------- */
