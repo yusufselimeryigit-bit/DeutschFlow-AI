@@ -2719,7 +2719,54 @@ html.fx .side-av, html.fx #topbar .icon-btn[title="Profil değiştir"] { backgro
 .tp-tile.tp-later { filter: saturate(.35) brightness(1.05); opacity: .62; }
 .tp-tile.tp-later:hover, .tp-tile.tp-later:focus-visible { opacity: .85; }
 html.dark .tp-tile.tp-later { filter: saturate(.35) brightness(.8); }
+/* Ders araçları */
+.yt-box { margin: 0 0 18px; display: grid; gap: 10px; }
+.yt-player { position: relative; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #000; box-shadow: var(--card-shadow, 0 1px 2px rgba(0,0,0,.08)); }
+.yt-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt-poster { position: absolute; inset: 0; border: 0; padding: 0; cursor: pointer; background: #000; color: #fff; }
+.yt-poster img { width: 100%; height: 100%; object-fit: cover; opacity: .85; display: block; }
+.yt-poster > i { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.92); color: #e00; font-size: 24px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+.yt-poster span { position: absolute; left: 14px; bottom: 12px; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.yt-acts { display: flex; gap: 8px; align-items: center; }
+.yt-acts button, .yt-ext { border: 0; cursor: pointer; border-radius: 999px; padding: 10px 14px; font: 600 14px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface); color: var(--accent); display: inline-flex; gap: 6px; align-items: center; text-decoration: none; box-shadow: var(--card-shadow, none); }
+.yt-acts .yt-watch.on { background: var(--pos-bg); color: var(--positive); }
+.yt-ext { margin-left: auto; padding: 10px 12px; }
+.yt-note { background: var(--surface); border-radius: 18px; padding: 10px 14px; box-shadow: var(--card-shadow, none); }
+.yt-note summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; gap: 8px; align-items: center; color: var(--ink); }
+.yt-note summary small { color: var(--muted); font-weight: 400; margin-left: auto; }
+.yt-note textarea { width: 100%; margin-top: 10px; font-size: 16px; }
+.yt-note-s { display: block; color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+.yt-page section { margin-bottom: 28px; }
+.yt-row { cursor: default; }
+.yt-row .yt-ra { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+.yt-row .yt-ra .btn { min-height: 34px; }
+.yt-row.today { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.yt-day { width: 40px; flex-shrink: 0; font-weight: 700; color: var(--muted); }
+.yt-st { font-size: 13px; font-weight: 600; padding: 4px 9px; border-radius: 999px; }
+.yt-st.ok { color: var(--positive); background: var(--pos-bg); } .yt-st.late { color: var(--negative); background: var(--neg-bg); } .yt-st.now { color: var(--accent); background: var(--accent-soft); }
+.yt-warn { display: flex; align-items: center; gap: 12px; width: 100%; border: 0; cursor: pointer; text-align: left; padding: 14px 16px; border-radius: 20px; background: var(--neg-bg); color: var(--negative); }
+.yt-warn span { flex: 1; display: flex; flex-direction: column; } .yt-warn small { color: var(--ink); opacity: .75; }
+.yt-seen { color: var(--accent); font-size: 11px; }
+.pdf-yt { margin-top: 14px; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 12px; }
+html.am .am-hero p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 560px) { .yt-row { flex-wrap: wrap; row-gap: 8px; } .yt-row .yt-ra { width: 100%; justify-content: flex-end; } .yt-row .yt-day + .am-lm { min-width: calc(100% - 60px); } }
 /* YTCSS-END */
+.tb-row .stat-pill { margin: 0; }
+/* Yüzen bar: iOS gibi parmakla kaydırılan cam mercek */
+@media (max-width: 960px) {
+  html.am #bottomNav { touch-action: none; -webkit-user-select: none; user-select: none; }
+  html.am #bottomNav .bn-item { position: relative; z-index: 1; background: transparent !important; box-shadow: none !important; }
+  html.am #bottomNav .bn-lens { position: absolute; top: 6px; bottom: 6px; left: 0; border-radius: 26px; pointer-events: none; z-index: 0;
+    background: color-mix(in srgb, var(--accent) 14%, rgba(255,255,255,.35)); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 .5px rgba(255,255,255,.5), 0 4px 14px -6px rgba(0,0,0,.25);
+    -webkit-backdrop-filter: blur(6px) saturate(160%); backdrop-filter: blur(6px) saturate(160%);
+    transition: transform .45s cubic-bezier(.32,.72,0,1), width .45s cubic-bezier(.32,.72,0,1), scale .3s cubic-bezier(.32,.72,0,1); will-change: transform; }
+  html.am.dark #bottomNav .bn-lens { background: color-mix(in srgb, var(--accent) 22%, rgba(255,255,255,.08)); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 4px 14px -6px rgba(0,0,0,.6); }
+  html.am #bottomNav.dragging .bn-lens { transition: scale .3s cubic-bezier(.32,.72,0,1); scale: 1.12 1.18; }
+  html.am #bottomNav .bn-item.hov { color: var(--accent) !important; }
+  html.am #bottomNav.dragging .bn-item.active:not(.hov), html.am #bottomNav.dragging .bn-item.active:not(.hov) i { color: var(--ink) !important; }
+  html.am #bottomNav .bn-item.hov i { color: var(--accent) !important; }
+}
+@media (prefers-reduced-motion: reduce) { html.am #bottomNav .bn-lens { transition: none; } }
 #swBack { position: fixed; left: 0; top: 50%; z-index: 9999; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--surface-2); box-shadow: 0 6px 18px -8px rgba(0,0,0,.45); transform: translate(-46px,-50%); pointer-events: none; transition: background .15s, color .15s; }
 #swBack.go { background: var(--accent); color: #fff; }
 .tp-fxq { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
@@ -2786,11 +2833,10 @@ html.am .lg, html.am #bottomNav, html.am #amMini, html.am.tb-sc #topbar, html.am
   html.am .am-lt { display: none !important; }
   html.am .am-home { gap: 28px; }
 }
-html.am .tb-row { gap: 8px; flex-wrap: nowrap; }
+html.am .tb-row, html.am #topbar .tb-row { gap: 10px !important; flex-wrap: nowrap; }
 html.am #topbar .icon-btn, html.am .tutor-top { width: 38px; height: 38px; min-width: 38px; border-radius: 999px; background: var(--lg-bg-strong) !important; color: var(--accent) !important; box-shadow: var(--lg-hi), 0 1px 3px rgba(0, 0, 0, .08); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); border: .5px solid var(--lg-edge); font-size: 15px; transition: transform .25s var(--am-spring); }
 html.am #topbar .icon-btn:active { transform: scale(.92); }
 html.am .stat-pill { height: 38px; padding: 0 12px; border-radius: 999px; background: var(--lg-bg-strong); box-shadow: var(--lg-hi), 0 1px 3px rgba(0, 0, 0, .08); border: .5px solid var(--lg-edge); gap: 5px; font: 600 15px var(--sf); }
-html.am .tb-row .stat-pill + .stat-pill { margin-left: -4px; }
 
 /* ---------- Yüzen cam alt bar ---------- */
 @media (max-width: 960px) {
@@ -8685,7 +8731,7 @@ function navBack() { if (closeTop()) return; if (NAV_I > 0) history.back(); }
   const target = () => $('#modalRoot .sheet') || $('#lesson') || (tutorOpen() && $('#tutorPanel')) || $('#view');
   const reset = () => { if (tgt) { tgt.style.transition = ''; tgt.style.transform = ''; tgt.style.opacity = ''; } if (ind) { ind.remove(); ind = null; } on = false; lock = null; tgt = null; };
   addEventListener('touchstart', e => {
-    const t = e.touches[0]; if (e.touches.length > 1 || t.clientX > EDGE || !D || $('#app').hidden || $('#drawLayer') || !canBack()) return;
+    const t = e.touches[0]; if (e.touches.length > 1 || t.clientX > EDGE || (e.target.closest && e.target.closest('#bottomNav')) || !D || $('#app').hidden || $('#drawLayer') || !canBack()) return;
     on = true; lock = null; sx = t.clientX; sy = t.clientY; dx = 0; t0 = Date.now(); tgt = target();
   }, { passive: true });
   addEventListener('touchmove', e => {
@@ -9595,9 +9641,10 @@ const YT_UNITS = [
   <div class="ex">Mir tut der Rücken weh. – Mir tun die Füße weh.<i>Sırtım ağrıyor. – Ayaklarım ağrıyor. (wehtun + Dativ)</i></div>
   <div class="ex">Ich habe Fieber, Husten und Schnupfen.<i>Ateşim, öksürüğüm ve nezlem var.</i></div>
   <div class="ex">Was fehlt Ihnen? – Ich bin krank.<i>Neyiniz var? – Hastayım.</i></div>
-  <div class="ex">Gute Besserung!<i>Geçmiş olsun!</i></div>`,
-  v: [["der Kopf", "baş"], ["das Auge", "göz"], ["das Ohr", "kulak"], ["die Nase", "burun"], ["der Bauch", "karın"], ["der Rücken", "sırt"], ["das Bein", "bacak"], ["der Fuß", "ayak"], ["die Kopfschmerzen", "baş ağrısı"], ["das Fieber", "ateş"], ["der Husten", "öksürük"], ["krank", "hasta"]],
-  s: [["Ich habe Kopfschmerzen.", "Başım ağrıyor."], ["Mir tut der Rücken weh.", "Sırtım ağrıyor."], ["Ich habe Fieber.", "Ateşim var."], ["Was fehlt Ihnen?", "Neyiniz var?"], ["Ich bin krank.", "Hastayım."], ["Gute Besserung!", "Geçmiş olsun!"]],
+  <div class="ex">Gute Besserung!<i>Geçmiş olsun!</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videoda hoca vücudu artikellerine göre gruplar: <b>der</b> Kopf, Hals, Rücken, Bauch, Arm, Finger, Mund, Zahn, Fuß · <b>die</b> Brust, Nase, Hand · <b>das</b> Bein, Knie, Auge, Ohr.</div><div class="tip">🎬 Çoğullar: die Arme, die Finger, die Zähne, die Füße, die Augen, die Ohren.</div>`,
+  v: [["die Brust", "göğüs"], ["das Knie", "diz"], ["die Zähne", "dişler"], ["die Schmerzen", "ağrılar, sancı"], ["der Kopf", "baş"], ["das Auge", "göz"], ["das Ohr", "kulak"], ["die Nase", "burun"], ["der Bauch", "karın"], ["der Rücken", "sırt"], ["das Bein", "bacak"], ["der Fuß", "ayak"], ["die Kopfschmerzen", "baş ağrısı"], ["das Fieber", "ateş"], ["der Husten", "öksürük"], ["krank", "hasta"]],
+  s: [["Ich habe Zahnschmerzen.", "Dişim ağrıyor."], ["Mir tun die Füße weh.", "Ayaklarım ağrıyor."], ["Ich habe Kopfschmerzen.", "Başım ağrıyor."], ["Mir tut der Rücken weh.", "Sırtım ağrıyor."], ["Ich habe Fieber.", "Ateşim var."], ["Was fehlt Ihnen?", "Neyiniz var?"], ["Ich bin krank.", "Hastayım."], ["Gute Besserung!", "Geçmiş olsun!"]],
   q: [["mc", "„der Bauch“", ["sırt", "karın", "baş"], 1, "der Bauch = karın."],
       ["mc", "„Sırtım ağrıyor.“", ["Ich tut der Rücken weh.", "Mir tut der Rücken weh.", "Mich tut der Rücken weh."], 1, "wehtun + Dativ: mir."],
       ["fill", "Ich habe ___. (baş ağrısı)", ["Kopfschmerzen", "kopfschmerzen"], "Kopf + Schmerzen."],
@@ -9661,9 +9708,10 @@ const YT_UNITS = [
   <div class="tip">💡 Açık/koyu: <b>hell</b>blau (açık mavi), <b>dunkel</b>grün (koyu yeşil). Bitişik yazılır.</div>
   <h4>Soru ve cevap</h4>
   <div class="ex">Welche Farbe hat das Auto? – Das Auto ist rot.<i>Araba ne renk? – Araba kırmızı.</i></div>
-  <div class="ex">Meine Lieblingsfarbe ist Blau.<i>En sevdiğim renk mavi. (isim olunca büyük harf)</i></div>`,
-  v: [["rot", "kırmızı"], ["blau", "mavi"], ["grün", "yeşil"], ["gelb", "sarı"], ["schwarz", "siyah"], ["weiß", "beyaz"], ["grau", "gri"], ["braun", "kahverengi"], ["hell", "açık (renk)"], ["dunkel", "koyu"], ["die Farbe", "renk"], ["die Lieblingsfarbe", "en sevilen renk"]],
-  s: [["Welche Farbe hat das Auto?", "Araba ne renk?"], ["Das Auto ist rot.", "Araba kırmızı."], ["Meine Lieblingsfarbe ist Blau.", "En sevdiğim renk mavi."], ["Der Himmel ist hellblau.", "Gökyüzü açık mavi."], ["Die Tasche ist schwarz.", "Çanta siyah."]],
+  <div class="ex">Meine Lieblingsfarbe ist Blau.<i>En sevdiğim renk mavi. (isim olunca büyük harf)</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Hoca renkleri nesnelerle öğretiyor: der Schnee ist weiß, die Zitrone ist gelb, das Meer ist blau, der Himmel ist blau, der Hut ist braun, das Kleid ist rosa.</div>`,
+  v: [["der Himmel", "gökyüzü"], ["das Meer", "deniz"], ["der Schnee", "kar"], ["der Hut", "şapka"], ["rot", "kırmızı"], ["blau", "mavi"], ["grün", "yeşil"], ["gelb", "sarı"], ["schwarz", "siyah"], ["weiß", "beyaz"], ["grau", "gri"], ["braun", "kahverengi"], ["hell", "açık (renk)"], ["dunkel", "koyu"], ["die Farbe", "renk"], ["die Lieblingsfarbe", "en sevilen renk"]],
+  s: [["Der Schnee ist weiß.", "Kar beyazdır."], ["Die Zitrone ist gelb.", "Limon sarıdır."], ["Das Meer ist blau.", "Deniz mavidir."], ["Der Hut ist braun.", "Şapka kahverengi."], ["Welche Farbe hat das Auto?", "Araba ne renk?"], ["Das Auto ist rot.", "Araba kırmızı."], ["Meine Lieblingsfarbe ist Blau.", "En sevdiğim renk mavi."], ["Der Himmel ist hellblau.", "Gökyüzü açık mavi."], ["Die Tasche ist schwarz.", "Çanta siyah."]],
   q: [["mc", "„gelb“", ["yeşil", "sarı", "gri"], 1, "gelb = sarı."],
       ["mc", "„koyu yeşil“", ["hellgrün", "dunkelgrün", "grünhell"], 1, "dunkel + grün."],
       ["fill", "Welche ___ hat das Auto?", "Farbe", "die Farbe = renk."],
@@ -9729,9 +9777,10 @@ const YT_UNITS = [
   <tr><td>ihr</td><td>trefft</td><td>fahrt</td></tr>
   <tr><td>sie/Sie</td><td>treffen</td><td>fahren</td></tr></table></div>
   <div class="ex">Am Wochenende trifft er seine Freunde.<i>Hafta sonu arkadaşlarıyla buluşuyor.</i></div>
-  <div class="ex">Fährst du gern Fahrrad?<i>Bisiklete binmeyi sever misin?</i></div>`,
-  v: [["das Hobby", "hobi"], ["gern", "severek"], ["treffen", "buluşmak"], ["fahren", "gitmek, sürmek"], ["wandern", "doğa yürüyüşü yapmak"], ["reisen", "seyahat etmek"], ["malen", "resim yapmak"], ["tanzen", "dans etmek"], ["Fahrrad fahren", "bisiklete binmek"], ["der Freund", "arkadaş"], ["die Freizeit", "boş zaman"]],
-  s: [["Was ist dein Hobby?", "Hobin ne?"], ["Ich lese gern.", "Okumayı severim."], ["Am Wochenende trifft er seine Freunde.", "Hafta sonu arkadaşlarıyla buluşuyor."], ["Fährst du gern Fahrrad?", "Bisiklete binmeyi sever misin?"], ["Wir wandern oft in den Bergen.", "Dağlarda sık yürüyüş yaparız."], ["In meiner Freizeit höre ich Musik.", "Boş zamanımda müzik dinlerim."]],
+  <div class="ex">Fährst du gern Fahrrad?<i>Bisiklete binmeyi sever misin?</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki hobiler: singen, Rad fahren, backen, Ski fahren, kochen, lesen, schwimmen, Freunde treffen, Gitarre / Klavier / Schach spielen.</div><div class="tip">🎬 Derece: <b>sehr gern</b> (çok severek) · <b>gern</b> · <b>nicht so gern</b> (pek sevmeden). Ayrıca <b>Das macht mir Spaß.</b> = Bu bana keyif veriyor.</div>`,
+  v: [["backen", "(fırında) pişirmek"], ["Ski fahren", "kayak yapmak"], ["Klavier spielen", "piyano çalmak"], ["Schach spielen", "satranç oynamak"], ["sehr gern", "çok severek"], ["der Spaß", "eğlence, keyif"], ["der Roman", "roman"], ["das Gedicht", "şiir"], ["das Hobby", "hobi"], ["gern", "severek"], ["treffen", "buluşmak"], ["fahren", "gitmek, sürmek"], ["wandern", "doğa yürüyüşü yapmak"], ["reisen", "seyahat etmek"], ["malen", "resim yapmak"], ["tanzen", "dans etmek"], ["Fahrrad fahren", "bisiklete binmek"], ["der Freund", "arkadaş"], ["die Freizeit", "boş zaman"]],
+  s: [["Ich fahre sehr gern Rad.", "Bisiklete binmeyi çok severim."], ["Kannst du Ski fahren? – Nein, das kann ich nicht.", "Kayak yapabilir misin? – Hayır, yapamam."], ["Ich lese gern Romane und Gedichte.", "Roman ve şiir okumayı severim."], ["Ich treffe nicht so gern Freunde.", "Arkadaşlarımla buluşmayı pek sevmem."], ["Kochen macht mir Spaß.", "Yemek yapmak bana keyif veriyor."], ["Was ist dein Hobby?", "Hobin ne?"], ["Ich lese gern.", "Okumayı severim."], ["Am Wochenende trifft er seine Freunde.", "Hafta sonu arkadaşlarıyla buluşuyor."], ["Fährst du gern Fahrrad?", "Bisiklete binmeyi sever misin?"], ["Wir wandern oft in den Bergen.", "Dağlarda sık yürüyüş yaparız."], ["In meiner Freizeit höre ich Musik.", "Boş zamanımda müzik dinlerim."]],
   q: [["fill", "du ___ (treffen)", "triffst", "e→i: du triffst."],
       ["fill", "er ___ nach Köln. (fahren)", "fährt", "a→ä: er fährt."],
       ["mc", "„Yüzmeyi severim.“", ["Ich gern schwimme.", "Ich schwimme gern.", "Ich mag schwimme."], 1, "fiil + gern."],
@@ -9856,9 +9905,10 @@ const YT_UNITS = [
   <tr><td>die Ananas</td><td>ananas</td><td>die Ananas</td></tr></table></div>
   <div class="tip">💡 Meyvelerin çoğu <b>die</b> ve -e ile biter; çoğulu -n. das Obst hep tekil kullanılır.</div>
   <div class="ex">Ich esse gern Erdbeeren.<i>Çilek yemeyi severim.</i></div>
-  <div class="ex">Ein Kilo Äpfel, bitte.<i>Bir kilo elma lütfen.</i></div>`,
-  v: [["das Obst", "meyve"], ["der Apfel", "elma"], ["die Birne", "armut"], ["die Banane", "muz"], ["die Orange", "portakal"], ["die Erdbeere", "çilek"], ["die Kirsche", "kiraz"], ["die Traube", "üzüm"], ["die Zitrone", "limon"], ["der Pfirsich", "şeftali"], ["die Wassermelone", "karpuz"]],
-  s: [["Ich esse gern Erdbeeren.", "Çilek yemeyi severim."], ["Ein Kilo Äpfel, bitte.", "Bir kilo elma, lütfen."], ["Die Banane ist gelb.", "Muz sarı."], ["Im Sommer essen wir Wassermelone.", "Yazın karpuz yeriz."], ["Obst ist gesund.", "Meyve sağlıklıdır."]],
+  <div class="ex">Ein Kilo Äpfel, bitte.<i>Bir kilo elma lütfen.</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Hoca portakalın iki adını da veriyor: <b>die Orange</b> = <b>die Apfelsine</b>. die Kirsche hem kiraz hem vişne için kullanılır; ayrıca die Aprikose (kayısı).</div>`,
+  v: [["die Apfelsine", "portakal"], ["die Aprikose", "kayısı"], ["das Obst", "meyve"], ["der Apfel", "elma"], ["die Birne", "armut"], ["die Banane", "muz"], ["die Orange", "portakal"], ["die Erdbeere", "çilek"], ["die Kirsche", "kiraz"], ["die Traube", "üzüm"], ["die Zitrone", "limon"], ["der Pfirsich", "şeftali"], ["die Wassermelone", "karpuz"]],
+  s: [["Ich esse gern Aprikosen.", "Kayısı yemeyi severim."], ["Ich esse gern Erdbeeren.", "Çilek yemeyi severim."], ["Ein Kilo Äpfel, bitte.", "Bir kilo elma, lütfen."], ["Die Banane ist gelb.", "Muz sarı."], ["Im Sommer essen wir Wassermelone.", "Yazın karpuz yeriz."], ["Obst ist gesund.", "Meyve sağlıklıdır."]],
   q: [["mc", "„die Birne“", ["armut", "elma", "şeftali"], 0, "die Birne = armut."],
       ["mc", "der Apfel → çoğul?", ["die Apfels", "die Äpfel", "die Apfeln"], 1, "die Äpfel."],
       ["mc", "„kiraz“", ["die Kirche", "die Kirsche", "die Erdbeere"], 1, "Kirsche (kilise: Kirche!)."],
@@ -9875,9 +9925,10 @@ const YT_UNITS = [
   <div class="tip">💡 Kısa yol: Nominativ tekil ve Akkusativ dişil/nötr → <b>-e</b>. Geri kalan her şey → <b>-en</b>.</div>
   <div class="ex">Der rote Pullover ist schön.<i>Kırmızı kazak güzel.</i></div>
   <div class="ex">Ich kaufe den roten Pullover.<i>Kırmızı kazağı alıyorum.</i></div>
-  <div class="ex">Er wohnt in dem (im) großen Haus.<i>Büyük evde oturuyor.</i></div>`,
-  v: [["neu", "yeni"], ["alt", "eski"], ["groß", "büyük"], ["klein", "küçük"], ["schön", "güzel"], ["rot", "kırmızı"], ["der Pullover", "kazak"], ["die Jacke", "ceket"], ["das Hemd", "gömlek"], ["teuer", "pahalı"]],
-  s: [["Der neue Tisch ist schön.", "Yeni masa güzel."], ["Ich kaufe den roten Pullover.", "Kırmızı kazağı alıyorum."], ["Die alte Lampe ist kaputt.", "Eski lamba bozuk."], ["Er wohnt im großen Haus.", "Büyük evde oturuyor."], ["Die neuen Schuhe sind teuer.", "Yeni ayakkabılar pahalı."], ["Ich nehme die blaue Jacke.", "Mavi ceketi alıyorum."]],
+  <div class="ex">Er wohnt in dem (im) großen Haus.<i>Büyük evde oturuyor.</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki örnekler: <b>Der berühmte Hafen</b> gefällt mir. · <b>Der alte Marktplatz</b> gefällt mir. · <b>Das schwarze Kleid</b> gefällt ihr. · <b>Die netten Leute</b> … (çoğul -en)</div><div class="tip">🎬 Akkusativ: Wir finden <b>den alten Marktplatz</b> interessant. · Dativ: Ich komme mit <b>der alten Frau</b> zum Supermarkt. · Ihr lernt mit <b>den klugen Schülern</b>.</div>`,
+  v: [["berühmt", "ünlü"], ["der Hafen", "liman"], ["der Marktplatz", "pazar yeri, çarşı meydanı"], ["die Leute", "insanlar"], ["klug", "akıllı"], ["nett", "nazik, hoş"], ["neu", "yeni"], ["alt", "eski"], ["groß", "büyük"], ["klein", "küçük"], ["schön", "güzel"], ["rot", "kırmızı"], ["der Pullover", "kazak"], ["die Jacke", "ceket"], ["das Hemd", "gömlek"], ["teuer", "pahalı"]],
+  s: [["Der berühmte Hafen gefällt mir.", "Ünlü liman hoşuma gidiyor."], ["Wir finden den alten Marktplatz interessant.", "Eski pazar yerini ilginç buluyoruz."], ["Ich komme mit der alten Frau zum Supermarkt.", "Yaşlı kadınla süpermarkete geliyorum."], ["Ihr lernt mit den klugen Schülern.", "Akıllı öğrencilerle öğreniyorsunuz."], ["Der neue Tisch ist schön.", "Yeni masa güzel."], ["Ich kaufe den roten Pullover.", "Kırmızı kazağı alıyorum."], ["Die alte Lampe ist kaputt.", "Eski lamba bozuk."], ["Er wohnt im großen Haus.", "Büyük evde oturuyor."], ["Die neuen Schuhe sind teuer.", "Yeni ayakkabılar pahalı."], ["Ich nehme die blaue Jacke.", "Mavi ceketi alıyorum."]],
   q: [["mc", "der ___ Tisch (neu, Nom.)", ["neu", "neue", "neuen"], 1, "Nominativ tekil: -e."],
       ["mc", "Ich kaufe den ___ Pullover. (rot)", ["rote", "roten", "roter"], 1, "Akkusativ eril: -en."],
       ["mc", "die ___ Bücher (neu, çoğul)", ["neue", "neuen", "neu"], 1, "Çoğul: -en."],
@@ -9895,9 +9946,10 @@ const YT_UNITS = [
   <div class="ex">heute Morgen · morgen Abend · gestern Nachmittag<i>bu sabah · yarın akşam · dün öğleden sonra</i></div>
   <h4>Cümle sırası</h4>
   <div class="ex">Zuerst frühstücke ich, dann gehe ich zur Arbeit.<i>Önce kahvaltı yaparım, sonra işe giderim.</i></div>
-  <div class="tip">💡 Zaman zarfı başa gelirse fiil yine 2. sırada, özne arkasına geçer: <b>Morgen fahre ich</b> nach Berlin.</div>`,
-  v: [["gestern", "dün"], ["heute", "bugün"], ["morgen", "yarın"], ["übermorgen", "öbür gün"], ["vorgestern", "evvelsi gün"], ["jetzt", "şimdi"], ["gleich", "birazdan"], ["bald", "yakında"], ["später", "daha sonra"], ["zuerst", "önce"], ["dann", "sonra"], ["abends", "akşamları"]],
-  s: [["Morgen fahre ich nach Berlin.", "Yarın Berlin'e gidiyorum."], ["Zuerst frühstücke ich, dann gehe ich zur Arbeit.", "Önce kahvaltı yaparım, sonra işe giderim."], ["Ich komme gleich.", "Birazdan geliyorum."], ["Abends sehe ich fern.", "Akşamları televizyon izlerim."], ["Gestern war ich müde.", "Dün yorgundum."], ["Bis bald!", "Yakında görüşürüz!"]],
+  <div class="tip">💡 Zaman zarfı başa gelirse fiil yine 2. sırada, özne arkasına geçer: <b>Morgen fahre ich</b> nach Berlin.</div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Hoca tekrar eden zamanları da gösteriyor: <b>jeden Abend</b> (her akşam), <b>jeden Freitag</b> (her cuma), jeden Tag, jede Woche. Örnek fiil: putzen (temizlemek, fırçalamak).</div>`,
+  v: [["jeden Abend", "her akşam"], ["jeden Freitag", "her cuma"], ["putzen", "temizlemek, fırçalamak"], ["gestern", "dün"], ["heute", "bugün"], ["morgen", "yarın"], ["übermorgen", "öbür gün"], ["vorgestern", "evvelsi gün"], ["jetzt", "şimdi"], ["gleich", "birazdan"], ["bald", "yakında"], ["später", "daha sonra"], ["zuerst", "önce"], ["dann", "sonra"], ["abends", "akşamları"]],
+  s: [["Jeden Abend putze ich meine Zähne.", "Her akşam dişlerimi fırçalarım."], ["Jeden Freitag spiele ich Fußball.", "Her cuma futbol oynarım."], ["Morgen fahre ich nach Berlin.", "Yarın Berlin'e gidiyorum."], ["Zuerst frühstücke ich, dann gehe ich zur Arbeit.", "Önce kahvaltı yaparım, sonra işe giderim."], ["Ich komme gleich.", "Birazdan geliyorum."], ["Abends sehe ich fern.", "Akşamları televizyon izlerim."], ["Gestern war ich müde.", "Dün yorgundum."], ["Bis bald!", "Yakında görüşürüz!"]],
   q: [["mc", "„öbür gün“", ["vorgestern", "übermorgen", "morgen"], 1, "übermorgen."],
       ["mc", "„Yarın Berlin'e gidiyorum.“", ["Morgen ich fahre nach Berlin.", "Morgen fahre ich nach Berlin.", "Ich morgen fahre nach Berlin."], 1, "Fiil 2. sırada."],
       ["fill", "Zuerst esse ich, ___ trinke ich Kaffee. (sonra)", "dann", "zuerst … dann."],
@@ -10064,9 +10116,10 @@ const YT_UNITS = [
   <div class="ex">Würden Sie mir bitte helfen?<i>Bana yardım eder misiniz lütfen?</i></div>
   <div class="ex">Würdest du das Fenster zumachen?<i>Pencereyi kapatır mısın?</i></div>
   <h4>Sık kullanılan kısa biçimler</h4>
-  <div class="ex">wäre (sein) · hätte (haben) · könnte (können)<i>Ich hätte gern einen Kaffee. – Das wäre schön! – Könnten Sie das wiederholen?</i></div>`,
-  v: [["würde", "-erdim (Konj. II)"], ["würden", "-er misiniz"], ["gern", "seve seve"], ["reisen", "seyahat etmek"], ["hätte", "olsaydı (haben)"], ["wäre", "olurdu (sein)"], ["könnte", "-ebilirdi"], ["wiederholen", "tekrarlamak"], ["helfen", "yardım etmek"], ["der Traum", "rüya, hayal"]],
-  s: [["Ich würde gern nach Japan reisen.", "Japonya'ya gitmek isterdim."], ["Würden Sie mir bitte helfen?", "Bana yardım eder misiniz lütfen?"], ["Was würdest du machen?", "Sen ne yapardın?"], ["Das wäre schön!", "Bu güzel olurdu!"], ["Könnten Sie das wiederholen?", "Tekrar edebilir misiniz?"]],
+  <div class="ex">wäre (sein) · hätte (haben) · könnte (können)<i>Ich hätte gern einen Kaffee. – Das wäre schön! – Könnten Sie das wiederholen?</i></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki örnek: <b>Ich würde gern mit ihr essen gehen.</b> (Onunla yemeğe gitmek isterdim.) · Kibar bekletme: <b>Einen Moment, bitte!</b></div>`,
+  v: [["essen gehen", "yemeğe gitmek"], ["einen Moment", "bir dakika, bir an"], ["sich freuen", "sevinmek"], ["würde", "-erdim (Konj. II)"], ["würden", "-er misiniz"], ["gern", "seve seve"], ["reisen", "seyahat etmek"], ["hätte", "olsaydı (haben)"], ["wäre", "olurdu (sein)"], ["könnte", "-ebilirdi"], ["wiederholen", "tekrarlamak"], ["helfen", "yardım etmek"], ["der Traum", "rüya, hayal"]],
+  s: [["Ich würde gern mit ihr essen gehen.", "Onunla yemeğe gitmek isterdim."], ["Würdet ihr gern tanzen?", "Dans etmek ister miydiniz?"], ["Einen Moment, bitte!", "Bir dakika lütfen!"], ["Ich würde gern nach Japan reisen.", "Japonya'ya gitmek isterdim."], ["Würden Sie mir bitte helfen?", "Bana yardım eder misiniz lütfen?"], ["Was würdest du machen?", "Sen ne yapardın?"], ["Das wäre schön!", "Bu güzel olurdu!"], ["Könnten Sie das wiederholen?", "Tekrar edebilir misiniz?"]],
   q: [["fill", "du ___ (würde)", "würdest", "du würdest."],
       ["mc", "„Japonya'ya gitmek isterdim.“", ["Ich würde gern nach Japan reisen.", "Ich werde gern nach Japan reisen.", "Ich würde reisen gern nach Japan."], 0, "würde + gern + … + mastar."],
       ["mc", "Kibar rica:", ["Helfen Sie mir!", "Würden Sie mir bitte helfen?", "Sie helfen mir."], 1, "Würden Sie …?"],
@@ -10079,9 +10132,10 @@ const YT_UNITS = [
   <div class="ex">Wann fährt der Zug? → Können Sie mir sagen, wann der Zug fährt?<i>Trenin ne zaman kalktığını söyleyebilir misiniz?</i></div>
   <div class="ex">Wie heißt er? → Ich weiß nicht, wie er heißt.<i>Adının ne olduğunu bilmiyorum.</i></div>
   <div class="ex">Was kostet das? → Ich möchte wissen, was das kostet.<i>Bunun ne kadar olduğunu öğrenmek istiyorum.</i></div>
-  <div class="tip">💡 Ayrılabilen fiil yan cümlede birleşir: Wann kommt der Bus an? → Weißt du, wann der Bus <b>ankommt</b>?</div>`,
-  v: [["wo", "nerede"], ["wann", "ne zaman"], ["wie", "nasıl"], ["was", "ne"], ["warum", "neden"], ["wer", "kim"], ["wie viel", "ne kadar"], ["Wissen Sie, …?", "biliyor musunuz …?"], ["ankommen", "varmak"], ["abfahren", "kalkmak (araç)"]],
-  s: [["Wissen Sie, wo der Bahnhof ist?", "İstasyonun nerede olduğunu biliyor musunuz?"], ["Können Sie mir sagen, wann der Zug fährt?", "Trenin ne zaman kalktığını söyleyebilir misiniz?"], ["Ich weiß nicht, wie er heißt.", "Adını bilmiyorum."], ["Weißt du, wann der Bus ankommt?", "Otobüsün ne zaman vardığını biliyor musun?"], ["Ich möchte wissen, was das kostet.", "Bunun ne kadar tuttuğunu öğrenmek istiyorum."]],
+  <div class="tip">💡 Ayrılabilen fiil yan cümlede birleşir: Wann kommt der Bus an? → Weißt du, wann der Bus <b>ankommt</b>?</div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki örnekler: <b>Wissen Sie, wie spät es ist?</b> · <b>Können Sie mir sagen, wo ich Geld wechseln kann?</b> (Geld wechseln = para bozdurmak)</div>`,
+  v: [["das Geld", "para"], ["Geld wechseln", "para bozdurmak"], ["wecken", "uyandırmak"], ["wo", "nerede"], ["wann", "ne zaman"], ["wie", "nasıl"], ["was", "ne"], ["warum", "neden"], ["wer", "kim"], ["wie viel", "ne kadar"], ["Wissen Sie, …?", "biliyor musunuz …?"], ["ankommen", "varmak"], ["abfahren", "kalkmak (araç)"]],
+  s: [["Wissen Sie, wie spät es ist?", "Saatin kaç olduğunu biliyor musunuz?"], ["Können Sie mir sagen, wo ich Geld wechseln kann?", "Nerede para bozdurabileceğimi söyleyebilir misiniz?"], ["Wissen Sie, wo der Bahnhof ist?", "İstasyonun nerede olduğunu biliyor musunuz?"], ["Können Sie mir sagen, wann der Zug fährt?", "Trenin ne zaman kalktığını söyleyebilir misiniz?"], ["Ich weiß nicht, wie er heißt.", "Adını bilmiyorum."], ["Weißt du, wann der Bus ankommt?", "Otobüsün ne zaman vardığını biliyor musun?"], ["Ich möchte wissen, was das kostet.", "Bunun ne kadar tuttuğunu öğrenmek istiyorum."]],
   q: [["mc", "„İstasyonun nerede olduğunu biliyor musunuz?“", ["Wissen Sie, wo ist der Bahnhof?", "Wissen Sie, wo der Bahnhof ist?", "Wissen Sie, ob wo der Bahnhof ist?"], 1, "Fiil sonda."],
       ["mc", "Weißt du, wann der Bus ___?", ["kommt an", "ankommt", "an kommt"], 1, "Yan cümlede birleşik: ankommt."],
       ["fill", "Ich weiß nicht, ___ er heißt. (nasıl)", "wie", "wie heißt er → wie er heißt."],
@@ -10173,9 +10227,10 @@ const YT_UNITS = [
   <div class="ex">Die Schuhe drücken. Sie sind zu eng.<i>Ayakkabılar sıkıyor. Çok dar.</i></div>
   <div class="ex">Haben Sie die Stiefel auch in Schwarz?<i>Çizmelerin siyahı da var mı?</i></div>
   <div class="ex">Die nehme ich. Was kosten sie?<i>Bunları alıyorum. Ne kadar?</i></div>
-  <div class="tip">💡 Ayakkabı çift olduğu için çoğu zaman çoğul: die Schuhe <b>sind</b> … , sie kosten …</div>`,
-  v: [["der Schuh", "ayakkabı"], ["die Turnschuhe", "spor ayakkabı"], ["die Stiefel", "çizme"], ["die Sandalen", "sandalet"], ["die Schuhgröße", "ayakkabı numarası"], ["bequem", "rahat"], ["drücken", "sıkmak"], ["eng", "dar"], ["weit", "bol"], ["das Paar", "çift"]],
-  s: [["Ich suche bequeme Schuhe.", "Rahat ayakkabı arıyorum."], ["Welche Schuhgröße haben Sie?", "Ayakkabı numaranız ne?"], ["Die Schuhe drücken.", "Ayakkabılar sıkıyor."], ["Haben Sie die Stiefel auch in Schwarz?", "Çizmelerin siyahı var mı?"], ["Die nehme ich.", "Bunları alıyorum."]],
+  <div class="tip">💡 Ayakkabı çift olduğu için çoğu zaman çoğul: die Schuhe <b>sind</b> … , sie kosten …</div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki kalıplar: <b>Kann ich die Stiefel probieren?</b> (denemek) · Satıcı: <b>Gern! Einen Moment, bitte.</b></div>`,
+  v: [["probieren", "denemek"], ["Einen Moment, bitte.", "bir dakika lütfen"], ["der Schuh", "ayakkabı"], ["die Turnschuhe", "spor ayakkabı"], ["die Stiefel", "çizme"], ["die Sandalen", "sandalet"], ["die Schuhgröße", "ayakkabı numarası"], ["bequem", "rahat"], ["drücken", "sıkmak"], ["eng", "dar"], ["weit", "bol"], ["das Paar", "çift"]],
+  s: [["Kann ich die Stiefel probieren?", "Çizmeleri deneyebilir miyim?"], ["Gern! Einen Moment, bitte.", "Tabii! Bir dakika lütfen."], ["Ich suche bequeme Schuhe.", "Rahat ayakkabı arıyorum."], ["Welche Schuhgröße haben Sie?", "Ayakkabı numaranız ne?"], ["Die Schuhe drücken.", "Ayakkabılar sıkıyor."], ["Haben Sie die Stiefel auch in Schwarz?", "Çizmelerin siyahı var mı?"], ["Die nehme ich.", "Bunları alıyorum."]],
   q: [["mc", "„Ayakkabılar sıkıyor.“", ["Die Schuhe drücken.", "Die Schuhe passen.", "Die Schuhe stehen."], 0, "drücken = sıkmak."],
       ["mc", "„rahat“", ["eng", "bequem", "weit"], 1, "bequem."],
       ["fill", "Welche ___ haben Sie? (ayakkabı numarası)", "Schuhgröße", "die Schuhgröße."],
@@ -10193,9 +10248,10 @@ const YT_UNITS = [
   <tr><td>Keine Ursache!</td><td>Ne demek!</td></tr>
   <tr><td>Leider kann ich nicht.</td><td>Maalesef gelemem / yapamam.</td></tr>
   <tr><td>Vielleicht ein anderes Mal.</td><td>Belki başka zaman.</td></tr>
-  <tr><td>Entschuldigung! / Tut mir leid.</td><td>Affedersin! / Üzgünüm.</td></tr></table></div>`,
-  v: [["nett", "nazik, hoş"], ["die Einladung", "davet"], ["einladen", "davet etmek"], ["Gern geschehen!", "rica ederim"], ["Keine Ursache!", "ne demek!"], ["leider", "maalesef"], ["vielleicht", "belki"], ["Tut mir leid.", "üzgünüm"], ["Vielen Dank!", "çok teşekkürler"], ["gern", "seve seve"]],
-  s: [["Das ist sehr nett von dir.", "Çok naziksin."], ["Vielen Dank für die Einladung!", "Davet için çok teşekkürler!"], ["Gern geschehen.", "Rica ederim."], ["Leider kann ich heute nicht.", "Maalesef bugün gelemem."], ["Vielleicht ein anderes Mal.", "Belki başka zaman."], ["Tut mir leid!", "Üzgünüm!"]],
+  <tr><td>Entschuldigung! / Tut mir leid.</td><td>Affedersin! / Üzgünüm.</td></tr></table></div>
+  <h4>Videoda hocanın verdiği örnekler</h4><div class="tip">🎬 Videodaki diyalogda geçen küçük kelimeler: <b>so</b> (o kadar), <b>ganz</b> (tamamen), <b>nervös</b> (gergin), <b>aber</b> (ama). Hitap: Herr … (erkek), Frau … (kadın).</div>`,
+  v: [["so", "o kadar"], ["ganz", "tamamen, oldukça"], ["nervös", "gergin, sinirli"], ["aber", "ama"], ["nett", "nazik, hoş"], ["die Einladung", "davet"], ["einladen", "davet etmek"], ["Gern geschehen!", "rica ederim"], ["Keine Ursache!", "ne demek!"], ["leider", "maalesef"], ["vielleicht", "belki"], ["Tut mir leid.", "üzgünüm"], ["Vielen Dank!", "çok teşekkürler"], ["gern", "seve seve"]],
+  s: [["Ich bin ganz nervös.", "Çok gerginim."], ["Das ist so nett von Ihnen, Frau Weber!", "Bu çok naziksiniz, Weber Hanım!"], ["Das ist sehr nett von dir.", "Çok naziksin."], ["Vielen Dank für die Einladung!", "Davet için çok teşekkürler!"], ["Gern geschehen.", "Rica ederim."], ["Leider kann ich heute nicht.", "Maalesef bugün gelemem."], ["Vielleicht ein anderes Mal.", "Belki başka zaman."], ["Tut mir leid!", "Üzgünüm!"]],
   q: [["mc", "„Rica ederim.“", ["Gern geschehen.", "Tut mir leid.", "Vielleicht."], 0, "Gern geschehen."],
       ["mc", "Daveti kibarca reddetmek:", ["Nein!", "Leider kann ich nicht.", "Das ist nett."], 1, "Leider kann ich nicht."],
       ["fill", "Vielen Dank für die ___! (davet)", "Einladung", "die Einladung."],
@@ -10606,7 +10662,258 @@ const YT_ROLEPLAYS = [
   { id: 'ytr8', sec: 'Ders 68–75', ic: 'fa-table-tennis-paddle-ball', t: 'Arkadaşla buluşma ayarla', role: 'ein guter Freund, der gern Tennis spielt, aber nicht immer Zeit hat', goal: 'Gün ve saat öner; uymazsa başka bir zaman öner (Wie wäre es mit …?), sonunda anlaş (Abgemacht!).', open: 'Hey! Lange nicht gesehen! Wie geht’s dir?' }
 ];
 YT_ROLEPLAYS.slice().reverse().forEach(r => ROLEPLAYS.unshift(Object.assign({ lv: 'A1-A2' }, r, { t: `${r.sec} · ${r.t}` })));
+
+/* =====================================================================
+   DERS ARAÇLARI: uygulama içinde video, izlendi işareti, 3 soruluk kontrol, ders defteri,
+   ders tekrar hatırlatıcısı, Zayıf Derslerim, haftalık Ders Planım, genişletilmiş ders PDF'i
+   ===================================================================== */
+const ytUnits = () => LEVELS[0].units.filter(u => u.yt);
+const ytWatched = id => !!((D && D.ytWatched) || {})[id];
+function ytMarkWatched(id, silent) {
+  if (!D || RO) return; D.ytWatched = D.ytWatched || {}; if (D.ytWatched[id]) return;
+  D.ytWatched[id] = Date.now(); save(); if (!silent) toast('Video izlendi olarak işaretlendi');
+  const b = document.querySelector('.yt-watch'); if (b) { b.classList.add('on'); b.innerHTML = '<i class="fa-solid fa-circle-check"></i> İzlendi'; }
+}
+// Gömülü oynatıcı: YouTube IFrame API mesajlarıyla video bitince otomatik “izlendi”
+let YT_PLAYING = null;
+function ytPlay(id) {
+  const f = findUnit(id), box = document.querySelector('.yt-player'); if (!f || !box) return;
+  box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${f.u.yt}?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&autoplay=1&origin=${encodeURIComponent(location.origin)}" title="Hocanın videosu · Ders ${esc(f.u.ders)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  box.classList.add('on'); YT_PLAYING = id; stopAllAudio();
+  const fr = box.querySelector('iframe'); fr.addEventListener('load', () => { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*'); } catch (e) {} });
+}
+addEventListener('message', e => {
+  if (!/youtube/.test(e.origin || '') || !YT_PLAYING) return;
+  let d = e.data; try { if (typeof d === 'string') d = JSON.parse(d); } catch (x) { return; }
+  const st = d && (d.event === 'onStateChange' ? d.info : d.info && d.info.playerState);
+  if (st === 0) ytMarkWatched(YT_PLAYING);
+});
+// Ünite penceresi: oynatıcı + izlendi + kontrol + defter (önceki video kartının yerine)
+const _openUnitYt2 = openUnit;
+openUnit = function (id) {
+  const el = _openUnitYt2.apply(this, arguments), f = findUnit(id);
+  if (!el || !f || !f.u.yt) return el;
+  const card = el.querySelector('.yt-card'); if (!card) return el;
+  const u = f.u, note = ((D.unitNotes || {})[id] || ''), w = ytWatched(id);
+  card.outerHTML = `<div class="yt-box">
+    <div class="yt-player"><button class="yt-poster" onclick="ytPlay('${id}')" aria-label="Videoyu oynat: Ders ${esc(u.ders)}"><img src="https://i.ytimg.com/vi/${u.yt}/hqdefault.jpg" alt="" loading="lazy"><i class="fa-solid fa-play"></i><span>Hocanın videosu · Ders ${esc(u.ders)}</span></button></div>
+    <div class="yt-acts">
+      <button class="yt-watch ${w ? 'on' : ''}" onclick="ytMarkWatched('${id}')">${w ? '<i class="fa-solid fa-circle-check"></i> İzlendi' : '<i class="fa-regular fa-circle"></i> İzledim'}</button>
+      <button class="yt-check" onclick="closeModal();ytCheck('${id}')"><i class="fa-solid fa-list-check"></i> 3 soruluk kontrol</button>
+      <a class="yt-ext" href="https://www.youtube.com/watch?v=${u.yt}&list=${YT_LIST}" target="_blank" rel="noopener" aria-label="YouTube'da aç"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    </div>
+    <details class="yt-note" ${note ? 'open' : ''}><summary><i class="fa-solid fa-pen-to-square"></i> Ders defterim${note ? ` <small>${note.length} karakter</small>` : ''}</summary>
+      <textarea class="pill-input" rows="4" placeholder="Hocanın videoda söylediği, özette olmayan notlarını buraya yaz…" oninput="ytNote('${id}',this.value)">${esc(note)}</textarea>
+      <small class="yt-note-s">Notların telefon ve bilgisayar arasında eşitlenir, ders PDF'ine de eklenir.</small></details></div>`;
+  return el;
+};
+let YT_NOTE_T = null;
+function ytNote(id, v) { if (!D || RO) return; D.unitNotes = D.unitNotes || {}; D.unitNotes[id] = v; clearTimeout(YT_NOTE_T); YT_NOTE_T = setTimeout(save, 600); }
+const _closeModalYt = closeModal;
+closeModal = function () { YT_PLAYING = null; return _closeModalYt.apply(this, arguments); };
+
+// 3 soruluk kontrol: hepsi doğruysa dersin uzun bölümü atlanabilir
+function ytCheck(id) {
+  const f = findUnit(id); if (!f) return;
+  const qs = shuffle(qItems(f.u)).slice(0, 3);
+  startLesson(qs, { title: 'Kontrol · Ders ' + f.u.ders, color: f.L.color, kind: 'ytcheck', unitId: id, pass: 0 });
+}
+function ytSkipUnit(id) {
+  const f = findUnit(id); if (!f || RO) return;
+  const first = D.done[id] == null; D.done[id] = Math.max(D.done[id] || 0, .8);
+  if (first) { f.u.v.forEach(v => addCard(v[0], v[1], id, true)); D.stats.lessons++; }
+  ytRevStamp(id, true); save(); quitLesson(true); toast(`Ders ${f.u.ders} geçildi, sıradaki ders açıldı`); go('learn');
+}
+
+/* ---------- Ders tekrar hatırlatıcısı (aralıklı: 2, 5, 12, 30, 60 gün) ---------- */
+const REV_DAYS = [2, 5, 12, 30, 60];
+function ytRevStamp(id, fresh) { if (!D || RO) return; D.lessonRev = D.lessonRev || {}; const r = D.lessonRev[id]; D.lessonRev[id] = { t: Date.now(), n: fresh || !r ? 0 : r.n }; }
+function lessonsDue() {
+  if (!D) return []; const now = Date.now(), R = D.lessonRev || {};
+  return ytUnits().filter(u => D.done[u.id] != null && R[u.id] && now - R[u.id].t >= REV_DAYS[Math.min(R[u.id].n, REV_DAYS.length - 1)] * 864e5)
+    .sort((a, b) => R[a.id].t - R[b.id].t);
+}
+function startLessonReview(id) {
+  const f = findUnit(id); if (!f) return;
+  const all = buildUnitItems(f.u, f.L), q = all.filter(x => /:q\d+$/.test(x.id || '')), rest = all.filter(x => ['mc', 'tf', 'fill', 'ww'].includes(x.k) && !q.includes(x));
+  startLesson(shuffle(shuffle(q).slice(0, 3).concat(shuffle(rest).slice(0, 2))), { title: 'Tekrar · Ders ' + f.u.ders, color: f.L.color, kind: 'lrev', unitId: id, pass: 0 });
+}
+function ytRevMigrate() {
+  if (!D || RO || D.lessonRevInit) return; D.lessonRevInit = 1; D.lessonRev = D.lessonRev || {};
+  ytUnits().forEach(u => { if (D.done[u.id] != null && !D.lessonRev[u.id]) D.lessonRev[u.id] = { t: Date.now(), n: 0 }; });
+  save();
+}
+const _goYt2 = go;
+go = function () { ytRevMigrate(); ytPlanEnsure(); return _goYt2.apply(this, arguments); };
+
+const _lessonSummaryYt = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts, score = LSN ? LSN.correct / LSN.items.length : 0, n = LSN ? LSN.items.length : 0, c = LSN ? LSN.correct : 0;
+  if (o && !RO) {
+    if (o.kind === 'unit' && score >= (o.pass || .8)) ytRevStamp(o.unitId, true);
+    if (o.kind === 'lrev') { D.lessonRev = D.lessonRev || {}; const r = D.lessonRev[o.unitId] || { n: 0 }; D.lessonRev[o.unitId] = { t: Date.now(), n: score >= .6 ? r.n + 1 : Math.max(0, r.n - 1) }; }
+  }
+  _lessonSummaryYt.apply(this, arguments);
+  if (!o) return;
+  const f = $('#lsFoot .ls-foot-in'), body = $('#lsBody > div');
+  if (o.kind === 'ytcheck') {
+    const fu = findUnit(o.unitId), done = D.done[o.unitId] != null;
+    if (body) body.insertAdjacentHTML('beforeend', c === n
+      ? `<p class="tp-rec">${done ? 'Konuya hâkimsin!' : 'Hepsi doğru! Bu dersi geçmiş sayıp sıradakine geçebilirsin.'}</p>`
+      : `<p class="tp-rec">${c}/${n} doğru. Dersi baştan çalışman daha iyi olur.</p>`);
+    if (f) f.insertAdjacentHTML('afterbegin', c === n && !done ? `<button class="btn" onclick="ytSkipUnit('${o.unitId}')"><i class="fa-solid fa-forward"></i> Dersi geçmiş say</button>` : `<button class="btn btn-ghost" onclick="quitLesson(true);startUnit('${o.unitId}')"><i class="fa-solid fa-play"></i> Derse başla</button>`);
+  }
+  if (o.kind === 'lrev') {
+    const r = (D.lessonRev || {})[o.unitId] || { n: 0 }, next = REV_DAYS[Math.min(r.n, REV_DAYS.length - 1)];
+    if (body) body.insertAdjacentHTML('beforeend', `<p class="tp-rec">${score >= .6 ? 'Tekrar tamam.' : 'Biraz unutmuşsun, yakında tekrar soracağım.'} Sonraki tekrar <b>${next} gün</b> sonra.</p>`);
+  }
+};
+
+/* ---------- Zayıf Derslerim ---------- */
+function weakLessons() {
+  return ytUnits().map(u => {
+    const wr = D.wrong.filter(w => w.item && w.item.unit === u.id).length, sc = D.done[u.id];
+    return { u, wr, sc, w: wr + (sc != null ? (1 - sc) * 10 : 0) };
+  }).filter(x => x.wr > 0 || (x.sc != null && x.sc < .9)).sort((a, b) => b.w - a.w);
+}
+function startWeakSet(id) {
+  const f = findUnit(id); if (!f) return;
+  const wr = D.wrong.filter(w => w.item && w.item.unit === id).map(w => w.item);
+  const fill = shuffle(qItems(f.u).concat(buildUnitItems(f.u, f.L).filter(x => ['mc', 'tf', 'fill', 'ww'].includes(x.k)))).filter(x => !wr.some(w => w.id === x.id));
+  startLesson(shuffle(wr.slice(0, 10).concat(fill).slice(0, 10)), { title: 'Zayıf ders · Ders ' + f.u.ders, color: f.L.color, kind: 'errors', pass: 0 });
+}
+const ytRow = (u, sub, acts) => `<div class="am-li yt-row"><span class="am-ic" style="background:var(--accent)"><i class="fa-solid ${u.ic || 'fa-book'}"></i></span><span class="am-lm"><b style="font-weight:500">Ders ${esc(u.ders)} · ${esc(u.t.replace(/^Ders [^·]+· /, ''))}</b><small>${sub}</small></span><span class="yt-ra">${acts}</span></div>`;
+Object.assign(PAGES, { weak: ['Zayıf Derslerim', 'fa-chart-line'], dersplan: ['Ders Planım', 'fa-calendar-check'] });
+Object.assign(NAV_PARENT, { weak: 'more', dersplan: 'more' });
+Object.assign(HUB_DESC, { weak: 'En çok zorlandığın dersler ve tekrar zamanı gelenler', dersplan: 'Haftada kaç ders? Hangi gün hangi video?' });
+Object.assign(FX_DE, { weak: 'Schwach Wiederholen Fehler', dersplan: 'Woche Plan Lektion' });
+MORE_GROUPS[0][3].unshift('dersplan', 'weak');
+VIEWS.weak = () => {
+  const due = lessonsDue(), weak = weakLessons().slice(0, 15);
+  const vid = u => `<a class="btn btn-ghost btn-sm" href="https://www.youtube.com/watch?v=${u.yt}&list=${YT_LIST}" target="_blank" rel="noopener" aria-label="Videoyu izle"><i class="fa-solid fa-play"></i></a>`;
+  return `<div class="yt-page"><p class="page-sub">Hangi derslerde zorlandığını ve hangilerinin tekrar zamanının geldiğini burada görürsün.</p>
+    <section><div class="am-sh"><h2>Tekrar zamanı gelenler</h2><span class="tp-note">${due.length} ders</span></div>
+      ${due.length ? `<div class="am-list">${due.map(u => { const r = D.lessonRev[u.id]; return ytRow(u, `${Math.floor((Date.now() - r.t) / 864e5)} gün önce çalıştın · ${r.n + 1}. tekrar`, `<button class="btn btn-sm" onclick="startLessonReview('${u.id}')">5 soru</button>`); }).join('')}</div>` : '<p class="am-foot">Şu an tekrar zamanı gelen ders yok. Bitirdiğin dersler 2, 5, 12, 30 ve 60 gün sonra tekrar sorulur.</p>'}</section>
+    <section><div class="am-sh"><h2>En çok zorlandıkların</h2></div>
+      ${weak.length ? `<div class="am-list">${weak.map(x => ytRow(x.u, `${x.wr} yanlış${x.sc != null ? ' · ders puanı %' + Math.round(x.sc * 100) : ''}`, `${vid(x.u)}<button class="btn btn-ghost btn-sm" onclick="openUnit('${x.u.id}')" aria-label="Konuyu aç"><i class="fa-solid fa-book-open"></i></button><button class="btn btn-sm" onclick="startWeakSet('${x.u.id}')">10 soru</button>`)).join('')}</div>` : '<p class="am-foot">Henüz zorlandığın bir ders görünmüyor. Yanlış yaptıkça burada listelenecek.</p>'}</section></div>`;
+};
+
+/* ---------- Ders Planım: haftada kaç ders, hangi gün hangi video ---------- */
+const WD = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'], WD_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const WD3 = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
+const PLAN_DAYS = { 1: [3], 2: [2, 5], 3: [1, 3, 5], 4: [1, 2, 4, 6], 5: [1, 2, 3, 4, 5], 6: [1, 2, 3, 4, 5, 6], 7: [1, 2, 3, 4, 5, 6, 0] };
+const weekKey = () => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d.toISOString().slice(0, 10); };
+function ytPlanBuild() {
+  const p = D.ytPlan, todo = LEVELS[0].units.filter(u => D.done[u.id] == null).slice(0, p.days.length);
+  p.week = { key: weekKey(), units: todo.map(u => u.id) };
+}
+function ytPlanEnsure() { if (!D || RO || !D.ytPlan) return; if (!D.ytPlan.week || D.ytPlan.week.key !== weekKey()) { ytPlanBuild(); save(); } }
+function ytPlanSet(per) { if (!canEdit()) return; D.ytPlan = { per, days: PLAN_DAYS[per].slice() }; ytPlanBuild(); save(); go('dersplan'); }
+function ytPlanDay(d) {
+  if (!canEdit() || !D.ytPlan) return; const p = D.ytPlan, i = p.days.indexOf(d);
+  if (i >= 0) { if (p.days.length <= 1) return; p.days.splice(i, 1); } else p.days.push(d);
+  p.days.sort((a, b) => WD_ORDER.indexOf(a) - WD_ORDER.indexOf(b)); p.per = p.days.length; ytPlanBuild(); save(); go('dersplan');
+}
+function ytPlanLate() {
+  if (!D || !D.ytPlan || !D.ytPlan.week) return [];
+  const p = D.ytPlan, td = WD_ORDER.indexOf(new Date().getDay());
+  return p.week.units.map((id, i) => ({ id, day: p.days[i] })).filter(x => x.day != null && WD_ORDER.indexOf(x.day) < td && D.done[x.id] == null);
+}
+VIEWS.dersplan = () => {
+  const p = D.ytPlan;
+  const per = `<div class="tp-pick" role="group" aria-label="Haftada kaç ders">${[1, 2, 3, 4, 5, 6, 7].map(n => `<button class="tp-chip" aria-pressed="${!!p && p.per === n}" onclick="ytPlanSet(${n})">${n}</button>`).join('')}</div>`;
+  if (!p) return `<div class="yt-page"><p class="page-sub">Haftada kaç ders izleyip çalışmak istiyorsun? Seçince her güne hangi videonun düştüğünü gösteririm, geride kalırsan Ana Sayfa'da haber veririm.</p><section><div class="am-sh"><h2>Haftada kaç ders?</h2></div>${per}</section></div>`;
+  ytPlanEnsure();
+  const td = new Date().getDay(), late = ytPlanLate();
+  const rows = WD_ORDER.map(d => {
+    const i = p.days.indexOf(d), id = i >= 0 ? p.week.units[i] : null, f = id && findUnit(id), done = id && D.done[id] != null;
+    const isLate = late.some(x => x.id === id), today = d === td;
+    const state = !id ? '<span class="am-foot">Dinlenme</span>' : done ? '<span class="yt-st ok"><i class="fa-solid fa-circle-check"></i> Bitti</span>' : isLate ? '<span class="yt-st late">Geride</span>' : today ? '<span class="yt-st now">Bugün</span>' : '';
+    return `<div class="am-li yt-row ${today ? 'today' : ''}"><span class="yt-day">${WD3[d]}</span><span class="am-lm">${f ? `<b style="font-weight:500">Ders ${esc(f.u.ders)} · ${esc(f.u.t.replace(/^Ders [^·]+· /, ''))}</b><small>${esc(f.u.de)}</small>` : '<b style="font-weight:400;color:var(--muted)">—</b>'}</span><span class="yt-ra">${state}${f && !done ? `<button class="btn btn-sm" onclick="openUnit('${id}')">Aç</button>` : ''}</span></div>`;
+  }).join('');
+  return `<div class="yt-page"><p class="page-sub">Bu hafta ${p.week.units.length} ders planlandı${late.length ? `, <b style="color:var(--negative)">${late.length} ders geride</b>` : ''}. Plan her pazartesi sıradaki derslerle yenilenir.</p>
+    <section><div class="am-list">${rows}</div></section>
+    <section><div class="am-sh"><h2>Haftada kaç ders?</h2></div>${per}</section>
+    <section><div class="am-sh"><h2>Hangi günler?</h2></div><div class="tp-pick">${WD_ORDER.map(d => `<button class="tp-chip" aria-pressed="${p.days.includes(d)}" onclick="ytPlanDay(${d})">${WD[d]}</button>`).join('')}</div></section></div>`;
+};
+
+/* ---------- Ana Sayfa: geride kalma uyarısı, ders tekrarı, bugünkü video ---------- */
+const _homeYt = VIEWS.home;
+VIEWS.home = () => {
+  let h = _homeYt(); if (!D) return h;
+  const late = ytPlanLate(), due = lessonsDue(), nu = nextUnit(), nv = nu && !nu.boss && nu.u.yt ? nu.u : null;
+  if (isAm()) {
+    const warn = late.length ? `<button class="yt-warn" onclick="go('dersplan')"><i class="fa-solid fa-triangle-exclamation"></i><span><b>Planın ${late.length} ders geride</b><small>${late.map(x => 'Ders ' + findUnit(x.id).u.ders).join(', ')} · Planı aç</small></span><i class="fa-solid fa-chevron-right"></i></button>` : '';
+    const cards = (nv && !ytWatched(nv.id) ? `<button class="am-it" onclick="openUnit('${nv.id}')"><span class="am-mix" style="background:linear-gradient(150deg,#ff6b6b,#e0245e 55%,#9b1747)"><span>Bugünün videosu</span><i class="fa-solid fa-circle-play"></i><b>Ders ${esc(nv.ders)}</b></span><b>Ders ${esc(nv.ders)}</b><small>${esc(nv.t.replace(/^Ders [^·]+· /, ''))}</small></button>` : '')
+      + (due.length ? `<button class="am-it" onclick="startLessonReview('${due[0].id}')"><span class="am-mix" style="background:linear-gradient(150deg,#ffd60a,#ff9f0a 55%,#c26a00)"><span>${due.length} ders</span><i class="fa-solid fa-rotate"></i><b>Ders tekrarı</b></span><b>Ders tekrarı</b><small>Ders ${esc(due[0].ders)} · 5 soru</small></button>` : '');
+    h = h.replace('<div class="am-home">', '<div class="am-home">' + warn).replace('<h2>Senin İçin</h2></div><div class="am-row">', m => m + cards);
+  } else if (isFx() && (late.length || due.length)) {
+    const slide = `<section class="fx-slide fx-plain"><h2>${late.length ? 'Planın geride' : 'Ders tekrarı'}</h2>
+      <p class="fx-lead">${late.length ? `Bu haftanın planından ${late.length} ders bekliyor.` : `${due.length} dersin tekrar zamanı geldi; 5 soruluk kısa bir tekrar.`}</p>
+      <ul class="fx-stack">${(late.length ? late.map(x => findUnit(x.id).u) : due.slice(0, 4)).map(u => `<li><b>Ders ${esc(u.ders)}</b><span>${esc(u.t.replace(/^Ders [^·]+· /, ''))}</span></li>`).join('')}</ul>
+      <div class="fx-foot"><button class="btn" onclick="${late.length ? "go('dersplan')" : `startLessonReview('${due[0].id}')`}">${late.length ? 'Planı aç' : 'Tekrara başla'}</button></div></section>`;
+    h = h.replace('<section class="fx-slide fx-plain fx-tint"><h2>Günün deyimi', slide + '<section class="fx-slide fx-plain fx-tint"><h2>Günün deyimi');
+  }
+  return h;
+};
+// Öğren listesinde izlenen videolar işaretli
+const _learnYt = VIEWS.learn;
+VIEWS.learn = () => {
+  let h = _learnYt(); if (!isAm() || !D) return h;
+  ytUnits().forEach(u => { if (ytWatched(u.id)) h = h.replace(`<small>${esc(u.t)}</small>`, `<small><i class="fa-solid fa-circle-play yt-seen" aria-label="video izlendi"></i> ${esc(u.t)}</small>`); });
+  return h;
+};
+
+/* ---------- Ders PDF'i: video bağlantısı ve ders defteri de eklensin ---------- */
+const _unitPdfHtmlYt = unitPdfHtml;
+unitPdfHtml = function (u) {
+  let h = _unitPdfHtmlYt.apply(this, arguments);
+  const note = ((D && D.unitNotes) || {})[u.id], extra = (u.yt ? `<div class="pdf-yt"><b>Hocanın videosu (Ders ${esc(u.ders)}):</b> youtube.com/watch?v=${u.yt}</div>` : '')
+    + (note ? `<div class="pdf-yt"><b>Ders defterim:</b><div style="white-space:pre-wrap;margin-top:4px">${esc(note)}</div></div>` : '');
+  return extra ? h.replace(/<\/section>\s*$/, extra + '</section>') : h;
+};
 /* =====YTEND===== */
+/* ---------- Yüzen bar: parmakla kaydır, mercek takip etsin, bırakınca o sekmeye geç (iOS gibi) ---------- */
+function bnLens() {
+  const nav = document.getElementById('bottomNav'); if (!nav || !isAm()) return;
+  let lens = nav.querySelector('.bn-lens'); if (!lens) { lens = document.createElement('span'); lens.className = 'bn-lens'; lens.setAttribute('aria-hidden', 'true'); nav.prepend(lens); }
+  const a = nav.querySelector('.bn-item.active') || nav.querySelector('.bn-item'); if (!a) return;
+  lens.style.width = a.offsetWidth + 'px'; lens.style.transform = `translateX(${a.offsetLeft}px)`;
+}
+(() => {
+  let drag = null;
+  const items = nav => [...nav.querySelectorAll('.bn-item')];
+  const hit = (nav, x) => { const its = items(nav); return its.reduce((b, it) => { const r = it.getBoundingClientRect(), d = Math.abs(x - (r.left + r.width / 2)); return !b || d < b.d ? { it, d } : b; }, null).it; };
+  addEventListener('pointerdown', e => {
+    const nav = e.target.closest && e.target.closest('#bottomNav'); if (!nav || !isAm() || innerWidth > 960) return;
+    bnLens(); const lens = nav.querySelector('.bn-lens'), nr = nav.getBoundingClientRect();
+    drag = { nav, lens, x0: e.clientX, moved: false, nr, w: lens.offsetWidth, it: hit(nav, e.clientX) };
+    try { nav.setPointerCapture(e.pointerId); } catch (x) {}
+  }, true);
+  addEventListener('pointermove', e => {
+    if (!drag) return; const dx = e.clientX - drag.x0;
+    if (!drag.moved && Math.abs(dx) < 6) return;
+    if (!drag.moved) { drag.moved = true; drag.nav.classList.add('dragging'); }
+    const x = Math.max(6, Math.min(drag.nr.width - drag.w - 6, e.clientX - drag.nr.left - drag.w / 2));
+    drag.lens.style.transform = `translateX(${x}px)`;
+    const it = hit(drag.nav, e.clientX); if (it !== drag.it) { drag.it = it; try { navigator.vibrate && navigator.vibrate(6); } catch (x) {} }
+    items(drag.nav).forEach(b => b.classList.toggle('hov', b === it));
+  }, true);
+  const end = e => {
+    if (!drag) return; const d = drag; drag = null;
+    d.nav.classList.remove('dragging'); items(d.nav).forEach(b => b.classList.remove('hov'));
+    if (!d.moved) return; // dokunma: normal tıklama çalışsın
+    e.preventDefault(); d.nav.dataset.noclick = '1'; setTimeout(() => { delete d.nav.dataset.noclick; }, 350);
+    const p = d.it && d.it.dataset.p; if (p && p !== PAGE) go(p); else bnLens();
+  };
+  addEventListener('pointerup', end, true); addEventListener('pointercancel', end, true);
+  // Kaydırmanın sonunda gelen tıklamayı yut (çift geçiş olmasın)
+  addEventListener('click', e => { const nav = e.target.closest && e.target.closest('#bottomNav'); if (nav && nav.dataset.noclick) { e.preventDefault(); e.stopPropagation(); } }, true);
+  addEventListener('resize', () => bnLens());
+})();
+const _goLens = go;
+go = function () { const r = _goLens.apply(this, arguments); requestAnimationFrame(bnLens); return r; };
+
 /* ---------- Başlat ---------- */
 applyTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!CFG.theme) applyTheme(); });
