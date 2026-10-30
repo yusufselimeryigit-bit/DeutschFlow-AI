@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<script>try{var dd=localStorage.getItem("df_design");var c=document.documentElement.classList;if(dd==="bh")c.add("bh");else if(dd==="bm")c.add("bm");else if(dd==="fx")c.add("bm","fx");else if(dd!=="herb")c.add("bm","am")}catch(e){document.documentElement.classList.add("bm","am")}</script>
+<script>document.documentElement.classList.add("bm","fx");try{localStorage.setItem("df_design","fx")}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -2604,7 +2604,12 @@ html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
 .tp-tt b { font: 700 17px/1.1 -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, sans-serif; letter-spacing: -.02em; text-wrap: balance; }
 .tp-tt small { font-size: 12.5px; opacity: .88; }
 .tp-score { position: absolute; left: 12px; top: 10px; font: 600 12px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: rgba(0,0,0,.22); padding: 3px 8px; border-radius: 999px; }
-.tp-row .tp-tile { aspect-ratio: 1; }
+.tp-page .am-row, .tp-shelf .am-row { scrollbar-width: none !important; }
+.tp-page .am-row::-webkit-scrollbar, .tp-shelf .am-row::-webkit-scrollbar { display: none; }
+.tp-row .tp-tile, .tp-tile.tp-sq { aspect-ratio: 1; }
+.tp-mixit > b, .tp-row .am-it > b { display: block; margin-top: 8px; font-weight: 500; font-size: 15px; }
+.tp-mixit > small, .tp-row .am-it > small { display: block; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tp-tile.tp-sq .tp-tt b { font-size: 22px; }
 .tp-pick { display: flex; flex-wrap: wrap; gap: 8px; }
 .tp-chip { border: 0; border-radius: 999px; padding: 8px 14px; font: 500 15px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface-2); color: var(--ink); cursor: pointer; }
 .tp-chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
@@ -2643,6 +2648,53 @@ html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
 .tp-bw span.miss { background: var(--neg-bg); color: var(--negative); }
 .tp-bk.shake { animation: tpShake .35s; }
 @keyframes tpShake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+/* EK 5: ustalık çizgileri, hızlı tur, tablo, bileşik kelime, ses dalgası, ders rengi, çevrimdışı */
+.tp-mast { position: absolute; left: 12px; top: 12px; display: flex; gap: 3px; }
+.tp-mast i { width: 16px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.3); }
+.tp-mast[data-lv="1"] i:nth-child(-n+1), .tp-mast[data-lv="2"] i:nth-child(-n+2), .tp-mast[data-lv="3"] i { background: #fff; }
+.tp-fade { position: absolute; right: 10px; top: 9px; font: 600 11.5px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: rgba(0,0,0,.28); color: #fff; padding: 3px 8px; border-radius: 999px; }
+.tp-speed { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.tp-sp { border: 0; cursor: pointer; color: #fff; text-align: left; border-radius: 12px; padding: 14px; min-height: 92px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; position: relative; overflow: hidden; }
+.tp-sp > i { position: absolute; right: 12px; top: 12px; font-size: 20px; opacity: .9; }
+.tp-sp b { font: 700 17px -apple-system, BlinkMacSystemFont, Inter, sans-serif; } .tp-sp small { font-size: 13px; opacity: .88; }
+#spdT { margin-left: 8px; min-width: 2.2em; text-align: center; font: 700 18px var(--mono, ui-monospace, monospace); padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink); }
+#spdT.low { background: var(--negative, #d70015); color: #fff; }
+.tp-rec { font-size: 18px; margin: 6px 0 0; }
+.tp-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+#lesson .tp-pair .opt { margin: 0; min-height: 110px; justify-content: center; font-size: 24px; font-weight: 700; text-align: center; }
+#lesson .tp-pair .opt .k { display: none; }
+.tp-tbl { display: grid; gap: 8px; margin-top: 4px; }
+.tp-tr { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 10px; position: relative; }
+.tp-tr > span { font-weight: 600; color: var(--muted); }
+.tp-tr .pill-input { margin: 0; padding: 10px 14px; font-size: 17px; }
+.tp-given { padding: 10px 14px; font-weight: 600; }
+.tp-tr .tp-ok { box-shadow: inset 0 0 0 2px var(--positive); }
+.tp-tr .tp-bad { box-shadow: inset 0 0 0 2px var(--negative); text-decoration: line-through; }
+.tp-fix { grid-column: 2; color: var(--positive); font-size: 15px; margin-top: -2px; }
+.tp-cmp { display: flex; align-items: baseline; gap: 10px; min-height: 58px; padding: 10px 16px; border-radius: 16px; background: var(--surface); margin-bottom: 16px; font: 800 clamp(24px, 6vw, 32px)/1.1 var(--display, -apple-system); letter-spacing: -.02em; overflow-wrap: anywhere; }
+.tp-cmpart { color: var(--lvd, var(--accent)); }
+.tp-arts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+#lesson .tp-arts .opt { margin: 0; justify-content: center; text-align: center; font-weight: 700; }
+.mic-wave { display: flex; align-items: center; justify-content: center; gap: 3px; height: 44px; margin: 12px auto 0; }
+.mic-wave i { display: block; width: 4px; height: 100%; border-radius: 2px; background: var(--lv, var(--accent)); transform: scaleY(.08); transform-origin: center; }
+/* Ders ekranı: üstte seviyenin rengi, doğru cevapta yumuşak parlama */
+html.fx #lesson { background: linear-gradient(180deg, color-mix(in srgb, var(--lv) 26%, var(--ground)) 0, var(--ground) 300px) var(--ground); }
+html.fx #lesson .ls-top { background: transparent; border-bottom-color: transparent; }
+html.fx #lesson .progress > div { background: var(--lv); }
+html.fx #lesson .ls-q .hl { background: color-mix(in srgb, var(--lv) 22%, transparent); color: inherit; }
+#lesson::after { content: ""; position: fixed; inset: 0; pointer-events: none; background: radial-gradient(90% 60% at 50% 100%, color-mix(in srgb, var(--lv) 45%, transparent), transparent 70%); opacity: 0; z-index: 0; }
+#lesson.ls-flash::after { animation: lsFlash .7s cubic-bezier(.32,.72,0,1); }
+@keyframes lsFlash { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+#netPill { position: fixed; left: 50%; top: max(10px, env(safe-area-inset-top)); transform: translateX(-50%); z-index: 9998; background: var(--ink); color: var(--ground); font: 600 13px -apple-system, BlinkMacSystemFont, Inter, sans-serif; padding: 8px 14px; border-radius: 999px; display: flex; gap: 8px; align-items: center; box-shadow: 0 8px 24px -10px rgba(0,0,0,.5); white-space: nowrap; }
+#netPill.back { background: var(--positive); color: #fff; }
+@media (prefers-reduced-motion: reduce) { #lesson.ls-flash::after { animation: none; } }
+@media (max-width: 380px) { .tp-tr { grid-template-columns: 78px 1fr; } }
+#swBack { position: fixed; left: 0; top: 50%; z-index: 9999; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--surface-2); box-shadow: 0 6px 18px -8px rgba(0,0,0,.45); transform: translate(-46px,-50%); pointer-events: none; transition: background .15s, color .15s; }
+#swBack.go { background: var(--accent); color: #fff; }
+.tp-fxq { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
+.tp-fxq button { border: 0; cursor: pointer; border-radius: 999px; padding: 9px 14px; font: 600 15px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: var(--fi, #fff); background: rgba(255,255,255,.2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.tp-fxq button:active { transform: scale(.96); }
+.tp-fxq small { opacity: .8; font-weight: 500; }
 @media (prefers-reduced-motion: reduce) { .tp-bk.shake { animation: none; } .tp-tile { transition: none; } }
 @media (max-width: 420px) { .tp-big { font-size: 80px; } .tp-em { font-size: 46px; } #lesson .tp-pics .opt { min-height: 120px; } .tp-bk { min-height: 128px; } }
 </style>
@@ -7844,7 +7896,7 @@ const TOPICS = [
 TOPICS.forEach(t => { if (!t.gen) t.gen = () => vocabSet(t.id, TP_VOCAB[t.id]); });
 const TP_GROUPS = [['temel', 'Temel konular'], ['gramer', 'Dilbilgisi'], ['kelime', 'Kelime konuları']];
 const tpBg = h => `background:radial-gradient(120% 90% at 0% 0%,hsl(${h + 24} 95% 66%) 0,transparent 60%),radial-gradient(110% 110% at 100% 100%,hsl(${h - 22} 85% 34%) 0,transparent 62%),hsl(${h} 82% 50%)`;
-const tpBest = id => ((D && D.topicBest) || {})[id];
+let tpBest = id => ((D && D.topicBest) || {})[id];
 
 // Karma testler: konulardan karışık soru
 const TP_MIXES = [
@@ -7876,8 +7928,8 @@ Object.assign(PAGES, { topics: ['Konular', 'fa-layer-group'] });
 Object.assign(NAV_PARENT, { topics: 'practice' });
 Object.assign(HUB_DESC, { topics: 'Sayılar, saat, artikel, fiiller… her konu ayrı test, karma testler' });
 Object.assign(FX_DE, { topics: 'Zahlen Artikel Uhrzeit Test' });
-const tpTile = t => { const b = tpBest(t.id); return `<button class="tp-tile press" style="${tpBg(t.h)}" onclick="startTopic('${t.id}')" aria-label="${esc(t.t)} testine başla"><i class="fa-solid ${t.ic}" aria-hidden="true"></i>${b != null ? `<span class="tp-score tabular">%${Math.round(b * 100)}</span>` : ''}<span class="tp-tt"><b>${esc(t.t)}</b><small lang="de">${esc(t.de)}</small></span></button>`; };
-const tpMixTile = m => `<button class="am-it tp-mixit" onclick="startMix('${m.id}')"><span class="am-mix" style="background:${m.bg}"><span>16 soru</span><i class="fa-solid ${m.ic}"></i><b>${esc(m.t)}</b></span><b>${esc(m.t)}</b><small>${esc(m.d)}</small></button>`;
+let tpTile = t => { const b = tpBest(t.id); return `<button class="tp-tile press" style="${tpBg(t.h)}" onclick="startTopic('${t.id}')" aria-label="${esc(t.t)} testine başla"><i class="fa-solid ${t.ic}" aria-hidden="true"></i>${b != null ? `<span class="tp-score tabular">%${Math.round(b * 100)}</span>` : ''}<span class="tp-tt"><b>${esc(t.t)}</b><small lang="de">${esc(t.de)}</small></span></button>`; };
+const tpMixTile = m => `<div class="am-it tp-mixit"><button class="tp-tile tp-sq" style="background:${m.bg}" onclick="startMix('${m.id}')" aria-label="${esc(m.t)} başlat"><i class="fa-solid ${m.ic}" aria-hidden="true"></i><span class="tp-score">16 soru</span><span class="tp-tt"><b>${esc(m.t)}</b></span></button><b>${esc(m.t)}</b><small>${esc(m.d)}</small></div>`;
 VIEWS.topics = () => {
   const weak = TOPICS.filter(t => tpBest(t.id) != null && tpBest(t.id) < .8).sort((a, b) => tpBest(a.id) - tpBest(b.id));
   return `<div class="tp-page">
@@ -7892,7 +7944,15 @@ VIEWS.topics = () => {
 // Pratik sayfasının en üstünde konu rafı; Ana Sayfa "Senin İçin" rafında Konu Testleri karışımı
 const tpShelf = () => `<section class="tp-shelf"><div class="am-sh"><h2>Konu testleri</h2><button onclick="go('topics')">Tümü</button></div><div class="am-row tp-row">${TP_MIXES.slice(0, 1).map(tpMixTile).join('')}${TOPICS.slice(0, 9).map(t => `<div class="am-it">${tpTile(t)}<b>${esc(t.t)}</b><small>${esc(t.d)}</small></div>`).join('')}</div></section>`;
 const _practiceTp = VIEWS.practice;
-VIEWS.practice = () => isFx() ? _practiceTp().replace('<div', tpShelf() + '<div') : tpShelf() + _practiceTp();
+// Akış: tam ekran kaydırmalı akışın ilk grubu "Test" olur (raf akışın üstüne binmesin)
+const tpQuick = ['zahlen', 'uhrzeit', 'artikel', 'kasus', 'perfekt', 'praep'];
+let tpFxGroup = () => ['Konu testleri', 'Test', 'c1', [
+  ['Konu Testleri', `${TOPICS.length} konu, her biri ayrı test. Hızlı başla:`, 'fa-layer-group', "go('topics')", 'Bütün konular', 'Zahlen Artikel Uhrzeit',
+    `<div class="tp-fxq">${tpQuick.map(id => { const t = TOPICS.find(x => x.id === id), b = tpBest(id); return `<button onclick="startTopic('${id}')">${esc(t.t)}${b != null ? ` <small class="tabular">%${Math.round(b * 100)}</small>` : ''}</button>`; }).join('')}</div>`],
+  ['Karma test', 'Bütün konulardan karışık 16 soru: sayı, saat, artikel, fiil, kelime', 'fa-shuffle', "startMix('mix')", 'Başla', 'Mischung Alles Test'],
+  ['Dinleme karması', 'Sadece duyarak çözülen 16 soru', 'fa-headphones', "startMix('mixl')", 'Başla', 'Hören Mischung'],
+  ['Yazma karması', 'Kelime, cümle, sayı ve saat yazma', 'fa-pen-nib', "startMix('mixw')", 'Başla', 'Schreiben Mischung']]];
+VIEWS.practice = () => isFx() ? fxFeedPage([tpFxGroup()].concat(PRAC_GROUPS.map(([g, s, k, l]) => [g, s, k, l.map(fxTool)])), 'Konu testleri, okuma, konuşma ve yazma. Kaydır, birini seç.') : tpShelf() + _practiceTp();
 const _homeTp = VIEWS.home;
 VIEWS.home = () => {
   const h = _homeTp(); if (!isAm()) return h;
@@ -7989,6 +8049,377 @@ lessonSummary = function () {
   if (o && o.kind === 'topic') { const f = $('#lsFoot .ls-foot-in'); if (f) f.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost" onclick="${o.topicId ? `startTopic('${o.topicId}')` : o.mixId === 'sel' ? 'startSelMix()' : `startMix('${o.mixId}')`}"><i class="fa-solid fa-rotate"></i> Yeni set</button>`); }
 };
 
+
+/* =====================================================================
+   EK 5: Ses ayırt etme · Konu ustalığı ve unutma · Bugünün 10 dakikası · Hızlı tur
+   Çekim tablosu · Bileşik kelime · Çevrimdışı · Ders rengi · Ustalık çizgileri · Ses dalgası
+   ===================================================================== */
+Object.assign(KIND_NAMES, { table: 'Tabloyu doldur', comp: 'Kelimeyi birleştir' });
+
+/* ---------- 1) Ses ayırt etme: Türkçede olmayan sesler ---------- */
+// [kelime 1, anlamı, kelime 2, anlamı, fark]
+const TP_PAIRS = TPW('schon=zaten=schön=güzel=o / ö|Mutter=anne=Mütter=anneler=u / ü|lesen=okumak=lösen=çözmek=e / ö|Tür=kapı=Tier=hayvan=ü / i (uzun)|vier=dört=für=için=i / ü|Kuchen=pasta=Küchen=mutfaklar=u / ü|Bruder=erkek kardeş=Brüder=erkek kardeşler=u / ü|Hölle=cehennem=Hülle=kılıf=ö / ü|zahlen=ödemek=zählen=saymak=a / ä|fühlen=hissetmek=füllen=doldurmak=uzun ü / kısa ü|Staat=devlet=Stadt=şehir=uzun a / kısa a|Miete=kira=Mitte=orta=uzun i / kısa i|Ofen=fırın=offen=açık=uzun o / kısa o|bieten=sunmak=bitten=rica etmek=uzun i / kısa i|Kirche=kilise=Kirsche=kiraz=ch / sch|leider=maalesef=Lieder=şarkılar=ei / ie|Wein=şarap=Wien=Viyana=ei / ie|Bach=dere=Bauch=karın=a / au|Bär=ayı=Beere=dut=ä / e|Höhle=mağara=Hülle=kılıf=ö / ü|Rose=gül=Rosse=atlar=uzun o / kısa o|Buch=kitap=Bauch=karın=u / au|heiß=sıcak=Haus=ev=ei / au|Eule=baykuş=Eile=acele=eu / ei');
+function soundSet() {
+  const U = tpU('laute'), out = [];
+  pick(TP_PAIRS, 6).forEach(p => { const second = Math.random() < .5, w = second ? p[2] : p[0];
+    out.push({ k: 'mc', q: 'Hangisini duydun?', say: w, listen: true, vis: tpListenVis(), o: [p[0], p[2]], a: second ? 1 : 0, lbl: 'Sesi ayırt et', e: `${p[0]} (${p[1]}) · ${p[2]} (${p[3]}) — fark: ${p[4]}`, id: U.id + ':mp:' + w, unit: U.id, sk: 'horen', ui: 'pair' }); });
+  pick(TP_PAIRS, 2).forEach(p => { const second = Math.random() < .5, w = second ? p[2] : p[0], right = Math.random() < .5, shown = right ? w : (second ? p[0] : p[2]);
+    out.push({ k: 'tf', q: `Duyduğun kelime “${shown}” mi?`, say: w, listen: true, vis: tpListenVis(), a: right, lbl: 'Dinle: doğru mu?', e: `Duyduğun: ${w} (${second ? p[3] : p[1]}) — fark: ${p[4]}`, id: U.id + ':tf:' + w, unit: U.id, sk: 'horen' }); });
+  pick(TP_PAIRS, 2).forEach(p => { const second = Math.random() < .5, w = second ? p[2] : p[0], tr = second ? p[3] : p[1];
+    out.push(tpMc({ q: 'Duyduğun kelime ne demek?', say: w, listen: true, vis: tpListenVis(), lbl: 'Dinle ve anlamını seç', e: `${w} = ${tr} (karıştırılan: ${second ? p[0] : p[2]} = ${second ? p[1] : p[3]})`, id: U.id + ':m:' + w, unit: U.id, sk: 'horen' }, tr, [second ? p[1] : p[3]].concat(TP_PAIRS.map(x => x[1])), 2)); });
+  pick(TP_PAIRS, 2).forEach(p => out.push(makeListenW(U, [p[2], p[3]])));
+  pick(TP_PAIRS, 2).forEach(p => out.push(makeSpeak(U, [`${p[0]} – ${p[2]}`, `${p[1]} – ${p[3]} (fark: ${p[4]})`])));
+  return out;
+}
+
+/* ---------- 6) Bileşik kelime: parçaları birleştir, artikeli son parça belirler ---------- */
+// [kelime, artikel, parça 1, parça 2, anlamı]
+const TP_COMP = TPW('Haustür=die=Haus=Tür=ev kapısı|Kühlschrank=der=Kühl=Schrank=buzdolabı|Handschuh=der=Hand=Schuh=eldiven|Kindergarten=der=Kinder=Garten=anaokulu|Bahnhof=der=Bahn=Hof=tren istasyonu|Krankenhaus=das=Kranken=Haus=hastane|Schlafzimmer=das=Schlaf=Zimmer=yatak odası|Wohnzimmer=das=Wohn=Zimmer=oturma odası|Apfelsaft=der=Apfel=Saft=elma suyu|Geburtstag=der=Geburts=Tag=doğum günü|Hausaufgabe=die=Haus=Aufgabe=ev ödevi|Fahrrad=das=Fahr=Rad=bisiklet|Flughafen=der=Flug=Hafen=havalimanı|Zahnbürste=die=Zahn=Bürste=diş fırçası|Regenschirm=der=Regen=Schirm=şemsiye|Sonnenbrille=die=Sonnen=Brille=güneş gözlüğü|Kaffeetasse=die=Kaffee=Tasse=kahve fincanı|Tischlampe=die=Tisch=Lampe=masa lambası|Wochenende=das=Wochen=Ende=hafta sonu|Haustier=das=Haus=Tier=evcil hayvan|Schreibtisch=der=Schreib=Tisch=çalışma masası|Stadtplan=der=Stadt=Plan=şehir haritası|Briefmarke=die=Brief=Marke=pul|Handtasche=die=Hand=Tasche=el çantası|Kinderzimmer=das=Kinder=Zimmer=çocuk odası|Sonntag=der=Sonn=Tag=pazar|Fußball=der=Fuß=Ball=futbol|Tomatensuppe=die=Tomaten=Suppe=domates çorbası');
+function makeComp(U, c) {
+  const others = shuffle([...new Set(TP_COMP.flatMap(x => [x[2], x[3]]).filter(p => p !== c[2] && p !== c[3]))]).slice(0, 2);
+  return { k: 'comp', q: c[4], a: c[0], art: c[1], parts: [c[2], c[3]], bank: shuffle([c[2], c[3]].concat(others)), e: `${c[2]} + ${c[3]} = ${c[1]} ${c[0]} — artikeli son parça belirler`, sayAns: c[1] + ' ' + c[0], id: U.id + ':comp:' + c[0], unit: U.id, sk: 'schreiben' };
+}
+function compSet() {
+  const U = tpU('komposita'), out = pick(TP_COMP, 5).map(c => makeComp(U, c));
+  pick(TP_COMP, 3).forEach(c => out.push(tpMc({ q: `${c[2]} + ${c[3]} → ___ ${c[0]}`, lbl: 'Artikeli seç', e: `Son parça “${c[3]}” → ${c[1]} ${c[0]} (${c[4]})`, sayAns: c[1] + ' ' + c[0], id: U.id + ':art:' + c[0], unit: U.id }, c[1], ARTS3, 2)));
+  pick(TP_COMP, 2).forEach(c => out.push(tpMc({ q: `“${c[0]}” ne demek?`, say: c[0], lbl: 'Anlamını seç', e: `${c[2]} + ${c[3]} = ${c[0]} (${c[4]})`, id: U.id + ':m:' + c[0], unit: U.id, card: [c[1] + ' ' + c[0], c[4]] }, c[4], TP_COMP.map(x => x[4]))));
+  pick(TP_COMP, 2).forEach(c => out.push({ k: 'ww', q: c[4], a: c[1] + ' ' + c[0], art: true, e: `${c[2]} + ${c[3]}`, id: U.id + ':ww:' + c[0], unit: U.id }));
+  out.push({ k: 'sort', bk: ARTS3, w: pick(TP_COMP, 6).map(c => [c[0], ARTS3.indexOf(c[1]), c[4]]), lbl: 'Artikeline göre ayır', id: U.id + ':sort', unit: U.id });
+  return out;
+}
+
+/* ---------- 5) Çekim tablosu ---------- */
+function makeTable(U, inf, tr, forms, tense) {
+  const give = rnd(0, 5);
+  return { k: 'table', q: inf, tr, tense, a: forms, give, e: forms ? `${inf} (${tense}): ` + PERS.map((p, i) => p.split('/')[0] + ' ' + forms[i]).join(', ') : '', id: U.id + ':tbl:' + tense + ':' + inf, unit: U.id, sk: 'schreiben' };
+}
+const tableFromVerb = (U, tense) => { const V = VERBS.filter(v => /^[a-zäöüß]+$/.test(v.i) && (tense !== 'Perfekt' || v.p2)), v = pick(V, 1)[0], c = conj(v); return makeTable(U, v.i, v.tr, tense === 'Präsens' ? c.p : tense === 'Präteritum' ? c.pr : c.perf, tense); };
+
+/* ---------- Yeni konular ve mevcut konulara yeni etkinlikler ---------- */
+TOPICS.splice(4, 0, { id: 'laute', g: 'temel', t: 'Ses ayırt etme', de: 'schön oder schon?', ic: 'fa-ear-listen', h: 268, d: 'ü/u, ö/o, ei/ie, uzun-kısa sesli', gen: soundSet });
+TOPICS.splice(TOPICS.findIndex(t => t.id === 'gegensatz') + 1, 0, { id: 'komposita', g: 'gramer', t: 'Bileşik kelimeler', de: 'Komposita', ic: 'fa-puzzle-piece', h: 150, d: 'Haus + Tür = die Haustür', gen: compSet });
+TOPICS.splice(TOPICS.findIndex(t => t.id === 'perfekt') + 1, 0, { id: 'tabelle', g: 'gramer', t: 'Çekim tabloları', de: 'Konjugation', ic: 'fa-table-cells', h: 205, d: 'Präsens, Präteritum, Perfekt tablosunu doldur',
+  gen: () => { const U = tpU('tabelle'); return [tableFromVerb(U, 'Präsens'), tableFromVerb(U, 'Präsens'), tableFromVerb(U, 'Präteritum'), tableFromVerb(U, 'Perfekt'), makeTable(U, pick(Object.keys(TP_MODALS), 1)[0], '', null, 'Präsens')].map(t => t.a ? t : Object.assign(t, { a: TP_MODALS[t.q], tr: TP_MODAL_TR[t.q], e: `${t.q}: ` + TP_MODALS[t.q].join(', ') })); } });
+const _presentGen = TOPICS.find(t => t.id === 'praesens').gen, _perfGen = TOPICS.find(t => t.id === 'perfekt').gen, _modalGen = TOPICS.find(t => t.id === 'modal').gen;
+TOPICS.find(t => t.id === 'praesens').gen = () => _presentGen().concat(tableFromVerb(tpU('praesens'), 'Präsens'));
+TOPICS.find(t => t.id === 'perfekt').gen = () => _perfGen().concat(tableFromVerb(tpU('perfekt'), 'Perfekt'));
+TOPICS.find(t => t.id === 'modal').gen = () => { const m = pick(Object.keys(TP_MODALS), 1)[0]; return _modalGen().concat(makeTable(tpU('modal'), m, TP_MODAL_TR[m], TP_MODALS[m], 'Präsens')); };
+TOPICS.forEach(t => { if (t.g === 'kelime') { const g = t.gen; t.gen = () => { const xs = g(), c = TP_COMP.find(x => TP_VOCAB[t.id].some(w => tpBare(w[0]) === x[3])); return c ? xs.concat(makeComp(tpU(t.id), c)) : xs; }; } });
+
+/* ---------- 2) Konu ustalığı: puan zamanla düşer, düşen konu tazelenir ---------- */
+const TP_DAY = 864e5;
+// 3 gün dokunulmaz, sonra günde %2,5 düşer; en fazla yarısına iner
+function tpMastery(id) {
+  const b = ((D && D.topicBest) || {})[id]; if (b == null) return null;
+  const at = ((D && D.topicAt) || {})[id] || Date.now(), days = (Date.now() - at) / TP_DAY;
+  return b * Math.max(.5, 1 - Math.max(0, days - 3) * .025);
+}
+tpBest = tpMastery;
+const tpFading = id => { const b = ((D && D.topicBest) || {})[id], m = tpMastery(id); return b != null && b >= .8 && m < .8; };
+const tpLevel = m => m == null ? 0 : m < .5 ? 1 : m < .8 ? 2 : 3;
+const TP_LV_NAME = ['Başlamadın', 'Başladın', 'İyi', 'Usta'];
+// Tasarım 3: yüzde yerine üç dolgu çizgisi
+tpTile = t => {
+  const m = tpMastery(t.id), lv = tpLevel(m), fade = tpFading(t.id);
+  return `<button class="tp-tile press" style="${tpBg(t.h)}" onclick="startTopic('${t.id}')" aria-label="${esc(t.t)}: ${TP_LV_NAME[lv]}${m != null ? ' %' + Math.round(m * 100) : ''}${fade ? ', tazelenmeli' : ''}"><i class="fa-solid ${t.ic}" aria-hidden="true"></i>${fade ? '<span class="tp-fade">Tazele</span>' : ''}<span class="tp-tt"><b>${esc(t.t)}</b><small lang="de">${esc(t.de)}</small></span><span class="tp-mast" data-lv="${lv}" aria-hidden="true"><i></i><i></i><i></i></span></button>`;
+};
+const _lessonSummaryMast = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts;
+  if (o && o.kind === 'topic' && o.topicId && !RO) {
+    const m = tpMastery(o.topicId) || 0, sc = LSN.correct / LSN.items.length;
+    _lessonSummaryMast.apply(this, arguments);
+    D.topicBest[o.topicId] = Math.max(m, sc); D.topicAt = D.topicAt || {}; D.topicAt[o.topicId] = Date.now(); save();
+    return;
+  }
+  _lessonSummaryMast.apply(this, arguments);
+};
+// Konu testlerinde renk: temel turuncu, dilbilgisi mavi, kelime yeşil
+startTopic = function (id) {
+  const t = TOPICS.find(x => x.id === id); if (!t) return;
+  startLesson(shuffle(t.gen().filter(Boolean)), { title: t.t, color: { temel: 'a2', gramer: 'c1', kelime: 'b2' }[t.g] || 'a1', kind: 'topic', topicId: id, pass: 0 });
+};
+const _topicsView = VIEWS.topics;
+VIEWS.topics = () => {
+  // Hızlı tur karma testlerin altında; "Tekrar et" bölümü unutulmaya başlayan konuları da gösterir
+  return _topicsView().replace('<section><div class="am-sh"><h2>Temel konular', speedSection() + '<section><div class="am-sh"><h2>Temel konular');
+};
+
+/* ---------- 3) Bugünün 10 dakikası ---------- */
+function buildToday() {
+  const now = Date.now(), items = [];
+  const due = shuffle(D.cards.filter(c => c.due <= now)).slice(0, 5), pool = D.cards.length >= 4 ? D.cards : allVocab().map(v => ({ de: v.de, tr: v.tr }));
+  due.forEach(c => { const o = shuffle([c.tr].concat(pick(pool.filter(x => x.tr !== c.tr), 2).map(x => x.tr))); items.push({ k: 'mc', q: `“${c.de}” ne demek?`, say: c.de, o, a: o.indexOf(c.tr), lbl: 'Tekrar kartı', e: `${c.de} = ${c.tr}`, id: 'daily:c:' + c.de, card: [c.de, c.tr], cardId: c.id, cat: 'kelime' }); });
+  D.wrong.filter(w => w.item.k !== 'match' && w.item.k !== 'free').slice(0, 2).forEach(w => items.push(w.item));
+  // En zayıf iki konu (hiç denenmemişse temel konulardan)
+  const tried = TOPICS.filter(t => tpMastery(t.id) != null).sort((a, b) => tpMastery(a.id) - tpMastery(b.id));
+  const weak = tried.filter(t => tpMastery(t.id) < .85).slice(0, 2), fill = shuffle(TOPICS.filter(t => !weak.includes(t) && t.g !== 'kelime')).slice(0, 2 - weak.length);
+  weak.concat(fill).forEach(t => items.push(...shuffle(t.gen().filter(x => x && x.k !== 'sort' && x.k !== 'table')).slice(0, 3)));
+  const nu = nextUnit(); if (nu && !nu.boss) items.push(...shuffle(buildUnitItems(nu.u, LEVELS[nu.li])).slice(0, 4));
+  return shuffle(items).slice(0, 16);
+}
+function startToday() { startLesson(buildToday(), { title: 'Bugünün 10 dakikası', color: 'c1', kind: 'daily', pass: 0 }); }
+const _homeToday = VIEWS.home;
+VIEWS.home = () => {
+  const h = _homeToday(); if (!isFx()) return h;
+  const tried = TOPICS.filter(t => tpMastery(t.id) != null).sort((a, b) => tpMastery(a.id) - tpMastery(b.id)).filter(t => tpMastery(t.id) < .85).slice(0, 2);
+  return h.replace('<h2>Günün dersi</h2>', '<h2>Bugünün 10 dakikası</h2>')
+    .replace(/<p class="fx-lead">Tekrar kartların, son yanlışların ve sıradaki konudan karışık, yaklaşık 5 dakikalık bir set.<\/p>/, '<p class="fx-lead">Tekrar kartların, son yanlışların, en zayıf konuların ve sıradaki üniten; senin için hazırlanmış 16 soru.</p>')
+    .replace('<li><b>Yeni konu</b>', `<li><b>Zayıf konular</b><span>${tried.length ? tried.map(t => esc(t.t)).join(', ') : 'Sayılar, artikel…'}</span></li><li><b>Yeni konu</b>`)
+    .replace(/onclick="startDaily\(\)">([^<]*<i class="fa-solid fa-(?:check|play)"><\/i>) ?[^<]*<\/button>/, (m, ic) => `onclick="startToday()">${/fa-check/.test(ic) ? '<i class="fa-solid fa-check"></i> Bugün yapıldı · yeni set' : '<i class="fa-solid fa-play"></i> 10 dakikaya başla'}</button>`);
+};
+startDaily = startToday;
+
+/* ---------- 4) Hızlı tur: 60 saniye, sadece seçmeli sorular, kişisel rekor ---------- */
+const SPEED = [
+  { id: 'zahlen', t: 'Sayılar', ic: 'fa-hashtag', bg: 'linear-gradient(150deg,#ff9f0a,#ff3b30)' },
+  { id: 'artikel', t: 'Artikel', ic: 'fa-tags', bg: 'linear-gradient(150deg,#ff6a88,#c21a5b)' },
+  { id: 'praesens', t: 'Fiil çekimi', ic: 'fa-person-running', bg: 'linear-gradient(150deg,#64d2ff,#007aff)' },
+  { id: 'mix', t: 'Karışık', ic: 'fa-bolt', bg: 'linear-gradient(150deg,#bf5af2,#4b2bd6)' }
+];
+const speedRec = id => ((D && D.speedBest) || {})[id] || 0;
+function speedSection() {
+  return `<section><div class="am-sh"><h2>Hızlı tur</h2><span class="tp-note">60 saniyede kaç doğru?</span></div><div class="tp-speed">${SPEED.map(s => `<button class="tp-sp press" style="background:${s.bg}" onclick="startSpeed('${s.id}')"><i class="fa-solid ${s.ic}" aria-hidden="true"></i><b>${s.t}</b><small>${speedRec(s.id) ? 'Rekor ' + speedRec(s.id) : 'Rekor yok'}</small></button>`).join('')}</div></section>`;
+}
+function startSpeed(id) {
+  const src = id === 'mix' ? TOPICS.filter(t => ['temel', 'gramer'].includes(t.g) || Math.random() < .3) : [TOPICS.find(t => t.id === id)], items = [];
+  for (let g = 0; items.length < 70 && g < 60; g++) src.forEach(t => items.push(...t.gen().filter(x => x && (x.k === 'mc' || x.k === 'tf') && !x.listen)));
+  const s = SPEED.find(x => x.id === id);
+  startLesson(shuffle(items).slice(0, 70), { title: 'Hızlı tur · ' + s.t, color: 'a1', kind: 'speed', speedId: id, pass: 0 });
+  LSN.t1 = Date.now() + 60000; speedTick();
+}
+let SPEED_T = null;
+function speedTick() {
+  clearTimeout(SPEED_T); if (!LSN || LSN.opts.kind !== 'speed') return;
+  const left = Math.max(0, Math.ceil((LSN.t1 - Date.now()) / 1000)); let el = $('#spdT');
+  if (!el) { const top = $('#lesson .ls-top'); if (top) { top.insertAdjacentHTML('beforeend', '<b id="spdT" class="tabular" aria-live="off"></b>'); el = $('#spdT'); } }
+  if (el) { el.textContent = left; el.classList.toggle('low', left <= 10); }
+  const cn = $('#lsCount'); if (cn) cn.textContent = LSN.correct + ' doğru';
+  if (left <= 0) return speedEnd();
+  SPEED_T = setTimeout(speedTick, 250);
+}
+function speedEnd() {
+  clearTimeout(SPEED_T); if (!LSN || LSN.opts.kind !== 'speed') return;
+  const n = LSN.results.length; if (!n) { quitLesson(true); toast('Süre bitti, hiç cevap vermedin', 'warn'); return; }
+  LSN.items = LSN.items.slice(0, n); LSN.i = n; lessonSummary();
+}
+// Seçince hemen kontrol, doğruysa hemen sonraki soru
+const _selOptSp = selOpt;
+selOpt = function (i) {
+  _selOptSp(i);
+  if (!LSN || LSN.opts.kind !== 'speed' || LSN.checked) return;
+  checkItem(); const ok = LSN.results[LSN.results.length - 1].ok;
+  setTimeout(() => { if (LSN && LSN.opts.kind === 'speed' && LSN.checked && Date.now() < LSN.t1) nextItem(); }, ok ? 350 : 1300);
+};
+const _lessonSummarySp = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts; clearTimeout(SPEED_T);
+  if (!o || o.kind !== 'speed') return _lessonSummarySp.apply(this, arguments);
+  const c = LSN.correct, prev = speedRec(o.speedId), rec = c > prev;
+  if (!RO) { D.speedBest = D.speedBest || {}; if (rec) D.speedBest[o.speedId] = c; }
+  _lessonSummarySp.apply(this, arguments);
+  const t = $('#spdT'); if (t) t.remove();
+  const b = $('#lsBody'); if (b) b.firstElementChild.insertAdjacentHTML('beforeend', `<p class="tp-rec">${rec ? `Yeni rekor: <b class="tabular">${c}</b> doğru` : `60 saniyede <b class="tabular">${c}</b> doğru · rekorun ${prev}`}</p>`);
+  const f = $('#lsFoot .ls-foot-in'); if (f) f.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost" onclick="startSpeed('${o.speedId}')"><i class="fa-solid fa-rotate"></i> Bir tur daha</button>`);
+};
+const _quitLessonSp = quitLesson;
+quitLesson = function () { clearTimeout(SPEED_T); return _quitLessonSp.apply(this, arguments); };
+
+/* ---------- Ders motoru: tablo ve bileşik kelime ---------- */
+const _renderItemE5 = renderItem;
+renderItem = function () {
+  _renderItemE5.apply(this, arguments);
+  const it = LSN && LSN.items[LSN.i]; if (!it) return;
+  const body = $('#lsBody');
+  if (it.ui === 'pair') { const opts = [...body.querySelectorAll('.opt')], g = document.createElement('div'); g.className = 'tp-pair'; opts[0].before(g); opts.forEach(b => { b.setAttribute('lang', 'de'); g.appendChild(b); }); }
+  if (it.k === 'table') {
+    LSN.tblF = null;
+    body.insertAdjacentHTML('beforeend', `<h2 class="ls-q"><span class="hl" lang="de">${esc(it.q)}</span> · ${esc(it.tense)}</h2>${it.tr ? `<div class="muted wx-sub">${esc(it.tr)}</div>` : ''}
+      <div class="tp-tbl">${PERS.map((p, i) => `<label class="tp-tr"><span lang="de">${esc(p)}</span>${i === it.give ? `<b class="tp-given" lang="de">${esc(it.a[i])}</b>` : `<input class="pill-input" id="tbl${i}" autocomplete="off" autocapitalize="off" spellcheck="false" lang="de" onfocus="LSN.tblF=this.id" oninput="tblInput()" onkeydown="if(event.key==='Enter'){event.preventDefault();tblNext(${i})}">`}</label>`).join('')}</div>
+      <div class="row" style="margin-top:10px">${['ä', 'ö', 'ü', 'ß'].map(c => `<button class="tok press" style="padding:6px 12px;font-size:15px" onmousedown="event.preventDefault()" onclick="LSN.tblF&&insChar(LSN.tblF,'${c}')">${c}</button>`).join('')}</div>`);
+    footCheck();
+  }
+  if (it.k === 'comp') {
+    LSN.cp = { picked: [], art: null };
+    body.insertAdjacentHTML('beforeend', `<h2 class="ls-q">İki parçayı birleştir: <span class="hl">${esc(it.q)}</span></h2>
+      <div class="tp-cmp" id="cmpOut" aria-live="polite"><span class="tp-cmpart">___</span><span class="tp-cmpw"></span></div>
+      <div class="bank" id="cmpBank">${it.bank.map((p, i) => `<button class="tok press" data-i="${i}" onclick="cmpTap(${i})" lang="de">${esc(p)}</button>`).join('')}</div>
+      <div class="muted wx-sub" style="margin:16px 0 8px">Artikel:</div><div class="tp-arts">${ARTS3.map(a => `<button class="opt" data-a="${a}" onclick="cmpArt('${a}')">${a}</button>`).join('')}</div>`);
+    footCheck();
+  }
+};
+function tblInput() { const it = LSN.items[LSN.i]; LSN.sel = PERS.every((_, i) => i === it.give || ($('#tbl' + i) || {}).value.trim()) ? 1 : null; footCheck(); }
+function tblNext(i) { for (let j = i + 1; j < 6; j++) { const e = $('#tbl' + j); if (e) { e.focus(); return; } } if (LSN.sel) checkItem(); }
+const cmpWord = () => { const it = LSN.items[LSN.i]; return LSN.cp.picked.map((k, j) => j ? it.bank[k].toLowerCase() : it.bank[k]).join(''); };
+function cmpDraw() {
+  const o = $('#cmpOut'); if (!o) return;
+  o.innerHTML = `<span class="tp-cmpart">${LSN.cp.art || '___'}</span><span class="tp-cmpw" lang="de">${esc(cmpWord()) || '<span class="muted">…</span>'}</span>`;
+  document.querySelectorAll('#cmpBank .tok').forEach(b => b.classList.toggle('used', LSN.cp.picked.includes(+b.dataset.i)));
+  document.querySelectorAll('.tp-arts .opt').forEach(b => b.classList.toggle('sel', b.dataset.a === LSN.cp.art));
+  LSN.sel = LSN.cp.picked.length >= 2 && LSN.cp.art ? 1 : null; footCheck();
+}
+function cmpTap(i) { if (!LSN || LSN.checked) return; const p = LSN.cp.picked; if (p.includes(i)) LSN.cp.picked = p.filter(x => x !== i); else if (p.length < 2) p.push(i); cmpDraw(); }
+function cmpArt(a) { if (!LSN || LSN.checked) return; LSN.cp.art = a; cmpDraw(); }
+const _checkItemE5 = checkItem;
+checkItem = function () {
+  if (!LSN || LSN.checked || !LSN.items[LSN.i]) return; const it = LSN.items[LSN.i];
+  if (it.k === 'table') {
+    const res = PERS.map((_, i) => i === it.give ? true : norm(($('#tbl' + i) || {}).value || '') === norm(it.a[i]));
+    finishItem(res.every(Boolean), false);
+    PERS.forEach((_, i) => { const e = $('#tbl' + i); if (!e) return; e.disabled = true; e.classList.add(res[i] ? 'tp-ok' : 'tp-bad'); if (!res[i]) e.insertAdjacentHTML('afterend', `<b class="tp-fix" lang="de">${esc(it.a[i])}</b>`); });
+    return;
+  }
+  if (it.k === 'comp') {
+    const w = cmpWord(), okW = norm(w) === norm(it.a), okA = LSN.cp.art === it.art;
+    finishItem(okW && okA, false);
+    const n = $('#lsFoot .fb-title'); if (n && !(okW && okA)) n.insertAdjacentHTML('afterend', `<div class="fb-text wx-note">${okW ? 'Kelime doğru, artikel yanlış: son parça “' + esc(it.parts[1]) + '” → ' + it.art : okA ? 'Artikel doğru, parçalar yanlış.' : ''}</div>`);
+    return;
+  }
+  return _checkItemE5();
+};
+const _answerTextE5 = answerText;
+answerText = it => it.k === 'table' ? PERS.map((p, i) => p.split('/')[0] + ' ' + it.a[i]).join(' · ') : it.k === 'comp' ? `${it.art} ${it.a}` : _answerTextE5(it);
+const _givenTextE5 = givenText;
+givenText = it => it.k === 'table' ? PERS.map((p, i) => i === it.give ? null : p.split('/')[0] + ' ' + (($('#tbl' + i) || {}).value || '—')).filter(Boolean).join(' · ') : it.k === 'comp' ? `${LSN.cp.art || '—'} ${cmpWord() || '—'}` : _givenTextE5(it);
+
+/* ---------- Tasarım 1: ders ekranında seviye rengi, doğru cevapta kısa parlama ---------- */
+const _finishItemE5 = finishItem;
+finishItem = function (ok, skipped) {
+  const was = LSN && LSN.checked; _finishItemE5(ok, skipped);
+  if (was || !ok || fxReduce()) return; const l = $('#lesson'); if (!l) return;
+  l.classList.remove('ls-flash'); void l.offsetWidth; l.classList.add('ls-flash');
+};
+
+/* ---------- Tasarım 5: mikrofon açıkken ses dalgası ---------- */
+let MIC_BTN = null;
+addEventListener('pointerdown', e => { const b = e.target.closest && e.target.closest('button'); if (b && b.querySelector('.fa-microphone, .fa-microphone-lines')) MIC_BTN = b; }, true);
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const _listenWave = listen;
+listen = function (lang, onText, onEnd) {
+  const btn = MIC_BTN; MIC_BTN = null; let wave = null, raf = 0, stream = null, ana = null, talk = 0;
+  const stop = () => { cancelAnimationFrame(raf); if (wave) wave.remove(); wave = null; if (stream) stream.getTracks().forEach(t => t.stop()); stream = null; };
+  const r = _listenWave(lang, onText, () => { stop(); onEnd && onEnd(); });
+  if (!r || !btn || fxReduce()) return r;
+  wave = document.createElement('div'); wave.className = 'mic-wave'; wave.setAttribute('aria-hidden', 'true'); wave.innerHTML = '<i></i>'.repeat(28); btn.after(wave);
+  const bars = [...wave.children], buf = new Uint8Array(64);
+  // iOS'ta konuşma tanıma mikrofonu kendisi tutar: dalga, konuşma algılandığında canlanır
+  r.addEventListener && r.addEventListener('speechstart', () => { talk = 1; });
+  r.addEventListener && r.addEventListener('speechend', () => { talk = 0; });
+  if (!IOS && navigator.mediaDevices && window.AudioContext) navigator.mediaDevices.getUserMedia({ audio: true }).then(s => { if (!wave) { s.getTracks().forEach(t => t.stop()); return; } stream = s; const ac = new AudioContext(); ana = ac.createAnalyser(); ana.fftSize = 128; ac.createMediaStreamSource(s).connect(ana); }).catch(() => {});
+  const draw = t => {
+    if (!wave) return; let lv = [];
+    if (ana) { ana.getByteFrequencyData(buf); lv = bars.map((_, i) => buf[2 + i] / 255); }
+    else lv = bars.map((_, i) => (talk ? .45 : .1) * (.55 + .45 * Math.sin(t / 140 + i * .7)) * (talk ? .6 + Math.random() * .4 : 1));
+    bars.forEach((b, i) => { b.style.transform = `scaleY(${Math.max(.08, Math.min(1, lv[i] * 1.6))})`; });
+    raf = requestAnimationFrame(draw);
+  };
+  raf = requestAnimationFrame(draw);
+  return r;
+};
+
+/* ---------- 8) Çevrimdışı: internet gelince ilerleme otomatik gönderilir ---------- */
+function netPill() {
+  let p = document.getElementById('netPill');
+  if (navigator.onLine) { if (p) { p.classList.add('back'); p.textContent = 'Tekrar çevrimiçi · kaydediliyor'; setTimeout(() => p && p.remove(), 2200); } return; }
+  if (!p) { p = document.createElement('div'); p.id = 'netPill'; p.setAttribute('role', 'status'); document.body.appendChild(p); }
+  p.classList.remove('back'); p.innerHTML = '<i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Çevrimdışı · ilerlemen telefonda saklanıyor';
+}
+addEventListener('offline', netPill);
+addEventListener('online', () => { netPill(); if (D && !RO) fbPushLater(); });
+setTimeout(() => { if (!navigator.onLine) netPill(); }, 1500);
+
+// Akış Pratik akışında Test grubu: Bugünün 10 dakikası ve Hızlı tur da kart olur
+const _tpFxGroupE5 = tpFxGroup;
+tpFxGroup = () => {
+  const g = _tpFxGroupE5();
+  g[3].unshift(['Bugünün 10 dakikası', 'Tekrar kartların, yanlışların, en zayıf konuların ve sıradaki üniten: 16 soru', 'fa-calendar-day', 'startToday()', 'Başla', 'Heute Zehn Minuten']);
+  g[3].splice(2, 0, ['Hızlı tur', '60 saniyede kaç doğru yapabilirsin? Rekorunu geç.', 'fa-stopwatch', "startSpeed('mix')", 'Karışık tur', 'Schnell Sechzig Sekunden',
+    `<div class="tp-fxq">${SPEED.filter(x => x.id !== 'mix').map(x => `<button onclick="startSpeed('${x.id}')">${esc(x.t)}${speedRec(x.id) ? ` <small class="tabular">${speedRec(x.id)}</small>` : ''}</button>`).join('')}</div>`]);
+  return g;
+};
+
+
+/* =====================================================================
+   TEK TASARIM: Akış. Diğer tasarımlar seçilemez; Ayarlar'daki Tasarım bölümü kaldırıldı.
+   GERİ: tarayıcı geçmişi + ana ekran uygulamasında soldan sağa kaydırma
+   ===================================================================== */
+setDesign = function () {
+  try { localStorage.setItem('df_design', 'fx'); } catch (e) {}
+  const h = document.documentElement; h.classList.remove('am', 'bh'); h.classList.add('bm', 'fx');
+};
+setDesign();
+const _settingsOne = VIEWS.settings;
+VIEWS.settings = () => _settingsOne().replace(/<div class="panel" style="margin-bottom:16px"><div class="panel-head" style="margin-bottom:4px"><h2>Tasarım<\/h2>[\s\S]*?<div class="ds-pick[^"]*">[\s\S]*?<\/button><\/div><\/div>/, '');
+
+// Her sayfa geçişi geçmişe yazılır; geri tuşu/hareketi önce pencereyi, dersi kapatır, sonra önceki sayfaya döner
+let NAV_I = 0, NAV_POP = false;
+const navState = () => ({ df: 1, p: PAGE, i: NAV_I });
+const _goHist = go;
+go = function (p) {
+  const prev = PAGE, r = _goHist.apply(this, arguments);
+  try {
+    if (!history.state || !history.state.df) { NAV_I = 0; history.replaceState(navState(), ''); }
+    else if (!NAV_POP && PAGE !== prev) { NAV_I++; history.pushState(navState(), ''); }
+  } catch (e) {}
+  return r;
+};
+const tutorOpen = () => { const t = $('#tutorPanel'); return t && !t.hidden; };
+const canBack = () => !!($('#modalRoot').innerHTML || LSN || tutorOpen() || NAV_I > 0);
+// Kapatılacak bir katman varsa kapatır; yoksa false döner
+function closeTop() {
+  if ($('#drawLayer')) { closeDraw(); return true; }
+  if ($('#modalRoot').innerHTML) { closeModal(); return true; }
+  if (LSN) { quitLesson(); return true; }
+  if (tutorOpen()) { toggleTutor(); return true; }
+  return false;
+}
+addEventListener('popstate', e => {
+  if (!D || $('#app').hidden) return;
+  if (closeTop()) { try { history.pushState(navState(), ''); } catch (x) {} return; }
+  const s = e.state; NAV_I = s && s.df ? s.i : 0; NAV_POP = true;
+  try { go(s && s.df ? s.p : 'home'); } finally { NAV_POP = false; }
+});
+function navBack() { if (closeTop()) return; if (NAV_I > 0) history.back(); }
+
+// Soldan kaydırma: yalnızca ana ekrana eklenmiş uygulamada (Safari'nin kendi hareketiyle çakışmasın)
+(() => {
+  const STANDALONE = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  if (!STANDALONE) return;
+  const EDGE = 26, GO = 84, ease = 'cubic-bezier(.32,.72,0,1)';
+  let on = false, lock = null, sx = 0, sy = 0, dx = 0, t0 = 0, tgt = null, ind = null;
+  const target = () => $('#modalRoot .sheet') || $('#lesson') || (tutorOpen() && $('#tutorPanel')) || $('#view');
+  const reset = () => { if (tgt) { tgt.style.transition = ''; tgt.style.transform = ''; tgt.style.opacity = ''; } if (ind) { ind.remove(); ind = null; } on = false; lock = null; tgt = null; };
+  addEventListener('touchstart', e => {
+    const t = e.touches[0]; if (e.touches.length > 1 || t.clientX > EDGE || !D || $('#app').hidden || $('#drawLayer') || !canBack()) return;
+    on = true; lock = null; sx = t.clientX; sy = t.clientY; dx = 0; t0 = Date.now(); tgt = target();
+  }, { passive: true });
+  addEventListener('touchmove', e => {
+    if (!on) return; const t = e.touches[0], x = t.clientX - sx, y = t.clientY - sy;
+    if (lock == null) {
+      if (Math.abs(x) < 8 && Math.abs(y) < 8) return;
+      lock = x > 0 && Math.abs(x) > Math.abs(y) * 1.2 ? 'x' : 'y'; if (lock === 'y') { reset(); return; }
+      ind = document.createElement('div'); ind.id = 'swBack'; ind.setAttribute('aria-hidden', 'true'); ind.innerHTML = '<i class="fa-solid fa-chevron-left"></i>'; document.body.appendChild(ind);
+    }
+    e.preventDefault(); dx = Math.max(0, x);
+    if (tgt) { tgt.style.transition = 'none'; tgt.style.transform = `translateX(${dx * .45}px)`; }
+    ind.style.transform = `translate(${Math.min(dx, GO + 20) - 46}px,-50%) scale(${.7 + .3 * Math.min(1, dx / GO)})`; ind.classList.toggle('go', dx >= GO);
+  }, { passive: false });
+  const end = () => {
+    if (!on) return; if (lock !== 'x') { reset(); return; }
+    const fast = dx > 40 && dx / Math.max(1, Date.now() - t0) > .5;
+    if (dx >= GO || fast) {
+      try { navigator.vibrate && navigator.vibrate(8); } catch (x) {}
+      const el = tgt; if (el) { el.style.transition = `transform .2s ${ease}, opacity .2s`; el.style.transform = 'translateX(38vw)'; el.style.opacity = '0'; }
+      if (ind) ind.remove(); ind = null; on = false; lock = null;
+      setTimeout(() => { if (el) { el.style.transition = 'none'; el.style.transform = ''; el.style.opacity = ''; } tgt = null; navBack(); }, 190);
+    } else {
+      if (tgt) { tgt.style.transition = `transform .3s ${ease}`; tgt.style.transform = ''; const el = tgt; setTimeout(() => { el.style.transition = ''; }, 320); }
+      if (ind) { ind.style.transition = `transform .25s ${ease}, opacity .25s`; ind.style.opacity = '0'; const i = ind; setTimeout(() => i.remove(), 260); ind = null; }
+      on = false; lock = null; tgt = null;
+    }
+  };
+  addEventListener('touchend', end); addEventListener('touchcancel', reset);
+})();
 
 /* ---------- Başlat ---------- */
 applyTheme();
