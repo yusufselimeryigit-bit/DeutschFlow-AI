@@ -2592,6 +2592,60 @@ html.fx .fx-slide.lock .fx-title { color: rgba(255,255,255,.78); }
 .wd-facts span { display: flex; flex-direction: column; padding: 8px 12px; border-radius: 12px; background: var(--surface-2); min-width: 84px; }
 .wd-facts small { font-size: 11.5px; color: var(--muted); } .wd-facts b { font-weight: 600; }
 </style>
+<style id="topics">
+/* Konu testleri sayfası: Apple Music "Göz At" kategori kutuları */
+.tp-page section, .tp-shelf { margin-bottom: 30px; }
+.tp-note { font-size: 13px; color: var(--muted); }
+.tp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 12px; }
+.tp-tile { position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; border-radius: 12px; overflow: hidden; color: #fff; text-align: left; cursor: pointer; padding: 0; box-shadow: 0 8px 20px -14px rgba(0,0,0,.45); transition: transform .35s cubic-bezier(.32,.72,0,1); }
+.tp-tile:active { transform: scale(.97); }
+.tp-tile > i { position: absolute; right: -6px; bottom: -10px; font-size: 64px; opacity: .22; transform: rotate(-12deg); }
+.tp-tt { position: absolute; left: 12px; right: 12px; bottom: 10px; display: flex; flex-direction: column; gap: 2px; }
+.tp-tt b { font: 700 17px/1.1 -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, sans-serif; letter-spacing: -.02em; text-wrap: balance; }
+.tp-tt small { font-size: 12.5px; opacity: .88; }
+.tp-score { position: absolute; left: 12px; top: 10px; font: 600 12px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: rgba(0,0,0,.22); padding: 3px 8px; border-radius: 999px; }
+.tp-row .tp-tile { aspect-ratio: 1; }
+.tp-pick { display: flex; flex-wrap: wrap; gap: 8px; }
+.tp-chip { border: 0; border-radius: 999px; padding: 8px 14px; font: 500 15px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface-2); color: var(--ink); cursor: pointer; }
+.tp-chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.tp-tile:focus-visible, .tp-chip:focus-visible, .tp-bk:focus-visible, .tp-play:focus-visible, .tp-slow:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Ders içi yeni görünümler */
+.tp-vis { display: flex; justify-content: center; margin: -4px 0 20px; }
+.tp-big { font-size: 96px; line-height: 1; }
+.tp-listen { display: flex; gap: 12px; align-items: center; }
+.tp-play, .tp-slow { border: 0; cursor: pointer; display: grid; place-items: center; border-radius: 999px; background: var(--accent); color: #fff; }
+.tp-play { width: 76px; height: 76px; font-size: 28px; box-shadow: 0 10px 24px -12px var(--accent); }
+.tp-slow { height: 44px; padding: 0 18px; font: 600 15px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface-2); color: var(--accent); }
+.tp-play:active, .tp-slow:active { transform: scale(.94); }
+.tp-pics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+#lesson .tp-pics .opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 140px; margin: 0; text-align: center; position: relative; }
+#lesson .tp-pics .opt .k { position: absolute; left: 10px; top: 10px; margin: 0; }
+.tp-em { font-size: 56px; line-height: 1; }
+.tp-clock { width: 168px; height: 168px; color: var(--ink); }
+.tp-clock .tp-cf { fill: var(--surface); stroke: var(--border, #e5e5ea); stroke-width: 1.5; }
+.tp-clock .tp-min { stroke: var(--accent); }
+.tp-clock .tp-dot { fill: var(--accent); }
+.tp-chat { display: flex; align-items: flex-end; gap: 10px; width: 100%; max-width: 520px; }
+.tp-av { flex: none; width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; background: var(--surface-2); color: var(--muted); }
+.tp-bub { border: 0; cursor: pointer; text-align: left; font: 500 18px/1.3 -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: var(--ink); background: var(--surface); padding: 12px 16px; border-radius: 20px 20px 20px 6px; display: flex; gap: 10px; align-items: center; }
+.tp-bub i { color: var(--accent); font-size: 15px; }
+/* Gruplara ayır */
+.tp-cur { display: flex; justify-content: center; min-height: 72px; margin: 4px 0 18px; }
+.tp-word { font-size: 22px !important; padding: 12px 22px !important; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tp-word small { font-size: 12.5px; font-weight: 400; color: var(--muted); }
+.tp-done { align-self: center; color: var(--positive); font-weight: 600; }
+.tp-bks { display: grid; grid-template-columns: repeat(var(--n), 1fr); gap: 10px; }
+.tp-bk { border: 0; cursor: pointer; border-radius: 14px; background: var(--surface); color: var(--ink); padding: 14px 8px; min-height: 150px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.tp-bk > b { font: 700 18px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: var(--accent); }
+.tp-bw { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.tp-bw span { font-size: 13px; padding: 3px 8px; border-radius: 999px; background: var(--pos-bg); color: var(--positive); }
+.tp-bw span.miss { background: var(--neg-bg); color: var(--negative); }
+.tp-bk.shake { animation: tpShake .35s; }
+@keyframes tpShake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+@media (prefers-reduced-motion: reduce) { .tp-bk.shake { animation: none; } .tp-tile { transition: none; } }
+@media (max-width: 420px) { .tp-big { font-size: 80px; } .tp-em { font-size: 46px; } #lesson .tp-pics .opt { min-height: 120px; } .tp-bk { min-height: 128px; } }
+</style>
 </head>
 <body>
 <div id="toast"></div>
@@ -7475,6 +7529,466 @@ openProfile = async function () {
   if (!RO) { weeklyAuto(); duelLoad().then(() => { const n = Object.values(DUELS).filter(d => d.to === PID && !(d.res || {})[PID]).length; if (n) toast(`${n} düello seni bekliyor · Pratik → Düello`); }).catch(() => {}); }
   return r;
 };
+
+/* =====================================================================
+   KONU TESTLERİ + yeni etkinlik türleri
+   Resimli seçim, duyduğunu diz, farklı olanı bul, gruplara ayır, diyaloğu tamamla, saat ve sayı soruları.
+   Her konu kendi testini üretir; karma testler konuları karıştırır.
+   ===================================================================== */
+KIND_NAMES.sort = 'Gruplara ayır';
+const TPW = s => s.split('|').map(x => x.split('='));
+const TP_VOCAB = {
+  farben: TPW('rot=kırmızı=🔴|blau=mavi=🔵|grün=yeşil=🟢|gelb=sarı=🟡|schwarz=siyah=⚫|weiß=beyaz=⚪|orange=turuncu=🟠|lila=mor=🟣|braun=kahverengi=🟤|rosa=pembe=🩷|grau=gri=🩶'),
+  tiere: TPW('der Hund=köpek=🐶|die Katze=kedi=🐱|das Pferd=at=🐴|die Kuh=inek=🐮|der Vogel=kuş=🐦|der Fisch=balık=🐟|die Maus=fare=🐭|das Schwein=domuz=🐷|der Bär=ayı=🐻|der Löwe=aslan=🦁|das Schaf=koyun=🐑|die Ente=ördek=🦆|der Affe=maymun=🐒|das Huhn=tavuk=🐔'),
+  essen: TPW('der Apfel=elma=🍎|die Banane=muz=🍌|das Brot=ekmek=🍞|der Käse=peynir=🧀|das Ei=yumurta=🥚|die Milch=süt=🥛|der Kaffee=kahve=☕|der Tee=çay=🍵|die Tomate=domates=🍅|die Kartoffel=patates=🥔|das Fleisch=et=🥩|der Kuchen=pasta=🍰|die Orange=portakal=🍊|die Suppe=çorba=🍲|der Reis=pirinç=🍚|die Erdbeere=çilek=🍓|die Zwiebel=soğan=🧅|das Wasser=su=💧'),
+  familie: TPW('die Mutter=anne=👩|der Vater=baba=👨|das Kind=çocuk=🧒|das Baby=bebek=👶|die Oma=büyükanne=👵|der Opa=büyükbaba=👴|die Familie=aile=👪|der Junge=erkek çocuk=👦|das Mädchen=kız çocuk=👧|der Mann=adam=🧔|die Frau=kadın=👱‍♀️|der Bruder=erkek kardeş=🙋‍♂️|die Schwester=kız kardeş=🙋‍♀️'),
+  koerper: TPW('das Auge=göz=👁️|das Ohr=kulak=👂|die Nase=burun=👃|der Mund=ağız=👄|die Hand=el=✋|der Fuß=ayak=🦶|das Bein=bacak=🦵|der Zahn=diş=🦷|das Herz=kalp=❤️|der Arm=kol=💪|der Kopf=baş=🗣️|die Haare=saçlar=💇'),
+  haus: TPW('das Haus=ev=🏠|die Tür=kapı=🚪|das Bett=yatak=🛏️|der Stuhl=sandalye=🪑|die Lampe=lamba=💡|das Fenster=pencere=🪟|der Schlüssel=anahtar=🔑|das Buch=kitap=📖|das Handy=cep telefonu=📱|der Computer=bilgisayar=💻|die Uhr=saat=⌚|das Sofa=kanepe=🛋️|die Dusche=duş=🚿|der Spiegel=ayna=🪞'),
+  stadt: TPW('das Auto=araba=🚗|der Bus=otobüs=🚌|der Zug=tren=🚆|das Fahrrad=bisiklet=🚲|das Flugzeug=uçak=✈️|das Schiff=gemi=🚢|das Taxi=taksi=🚕|der Bahnhof=istasyon=🚉|das Krankenhaus=hastane=🏥|die Schule=okul=🏫|die Bank=banka=🏦|die Kirche=kilise=⛪|der Supermarkt=süpermarket=🛒|die Post=postane=🏤'),
+  wetter: TPW('die Sonne=güneş=☀️|der Regen=yağmur=🌧️|der Schnee=kar=❄️|der Wind=rüzgâr=💨|die Wolke=bulut=☁️|das Gewitter=fırtına=⛈️|der Baum=ağaç=🌳|die Blume=çiçek=🌸|der Berg=dağ=⛰️|das Meer=deniz=🌊|der Mond=ay=🌙|der Stern=yıldız=⭐'),
+  kleidung: TPW('das Hemd=gömlek=👔|die Hose=pantolon=👖|das Kleid=elbise=👗|der Schuh=ayakkabı=👟|die Jacke=ceket=🧥|der Hut=şapka=👒|die Mütze=bere=🧢|die Socke=çorap=🧦|die Brille=gözlük=👓|der Schal=atkı=🧣|die Tasche=çanta=👜|der Handschuh=eldiven=🧤'),
+  berufe: TPW('der Arzt=doktor=🧑‍⚕️|der Lehrer=öğretmen=🧑‍🏫|der Koch=aşçı=🧑‍🍳|der Polizist=polis=👮|der Bauer=çiftçi=🧑‍🌾|der Pilot=pilot=🧑‍✈️|der Feuerwehrmann=itfaiyeci=🧑‍🚒|der Mechaniker=tamirci=🧑‍🔧|der Student=üniversite öğrencisi=🧑‍🎓|der Sänger=şarkıcı=🧑‍🎤|der Maler=ressam=🧑‍🎨|der Verkäufer=satıcı=🧑‍💼')
+};
+const TP_DAYS = TPW('Montag=Pazartesi|Dienstag=Salı|Mittwoch=Çarşamba|Donnerstag=Perşembe|Freitag=Cuma|Samstag=Cumartesi|Sonntag=Pazar');
+const TP_MONTHS = TPW('Januar=Ocak|Februar=Şubat|März=Mart|April=Nisan|Mai=Mayıs|Juni=Haziran|Juli=Temmuz|August=Ağustos|September=Eylül|Oktober=Ekim|November=Kasım|Dezember=Aralık');
+const TP_SEASONS = TPW('der Frühling=ilkbahar=🌱|der Sommer=yaz=🏖️|der Herbst=sonbahar=🍂|der Winter=kış=⛄');
+const TP_PLURAL = TPW('das Kind=die Kinder=çocuk|der Mann=die Männer=adam|die Frau=die Frauen=kadın|das Buch=die Bücher=kitap|der Apfel=die Äpfel=elma|das Auto=die Autos=araba|der Tisch=die Tische=masa|die Stadt=die Städte=şehir|das Haus=die Häuser=ev|der Stuhl=die Stühle=sandalye|die Katze=die Katzen=kedi|der Hund=die Hunde=köpek|das Ei=die Eier=yumurta|die Blume=die Blumen=çiçek|der Bruder=die Brüder=erkek kardeş|die Mutter=die Mütter=anne|der Lehrer=die Lehrer=öğretmen|das Handy=die Handys=cep telefonu|die Zeitung=die Zeitungen=gazete|der Fuß=die Füße=ayak|der Freund=die Freunde=arkadaş|das Zimmer=die Zimmer=oda|die Nacht=die Nächte=gece|der Zug=die Züge=tren');
+const TP_ADJ = TPW('groß=büyük=klein=küçük|alt=yaşlı=jung=genç|neu=yeni=alt=eski|schnell=hızlı=langsam=yavaş|heiß=sıcak=kalt=soğuk|gut=iyi=schlecht=kötü|teuer=pahalı=billig=ucuz|lang=uzun=kurz=kısa|hell=aydınlık=dunkel=karanlık|leicht=kolay; hafif=schwer=zor; ağır|voll=dolu=leer=boş|früh=erken=spät=geç|laut=gürültülü=leise=sessiz|dick=kalın; şişman=dünn=ince; zayıf|glücklich=mutlu=traurig=üzgün|richtig=doğru=falsch=yanlış|offen=açık=geschlossen=kapalı|reich=zengin=arm=fakir|sauber=temiz=schmutzig=kirli|stark=güçlü=schwach=zayıf');
+const TP_MODALS = { können: ['kann', 'kannst', 'kann', 'können', 'könnt', 'können'], müssen: ['muss', 'musst', 'muss', 'müssen', 'müsst', 'müssen'], wollen: ['will', 'willst', 'will', 'wollen', 'wollt', 'wollen'], dürfen: ['darf', 'darfst', 'darf', 'dürfen', 'dürft', 'dürfen'], sollen: ['soll', 'sollst', 'soll', 'sollen', 'sollt', 'sollen'], mögen: ['mag', 'magst', 'mag', 'mögen', 'mögt', 'mögen'], möchten: ['möchte', 'möchtest', 'möchte', 'möchten', 'möchtet', 'möchten'] };
+const TP_MODAL_TR = { können: '-ebilmek', müssen: 'zorunda olmak', wollen: 'istemek', dürfen: 'izinli olmak', sollen: '-meli (biri istediği için)', mögen: 'sevmek', möchten: 'istemek (kibar)' };
+const TP_MODAL_S = TPW('Ich kann heute nicht kommen.=Bugün gelemem.|Du musst mehr Wasser trinken.=Daha çok su içmelisin.|Wir wollen nach Berlin fahren.=Berlin\'e gitmek istiyoruz.|Darf ich hier parken?=Buraya park edebilir miyim?|Er soll morgen früh arbeiten.=Yarın sabah çalışması gerekiyor.|Ich möchte einen Kaffee trinken.=Bir kahve içmek istiyorum.|Kannst du mir bitte helfen?=Bana yardım edebilir misin lütfen?|Sie müssen das Formular ausfüllen.=Formu doldurmanız gerekiyor.|Ihr dürft hier nicht spielen.=Burada oynayamazsınız.|Magst du Schokolade?=Çikolata sever misin?');
+// [cümle, doğru edat, Türkçesi]
+const TP_PREP = TPW('Ich fahre ___ dem Bus zur Arbeit.=mit=İşe otobüsle gidiyorum.|Das Buch liegt ___ dem Tisch.=auf=Kitap masanın üstünde duruyor.|Ich komme ___ der Türkei.=aus=Türkiye\'den geliyorum.|Das Geschenk ist ___ dich.=für=Hediye senin için.|Er wohnt noch ___ seinen Eltern.=bei=Hâlâ ailesinin yanında oturuyor.|Ich lerne ___ zwei Jahren Deutsch.=seit=İki yıldır Almanca öğreniyorum.|Wir fahren im Sommer ___ Spanien.=nach=Yazın İspanya\'ya gidiyoruz.|Ich trinke Kaffee ___ Zucker.=ohne=Kahveyi şekersiz içerim.|Die Katze schläft ___ dem Sofa.=unter=Kedi kanepenin altında uyuyor.|Das Bild hängt ___ der Wand.=an=Resim duvarda asılı.|Wir gehen ___ den Park.=durch=Parkın içinden geçiyoruz.|Der Kurs beginnt ___ neun Uhr.=um=Kurs saat dokuzda başlıyor.|Ich habe ein Geschenk ___ meiner Mutter bekommen.=von=Annemden bir hediye aldım.|Die Lampe hängt ___ dem Tisch.=über=Lamba masanın üstünde asılı.|Ich warte ___ dem Kino auf dich.=vor=Sinemanın önünde seni bekliyorum.|Die Bank ist ___ der Post und dem Supermarkt.=zwischen=Banka postane ile süpermarketin arasında.');
+const TP_PREPS = ['mit', 'auf', 'aus', 'für', 'bei', 'seit', 'nach', 'ohne', 'unter', 'an', 'durch', 'um', 'von', 'über', 'vor', 'zwischen', 'in', 'zu', 'gegen'];
+const TP_CASE_PREP = [['mit', 'Dativ'], ['bei', 'Dativ'], ['nach', 'Dativ'], ['von', 'Dativ'], ['zu', 'Dativ'], ['aus', 'Dativ'], ['seit', 'Dativ'], ['für', 'Akkusativ'], ['durch', 'Akkusativ'], ['ohne', 'Akkusativ'], ['gegen', 'Akkusativ'], ['um', 'Akkusativ']];
+// [cümle, Türkçesi, mastar]
+const TP_SEP = TPW('Ich stehe jeden Tag um sieben Uhr auf.=Her gün saat yedide kalkarım.=aufstehen|Der Zug fährt um zehn Uhr ab.=Tren saat onda kalkıyor.=abfahren|Wir kaufen am Samstag ein.=Cumartesi alışveriş yapıyoruz.=einkaufen|Ruf mich bitte heute Abend an.=Lütfen beni bu akşam ara.=anrufen|Ich sehe abends gern fern.=Akşamları televizyon izlemeyi severim.=fernsehen|Mach bitte das Fenster zu.=Lütfen pencereyi kapat.=zumachen|Er kommt morgen zurück.=Yarın geri dönüyor.=zurückkommen|Sie räumt ihr Zimmer auf.=Odasını topluyor.=aufräumen|Wann kommt der Bus an?=Otobüs ne zaman varıyor?=ankommen|Ich lade dich zum Essen ein.=Seni yemeğe davet ediyorum.=einladen|Kommst du heute mit?=Bugün sen de geliyor musun?=mitkommen|Wir gehen am Freitag aus.=Cuma günü dışarı çıkıyoruz.=ausgehen');
+const TP_SEP_PRE = ['auf', 'ab', 'ein', 'an', 'fern', 'zu', 'zurück', 'mit', 'aus', 'vor', 'weg', 'los'];
+// [soru, cevap, Türkçesi, soru kelimesi]
+const TP_Q = TPW('Wo wohnst du?=In Berlin.=Nerede oturuyorsun?=Wo|Woher kommst du?=Aus der Türkei.=Nereden geliyorsun?=Woher|Wohin fährst du?=Nach Hamburg.=Nereye gidiyorsun?=Wohin|Wann beginnt der Kurs?=Um neun Uhr.=Kurs ne zaman başlıyor?=Wann|Wie heißt du?=Ich heiße Anna.=Adın ne?=Wie|Was trinkst du?=Einen Tee, bitte.=Ne içiyorsun?=Was|Wer ist das?=Das ist mein Bruder.=Bu kim?=Wer|Warum lernst du Deutsch?=Weil ich in Deutschland arbeite.=Neden Almanca öğreniyorsun?=Warum|Wie viel kostet das?=Drei Euro.=Bu ne kadar?=Wie viel|Wie alt bist du?=Ich bin 25 Jahre alt.=Kaç yaşındasın?=Wie alt|Welche Farbe magst du?=Blau.=Hangi rengi seversin?=Welche');
+const TP_QW = TPW('wer=kim|was=ne|wo=nerede|wohin=nereye|woher=nereden|wann=ne zaman|warum=neden|wie=nasıl|wie viel=ne kadar|welcher=hangi');
+// Diyalog: [karşı tarafın cümlesi, doğru cevap, yanlış 1, yanlış 2, Türkçesi]
+const TP_CHAT = TPW('Wie geht es dir?=Gut, danke! Und dir?=Ich heiße Tom.=Um acht Uhr.=Nasılsın?|Guten Morgen!=Guten Morgen! Wie geht\'s?=Gute Nacht!=Tschüss, bis morgen!=Günaydın!|Was möchten Sie trinken?=Einen Kaffee, bitte.=Ich wohne in Köln.=Es ist kalt.=Ne içmek istersiniz?|Woher kommst du?=Ich komme aus der Türkei.=Ich bin 30 Jahre alt.=Ich trinke Tee.=Nerelisin?|Wie spät ist es?=Es ist halb drei.=Es ist sehr schön.=Ich habe keine Zeit.=Saat kaç?|Danke schön!=Bitte schön!=Guten Appetit!=Gute Besserung!=Çok teşekkürler!|Kannst du mir helfen?=Ja, natürlich!=Ich heiße Lena.=Das kostet fünf Euro.=Bana yardım edebilir misin?|Wie viel kostet das?=Das kostet zehn Euro.=Ich bin müde.=Am Montag.=Bu ne kadar?|Was machst du am Wochenende?=Ich besuche meine Eltern.=Ich komme aus Berlin.=Das ist mein Auto.=Hafta sonu ne yapıyorsun?|Haben Sie ein Zimmer frei?=Ja, für wie viele Nächte?=Nein, ich trinke keinen Kaffee.=Der Bus kommt gleich.=Boş odanız var mı?|Entschuldigung, wo ist der Bahnhof?=Gehen Sie geradeaus und dann links.=Ich habe Hunger.=Es regnet heute.=Affedersiniz, istasyon nerede?|Was fehlt Ihnen?=Ich habe Kopfschmerzen.=Ich fahre nach Hause.=Das Essen ist lecker.=Neyiniz var? (doktorda)|Wann treffen wir uns?=Um sechs vor dem Kino.=Ich mag Pizza.=Mein Bruder ist Arzt.=Ne zaman buluşuyoruz?|Möchtest du mitkommen?=Gern, wann geht es los?=Ich wohne hier.=Das ist teuer.=Sen de gelmek ister misin?|Gute Reise!=Danke, bis bald!=Guten Appetit!=Herzlichen Glückwunsch!=İyi yolculuklar!|Hast du Geschwister?=Ja, eine Schwester.=Ja, ich habe Hunger.=Nein, ich trinke nicht.=Kardeşin var mı?');
+
+/* ---------- Ortak yardımcılar ---------- */
+const tpU = id => ({ id: 'tp:' + id });
+const tpMc = (x, right, others, n = 3) => { const o = shuffle([right].concat(shuffle([...new Set(others.filter(w => w !== right))]).slice(0, n))); return Object.assign(x, { k: 'mc', o, a: o.indexOf(right) }); };
+const tpListenVis = () => `<div class="tp-listen"><button class="tp-play press" aria-label="Dinle" onclick="speak(LSN.items[LSN.i].say)"><i class="fa-solid fa-volume-high"></i></button><button class="tp-slow press" onclick="speak(LSN.items[LSN.i].say,{rate:.6})">Yavaş</button></div>`;
+const tpBig = em => `<div class="tp-big" aria-hidden="true">${em}</div>`;
+const tpNoun = w => ART_RE.test(w[0]);
+const tpBare = de => de.replace(ART_RE, '');
+
+/* ---------- Etkinlik üreticileri (kelime listeleri için) ---------- */
+// Resimli seç: Almanca kelimeyi gör ya da duy, doğru resmi seç
+function tpPic(U, W, w, listen) {
+  const pool = shuffle(W.filter(x => x[0] !== w[0] && x[2])).slice(0, 3), all = shuffle([w].concat(pool));
+  return { k: 'mc', ui: 'pic', q: listen ? 'Duyduğun kelime hangisi?' : `“${w[0]}” hangisi?`, say: w[0], listen: !!listen, vis: listen ? tpListenVis() : '', lbl: listen ? 'Dinle ve resmi seç' : 'Doğru resmi seç',
+    o: all.map(x => x[1]), em: all.map(x => x[2]), a: all.indexOf(w), e: `${w[0]} = ${w[1]}`, id: U.id + ':pic:' + w[0], unit: U.id, card: w.slice(0, 2), sk: listen ? 'horen' : 'lesen' };
+}
+// Resme bak, Almancasını seç
+function tpPicRev(U, W, w) { return tpMc({ q: 'Bu ne?', vis: tpBig(w[2]), lbl: 'Resme bak ve seç', e: `${w[0]} = ${w[1]}`, id: U.id + ':pr:' + w[0], unit: U.id, card: w.slice(0, 2) }, w[0], W.map(x => x[0])); }
+function tpMean(U, W, w) { return tpMc({ q: `“${w[0]}” ne demek?`, say: w[0], lbl: 'Anlamını seç', e: `${w[0]} = ${w[1]}`, id: U.id + ':m:' + w[0], unit: U.id, card: w.slice(0, 2) }, w[1], W.map(x => x[1])); }
+function tpRev(U, W, w) { return tpMc({ q: `“${w[1]}” Almancada hangisi?`, lbl: 'Almancasını seç', e: `${w[1]} = ${w[0]}`, id: U.id + ':r:' + w[0], unit: U.id, card: w.slice(0, 2) }, w[0], W.map(x => x[0])); }
+// Farklı olanı bul: üç kelime bu konudan, biri başka bir konudan
+function tpOdd(U, W, otherKey) {
+  const keys = Object.keys(TP_VOCAB).filter(k => TP_VOCAB[k] !== W && k !== otherKey), ok = otherKey || pick(keys, 1)[0], odd = pick(TP_VOCAB[ok], 1)[0], three = pick(W, 3);
+  const tp = TOPICS.find(t => t.id === ok);
+  return tpMc({ q: 'Hangisi diğerlerine uymuyor?', lbl: 'Farklı olanı bul', e: `${odd[0]} (${odd[1]}) “${tp ? tp.t : ok}” grubundan; diğerleri: ${three.map(x => x[0]).join(', ')}`, id: U.id + ':odd:' + odd[0], unit: U.id }, odd[0], three.map(x => x[0]), 3);
+}
+function tpMatch(U, W) { const ps = pick(W, 4).map(x => [x[0], x[1]]); return new Set(ps.map(p => p[1])).size === 4 ? { k: 'match', pairs: ps, id: U.id + ':match', unit: U.id } : null; }
+// Gruplara ayır: der / die / das kutularına
+function tpSortArt(U, nouns, n = 6) {
+  const ws = pick(nouns.filter(tpNoun), n); if (ws.length < 4) return null;
+  return { k: 'sort', bk: ['der', 'die', 'das'], w: ws.map(x => [tpBare(wordForms(x[0])[0]), ARTS3.indexOf(wordForms(x[0])[0].match(ART_RE)[1].toLowerCase()), x[1]]), lbl: 'Artikeline göre ayır', id: U.id + ':sort:' + ws.map(x => x[0]).join(','), unit: U.id };
+}
+function tpArt(U, w) { return makeArt(U, w); }
+// Duyduğun cümleyi diz (çeviri gösterilmez)
+function tpLBuild(U, s) { return s && { k: 'build', q: s[1], a: s[0], tr: s[1], say: s[0], listen: true, hq: 'Duyduğun cümleyi diz', vis: tpListenVis(), lbl: 'Duyduğunu diz', id: U.id + ':lb:' + hashStr(s[0]), unit: U.id, sk: 'horen' }; }
+function tpChat(U, c) {
+  return tpMc({ q: 'En uygun cevabı seç', say: c[0], lbl: 'Diyaloğu tamamla', vis: `<div class="tp-chat"><span class="tp-av" aria-hidden="true"><i class="fa-solid fa-user"></i></span><button class="tp-bub" lang="de" data-say="${esc(c[0])}" onclick="say(this.dataset.say)">${esc(c[0])}<i class="fa-solid fa-volume-high"></i></button></div>`,
+    e: `${c[0]} → ${c[1]} (${c[4]})`, id: U.id + ':chat:' + hashStr(c[0]), unit: U.id, sk: 'sprechen' }, c[1], [c[2], c[3]], 2);
+}
+
+function vocabSet(id, W) {
+  const U = tpU(id), ws = shuffle(W), at = i => ws[i % ws.length], pics = W.filter(x => x[2]).length >= 4, nouns = W.filter(tpNoun);
+  const out = [
+    pics && tpPic(U, W, at(0)), pics && tpPic(U, W, at(1), true), pics && tpPicRev(U, W, at(2)),
+    tpMean(U, W, at(3)), tpRev(U, W, at(4)), makeWW(U, at(5)), makeWW(U, at(6)), makeListenW(U, at(7)), makeScr(U, at(8)) || makeScr(U, at(9)),
+    tpMatch(U, W), tpOdd(U, W), nouns.length >= 5 && tpSortArt(U, nouns), nouns.length >= 3 && tpArt(U, at(10)),
+    makeSpeak(U, [at(11)[0], at(11)[1]])
+  ];
+  return out.filter(Boolean);
+}
+
+/* ---------- Sayılar ---------- */
+const NUM_1 = ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf'];
+const NUM_10 = ['', 'zehn', 'zwanzig', 'dreißig', 'vierzig', 'fünfzig', 'sechzig', 'siebzig', 'achtzig', 'neunzig'];
+function numDe(n) {
+  if (n < 13) return NUM_1[n];
+  if (n < 20) return { 16: 'sechzehn', 17: 'siebzehn' }[n] || NUM_1[n - 10] + 'zehn';
+  if (n < 100) { const e = n % 10, z = NUM_10[Math.floor(n / 10)]; return e ? (e === 1 ? 'ein' : NUM_1[e]) + 'und' + z : z; }
+  if (n < 1000) { const h = Math.floor(n / 100), r = n % 100; return (h === 1 ? 'ein' : NUM_1[h]) + 'hundert' + (r ? numDe(r) : ''); }
+  const t = Math.floor(n / 1000), r = n % 1000; return (t === 1 ? 'ein' : numDe(t)) + 'tausend' + (r ? numDe(r) : '');
+}
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const numRand = () => { const r = Math.random(); return r < .35 ? rnd(0, 20) : r < .8 ? rnd(21, 99) : rnd(100, 2030); };
+// Yanıltıcı seçenekler: basamakları ters (37 ↔ 73), bir eksik/fazla, on fazla
+const numTraps = n => { const s = String(n), rev = s.length === 2 && s[0] !== s[1] && s[1] !== '0' ? +s.split('').reverse().join('') : null; return [rev, n + 1, Math.max(0, n - 1), n + 10, n > 12 ? n - 10 : n + 2].filter(x => x != null && x !== n); };
+function numberSet() {
+  const U = tpU('zahlen'), N = () => numRand(), out = [];
+  for (let k = 0; k < 2; k++) { const n = N(); out.push({ k: 'fill', q: 'Duyduğun sayıyı rakamla yaz: ___', a: [String(n)], say: numDe(n), sayAns: numDe(n), listen: true, num: true, vis: tpListenVis(), lbl: 'Sayıyı dinle ve yaz', e: `${n} = ${numDe(n)}`, id: U.id + ':h:' + n, unit: U.id, sk: 'horen' }); }
+  for (let k = 0; k < 2; k++) { const n = N(); out.push(tpMc({ q: `${n} Almancada nasıl yazılır?`, lbl: 'Doğru yazılışı seç', e: `${n} = ${numDe(n)}`, sayAns: numDe(n), id: U.id + ':mc:' + n, unit: U.id }, numDe(n), numTraps(n).map(numDe))); }
+  { const n = N(); out.push({ k: 'fill', q: `${numDe(n)} = ___`, a: [String(n)], num: true, sayAns: numDe(n), lbl: 'Rakamla yaz', e: `${numDe(n)} = ${n}`, id: U.id + ':f:' + n, unit: U.id }); }
+  for (let k = 0; k < 2; k++) { const n = rnd(13, 99); out.push({ k: 'ww', q: String(n), a: numDe(n), hq: `Almanca yazıyla yaz: <span class="hl tabular">${n}</span>`, id: U.id + ':ww:' + n, unit: U.id }); }
+  { const n = N(); out.push(tpMc({ q: 'Hangi sayıyı duydun?', say: numDe(n), listen: true, vis: tpListenVis(), lbl: 'Dinle ve seç', e: `${numDe(n)} = ${n}`, id: U.id + ':l:' + n, unit: U.id, sk: 'horen' }, String(n), numTraps(n).map(String))); }
+  { const ns = shuffle([...new Set([rnd(1, 12), rnd(13, 19), rnd(21, 99), rnd(21, 99), rnd(100, 999)])]).slice(0, 4); out.push({ k: 'match', pairs: ns.map(n => [numDe(n), String(n)]), id: U.id + ':match', unit: U.id }); }
+  { const a = rnd(2, 12), b = rnd(2, 12), plus = Math.random() < .6, r = plus ? a + b : a * b, q = `${numDe(a)} ${plus ? 'plus' : 'mal'} ${numDe(b)}`;
+    out.push(tpMc({ q: q + ' = ?', say: q, lbl: 'Almanca hesapla', e: `${a} ${plus ? '+' : '×'} ${b} = ${r} (${numDe(r)})`, sayAns: numDe(r), id: U.id + ':calc:' + q, unit: U.id }, numDe(r), numTraps(r).map(numDe))); }
+  { const n = rnd(21, 99), s = String(n), rv = +s.split('').reverse().join(''), right = Math.random() < .5 || s[1] === '0' || s[0] === s[1];
+    out.push({ k: 'tf', q: `${numDe(n)} = ${right ? n : rv}`, a: right, lbl: 'Doğru mu?', e: `Almancada önce birler söylenir: ${numDe(n)} = ${n}`, id: U.id + ':tf:' + n, unit: U.id }); }
+  { const p = (rnd(1, 49) + rnd(0, 1) * .5).toFixed(2), [eu, ct] = p.split('.'), de = `${numDe(+eu)} Euro${+ct ? ' ' + numDe(+ct) : ''}`;
+    out.push(tpMc({ q: 'Fiyat ne kadar?', say: 'Das kostet ' + de + '.', listen: true, vis: tpListenVis(), lbl: 'Fiyatı dinle', e: `Das kostet ${de} = ${eu},${ct} €`, id: U.id + ':€:' + p, unit: U.id, sk: 'horen' }, `${eu},${ct} €`, numTraps(+eu).map(x => `${x},${ct} €`))); }
+  return out;
+}
+
+/* ---------- Saat ---------- */
+const hWord = h => h === 1 ? 'eins' : NUM_1[h];
+function timeDe(h, m) {
+  const nx = h % 12 + 1;
+  return { 0: (h === 1 ? 'ein' : NUM_1[h]) + ' Uhr', 5: 'fünf nach ' + hWord(h), 10: 'zehn nach ' + hWord(h), 15: 'Viertel nach ' + hWord(h), 20: 'zwanzig nach ' + hWord(h), 25: 'fünf vor halb ' + hWord(nx), 30: 'halb ' + hWord(nx), 35: 'fünf nach halb ' + hWord(nx), 40: 'zwanzig vor ' + hWord(nx), 45: 'Viertel vor ' + hWord(nx), 50: 'zehn vor ' + hWord(nx), 55: 'fünf vor ' + hWord(nx) }[m];
+}
+const tDig = (h, m) => `${h}:${String(m).padStart(2, '0')}`;
+function clockSvg(h, m) {
+  const ticks = Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6; return `<line x1="${50 + 38 * Math.sin(a)}" y1="${50 - 38 * Math.cos(a)}" x2="${50 + (i % 3 ? 41 : 43) * Math.sin(a)}" y2="${50 - (i % 3 ? 41 : 43) * Math.cos(a)}" stroke-width="${i % 3 ? 1.5 : 3}"/>`; }).join('');
+  const ha = ((h % 12) + m / 60) * 30, ma = m * 6;
+  return `<svg class="tp-clock" viewBox="0 0 100 100" role="img" aria-label="Saat ${tDig(h, m)}"><circle cx="50" cy="50" r="46" class="tp-cf"/><g stroke="currentColor" stroke-linecap="round">${ticks}<line x1="50" y1="50" x2="50" y2="27" stroke-width="4.5" transform="rotate(${ha} 50 50)"/><line x1="50" y1="50" x2="50" y2="15" stroke-width="2.5" transform="rotate(${ma} 50 50)" class="tp-min"/></g><circle cx="50" cy="50" r="3.5" class="tp-dot"/></svg>`;
+}
+const TP_MINS = [0, 0, 15, 30, 30, 45, 5, 10, 20, 25, 35, 40, 50, 55];
+function timeSet() {
+  const U = tpU('uhrzeit'), T = () => [rnd(1, 12), pick(TP_MINS, 1)[0]], out = [];
+  // halb'da en sık hata: “halb drei” = 2:30 (3:30 değil)
+  const traps = (h, m) => [tDig(h % 12 + 1, m), tDig(h === 1 ? 12 : h - 1, m), tDig(h, (m + 30) % 60), tDig(h, (m + 15) % 60)];
+  for (let k = 0; k < 3; k++) { const [h, m] = T(); out.push(tpMc({ q: 'Saat kaç?', vis: clockSvg(h, m), lbl: 'Saate bak, seç', e: `${tDig(h, m)} = Es ist ${timeDe(h, m)}.`, sayAns: 'Es ist ' + timeDe(h, m), id: U.id + ':c:' + tDig(h, m), unit: U.id }, timeDe(h, m), [timeDe(h % 12 + 1, m), timeDe(h, (m + 30) % 60), timeDe(h === 1 ? 12 : h - 1, (m + 15) % 60)].filter(Boolean))); }
+  for (let k = 0; k < 2; k++) { const [h, m] = T(); out.push(tpMc({ q: 'Duyduğun saat hangisi?', say: 'Es ist ' + timeDe(h, m) + '.', listen: true, vis: tpListenVis(), lbl: 'Dinle ve seç', e: `Es ist ${timeDe(h, m)} = ${tDig(h, m)}`, id: U.id + ':l:' + tDig(h, m), unit: U.id, sk: 'horen' }, tDig(h, m), traps(h, m))); }
+  for (let k = 0; k < 2; k++) { const h = rnd(1, 12), m = pick([30, 30, 15, 45], 1)[0]; out.push(tpMc({ q: `“${timeDe(h, m)}” saat kaç?`, say: timeDe(h, m), lbl: 'Saati seç', e: m === 30 ? `“halb ${hWord(h % 12 + 1)}” = ${hWord(h % 12 + 1)}'e yarım var → ${tDig(h, m)}` : `${timeDe(h, m)} = ${tDig(h, m)}`, id: U.id + ':t:' + tDig(h, m), unit: U.id }, tDig(h, m), traps(h, m))); }
+  { const [h, m] = T(); out.push({ k: 'fill', q: `Es ist ${timeDe(h, m)}. → ___`, a: [tDig(h, m), tDig(h, m).padStart(5, '0'), tDig(h + 12 === 24 ? 12 : h + 12, m)], num: true, lbl: 'Saati rakamla yaz (ör. 7:15)', e: `${timeDe(h, m)} = ${tDig(h, m)}`, sayAns: 'Es ist ' + timeDe(h, m), id: U.id + ':f:' + tDig(h, m), unit: U.id }); }
+  { const h = rnd(1, 12), right = Math.random() < .5, shown = right ? h : h % 12 + 1; out.push({ k: 'tf', q: `halb ${hWord(h % 12 + 1)} = ${shown}:30`, vis: clockSvg(shown, 30), a: right, lbl: 'Doğru mu?', e: `halb ${hWord(h % 12 + 1)} = ${h}:30 (bir sonraki saate yarım var)`, id: U.id + ':tf:' + h, unit: U.id }); }
+  { const [h, m] = T(); out.push({ k: 'ww', q: tDig(h, m), a: timeDe(h, m), hq: `Saati Almanca yaz: <span class="hl tabular">${tDig(h, m)}</span>`, vis: clockSvg(h, m), id: U.id + ':ww:' + tDig(h, m), unit: U.id }); }
+  out.push(tpLBuild(U, ['Der Unterricht beginnt um halb neun.', 'Ders sekiz buçukta başlıyor.']));
+  out.push(tpChat(U, TP_CHAT.find(c => c[0] === 'Wie spät ist es?')));
+  return out;
+}
+
+/* ---------- Günler, aylar, mevsimler ---------- */
+function calendarSet() {
+  const U = tpU('kalender'), out = [], D7 = TP_DAYS, M12 = TP_MONTHS;
+  for (let k = 0; k < 2; k++) { const i = rnd(0, 6); out.push(tpMc({ q: `${D7[i][0]}'tan sonra hangi gün gelir?`, say: D7[i][0], lbl: 'Sıradaki gün', e: `${D7[i][0]} → ${D7[(i + 1) % 7][0]} (${D7[(i + 1) % 7][1]})`, id: U.id + ':nd:' + i, unit: U.id }, D7[(i + 1) % 7][0], D7.map(x => x[0]))); }
+  { const i = rnd(0, 11); out.push(tpMc({ q: `${M12[i][0]}'dan önce hangi ay gelir?`, say: M12[i][0], lbl: 'Önceki ay', e: `${M12[(i + 11) % 12][0]} → ${M12[i][0]}`, id: U.id + ':pm:' + i, unit: U.id }, M12[(i + 11) % 12][0], M12.map(x => x[0]))); }
+  const W = D7.concat(M12).map(x => [x[0], x[1]]);
+  out.push(tpMean(U, W, pick(W, 1)[0]), tpRev(U, W, pick(W, 1)[0]), makeWW(U, pick(D7, 1)[0]), makeWW(U, pick(M12, 1)[0]), makeListenW(U, pick(W, 1)[0]));
+  { const i = rnd(0, 3), d = D7.slice(i, i + 4); out.push({ k: 'build', q: d.map(x => x[1]).join(', '), a: d.map(x => x[0]).join(' '), hq: 'Günleri sıraya diz', lbl: 'Sıraya diz', e: d.map(x => x[0]).join(' → '), id: U.id + ':od:' + i, unit: U.id }); }
+  { const i = rnd(0, 8), m = M12.slice(i, i + 4); out.push({ k: 'build', q: m.map(x => x[1]).join(', '), a: m.map(x => x[0]).join(' '), hq: 'Ayları sıraya diz', lbl: 'Sıraya diz', e: m.map(x => x[0]).join(' → '), id: U.id + ':om:' + i, unit: U.id }); }
+  out.push(tpPic(U, TP_SEASONS, pick(TP_SEASONS, 1)[0]));
+  { const i = rnd(0, 11), s = [3, 3, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3][i]; out.push(tpMc({ q: `${M12[i][0]} hangi mevsimde?`, lbl: 'Mevsimi seç', e: `${M12[i][0]} → ${TP_SEASONS[s][0]}`, id: U.id + ':s:' + i, unit: U.id }, TP_SEASONS[s][0], TP_SEASONS.map(x => x[0]))); }
+  out.push({ k: 'match', pairs: pick(D7, 4).map(x => [x[0], x[1]]), id: U.id + ':match', unit: U.id });
+  out.push(tpLBuild(U, ['Am Montag habe ich frei.', 'Pazartesi boşum.']));
+  return out;
+}
+
+/* ---------- Dilbilgisi konuları ---------- */
+const allNouns = () => Object.values(TP_VOCAB).flat().filter(tpNoun);
+function articleSet() {
+  const U = tpU('artikel'), N = allNouns(), out = pick(N, 6).map(w => makeArt(U, w));
+  out.push(tpSortArt(U, N), tpSortArt(U, N));
+  pick(ART_RULES.flatMap(r => r[1].filter(s => /^-/.test(s)).map(s => [s.replace(/\s*\(.*\)/, ''), r[0], r[2]])), 2).forEach(([suf, art, ex]) => out.push(tpMc({ q: `${suf} ile biten isimler genellikle hangi artikeli alır?`, lbl: 'Artikel kuralı', e: `${suf} → ${art} (ör. ${ex.slice(0, 3).join(', ')})`, id: U.id + ':rule:' + suf, unit: U.id }, art, ARTS3, 2)));
+  { const w = pick(N, 1)[0], f = wordForms(w[0])[0], m = f.match(ART_RE)[1], right = Math.random() < .5, shown = right ? m : pick(ARTS3.filter(a => a !== m), 1)[0];
+    out.push({ k: 'tf', q: `${shown} ${tpBare(f)} (${w[1]})`, a: right, lbl: 'Artikel doğru mu?', e: `Doğrusu: ${f}`, id: U.id + ':tf:' + f, unit: U.id }); }
+  pick(N, 2).forEach(w => out.push(makeWW(U, w)));
+  out.push(tpPic(U, N.filter(x => x[2]), pick(N.filter(x => x[2]), 1)[0]));
+  return out;
+}
+function pluralSet() {
+  const U = tpU('plural'), out = [];
+  const traps = (sg, pl) => { const b = tpBare(sg), uml = b.replace(/([aou])(?!.*[aou])/, c => ({ a: 'ä', o: 'ö', u: 'ü' })[c]); return [b + 'e', b + 'en', b + 'n', b + 'er', b + 's', uml + 'e', uml + 'er', b].map(x => 'die ' + x).filter(x => x !== pl); };
+  pick(TP_PLURAL, 4).forEach(p => out.push(tpMc({ q: `${p[0]} (${p[2]}) → çoğulu?`, say: p[0], lbl: 'Çoğulu seç', e: `${p[0]} → ${p[1]}`, sayAns: p[1], id: U.id + ':mc:' + p[0], unit: U.id }, p[1], traps(p[0], p[1]))));
+  pick(TP_PLURAL, 3).forEach(p => out.push({ k: 'ww', q: p[0], a: p[1] + '/' + tpBare(p[1]), hq: `Çoğulunu yaz: <span class="hl">${esc(p[0])}</span>`, e: `${p[0]} → ${p[1]}`, id: U.id + ':ww:' + p[0], unit: U.id }));
+  out.push({ k: 'match', pairs: pick(TP_PLURAL, 4).map(p => [p[0], p[1]]), id: U.id + ':match', unit: U.id });
+  { const p = pick(TP_PLURAL, 1)[0]; out.push({ k: 'tf', q: `Çoğulda artikel her zaman “die” olur: ${p[1]}`, a: true, lbl: 'Doğru mu?', e: 'Çoğul isimlerin yalın hâldeki artikeli her zaman die\'dir.', id: U.id + ':tfd', unit: U.id }); }
+  pick(TP_PLURAL, 2).forEach(p => out.push(makeListenW(U, [p[1], p[2] + ' (çoğul)']))); // dinle, çoğulu yaz
+  { const p = pick(TP_PLURAL, 1)[0]; out.push(tpLBuild(U, [`Ich habe zwei ${tpBare(p[1])}.`, `Bende iki ${p[2]} var.`])); }
+  return out;
+}
+function caseSet() {
+  const U = tpU('kasus'), N = allNouns().filter(w => !/Familie|Haare|Wetter/.test(w[0])), out = [];
+  const AKK = { der: 'den', die: 'die', das: 'das' }, DAT = { der: 'dem', die: 'der', das: 'dem' }, EIN = { der: 'einen', die: 'eine', das: 'ein' };
+  const mk = (tpl, map, kase, tr, opts) => { const w = pick(N, 1)[0], f = wordForms(w[0])[0], art = f.match(ART_RE)[1].toLowerCase(), n = tpBare(f), right = map[art];
+    return tpMc({ q: tpl.replace('{N}', n), lbl: kase + ' · boşluğa uyanı seç', e: `${tpl.replace('___', right).replace('{N}', n)} — ${f} → ${kase}: ${right} ${n}. (${tr.replace('{T}', w[1])})`, sayAns: tpl.replace('___', right).replace('{N}', n), id: U.id + ':' + kase + ':' + hashStr(tpl + n), unit: U.id }, right, opts, 3); };
+  for (let k = 0; k < 3; k++) out.push(mk(pick(['Ich sehe ___ {N}.', 'Ich suche ___ {N}.', 'Wir brauchen ___ {N}.'], 1)[0], AKK, 'Akkusativ', '{T}', ['der', 'die', 'das', 'den', 'dem']));
+  for (let k = 0; k < 2; k++) out.push(mk('Ich habe ___ {N}.', EIN, 'Akkusativ', 'Bir {T} var.', ['ein', 'eine', 'einen', 'einem', 'einer']));
+  for (let k = 0; k < 3; k++) out.push(mk(pick(['Das steht neben ___ {N}.', 'Ich warte vor ___ {N}.', 'Das liegt unter ___ {N}.'], 1)[0], DAT, 'Dativ', '{T}', ['der', 'die', 'das', 'den', 'dem']));
+  pick(TP_CASE_PREP, 3).forEach(([p, c]) => out.push(tpMc({ q: `“${p}” edatından sonra hangi hâl gelir?`, lbl: 'Hâl kuralı', e: `${p} + ${c}`, id: U.id + ':pc:' + p, unit: U.id }, c, ['Akkusativ', 'Dativ', 'Nominativ'], 2)));
+  { const w = pick(N.filter(x => /^der /.test(x[0])), 1)[0], n = tpBare(w[0]), right = Math.random() < .5;
+    out.push({ k: 'tf', q: `Ich sehe ${right ? 'den' : 'der'} ${n}.`, a: right, lbl: 'Cümle doğru mu?', e: `sehen Akkusativ ister: der ${n} → den ${n}`, id: U.id + ':tf:' + n, unit: U.id }); }
+  out.push({ k: 'sort', bk: ['Akkusativ', 'Dativ'], w: shuffle(TP_CASE_PREP).slice(0, 6).map(([p, c]) => [p, c === 'Akkusativ' ? 0 : 1, '']), lbl: 'Edatları hâle göre ayır', id: U.id + ':sortp', unit: U.id });
+  return out;
+}
+function presentSet() {
+  const U = tpU('praesens'), V = VERBS.filter(v => /^[a-zäöüß]+$/.test(v.i)), out = [];
+  for (let k = 0; k < 4; k++) { const v = pick(V, 1)[0], c = conj(v), i = rnd(0, 5), pr = PERS[i].split('/')[0]; out.push({ k: 'fill', q: `${pr} ___ (${v.i})`, a: [c.p[i]], lbl: 'Fiili çek', e: `${pr} ${c.p[i]} — ${v.i}: ${v.tr}`, id: U.id + ':f:' + v.i + i, unit: U.id }); }
+  for (let k = 0; k < 3; k++) { const v = pick(V, 1)[0], c = conj(v), i = pick([0, 1, 2, 4], 1)[0], pr = PERS[i].split('/')[0];
+    out.push(tpMc({ q: `${pr} ___ (${v.i} · ${v.tr})`, lbl: 'Doğru çekimi seç', e: `${pr} ${c.p[i]}`, sayAns: `${pr} ${c.p[i]}`, id: U.id + ':mc:' + v.i + i, unit: U.id }, c.p[i], c.p)); }
+  { const v = pick(V.filter(v => new Set(conj(v).p.slice(0, 4)).size === 4), 1)[0]; if (v) { const c = conj(v); out.push({ k: 'match', pairs: [0, 1, 2, 3].map(i => [PERS[i].split('/')[0], c.p[i]]), id: U.id + ':match:' + v.i, unit: U.id }); } }
+  { const v = pick(V, 1)[0], c = conj(v); out.push({ k: 'ww', q: v.tr, a: 'du ' + c.p[1] + '/' + c.p[1], hq: `“du” ile çek: <span class="hl">${esc(v.i)}</span>`, e: `du ${c.p[1]}`, id: U.id + ':ww:' + v.i, unit: U.id }); }
+  { const v = pick(V, 1)[0], c = conj(v), i = rnd(0, 5), s = `${PERS[i].split('/')[0].replace(/^./, x => x.toUpperCase())} ${c.p[i]} gern.`; out.push(tpLBuild(U, [s, `${v.tr} (${PERS[i]})`])); }
+  { const v = pick(V, 1)[0]; out.push(tpMc({ q: `“${v.i}” ne demek?`, say: v.i, lbl: 'Fiilin anlamı', e: `${v.i} = ${v.tr}`, id: U.id + ':m:' + v.i, unit: U.id, card: [v.i, v.tr] }, v.tr, V.map(x => x.tr))); }
+  return out;
+}
+function perfectSet() {
+  const U = tpU('perfekt'), V = VERBS.filter(v => v.p2 && /^[a-zäöüß]+$/.test(v.i) && !/^(sein|haben|werden|können|müssen|wollen|dürfen|sollen|mögen)$/.test(v.i)), out = [];
+  pick(V, 4).forEach(v => { const c = conj(v); out.push(tpMc({ q: `Ich ___ ${c.p2}. (${v.i})`, lbl: 'haben mı, sein mı?', e: `ich ${c.perf[0]} — ${v.a === 'sein' ? 'hareket/değişim bildiren fiiller sein alır' : 'çoğu fiil haben alır'}`, sayAns: `Ich ${c.perf[0]}.`, id: U.id + ':aux:' + v.i, unit: U.id }, v.a === 'sein' ? 'bin' : 'habe', ['habe', 'bin'], 1)); });
+  pick(V, 3).forEach(v => { const c = conj(v), st = v.i.replace(/e?n$/, ''); out.push(tpMc({ q: `${v.i} (${v.tr}) → Partizip II?`, say: v.i, lbl: 'Partizip II seç', e: `${v.i} → ${c.p2}`, id: U.id + ':p2:' + v.i, unit: U.id }, c.p2, ['ge' + st + 't', 'ge' + v.i, st + 't', 'ge' + st + 'en'])); });
+  pick(V, 2).forEach(v => { const c = conj(v); out.push({ k: 'ww', q: v.i, a: c.p2, hq: `Partizip II yaz: <span class="hl">${esc(v.i)}</span>`, e: `${v.i} → ${c.p2} (${v.a === 'sein' ? 'sein' : 'haben'})`, id: U.id + ':ww:' + v.i, unit: U.id }); });
+  { const v = pick(V, 1)[0], c = conj(v); out.push({ k: 'fill', q: `er ___ (${v.i}, Perfekt)`, a: [c.perf[2]], lbl: 'Perfekt\'i yaz (yardımcı fiil + Partizip)', e: `er ${c.perf[2]}`, id: U.id + ':f:' + v.i, unit: U.id }); }
+  out.push({ k: 'sort', bk: ['haben', 'sein'], w: pick(V.filter(v => v.a), 6).map(v => [v.i, v.a === 'sein' ? 1 : 0, v.tr]), lbl: 'Yardımcı fiile göre ayır', id: U.id + ':sort', unit: U.id });
+  out.push(tpLBuild(U, pick([['Ich habe gestern Pizza gegessen.', 'Dün pizza yedim.'], ['Wir sind nach Berlin gefahren.', 'Berlin\'e gittik.'], ['Hast du schon gefrühstückt?', 'Kahvaltı yaptın mı?'], ['Sie ist spät nach Hause gekommen.', 'Eve geç geldi.']], 1)[0]));
+  return out.filter(Boolean);
+}
+function modalSet() {
+  const U = tpU('modal'), M = Object.keys(TP_MODALS), out = [];
+  for (let k = 0; k < 4; k++) { const m = pick(M, 1)[0], i = rnd(0, 5), pr = PERS[i].split('/')[0]; out.push(tpMc({ q: `${pr} ___ (${m})`, lbl: 'Modal fiili çek', e: `${pr} ${TP_MODALS[m][i]} — ${m}: ${TP_MODAL_TR[m]}`, sayAns: `${pr} ${TP_MODALS[m][i]}`, id: U.id + ':mc:' + m + i, unit: U.id }, TP_MODALS[m][i], TP_MODALS[m])); }
+  pick(M, 2).forEach(m => { const i = pick([0, 2], 1)[0]; out.push({ k: 'fill', q: `${PERS[i].split('/')[0]} ___ (${m})`, a: [TP_MODALS[m][i]], lbl: 'Yaz', e: `ich/er/sie/es aynı: ${TP_MODALS[m][0]} — sonda -t yok`, id: U.id + ':f:' + m + i, unit: U.id }); });
+  pick(TP_MODAL_S, 2).forEach(s => out.push(mkBuild(U, s)));
+  pick(TP_MODAL_S, 2).forEach(s => out.push(tpLBuild(U, s)));
+  { const m = pick(M, 1)[0]; out.push(tpMc({ q: `“${m}” ne demek?`, say: m, lbl: 'Anlamını seç', e: `${m} = ${TP_MODAL_TR[m]}`, id: U.id + ':tr:' + m, unit: U.id }, TP_MODAL_TR[m], Object.values(TP_MODAL_TR))); }
+  { const s = pick(TP_MODAL_S.filter(x => x[0].split(' ').length >= 5), 1)[0], ws = s[0].replace(/[.?!]$/, '').split(' '), last = ws[ws.length - 1];
+    out.push({ k: 'tf', q: `Modal fiilli cümlede asıl fiil sona gider: „${s[0]}” → “${last}”`, a: true, lbl: 'Doğru mu?', e: s[1], id: U.id + ':tf', unit: U.id }); }
+  return out;
+}
+function prepSet() {
+  const U = tpU('praep'), out = [];
+  pick(TP_PREP, 7).forEach(p => out.push(tpMc({ q: p[0], lbl: 'Edatı seç', e: `${p[0].replace('___', p[1])} — ${p[2]}`, sayAns: p[0].replace('___', p[1]), id: U.id + ':mc:' + hashStr(p[0]), unit: U.id }, p[1], TP_PREPS)));
+  pick(TP_PREP, 2).forEach(p => out.push({ k: 'fill', q: p[0] + ` (“${p[2]}”)`, a: [p[1]], lbl: 'Edatı yaz', e: p[0].replace('___', p[1]), id: U.id + ':f:' + hashStr(p[0]), unit: U.id }));
+  pick(TP_CASE_PREP, 2).forEach(([p, c]) => out.push(tpMc({ q: `“${p}” edatından sonra hangi hâl gelir?`, lbl: 'Hâl kuralı', e: `${p} + ${c}`, id: U.id + ':pc:' + p, unit: U.id }, c, ['Akkusativ', 'Dativ', 'Nominativ'], 2)));
+  pick(TP_PREP, 2).forEach(p => out.push(tpLBuild(U, [p[0].replace('___', p[1]), p[2]])));
+  out.push({ k: 'sort', bk: ['Akkusativ', 'Dativ'], w: shuffle(TP_CASE_PREP).slice(0, 6).map(([p, c]) => [p, c === 'Akkusativ' ? 0 : 1, '']), lbl: 'Edatları hâle göre ayır', id: U.id + ':sort', unit: U.id });
+  return out;
+}
+function sepSet() {
+  const U = tpU('trennbar'), out = [];
+  pick(TP_SEP, 3).forEach(s => out.push(mkBuild(U, s)));
+  pick(TP_SEP, 2).forEach(s => out.push(tpLBuild(U, s)));
+  pick(TP_SEP, 3).forEach(s => { const ws = s[0].split(' '), li = ws.length - 1, end = ws[li].replace(/[.?!]$/, ''), pun = ws[li].slice(end.length);
+    if (!TP_SEP_PRE.includes(end)) return; const q = ws.slice(0, li).concat('___' + pun).join(' ');
+    out.push(tpMc({ q, lbl: 'Ayrılan öneki seç', e: `${s[2]} → ${s[0]} (${s[1]})`, sayAns: s[0], id: U.id + ':pre:' + hashStr(s[0]), unit: U.id }, end, TP_SEP_PRE)); });
+  pick(TP_SEP, 2).forEach(s => out.push(tpMc({ q: `„${s[0]}” cümlesindeki fiilin mastarı hangisi?`, say: s[0], lbl: 'Mastarı bul', e: `${s[2]} — ${s[1]}`, id: U.id + ':inf:' + hashStr(s[0]), unit: U.id }, s[2], TP_SEP.map(x => x[2]))));
+  { const s = pick(TP_SEP, 1)[0]; out.push({ k: 'wr', q: s[1], a: s[0], id: U.id + ':wr:' + hashStr(s[0]), unit: U.id }); }
+  return out;
+}
+function questionSet() {
+  const U = tpU('fragen'), out = [];
+  pick(TP_Q, 5).forEach(q => { const rest = q[0].slice(q[3].length); out.push(tpMc({ q: `___${rest} – ${q[1]}`, lbl: 'Soru kelimesini seç', e: `${q[0]} – ${q[1]} (${q[2]})`, sayAns: q[0], id: U.id + ':mc:' + hashStr(q[0]), unit: U.id }, q[3], TP_Q.map(x => x[3]))); });
+  out.push({ k: 'match', pairs: pick(TP_QW, 4), id: U.id + ':match', unit: U.id });
+  pick(TP_QW, 2).forEach(w => out.push(tpRev(U, TP_QW, w)));
+  pick(TP_Q, 2).forEach(q => out.push(tpLBuild(U, [q[0], q[2]])));
+  pick(TP_Q, 1).forEach(q => out.push(makeWR(U, [q[0], q[2]])));
+  pick(TP_CHAT, 2).forEach(c => out.push(tpChat(U, c)));
+  return out;
+}
+function adjSet() {
+  const U = tpU('gegensatz'), out = [], W = TP_ADJ.map(a => [a[0], a[1]]).concat(TP_ADJ.map(a => [a[2], a[3]]));
+  pick(TP_ADJ, 4).forEach(a => out.push(tpMc({ q: `“${a[0]}” kelimesinin zıttı?`, say: a[0], lbl: 'Zıt anlamlıyı seç', e: `${a[0]} (${a[1]}) ↔ ${a[2]} (${a[3]})`, id: U.id + ':opp:' + a[0], unit: U.id }, a[2], TP_ADJ.map(x => x[2]).concat(TP_ADJ.map(x => x[0])).filter(x => x !== a[0]))));
+  { const ps = pick(TP_ADJ.filter(a => a[0] !== 'neu'), 4); out.push({ k: 'match', pairs: ps.map(a => [a[0], a[2]]), id: U.id + ':match', unit: U.id, lbl: 'Zıtlarını eşleştir' }); }
+  pick(W, 2).forEach(w => out.push(tpMean(U, W, w)));
+  pick(W, 2).forEach(w => out.push(makeWW(U, w)));
+  { const a = pick(TP_ADJ, 1)[0]; out.push({ k: 'ww', q: a[2], a: a[0], hq: `Zıttını yaz: <span class="hl">${esc(a[2])}</span> (${esc(a[3])})`, e: `${a[2]} ↔ ${a[0]}`, id: U.id + ':ww:' + a[2], unit: U.id }); }
+  out.push(tpLBuild(U, pick([['Das Auto ist sehr schnell.', 'Araba çok hızlı.'], ['Der Kaffee ist zu heiß.', 'Kahve çok sıcak.'], ['Die Wohnung ist klein, aber hell.', 'Daire küçük ama aydınlık.'], ['Heute bin ich sehr glücklich.', 'Bugün çok mutluyum.']], 1)[0]));
+  out.push({ k: 'sort', bk: ['olumlu', 'olumsuz'], w: shuffle([['gut', 0], ['glücklich', 0], ['sauber', 0], ['stark', 0], ['schlecht', 1], ['traurig', 1], ['schmutzig', 1], ['schwach', 1]]).slice(0, 6).map(x => [x[0], x[1], '']), lbl: 'Anlamına göre ayır', id: U.id + ':sort', unit: U.id });
+  return out;
+}
+function chatSet() {
+  const U = tpU('alltag'), out = pick(TP_CHAT, 7).map(c => tpChat(U, c));
+  pick(TP_CHAT, 2).forEach(c => out.push(tpLBuild(U, [c[1], `“${c[0]}” sorusuna cevap`])));
+  pick(TP_CHAT, 2).forEach(c => out.push(makeSpeak(U, [c[1], `“${c[0]}” (${c[4]}) sorusuna cevap ver`])));
+  { const cs = pick(TP_CHAT, 3), o = cs.map(c => c[0]); out.push({ k: 'mc', q: 'Duyduğun cümle hangisi?', say: cs[0][0], listen: true, vis: tpListenVis(), o: shuffle(o), lbl: 'Dinle ve seç', e: cs[0][4], id: U.id + ':ls:' + hashStr(cs[0][0]), unit: U.id, sk: 'horen' }); const it = out[out.length - 1]; it.a = it.o.indexOf(cs[0][0]); }
+  { const q = pick(TP_Q, 1)[0]; out.push(makeWR(U, [q[0], q[2]])); }
+  return out;
+}
+
+/* ---------- Konu kataloğu ---------- */
+const TOPICS = [
+  { id: 'zahlen', g: 'temel', t: 'Sayılar', de: 'Zahlen', ic: 'fa-hashtag', h: 4, d: 'Dinle-yaz, 37 ↔ 73 tuzağı, fiyat, hesap', gen: numberSet },
+  { id: 'uhrzeit', g: 'temel', t: 'Saat', de: 'Uhrzeit', ic: 'fa-clock', h: 214, d: 'Saat kadranı, halb, Viertel', gen: timeSet },
+  { id: 'kalender', g: 'temel', t: 'Günler ve aylar', de: 'Kalender', ic: 'fa-calendar', h: 30, d: 'Sıraya diz, mevsimler', gen: calendarSet },
+  { id: 'alltag', g: 'temel', t: 'Günlük konuşmalar', de: 'Dialoge', ic: 'fa-comments', h: 330, d: 'Diyaloğu tamamla, cevabı söyle', gen: chatSet },
+  { id: 'artikel', g: 'gramer', t: 'Artikeller', de: 'der · die · das', ic: 'fa-tags', h: 350, d: 'Gruplara ayır, son ek kuralları', gen: articleSet },
+  { id: 'plural', g: 'gramer', t: 'Çoğul', de: 'Plural', ic: 'fa-clone', h: 16, d: 'Çoğulu seç ve yaz', gen: pluralSet },
+  { id: 'kasus', g: 'gramer', t: 'Akkusativ ve Dativ', de: 'Kasus', ic: 'fa-arrows-split-up-and-left', h: 262, d: 'den, dem, einen: boşluğa uyan', gen: caseSet },
+  { id: 'praesens', g: 'gramer', t: 'Şimdiki zaman çekimi', de: 'Präsens', ic: 'fa-person-running', h: 186, d: 'ich, du, er… fiil çekimi', gen: presentSet },
+  { id: 'perfekt', g: 'gramer', t: 'Geçmiş zaman (Perfekt)', de: 'Perfekt', ic: 'fa-clock-rotate-left', h: 230, d: 'haben mı sein mı, Partizip II', gen: perfectSet },
+  { id: 'modal', g: 'gramer', t: 'Modal fiiller', de: 'Modalverben', ic: 'fa-key', h: 42, d: 'können, müssen, wollen…', gen: modalSet },
+  { id: 'praep', g: 'gramer', t: 'Edatlar', de: 'Präpositionen', ic: 'fa-location-crosshairs', h: 170, d: 'mit, auf, für… ve hâlleri', gen: prepSet },
+  { id: 'trennbar', g: 'gramer', t: 'Ayrılabilen fiiller', de: 'Trennbare Verben', ic: 'fa-scissors', h: 300, d: 'aufstehen → Ich stehe … auf', gen: sepSet },
+  { id: 'fragen', g: 'gramer', t: 'Soru kelimeleri', de: 'W-Fragen', ic: 'fa-circle-question', h: 196, d: 'wer, wo, wann… ve cevaplar', gen: questionSet },
+  { id: 'gegensatz', g: 'gramer', t: 'Zıt sıfatlar', de: 'Gegensätze', ic: 'fa-right-left', h: 120, d: 'groß ↔ klein, eşleştir', gen: adjSet },
+  { id: 'farben', g: 'kelime', t: 'Renkler', de: 'Farben', ic: 'fa-palette', h: 320, d: 'Resimli seç, yaz, dinle' },
+  { id: 'tiere', g: 'kelime', t: 'Hayvanlar', de: 'Tiere', ic: 'fa-paw', h: 24, d: 'Resimli seç, artikeline ayır' },
+  { id: 'essen', g: 'kelime', t: 'Yiyecek ve içecek', de: 'Essen & Trinken', ic: 'fa-utensils', h: 8, d: 'Resimli seç, eşleştir' },
+  { id: 'familie', g: 'kelime', t: 'Aile', de: 'Familie', ic: 'fa-people-roof', h: 340, d: 'Anne, baba, kardeş…' },
+  { id: 'koerper', g: 'kelime', t: 'Vücut', de: 'Körper', ic: 'fa-hand', h: 12, d: 'Göz, kulak, el…' },
+  { id: 'haus', g: 'kelime', t: 'Ev ve eşyalar', de: 'Zuhause', ic: 'fa-house', h: 200, d: 'Kapı, yatak, anahtar…' },
+  { id: 'stadt', g: 'kelime', t: 'Şehir ve ulaşım', de: 'Stadt & Verkehr', ic: 'fa-bus', h: 220, d: 'Otobüs, istasyon, banka…' },
+  { id: 'wetter', g: 'kelime', t: 'Hava ve doğa', de: 'Wetter & Natur', ic: 'fa-cloud-sun', h: 190, d: 'Güneş, yağmur, dağ…' },
+  { id: 'kleidung', g: 'kelime', t: 'Giysiler', de: 'Kleidung', ic: 'fa-shirt', h: 280, d: 'Gömlek, ceket, ayakkabı…' },
+  { id: 'berufe', g: 'kelime', t: 'Meslekler', de: 'Berufe', ic: 'fa-briefcase', h: 160, d: 'Doktor, öğretmen, aşçı…' }
+];
+TOPICS.forEach(t => { if (!t.gen) t.gen = () => vocabSet(t.id, TP_VOCAB[t.id]); });
+const TP_GROUPS = [['temel', 'Temel konular'], ['gramer', 'Dilbilgisi'], ['kelime', 'Kelime konuları']];
+const tpBg = h => `background:radial-gradient(120% 90% at 0% 0%,hsl(${h + 24} 95% 66%) 0,transparent 60%),radial-gradient(110% 110% at 100% 100%,hsl(${h - 22} 85% 34%) 0,transparent 62%),hsl(${h} 82% 50%)`;
+const tpBest = id => ((D && D.topicBest) || {})[id];
+
+// Karma testler: konulardan karışık soru
+const TP_MIXES = [
+  { id: 'mix', t: 'Karma test', d: 'Bütün konulardan 16 soru', ic: 'fa-shuffle', bg: 'linear-gradient(150deg,#ff6a88,#fa2d48 55%,#c21a5b)', pool: () => TOPICS },
+  { id: 'mixg', t: 'Dilbilgisi karması', d: 'Artikel, hâller, fiiller, edatlar', ic: 'fa-scale-balanced', bg: 'linear-gradient(150deg,#5ac8fa,#007aff 55%,#3a3adb)', pool: () => TOPICS.filter(t => t.g === 'gramer') },
+  { id: 'mixk', t: 'Kelime karması', d: 'Resimli, dinlemeli, yazmalı', ic: 'fa-images', bg: 'linear-gradient(150deg,#ffd60a,#ff9f0a 55%,#ff6b00)', pool: () => TOPICS.filter(t => t.g === 'kelime') },
+  { id: 'mixl', t: 'Dinleme karması', d: 'Sadece duyarak çözülen sorular', ic: 'fa-headphones', bg: 'linear-gradient(150deg,#bf5af2,#7d3cff 55%,#4b2bd6)', pool: () => TOPICS, only: it => it.listen || it.k === 'dict' },
+  { id: 'mixw', t: 'Yazma karması', d: 'Kelime, cümle ve sayı yazma', ic: 'fa-pen-nib', bg: 'linear-gradient(150deg,#64d2ff,#30b0c7 55%,#1a7f8e)', pool: () => TOPICS, only: it => ['ww', 'wr', 'fill', 'dict', 'build'].includes(it.k) && !it.listen }
+];
+function tpMixItems(topics, n, only) {
+  const per = Math.max(1, Math.ceil(n * 1.6 / topics.length)), all = [];
+  shuffle(topics).forEach(t => { let xs = t.gen().filter(Boolean); if (only) xs = xs.filter(only); all.push(...shuffle(xs).slice(0, per)); });
+  return shuffle(all).slice(0, n);
+}
+function startTopic(id) {
+  const t = TOPICS.find(x => x.id === id); if (!t) return;
+  startLesson(shuffle(t.gen().filter(Boolean)), { title: t.t, color: 'a1', kind: 'topic', topicId: id, pass: 0 });
+}
+function startMix(id) {
+  const m = TP_MIXES.find(x => x.id === id); if (!m) return;
+  startLesson(tpMixItems(m.pool(), 16, m.only), { title: m.t, color: 'c1', kind: 'topic', mixId: id, pass: 0 });
+}
+let TP_SEL = [];
+function tpToggle(id, b) { TP_SEL = TP_SEL.includes(id) ? TP_SEL.filter(x => x !== id) : TP_SEL.concat(id); b.setAttribute('aria-pressed', TP_SEL.includes(id)); const s = $('#tpSelGo'); if (s) { s.disabled = TP_SEL.length < 2; s.innerHTML = `<i class="fa-solid fa-play"></i> ${TP_SEL.length >= 2 ? TP_SEL.length + ' konuyla başla' : 'En az 2 konu seç'}`; } }
+function startSelMix() { const ts = TOPICS.filter(t => TP_SEL.includes(t.id)); if (ts.length < 2) return; startLesson(tpMixItems(ts, 16), { title: 'Seçtiğin konular', color: 'b2', kind: 'topic', mixId: 'sel', pass: 0 }); }
+
+/* ---------- Konu Testleri sayfası ---------- */
+Object.assign(PAGES, { topics: ['Konular', 'fa-layer-group'] });
+Object.assign(NAV_PARENT, { topics: 'practice' });
+Object.assign(HUB_DESC, { topics: 'Sayılar, saat, artikel, fiiller… her konu ayrı test, karma testler' });
+Object.assign(FX_DE, { topics: 'Zahlen Artikel Uhrzeit Test' });
+const tpTile = t => { const b = tpBest(t.id); return `<button class="tp-tile press" style="${tpBg(t.h)}" onclick="startTopic('${t.id}')" aria-label="${esc(t.t)} testine başla"><i class="fa-solid ${t.ic}" aria-hidden="true"></i>${b != null ? `<span class="tp-score tabular">%${Math.round(b * 100)}</span>` : ''}<span class="tp-tt"><b>${esc(t.t)}</b><small lang="de">${esc(t.de)}</small></span></button>`; };
+const tpMixTile = m => `<button class="am-it tp-mixit" onclick="startMix('${m.id}')"><span class="am-mix" style="background:${m.bg}"><span>16 soru</span><i class="fa-solid ${m.ic}"></i><b>${esc(m.t)}</b></span><b>${esc(m.t)}</b><small>${esc(m.d)}</small></button>`;
+VIEWS.topics = () => {
+  const weak = TOPICS.filter(t => tpBest(t.id) != null && tpBest(t.id) < .8).sort((a, b) => tpBest(a.id) - tpBest(b.id));
+  return `<div class="tp-page">
+    <p class="page-sub">Bir konu seç, sadece o konudan soru gelsin. Her seferinde yeni sorular üretilir.</p>
+    <section><div class="am-sh"><h2>Karma testler</h2></div><div class="am-row">${TP_MIXES.map(tpMixTile).join('')}</div></section>
+    ${weak.length ? `<section><div class="am-sh"><h2>Tekrar et</h2><span class="tp-note">%80'in altında kalan konular</span></div><div class="tp-grid">${weak.map(tpTile).join('')}</div></section>` : ''}
+    ${TP_GROUPS.map(([g, title]) => `<section><div class="am-sh"><h2>${title}</h2><span class="tp-note">${TOPICS.filter(t => t.g === g).length} konu</span></div><div class="tp-grid">${TOPICS.filter(t => t.g === g).map(tpTile).join('')}</div></section>`).join('')}
+    <section><div class="am-sh"><h2>Kendi karmanı yap</h2></div><div class="tp-pick">${TOPICS.map(t => `<button class="tp-chip" aria-pressed="${TP_SEL.includes(t.id)}" onclick="tpToggle('${t.id}',this)">${esc(t.t)}</button>`).join('')}</div>
+      <button class="btn" id="tpSelGo" style="margin-top:14px" ${TP_SEL.length < 2 ? 'disabled' : ''} onclick="startSelMix()"><i class="fa-solid fa-play"></i> ${TP_SEL.length >= 2 ? TP_SEL.length + ' konuyla başla' : 'En az 2 konu seç'}</button></section>
+  </div>`;
+};
+// Pratik sayfasının en üstünde konu rafı; Ana Sayfa "Senin İçin" rafında Konu Testleri karışımı
+const tpShelf = () => `<section class="tp-shelf"><div class="am-sh"><h2>Konu testleri</h2><button onclick="go('topics')">Tümü</button></div><div class="am-row tp-row">${TP_MIXES.slice(0, 1).map(tpMixTile).join('')}${TOPICS.slice(0, 9).map(t => `<div class="am-it">${tpTile(t)}<b>${esc(t.t)}</b><small>${esc(t.d)}</small></div>`).join('')}</div></section>`;
+const _practiceTp = VIEWS.practice;
+VIEWS.practice = () => isFx() ? _practiceTp().replace('<div', tpShelf() + '<div') : tpShelf() + _practiceTp();
+const _homeTp = VIEWS.home;
+VIEWS.home = () => {
+  const h = _homeTp(); if (!isAm()) return h;
+  const card = `<button class="am-it" onclick="go('topics')"><span class="am-mix" style="background:linear-gradient(150deg,#30d158,#34c759 50%,#0a8f4a)"><span>${TOPICS.length} konu</span><i class="fa-solid fa-layer-group"></i><b>Konu Testleri</b></span><b>Konu Testleri</b><small>Sayılar, saat, artikel, karma</small></button>`;
+  return h.replace('<h2>Senin İçin</h2></div><div class="am-row">', m => m + card);
+};
+
+/* ---------- Ünite derslerine ve pratiğine yeni etkinlikler ---------- */
+const unitPics = u => okVocab(u).map(v => [v[0], v[1], wordEmoji(v[0])]).filter(v => v[2]);
+const _buildUnitItemsTp = buildUnitItems;
+buildUnitItems = function (u, L) {
+  const items = _buildUnitItemsTp(u, L), P = unitPics(u), s = pick(u.s, 1)[0];
+  const extra = [tpLBuild(u, s), P.length >= 4 && tpPic(u, P, pick(P, 1)[0], Math.random() < .5)].filter(Boolean);
+  extra.forEach(x => items.splice(Math.floor(Math.random() * (items.length + 1)), 0, x));
+  return items;
+};
+PRACTICE.push({ k: 'oyun', ic: 'fa-puzzle-piece', t: 'Oyunlu set', d: 'Resim seç, duyduğunu diz, gruplara ayır, eşleştir' });
+const _practiceItemsTp = practiceItems;
+practiceItems = function (u, L, mode) {
+  if (mode !== 'oyun') return _practiceItemsTp(u, L, mode);
+  const P = unitPics(u), vs = okVocab(u), nouns = vs.filter(v => /^(der|die|das)\s+[A-ZÄÖÜ]/.test(wordForms(v[0])[0]));
+  const out = [...pick(u.s, 3).map(s => tpLBuild(u, s)), { k: 'match', pairs: pick(u.v, 4), id: u.id + ':match', unit: u.id }, makeListenS(u, pick(u.s, 1)[0]), ...pick(vs, 2).map(v => makeScr(u, v)), makeRev(u, L, pick(vs, 1)[0]), makeWW(u, pick(vs, 1)[0])];
+  if (P.length >= 4) out.push(tpPic(u, P, pick(P, 1)[0]), tpPic(u, P, pick(P, 1)[0], true), tpPicRev(u, P, pick(P, 1)[0]));
+  if (nouns.length >= 4) out.push(tpSortArt(u, nouns.map(v => [v[0], v[1]]), Math.min(6, nouns.length)));
+  return shuffle(out.filter(Boolean));
+};
+
+/* ---------- Ders motoru: yeni görünümler ve "Gruplara ayır" ---------- */
+const _renderItemTp = renderItem;
+renderItem = function () {
+  _renderItemTp.apply(this, arguments);
+  const it = LSN && LSN.items[LSN.i]; if (!it) return;
+  const body = $('#lsBody'), h2 = body.querySelector('.ls-q');
+  if (it.hq && h2) h2.innerHTML = it.hq;
+  if (it.vis && h2) { h2.insertAdjacentHTML('afterend', `<div class="tp-vis">${it.vis}</div>`); if (/tp-listen|tp-chat/.test(it.vis)) h2.querySelectorAll('.icon-btn').forEach(b => b.remove()); }
+  if (it.listen && it.k === 'build' && it.say) setTimeout(() => { if (LSN && LSN.items[LSN.i] === it) speak(it.say); }, 400);
+  if (it.num) { const fi = $('#fillIn'); if (fi) { fi.setAttribute('inputmode', /:/.test(it.a[0]) ? 'text' : 'numeric'); fi.placeholder = 'Rakamla yaz…'; const ub = fi.nextElementSibling; if (ub && /ä/.test(ub.textContent)) ub.remove(); } }
+  if (it.k === 'mc' && it.ui === 'pic') {
+    const opts = [...body.querySelectorAll('.opt')], grid = document.createElement('div'); grid.className = 'tp-pics';
+    opts[0].before(grid); opts.forEach((b, i) => { b.insertAdjacentHTML('afterbegin', `<span class="tp-em" aria-hidden="true">${it.em[i]}</span>`); grid.appendChild(b); });
+  }
+  if (it.k === 'sort') {
+    LSN.sv = { i: 0, miss: 0, order: shuffle(it.w.map((_, i) => i)) };
+    body.insertAdjacentHTML('beforeend', `<h2 class="ls-q">Her kelimeyi doğru gruba koy</h2><div class="tp-cur" id="tpCur" aria-live="polite"></div>
+      <div class="tp-bks" style="--n:${it.bk.length}">${it.bk.map((b, i) => `<button class="tp-bk press" data-b="${i}" onclick="tpDrop(${i})"><b>${esc(b)}</b><span class="tp-bw" id="tpBw${i}"></span></button>`).join('')}</div>`);
+    tpCurShow(); footCheck();
+  }
+};
+function tpCurShow() {
+  const it = LSN.items[LSN.i], c = $('#tpCur'), sv = LSN.sv; if (!c) return;
+  if (sv.i >= it.w.length) { c.innerHTML = '<span class="tp-done"><i class="fa-solid fa-check"></i> Hepsi yerleşti</span>'; return; }
+  const w = it.w[sv.order[sv.i]]; c.innerHTML = `<button class="tok tp-word" data-say="${esc(w[0])}" onclick="say(this.dataset.say)" lang="de">${esc(w[0])}${w[2] ? `<small>${esc(w[2])}</small>` : ''}</button>`;
+  if (/^(der|die|das)$/.test(it.bk[0])) say(w[0]);
+}
+function tpDrop(b) {
+  if (!LSN || LSN.checked) return; const it = LSN.items[LSN.i], sv = LSN.sv; if (!sv || sv.i >= it.w.length) return;
+  const w = it.w[sv.order[sv.i]], ok = w[1] === b;
+  if (!ok) { sv.miss++; sfxBad(); const bad = document.querySelector(`.tp-bk[data-b="${b}"]`); if (bad) { bad.classList.remove('shake'); void bad.offsetWidth; bad.classList.add('shake'); } }
+  else beep(700, .06);
+  const box = $('#tpBw' + w[1]); if (box) box.insertAdjacentHTML('beforeend', `<span class="${ok ? '' : 'miss'}">${esc(w[0])}</span>`);
+  sv.i++; tpCurShow();
+  if (sv.i >= it.w.length) { LSN.sel = true; checkItem(); } else footCheck();
+}
+const _footCheckTp = footCheck;
+footCheck = function () {
+  const it = LSN && LSN.items[LSN.i];
+  if (!it || it.k !== 'sort' || LSN.checked || !LSN.sv) return _footCheckTp();
+  $('#lsFoot').className = 'ls-foot';
+  $('#lsFoot').innerHTML = `<div class="ls-foot-in"><span class="muted" style="font-weight:600">${LSN.sv.i}/${it.w.length} yerleşti · hata: ${LSN.sv.miss}</span><button class="btn btn-ghost" onclick="skipItem()">Atla</button></div>`;
+};
+const _checkItemTp = checkItem;
+checkItem = function () {
+  if (!LSN || LSN.checked || !LSN.items[LSN.i]) return; const it = LSN.items[LSN.i];
+  if (it.k !== 'sort') return _checkItemTp();
+  finishItem(LSN.sv.i >= it.w.length && LSN.sv.miss === 0, false);
+};
+const _answerTextTp = answerText;
+answerText = it => it.k === 'sort' ? it.bk.map((b, i) => `${b}: ${it.w.filter(w => w[1] === i).map(w => w[0]).join(', ')}`).join(' · ') : _answerTextTp(it);
+const _givenTextTp = givenText;
+givenText = it => it.k === 'sort' ? (LSN.sv ? LSN.sv.miss + ' hatalı yerleştirme' : '(boş)') : _givenTextTp(it);
+const _finishItemTp = finishItem;
+finishItem = function (ok, skipped) {
+  const it = LSN && LSN.items[LSN.i], was = LSN && LSN.checked; _finishItemTp(ok, skipped);
+  if (was || !it) return;
+  if (it.k === 'sort') D.wrong = D.wrong.filter(w => w.id !== it.id);
+  // "Dinle" düğmesi soru metnini değil Almanca cevabı okusun
+  const sb = $('#lsFoot [data-say]'); if (it.sayAns) { if (sb) sb.dataset.say = it.sayAns; else { const row = $('#lsFoot .row'); if (row) row.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost btn-sm" data-say="${esc(it.sayAns)}" onclick="say(this.dataset.say)"><i class="fa-solid fa-volume-high"></i> Dinle</button>`); } }
+};
+const _lessonSummaryTp = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts;
+  if (o && o.kind === 'topic' && o.topicId && !RO) { D.topicBest = D.topicBest || {}; D.topicBest[o.topicId] = Math.max(D.topicBest[o.topicId] || 0, LSN.correct / LSN.items.length); }
+  _lessonSummaryTp.apply(this, arguments);
+  if (o && o.kind === 'topic') { const f = $('#lsFoot .ls-foot-in'); if (f) f.insertAdjacentHTML('afterbegin', `<button class="btn btn-ghost" onclick="${o.topicId ? `startTopic('${o.topicId}')` : o.mixId === 'sel' ? 'startSelMix()' : `startMix('${o.mixId}')`}"><i class="fa-solid fa-rotate"></i> Yeni set</button>`); }
+};
+
 
 /* ---------- Başlat ---------- */
 applyTheme();
