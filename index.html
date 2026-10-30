@@ -124,7 +124,7 @@ body.readonly .ro-banner { display: flex; }
   #sidebar { display: none; }
   #main { padding: 16px 16px calc(var(--nav-h) + 90px + env(safe-area-inset-bottom)); }
   #topbar { padding-top: env(safe-area-inset-top); }
-  #bottomNav { display: flex; position: fixed; left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); height: var(--nav-h); z-index: 60; justify-content: space-around; align-items: center; padding: 0 6px; border-radius: 26px; }
+  #bottomNav { display: flex; position: fixed; left: 12px; right: 12px; bottom: max(8px, calc(env(safe-area-inset-bottom) - 14px)); height: var(--nav-h); z-index: 60; justify-content: space-around; align-items: center; padding: 0 6px; border-radius: 26px; }
   .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 900; color: var(--muted); padding: 8px 0; border-radius: 18px; }
   .bn-item i { font-size: 20px; }
   .bn-item.active { color: var(--acc); }
@@ -2840,7 +2840,7 @@ html.am .stat-pill { height: 38px; padding: 0 12px; border-radius: 999px; backgr
 
 /* ---------- Yüzen cam alt bar ---------- */
 @media (max-width: 960px) {
-  html.am #bottomNav, html.am.dark #bottomNav { left: 14px; right: 14px; bottom: calc(10px + env(safe-area-inset-bottom)); height: 64px; padding: 6px; border-radius: 32px; border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); display: flex; gap: 2px; }
+  html.am #bottomNav, html.am.dark #bottomNav { left: 14px; right: 14px; bottom: max(8px, calc(env(safe-area-inset-bottom) - 14px)); height: 64px; padding: 6px; border-radius: 32px; border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); display: flex; gap: 2px; }
   html.am .bn-item { flex: 1; height: 100%; border-radius: 26px; color: var(--ink); font: 500 10.5px/1 var(--sf); gap: 4px; transition: background-color .3s var(--am-spring), color .2s, transform .25s var(--am-spring); }
   html.am .bn-item i { font-size: 19px; }
   html.am .bn-item:active { transform: scale(.94); }
