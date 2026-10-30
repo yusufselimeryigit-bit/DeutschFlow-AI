@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<script>document.documentElement.classList.add("bm","fx");try{localStorage.setItem("df_design","fx")}catch(e){}</script>
+<script>(function(){var d="am";try{if(localStorage.getItem("df_design")==="fx")d="fx"}catch(e){}document.documentElement.classList.add("bm",d)})()</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -10,6 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
+<meta name="referrer" content="no-referrer">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
@@ -2689,6 +2690,20 @@ html.fx #lesson .ls-q .hl { background: color-mix(in srgb, var(--lv) 22%, transp
 #netPill.back { background: var(--positive); color: #fff; }
 @media (prefers-reduced-motion: reduce) { #lesson.ls-flash::after { animation: none; } }
 @media (max-width: 380px) { .tp-tr { grid-template-columns: 78px 1fr; } }
+.ds-pick.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.ds-pick.two .ds-opt { display: flex; flex-direction: column; align-items: stretch; gap: 2px; text-align: left; cursor: pointer; }
+.ds-pick.two .ds-opt b { font-weight: 600; font-size: 15px; } .ds-pick.two .ds-opt small { color: var(--muted); font-size: 12.5px; }
+.ds-pick.two .ds-prev { height: 84px; }
+.ds-prev.lgp { position: relative; background: linear-gradient(160deg, #f2f2f7, #dfe7f5); overflow: hidden; }
+.ds-prev.lgp i { position: absolute; top: 12px; width: 34%; height: 30px; border-radius: 9px; background: #fff; box-shadow: 0 4px 10px -6px rgba(0,0,0,.3); }
+.ds-prev.lgp i:first-child { left: 12px; } .ds-prev.lgp i:nth-child(2) { left: calc(12px + 34% + 8px); background: #007aff; }
+.ds-prev.lgp span { position: absolute; left: 12px; right: 12px; bottom: 10px; height: 18px; border-radius: 99px; background: rgba(255,255,255,.7); box-shadow: inset 0 1px 0 #fff, 0 3px 8px -4px rgba(0,0,0,.3); }
+html.am .ds-opt.on .ds-prev, html.fx .ds-opt.on .ds-prev { box-shadow: 0 0 0 2px var(--ground), 0 0 0 4px var(--accent); }
+html.fx .ds-opt.on .ds-prev { box-shadow: 0 0 0 2px var(--ground), 0 0 0 4px var(--ink); }
+/* Profil simgesi: profilin kayıtlı rengi yerine tasarımın kendi rengi */
+html.am .side-av, html.am #topbar .icon-btn[title="Profil değiştir"] { background: linear-gradient(150deg, #64d2ff 0%, #007aff 52%, #5856d6 100%) !important; color: #fff !important; font-weight: 600; box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 4px 12px -6px rgba(0,122,255,.7); border: 0; }
+html.am.dark .side-av, html.am.dark #topbar .icon-btn[title="Profil değiştir"] { background: linear-gradient(150deg, #5ac8fa 0%, #0a84ff 52%, #5e5ce6 100%) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 4px 14px -6px rgba(10,132,255,.6); }
+html.fx .side-av, html.fx #topbar .icon-btn[title="Profil değiştir"] { background: linear-gradient(150deg, #2f5bff 0%, #7b3ff2 100%) !important; color: #fff !important; font-weight: 700; box-shadow: none; border: 0; }
 #swBack { position: fixed; left: 0; top: 50%; z-index: 9999; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--surface-2); box-shadow: 0 6px 18px -8px rgba(0,0,0,.45); transform: translate(-46px,-50%); pointer-events: none; transition: background .15s, color .15s; }
 #swBack.go { background: var(--accent); color: #fff; }
 .tp-fxq { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
@@ -2697,6 +2712,194 @@ html.fx #lesson .ls-q .hl { background: color-mix(in srgb, var(--lv) 22%, transp
 .tp-fxq small { opacity: .8; font-weight: 500; }
 @media (prefers-reduced-motion: reduce) { .tp-bk.shake { animation: none; } .tp-tile { transition: none; } }
 @media (max-width: 420px) { .tp-big { font-size: 80px; } .tp-em { font-size: 46px; } #lesson .tp-pics .opt { min-height: 120px; } .tp-bk { min-height: 128px; } }
+</style>
+<style id="liquid-glass">
+/* =====================================================================
+   LIQUID GLASS (html.am): Apple HIG çizgisinde tek tasarım.
+   iOS gruplu zemin (#F2F2F7) üstünde beyaz, yüzen kartlar; sistem mavisi vurgu;
+   cam araç çubuğu, cam alt bar ve cam mini oynatıcı. Seviye renkleri yalnızca kapaklarda.
+   ===================================================================== */
+html.am {
+  --ground: #f2f2f7; --surface: #ffffff; --surface-2: #e9e9ee; --raised: #ffffff;
+  --border: rgba(60, 60, 67, .12); --rule: rgba(60, 60, 67, .14); --control: #d1d1d6;
+  --ink: #000000; --muted: #6c6c70; --faint: #8e8e93; --track: #e3e3e8;
+  --accent: #007aff; --accd: #0062cc; --accent-soft: rgba(0, 122, 255, .12); --accent-ink: #ffffff;
+  --indigo: #5856d6; --mint: #00c7be;
+  --positive: #248a3d; --negative: #d70015; --pos-bg: #e5f6ea; --neg-bg: #fdeceb;
+  --st5: #007aff;
+  --lg-bg: rgba(255, 255, 255, .64); --lg-bg-strong: rgba(255, 255, 255, .8);
+  --lg-edge: rgba(255, 255, 255, .75); --lg-hi: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 0 rgba(0, 0, 0, .03);
+  --lg-blur: blur(28px) saturate(180%);
+  --lg-shadow: 0 1px 1px rgba(0, 0, 0, .03), 0 12px 32px -12px rgba(0, 0, 0, .22);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 28px -16px rgba(0, 0, 0, .16);
+  --r-card: 22px; --r-list: 20px; --r-opt: 18px;
+  --am-glass: var(--lg-bg);
+}
+html.am.dark {
+  --ground: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --raised: #1c1c1e;
+  --border: rgba(84, 84, 88, .5); --rule: rgba(84, 84, 88, .45); --track: #38383a;
+  --ink: #ffffff; --muted: #98989f; --faint: #8d8d93;
+  --accent: #0a84ff; --accd: #409cff; --accent-soft: rgba(10, 132, 255, .18);
+  --positive: #30d158; --negative: #ff453a; --pos-bg: #0f2e18; --neg-bg: #3a1311; --st5: #0a84ff;
+  --lg-bg: rgba(36, 36, 40, .58); --lg-bg-strong: rgba(36, 36, 40, .78);
+  --lg-edge: rgba(255, 255, 255, .12); --lg-hi: inset 0 1px 0 rgba(255, 255, 255, .1), inset 0 -1px 0 rgba(0, 0, 0, .2);
+  --lg-shadow: 0 16px 40px -14px rgba(0, 0, 0, .7);
+  --card-shadow: none;
+}
+html.am.dark.oled { --ground: #000; --surface: #121214; --surface-2: #1c1c1e; --raised: #121214; }
+html.am[data-accent], html.am.dark[data-accent] { --accent: #007aff; --accd: #0062cc; --accent-soft: rgba(0, 122, 255, .12); }
+html.am.dark[data-accent] { --accent: #0a84ff; --accd: #409cff; --accent-soft: rgba(10, 132, 255, .18); }
+html.am body { background: var(--ground); }
+html.am ::selection { background: rgba(0, 122, 255, .24); }
+html.am :focus-visible { outline: 3px solid rgba(0, 122, 255, .5); outline-offset: 2px; }
+
+/* Ortak cam yüzey */
+html.am .lg, html.am #bottomNav, html.am #amMini, html.am.tb-sc #topbar, html.am .us-foot, html.am #lesson .ls-foot:not(.ok):not(.bad), html.am .toast, html.am #tutorPanel {
+  background: var(--lg-bg) !important; -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur);
+}
+
+/* ---------- Üst araç çubuğu + büyük başlık ---------- */
+.ios-lt { display: none; }
+@media (max-width: 960px) {
+  html.am #topbar, html.am.dark #topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; margin: 0 -16px; padding: calc(6px + env(safe-area-inset-top)) 16px 6px; background: transparent; border: 0; transition: background-color .25s, box-shadow .25s; }
+  html.am.tb-sc #topbar { box-shadow: 0 .5px 0 var(--rule); }
+  html.am #topbar .page-title { font: 600 17px/1.2 var(--sf) !important; letter-spacing: -.02em; opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .3s var(--am-spring); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 42vw; }
+  html.am.tb-sc #topbar .page-title { opacity: 1; transform: none; }
+  html.am #topbar > div:first-child { min-width: 0; flex: 1; }
+  .ios-lt { display: block; font: 700 34px/1.12 var(--sf); letter-spacing: -.025em; margin: 2px 0 16px; color: var(--ink); text-wrap: balance; }
+  html.am .am-lt { display: none !important; }
+  html.am .am-home { gap: 28px; }
+}
+html.am .tb-row { gap: 8px; flex-wrap: nowrap; }
+html.am #topbar .icon-btn, html.am .tutor-top { width: 38px; height: 38px; min-width: 38px; border-radius: 999px; background: var(--lg-bg-strong) !important; color: var(--accent) !important; box-shadow: var(--lg-hi), 0 1px 3px rgba(0, 0, 0, .08); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); border: .5px solid var(--lg-edge); font-size: 15px; transition: transform .25s var(--am-spring); }
+html.am #topbar .icon-btn:active { transform: scale(.92); }
+html.am .stat-pill { height: 38px; padding: 0 12px; border-radius: 999px; background: var(--lg-bg-strong); box-shadow: var(--lg-hi), 0 1px 3px rgba(0, 0, 0, .08); border: .5px solid var(--lg-edge); gap: 5px; font: 600 15px var(--sf); }
+html.am .tb-row .stat-pill + .stat-pill { margin-left: -4px; }
+
+/* ---------- Yüzen cam alt bar ---------- */
+@media (max-width: 960px) {
+  html.am #bottomNav, html.am.dark #bottomNav { left: 14px; right: 14px; bottom: calc(10px + env(safe-area-inset-bottom)); height: 64px; padding: 6px; border-radius: 32px; border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); display: flex; gap: 2px; }
+  html.am .bn-item { flex: 1; height: 100%; border-radius: 26px; color: var(--ink); font: 500 10.5px/1 var(--sf); gap: 4px; transition: background-color .3s var(--am-spring), color .2s, transform .25s var(--am-spring); }
+  html.am .bn-item i { font-size: 19px; }
+  html.am .bn-item:active { transform: scale(.94); }
+  html.am .bn-item.active, html.am.dark .bn-item.active { color: var(--accent) !important; background: var(--accent-soft); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5); }
+  html.am.dark .bn-item.active { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); }
+  html.am #main { padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
+  html.am.has-mini #main { padding-bottom: calc(184px + env(safe-area-inset-bottom)); }
+}
+
+/* ---------- Mini oynatıcı (yalnızca Ana Sayfa ve Öğren'de) ---------- */
+html.am #amMini { border-radius: 22px; border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); bottom: calc(84px + env(safe-area-inset-bottom)); left: 14px; right: 14px; }
+html.am #amMini .am-cv { border-radius: 10px; }
+html.am #amMini button { color: var(--ink); }
+@media (min-width: 961px) { html.am #amMini { left: calc(240px + (100vw - 240px) / 2); right: auto; top: 14px; bottom: auto; } }
+
+/* ---------- Kartlar ve gruplu listeler ---------- */
+html.am .glass, html.am .panel, html.am .k-tile, html.am .am-list, html.am .hub, html.am .us-s, html.am .us-pc, html.am .us-ai { background: var(--surface); border-radius: var(--r-card); box-shadow: var(--card-shadow); border: 0; }
+html.am .am-list, html.am .hub { border-radius: var(--r-list); }
+html.am .row-card { border-radius: var(--r-list); background: var(--surface); box-shadow: var(--card-shadow); }
+html.am .hub .row-card { box-shadow: none; }
+html.am .row-card .rc-ic, html.am .am-li .am-ic, html.am .us-pc > i:first-child { border-radius: 9px; background: var(--accent); }
+html.am .row-card.hot { background: var(--accent-soft); }
+html.am .hub-h, html.am .section-title { color: var(--muted); }
+html.am .panel { padding: 18px 18px; }
+html.am .panel input[type=time] { width: auto; max-width: 120px; min-height: 40px; padding: 6px 12px; }
+html.am .panel .row:has(> input[type=time]) { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 8px 12px; align-items: center; }
+
+/* Kapaklar ve öne çıkan kart */
+html.am .am-cv { border-radius: 16px; }
+html.am .am-cv.xl { border-radius: 24px; }
+html.am .am-cv.sm { border-radius: 10px; }
+html.am .am-hero { border-radius: 26px; min-height: 280px; box-shadow: 0 2px 4px rgba(0, 0, 0, .06), 0 28px 50px -26px rgba(0, 0, 0, .5); transition: transform .35s var(--am-spring); }
+html.am .am-hero:active { transform: scale(.98); }
+html.am .am-play { height: 44px; padding: 0 20px 0 16px; background: rgba(255, 255, 255, .78); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 6px 18px -8px rgba(0, 0, 0, .35); border: .5px solid rgba(255, 255, 255, .7); }
+html.am .am-play i { color: #000; }
+html.am .am-mix { border-radius: 20px; }
+html.am .am-it:active .am-mix, html.am .am-it:active .am-cv { transform: scale(.97); }
+html.am .am-mix { transition: transform .3s var(--am-spring); }
+html.am .am-it b { font-weight: 500; }
+html.am .am-sh h2 { font-size: 22px; }
+html.am .am-sh button { color: var(--accent); }
+html.am .tp-tile, html.am .tp-sp { border-radius: 20px; }
+
+/* Öğren: seviye seçici iOS segmentleri gibi, albüm başlığı */
+html.am .am-seg button { background: var(--surface); box-shadow: var(--card-shadow); border-radius: 18px; }
+html.am .am-seg button.on { background: var(--surface); box-shadow: inset 0 0 0 2px var(--h), var(--card-shadow); }
+html.am .am-acts .btn, html.am .am-acts .btn-ghost { border-radius: 16px !important; background: var(--surface) !important; color: var(--accent) !important; box-shadow: var(--card-shadow); }
+html.am:not(.dark) .am-acts .btn, html.am:not(.dark) .am-acts .btn-ghost { color: var(--accd) !important; }
+html.am .am-ah .am-by { color: var(--accent); }
+html.am .am-tracks { background: var(--surface); border-radius: var(--r-list); border: 0; box-shadow: var(--card-shadow); padding: 0 14px; }
+html.am .am-tr { border-bottom: .5px solid var(--rule); }
+html.am .am-tr:last-child { border-bottom: 0; }
+html.am .am-eq i { background: var(--accent); }
+
+/* ---------- Segment kontrolleri ---------- */
+html.am .tabs, html.am .us-tabs { background: rgba(118, 118, 128, .12); border-radius: 12px; padding: 2px; }
+html.am.dark .tabs { background: rgba(118, 118, 128, .24); }
+html.am .tab { border-radius: 10px; font: 600 14px var(--sf); transition: background-color .25s var(--am-spring), color .2s, box-shadow .25s; }
+html.am .tab.active { background: var(--raised); color: var(--ink); box-shadow: 0 3px 8px rgba(0, 0, 0, .12), 0 3px 1px rgba(0, 0, 0, .04); }
+html.am.dark .tab.active { background: #636366; }
+
+/* ---------- Düğmeler ---------- */
+html.am .btn, html.am .btn-red, html.am .btn-ghost { border-radius: 999px; transition: transform .25s var(--am-spring), opacity .2s, background-color .2s; }
+html.am .btn:active { transform: scale(.97); opacity: .88; }
+html.am .btn:not(.btn-ghost):not(.btn-red) { background: var(--accent); color: #fff; box-shadow: 0 6px 16px -8px rgba(0, 122, 255, .7); }
+html.am .btn:not(.btn-ghost):not(.btn-red):disabled { box-shadow: none; opacity: .4; }
+html.am .btn.btn-ghost, html.am .btn-ghost, html.am.dark .btn-ghost { background: var(--accent-soft); color: var(--accent); box-shadow: none; }
+html.am:not(.dark) .btn.btn-ghost, html.am:not(.dark) .btn-ghost { color: var(--accd); }
+html.am .btn.btn-red, html.am .btn-red { background: var(--negative) !important; color: #fff !important; box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--negative) 70%, transparent); }
+@media (hover: hover) { html.am .btn:hover { opacity: .9; } html.am .row-card:hover, html.am .am-tr:hover:not(.lock) { background: color-mix(in srgb, var(--ink) 3%, var(--surface)); } }
+html.am .chip { background: var(--surface-2); }
+html.am .icon-btn { background: var(--surface-2); color: var(--accent); }
+html.am .pill-input, html.am #app .pill-input, html.am .sheet .pill-input, html.am #lesson .pill-input, html.am #tutorPanel .pill-input { background: var(--surface); border: .5px solid var(--rule); border-radius: 14px; }
+html.am .pill-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); background: var(--surface); }
+html.am .lvl-badge { border-radius: 7px; }
+html.am .bar > div { background: var(--accent); }
+html.am input[type=checkbox]:checked { background: #34c759; }
+html.am.dark input[type=checkbox]:checked { background: #30d158; }
+
+/* ---------- Pencereler (sheet) ---------- */
+html.am .overlay { background: rgba(0, 0, 0, .28); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+html.am .sheet { border-radius: 26px 26px 0 0; background: var(--ground); box-shadow: 0 -10px 40px -10px rgba(0, 0, 0, .3); }
+@media (min-width: 961px) { html.am .sheet { border-radius: 26px; } }
+html.am .us-x { background: rgba(255, 255, 255, .24); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+html.am .us-foot { border-top: .5px solid var(--rule); }
+html.am .us-tabs .tab.active { background: #fff; color: #000; }
+html.am .us-skip { color: var(--accent); }
+html.am .toast { color: var(--ink); border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); border-radius: 18px; }
+html.am #tutorPanel { border-radius: 24px; border: .5px solid var(--lg-edge); box-shadow: var(--lg-hi), var(--lg-shadow); }
+
+/* ---------- Ders ekranı ---------- */
+html.am #lesson { background: linear-gradient(180deg, color-mix(in srgb, var(--lv, var(--accent)) 14%, var(--ground)) 0, var(--ground) 260px) var(--ground); }
+html.am #lesson .ls-top { background: transparent; border: 0; }
+html.am #lesson .ls-top .icon-btn { background: var(--lg-bg-strong); color: var(--ink); box-shadow: var(--lg-hi), 0 1px 3px rgba(0, 0, 0, .08); border: .5px solid var(--lg-edge); }
+html.am #lesson .progress { height: 6px; background: color-mix(in srgb, var(--ink) 8%, transparent); border-radius: 99px; }
+html.am #lesson .progress > div { background: var(--lv, var(--accent)); border-radius: 99px; transition: width .5s var(--am-spring); }
+html.am .fx-kind { background: var(--lg-bg-strong); box-shadow: var(--lg-hi); border: .5px solid var(--lg-edge); color: var(--muted); }
+html.am #lesson .opt, html.am #gameArea .opt { background: var(--surface); border: 0; border-radius: var(--r-opt); box-shadow: var(--card-shadow); transition: transform .2s var(--am-spring), box-shadow .2s; }
+html.am #lesson .opt:active { transform: scale(.98); }
+html.am #lesson .opt.sel { box-shadow: inset 0 0 0 2px var(--accent), var(--card-shadow); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+html.am #lesson .opt.ok { box-shadow: inset 0 0 0 2px var(--positive); background: var(--pos-bg); }
+html.am #lesson .opt.bad { box-shadow: inset 0 0 0 2px var(--negative); background: var(--neg-bg); }
+html.am #lesson .hl, html.am .ls-q .hl { background: var(--accent-soft); color: inherit; }
+html.am .tok { background: var(--surface); border-radius: 12px; box-shadow: var(--card-shadow); }
+html.am #lesson .ls-foot { border-top: .5px solid var(--rule); }
+html.am #lesson .ls-foot.ok { background: var(--pos-bg); }
+html.am #lesson .ls-foot.bad { background: var(--neg-bg); }
+html.am .tp-play { background: var(--accent); }
+html.am .tp-slow { background: var(--accent-soft); color: var(--accent); }
+html.am .tp-bk, html.am .tp-cmp { background: var(--surface); box-shadow: var(--card-shadow); border-radius: var(--r-card); }
+html.am .tp-bk > b { color: var(--accent); }
+html.am .mic-wave i { background: var(--accent); }
+html.am #spdT { background: var(--lg-bg-strong); box-shadow: var(--lg-hi); }
+html.am #swBack.go { background: var(--accent); }
+
+/* Konular ve ayarlar */
+html.am .tp-chip { background: var(--surface); box-shadow: var(--card-shadow); }
+html.am .tp-chip[aria-pressed="true"] { background: var(--accent); color: #fff; }
+html.am label.between { border-bottom: .5px solid var(--rule); }
+html.am .page-sub { color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { html.am #topbar .page-title, html.am .bn-item, html.am .am-hero, html.am .btn, html.am #lesson .opt { transition: none; } }
 </style>
 </head>
 <body>
@@ -8340,16 +8543,92 @@ tpFxGroup = () => {
 
 
 /* =====================================================================
-   TEK TASARIM: Akış. Diğer tasarımlar seçilemez; Ayarlar'daki Tasarım bölümü kaldırıldı.
+   SES: iPhone'da sessiz modda ve takılmadan çalsın.
+   İnternet varken Almanca ses bir ses dosyası olarak çalınır (zil düğmesinden etkilenmez);
+   yoksa ya da yüklenemezse telefonun kendi konuşma motoruna dönülür.
+   ===================================================================== */
+const TTS_A = new Audio(); TTS_A.preload = 'auto'; TTS_A.setAttribute('playsinline', '');
+const TTS_SILENT = 'data:audio/wav;base64,UklGRrQBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YZABAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA';
+let TTS_UNLOCKED = false, TTS_Q = null;
+// İlk dokunuşta ses kanalını aç: iOS sonraki çalmalara (otomatik okumalar dahil) izin verir
+function ttsUnlock() {
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  if (TTS_UNLOCKED) return; TTS_A.src = TTS_SILENT;
+  const p = TTS_A.play(); if (p) p.then(() => { TTS_UNLOCKED = true; }).catch(() => {});
+  try { const w = new SpeechSynthesisUtterance(' '); w.volume = 0; speechSynthesis.speak(w); } catch (e) {}
+}
+addEventListener('touchend', ttsUnlock, { capture: true, passive: true });
+addEventListener('click', ttsUnlock, { capture: true });
+// Uzun metni ~180 karakterlik parçalara böl (cümle, sonra virgül sınırından)
+function ttsChunks(t) {
+  const out = []; String(t).split(/(?<=[.!?…])\s+/).forEach(s => {
+    while (s.length > 180) { let k = s.lastIndexOf(',', 180); if (k < 60) k = s.lastIndexOf(' ', 180); if (k < 1) k = 180; out.push(s.slice(0, k + 1).trim()); s = s.slice(k + 1).trim(); }
+    if (s.trim()) out.push(s.trim());
+  });
+  return out;
+}
+function ttsStop() { TTS_Q = null; try { TTS_A.onended = TTS_A.onerror = null; TTS_A.pause(); } catch (e) {} }
+const _speakLocal = speak;
+// Telefonun motoru: önceki okuma bitmeden "durdur ve hemen çal" iOS'ta sessizce düşer; araya kısa bir boşluk koy
+function speakLocal(text, opts = {}) {
+  if (!('speechSynthesis' in window)) return _speakLocal(text, opts);
+  const busy = speechSynthesis.speaking || speechSynthesis.pending;
+  try { speechSynthesis.cancel(); speechSynthesis.resume(); } catch (e) {}
+  if (deVoice && !speechSynthesis.getVoices().some(v => v.name === deVoice.name)) deVoice = null;
+  const go = () => { const u = new SpeechSynthesisUtterance(text); u.lang = opts.lang || 'de-DE'; if (u.lang.startsWith('de')) { if (!deVoice) pickVoice(); if (deVoice) u.voice = deVoice; } u.rate = opts.rate || (CFG.rate || .95); if (opts.onend) u.onend = opts.onend; speechSynthesis.speak(u); };
+  if (busy) setTimeout(go, 80); else go();
+}
+speak = function (text, opts = {}) {
+  text = String(text || '').trim(); if (!text) return;
+  const lang = (opts.lang || 'de-DE').slice(0, 2);
+  ttsStop(); try { speechSynthesis.cancel(); } catch (e) {}
+  if (!navigator.onLine || CFG.ttsLocal) return speakLocal(text, opts);
+  const parts = ttsChunks(text), q = TTS_Q = { parts, i: 0 }, rate = opts.rate || CFG.rate || .95;
+  let fell = false;
+  const fall = () => { if (fell || TTS_Q !== q) return; fell = true; TTS_Q = null; speakLocal(parts.slice(q.i).join(' '), opts); };
+  const next = () => {
+    if (TTS_Q !== q) return;
+    if (q.i >= parts.length) { TTS_Q = null; opts.onend && opts.onend(); return; }
+    TTS_A.onended = () => { q.i++; next(); }; TTS_A.onerror = fall;
+    TTS_A.src = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${encodeURIComponent(parts[q.i])}`;
+    TTS_A.defaultPlaybackRate = TTS_A.playbackRate = rate; TTS_A.preservesPitch = TTS_A.webkitPreservesPitch = true;
+    const p = TTS_A.play(); if (p) p.catch(fall);
+  };
+  next();
+};
+const _stopAllAudioTts = stopAllAudio;
+stopAllAudio = function () { ttsStop(); return _stopAllAudioTts.apply(this, arguments); };
+const _quitLessonTts = quitLesson;
+quitLesson = function () { const r = _quitLessonTts.apply(this, arguments); if (!LSN) ttsStop(); return r; };
+// Mikrofon açılınca okuma sussun (kendi sesini duymasın)
+const _listenTts = listen;
+listen = function () { ttsStop(); return _listenTts.apply(this, arguments); };
+
+/* =====================================================================
+   İKİ TASARIM: Liquid Glass (html.am, varsayılan) ve Akış (html.fx). Ayarlar > Tasarım'dan seçilir.
    GERİ: tarayıcı geçmişi + ana ekran uygulamasında soldan sağa kaydırma
    ===================================================================== */
-setDesign = function () {
-  try { localStorage.setItem('df_design', 'fx'); } catch (e) {}
-  const h = document.documentElement; h.classList.remove('am', 'bh'); h.classList.add('bm', 'fx');
+const DESIGNS = { am: 'Liquid Glass', fx: 'Akış' };
+function applyDesign(d) {
+  const h = document.documentElement; h.classList.remove('fx', 'am', 'bh'); h.classList.add('bm', d);
+}
+setDesign = function (d) {
+  d = DESIGNS[d] ? d : 'am';
+  try { localStorage.setItem('df_design', d); } catch (e) {}
+  applyDesign(d);
+  if (!D) return;
+  bhPosterDrawn = false; bhLearnSeen = false; bmAlbumDrawn = false; bmLearnSeen = false;
+  scrollTo(0, 0); renderNav(); go(PAGE); toast('Tasarım: ' + DESIGNS[d]);
 };
-setDesign();
+applyDesign((() => { try { return DESIGNS[localStorage.getItem('df_design')] ? localStorage.getItem('df_design') : 'am'; } catch (e) { return 'am'; } })());
 const _settingsOne = VIEWS.settings;
-VIEWS.settings = () => _settingsOne().replace(/<div class="panel" style="margin-bottom:16px"><div class="panel-head" style="margin-bottom:4px"><h2>Tasarım<\/h2>[\s\S]*?<div class="ds-pick[^"]*">[\s\S]*?<\/button><\/div><\/div>/, '');
+VIEWS.settings = () => {
+  const cur = isFx() ? 'fx' : 'am';
+  const opt = (k, prev, t, s) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}<b>${t}</b><small>${s}</small></button>`;
+  const panel = `<div class="panel" style="margin-bottom:16px"><div class="panel-head" style="margin-bottom:4px"><h2>Tasarım</h2></div><p class="note" style="margin:0">Uygulamanın görünümünü seç. Verilerin değişmez.</p>
+    <div class="ds-pick two">${opt('am', '<div class="ds-prev lgp"><i></i><i></i><span></span></div>', 'Liquid Glass', 'Apple tarzı, cam ve mavi')}${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış', 'Tam ekran kaydırmalı, renkli')}</div></div>`;
+  return panel + _settingsOne().replace(/<div class="panel" style="margin-bottom:16px"><div class="panel-head" style="margin-bottom:4px"><h2>Tasarım<\/h2>[\s\S]*?<div class="ds-pick[^"]*">[\s\S]*?<\/button><\/div><\/div>/, '');
+};
 
 // Her sayfa geçişi geçmişe yazılır; geri tuşu/hareketi önce pencereyi, dersi kapatır, sonra önceki sayfaya döner
 let NAV_I = 0, NAV_POP = false;
@@ -8420,6 +8699,40 @@ function navBack() { if (closeTop()) return; if (NAV_I > 0) history.back(); }
   };
   addEventListener('touchend', end); addEventListener('touchcancel', reset);
 })();
+
+/* ---------- Liquid Glass: büyük başlık, kayınca cam araç çubuğu, mini oynatıcı kapalı ---------- */
+const MINI_PAGES = []; // "Devam et" kartı ve Öğren'deki düğme yeterli; içeriğin üstüne binen ikinci bir katman olmasın
+const _goLg = go;
+go = function () {
+  const r = _goLg.apply(this, arguments);
+  if (isAm()) {
+    const v = $('#view'); if (v && PAGES[PAGE] && !v.querySelector('.ios-lt')) v.insertAdjacentHTML('afterbegin', `<h1 class="ios-lt">${esc(PAGES[PAGE][0])}</h1>`);
+    document.documentElement.classList.remove('tb-sc');
+  }
+  return r;
+};
+const _amMiniLg = amMini;
+amMini = function () {
+  if (isAm() && !MINI_PAGES.includes(PAGE)) { const m = document.getElementById('amMini'); if (m) m.remove(); document.documentElement.classList.remove('has-mini'); return; }
+  _amMiniLg.apply(this, arguments);
+  document.documentElement.classList.toggle('has-mini', !!document.getElementById('amMini'));
+};
+let LG_TICK = false;
+addEventListener('scroll', () => {
+  if (LG_TICK) return; LG_TICK = true;
+  requestAnimationFrame(() => { LG_TICK = false; document.documentElement.classList.toggle('tb-sc', scrollY > 44); });
+}, { passive: true });
+// Ana Sayfa "Senin İçin": Bugünün 10 dakikası ve Hızlı tur
+const _homeLg = VIEWS.home;
+VIEWS.home = () => {
+  const h = _homeLg(); if (!isAm()) return h;
+  const done = D.daily && D.daily[today()] != null;
+  const speed = `<button class="am-it" onclick="startSpeed('mix')"><span class="am-mix" style="background:linear-gradient(150deg,#5e5ce6,#5856d6 50%,#3634a3)"><span>60 saniye</span><i class="fa-solid fa-stopwatch"></i><b>Hızlı tur</b></span><b>Hızlı tur</b><small>${speedRec('mix') ? 'Rekor ' + speedRec('mix') : 'Rekorunu kur'}</small></button>`;
+  return h.replace(/<span>Her gün<\/span><i class="fa-solid fa-calendar-day"><\/i><b>Günün Dersi<\/b><\/span><b>Günün Dersi<\/b><small>[^<]*<\/small>/, `<span>16 soru</span><i class="fa-solid fa-calendar-day"></i><b>Bugünün 10 dakikası</b></span><b>Bugünün 10 dakikası</b><small>${done ? 'Bugün yapıldı · yeni set' : 'Tekrar, zayıf konular, yeni ünite'}</small>`)
+    .replace('linear-gradient(150deg,#ff6a88,#fa2d48 55%,#c21a5b)', 'linear-gradient(150deg,#64d2ff,#007aff 55%,#0040dd)')
+    .replace('<h2>Senin İçin</h2></div><div class="am-row">', m => m)
+    .replace(/(<h2>Senin İçin<\/h2><\/div><div class="am-row">[\s\S]*?)(<\/div><\/section>)/, (m, a, b) => a + speed + b);
+};
 
 /* ---------- Başlat ---------- */
 applyTheme();
