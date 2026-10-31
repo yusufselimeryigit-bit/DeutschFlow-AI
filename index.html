@@ -2973,6 +2973,8 @@ html.vx .pill-input { background: var(--vx-glass) !important; -webkit-backdrop-f
 @keyframes aicDot { 0%, 100% { opacity: .3; transform: scale(.85); } 50% { opacity: .9; transform: scale(1.1); } }
 @media (max-width: 960px) { #tutorPanel.aic { border-radius: 26px; } }
 @media (prefers-reduced-motion: reduce) { .aic-orbs i, .aic-dots i, #tutorPanel.aic, .aic-hero, .aic-sugs button, #tutorPanel.aic .msg { animation: none !important; } }
+.pdf-toks b { font-weight: 700; } .pdf-mt { border-collapse: collapse; margin: 6px 0 2px; } .pdf-mt td { padding: 3px 18px 3px 0; min-width: 120px; }
+.pdf-mt .pdf-blank { width: 120px; } .pdf-clock { width: 90px; margin: 4px 0; } .pdf-clock svg { width: 90px; height: 90px; color: #111; } .pdf-clock .tp-cf { fill: #fff; stroke: #999; }
 #swBack { position: fixed; left: 0; top: 50%; z-index: 9999; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--surface-2); box-shadow: 0 6px 18px -8px rgba(0,0,0,.45); transform: translate(-46px,-50%); pointer-events: none; transition: background .15s, color .15s; }
 #swBack.go { background: var(--accent); color: #fff; }
 .tp-fxq { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
@@ -11689,6 +11691,55 @@ addEventListener('mousemove', e => {
   if (!AIC_RAF && !matchMedia('(prefers-reduced-motion: reduce)').matches) { const f = () => { AIC_GX += (AIC_MX - AIC_GX) * .12; AIC_GY += (AIC_MY - AIC_GY) * .12; const g = $('#aicGlow'); if (g) g.style.transform = `translate(${AIC_GX - 200}px,${AIC_GY - 200}px)`; AIC_RAF = Math.abs(AIC_MX - AIC_GX) + Math.abs(AIC_MY - AIC_GY) > .5 ? requestAnimationFrame(f) : 0; }; AIC_RAF = requestAnimationFrame(f); }
 });
 addEventListener('mousedown', e => { if (AIC.open && !e.target.closest('#aicPal') && !e.target.closest('#aicCmdBtn')) aicPalette(false); });
+
+/* ---------- Ders PDF'i: 30–40 karışık alıştırma (seçmeli, boşluk, yazma, çeviri, sıralama, eşleştirme…) + cevap anahtarı ---------- */
+function pdfQuestions(u, L) {
+  const pool = [], seen = new Set(), add = it => { if (!it) return; const k = (it.k + '|' + (it.q || '') + '|' + JSON.stringify(it.a || it.pairs || it.w || '')).slice(0, 220); if (seen.has(k)) return; seen.add(k); pool.push(it); };
+  qItems(u).forEach(add);
+  const gens = [() => buildUnitItems(u, L)].concat(typeof practiceItems === 'function' ? ['yaz', 'kelime', 'cumle', 'gramer', 'artikel', 'karisik'].map(m => () => practiceItems(u, L, m)) : []);
+  if (u.tp && typeof TOPICS !== 'undefined') u.tp.forEach(id => { const t = TOPICS.find(x => x.id === id); if (t) gens.push(() => t.gen()); });
+  for (let r = 0; r < 4 && pool.length < 70; r++) gens.forEach(g => { try { g().forEach(add); } catch (e) {} });
+  u.s.forEach(s => { add({ k: 'wr', q: s[1], a: s[0] }); add({ k: 'build', q: s[1], a: s[0] }); });
+  // Kâğıtta çözülemeyenler (dinleme, konuşma, serbest yazma, resim) çıkar
+  const ok = pool.filter(it => !it.listen && it.ui !== 'pic' && !['dict', 'speak', 'free', 'spot'].includes(it.k) && (!it.vis || /tp-clock|tp-chat/.test(it.vis)));
+  // Türleri dengeli karıştır
+  // Aynı cevap (aynı cümle/kelime) yalnızca bir soruda; her türden en fazla belli sayıda
+  const ansKey = it => norm(String(it.k === 'mc' ? it.q : it.k === 'match' ? it.pairs.map(p => p[0]).join() : it.k === 'sort' ? it.w.map(w => w[0]).join() : [].concat(it.a)[0] || '')).replace(/[.,!?]/g, '');
+  const CAP = { mc: 14, tf: 5, fill: 6, ww: 5, wr: 5, build: 5, scr: 3, match: 2, sort: 2, table: 2, comp: 2 };
+  const used = new Set(), by = {};
+  shuffle(ok).forEach(it => { const k = ansKey(it); if (!k || used.has(k)) return; const t = it.k; if ((by[t] = by[t] || []).length >= (CAP[t] || 2)) return; used.add(k); by[t].push(it); });
+  Object.values(by).forEach(a => shuffle(a));
+  const out = [], kinds = Object.keys(by), target = 36;
+  for (let r = 0; out.length < target && kinds.some(k => by[k].length); r++) kinds.forEach(k => { if (out.length < target && by[k].length) out.push(by[k].shift()); });
+  return shuffle(out);
+}
+function pdfQHtml(it, n) {
+  const L = 'abcde', blank = '<span class="pdf-blank"></span>', line = '<div class="pdf-line"></div>';
+  const vis = it.vis && /tp-chat/.test(it.vis) ? `<div class="pdf-muted">„${esc((it.vis.match(/data-say="([^"]*)"/) || [])[1] || '')}“</div>` : '';
+  let body = '', ans = '';
+  if (it.k === 'mc') { body = `${it.lbl ? `<span class="pdf-muted">${esc(it.lbl)}:</span> ` : ''}${esc(it.q).replace('___', blank)}${vis}<div class="pdf-opts">${it.o.map((o, k) => `<span>${L[k]}) ${esc(o)}</span>`).join('')}</div>`; ans = `${L[it.a]}) ${esc(it.o[it.a])}`; }
+  else if (it.k === 'tf') { body = `${esc(it.q)} <span class="pdf-muted">(Doğru / Yanlış)</span>`; ans = it.a ? 'Doğru' : 'Yanlış'; }
+  else if (it.k === 'fill') { body = `<span class="pdf-muted">Boşluğu doldur:</span> ${esc(it.q).replace('___', blank)}`; ans = esc([].concat(it.a)[0]); }
+  else if (it.k === 'ww') { body = `<span class="pdf-muted">${it.hq ? esc(it.hq.replace(/<[^>]+>/g, '')) : 'Almancasını yaz' + (it.art ? ' (artikeliyle)' : '') + ': ' + esc(it.q)}</span>${line}`; ans = esc(String(it.a).split('/')[0]); }
+  else if (it.k === 'wr') { body = `<span class="pdf-muted">Almancaya çevir:</span> <i>“${esc(it.q)}”</i>${line}`; ans = esc(it.a); }
+  else if (it.k === 'build') { const toks = shuffle(tokenize(it.a)); body = `<span class="pdf-muted">Kelimeleri sıraya koyarak cümle kur${it.hq ? '' : ` (“${esc(it.q)}”)`}:</span> <span class="pdf-toks">${toks.map(t => `<b>${esc(t)}</b>`).join(' / ')}</span>${line}`; ans = esc(it.a); }
+  else if (it.k === 'scr') { body = `<span class="pdf-muted">Harfleri sırala (${esc(it.q)}):</span> <b class="pdf-toks">${esc(shuffle(it.a.split('')).join(' '))}</b>${line}`; ans = esc((it.art ? it.art + ' ' : '') + it.a); }
+  else if (it.k === 'match') { const R = shuffle(it.pairs.map(p => p[1])); body = `<span class="pdf-muted">Eşleştir:</span><table class="pdf-mt">${it.pairs.map((p, k) => `<tr><td>${k + 1}. ${esc(p[0])}</td><td>${L[k]}) ${esc(R[k])}</td></tr>`).join('')}</table>`; ans = it.pairs.map((p, k) => `${k + 1}-${L[R.indexOf(p[1])]}`).join(', '); }
+  else if (it.k === 'sort') { body = `<span class="pdf-muted">Gruplara ayır (${it.bk.map(esc).join(' / ')}):</span> ${it.w.map(w => `<b>${esc(w[0])}</b>`).join(', ')}${line}`; ans = it.bk.map((b, i) => `${esc(b)}: ${it.w.filter(w => w[1] === i).map(w => esc(w[0])).join(', ')}`).join(' · '); }
+  else if (it.k === 'table') { body = `<span class="pdf-muted">Çekim tablosunu doldur:</span> <b>${esc(it.q)}</b> (${esc(it.tense)})<table class="pdf-mt">${PERS.map((p, i) => `<tr><td>${esc(p)}</td><td>${i === it.give ? esc(it.a[i]) : blank}</td></tr>`).join('')}</table>`; ans = PERS.map((p, i) => `${p.split('/')[0]} ${esc(it.a[i])}`).join(', '); }
+  else if (it.k === 'comp') { body = `<span class="pdf-muted">Bileşik kelime kur ve artikelini yaz (“${esc(it.q)}”):</span> ${it.bank.map(b => `<b>${esc(b)}</b>`).join(' / ')}${line}`; ans = `${esc(it.art)} ${esc(it.a)}`; }
+  else return null;
+  if (it.vis && /tp-clock/.test(it.vis)) body = `<div class="pdf-clock">${it.vis}</div>` + body;
+  return { q: `<div class="pdf-q"><span class="pdf-qn">${n}</span><div>${body}</div></div>`, a: `<b>${n}.</b> ${ans}` };
+}
+const _unitPdfHtmlQ = unitPdfHtml;
+unitPdfHtml = function (u, L) {
+  const h = _unitPdfHtmlQ.apply(this, arguments); L = L || (findUnit(u.id) || {}).L; if (!L) return h;
+  const rows = []; pdfQuestions(u, L).forEach(it => { const r = pdfQHtml(it, rows.length + 1); if (r) rows.push(r); });
+  if (rows.length < 10) return h;
+  return h.replace(/<h2 class="pdf-break">([^<]*Alıştırmalar)<\/h2>[\s\S]*?<div class="pdf-key">[\s\S]*?<\/div>/,
+    (m, t) => `<h2 class="pdf-break">${t} <span class="pdf-muted" style="font-size:13px;font-weight:500">· ${rows.length} soru</span></h2>${rows.map(r => r.q).join('')}<h2 class="pdf-break">Cevap anahtarı</h2><div class="pdf-key">${rows.map(r => r.a).join('<br>')}</div>`);
+};
 
 /* ---------- Başlat ---------- */
 applyTheme();
