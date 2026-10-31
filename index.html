@@ -10914,6 +10914,12 @@ function bnLens() {
 const _goLens = go;
 go = function () { const r = _goLens.apply(this, arguments); requestAnimationFrame(bnLens); return r; };
 
+/* ---------- Kilit yok: bütün seviyeler, dersler, karma testler ve sınavlar açık. „Devam et“ yine sırayla ilerler ---------- */
+levelUnlocked = () => true;
+unitUnlocked = () => true;
+bossUnlocked = () => true;
+currentLevelIdx = function () { const nu = nextUnit(); return nu ? nu.li : LEVELS.length - 1; };
+
 /* ---------- Başlat ---------- */
 applyTheme();
 matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!CFG.theme) applyTheme(); });
