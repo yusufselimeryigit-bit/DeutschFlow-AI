@@ -2767,6 +2767,16 @@ html.am .am-hero p { white-space: nowrap; overflow: hidden; text-overflow: ellip
   html.am #bottomNav .bn-item.hov i { color: var(--accent) !important; }
 }
 @media (prefers-reduced-motion: reduce) { html.am #bottomNav .bn-lens { transition: none; } }
+/* PDF her zaman açık renkli: koyu mod ve tasarım renkleri ders notuna sızmasın */
+.pdf-doc, html.dark .pdf-doc, html.am .pdf-doc, html.am.dark .pdf-doc, html.fx .pdf-doc, html.fx.dark .pdf-doc {
+  --ground: #ffffff; --surface: #f5f5f7; --surface-2: #ececf0; --raised: #ffffff; --ink: #111111; --muted: #5f5f66; --faint: #8a8a90; --border: #e3e3e8; --rule: #e3e3e8;
+  --b1s: #fff6d6; --b1d: #7a5c00; --pos-bg: #e5f6ea; --neg-bg: #fdeceb; --accent-soft: #e6f0ff; --card-shadow: none; color: #111; background: #fff; }
+.pdf-doc .tip, html.dark .pdf-doc .tip { background: #fff6d6 !important; color: #1a1a1a !important; border-color: #f0dc9a !important; }
+.pdf-doc .ex, .pdf-doc .tbl-wrap, .pdf-doc table, .pdf-doc td, .pdf-doc th { color: #111 !important; }
+.pdf-doc .ex, html.dark .pdf-doc .ex { background: #f5f5f7 !important; }
+.pdf-doc .ex i { color: #5f5f66 !important; }
+.pdf-doc th, html.dark .pdf-doc th { background: #f0f0f3 !important; }
+.pdf-doc td, html.dark .pdf-doc td { background: #fff !important; border-color: #e3e3e8 !important; }
 #swBack { position: fixed; left: 0; top: 50%; z-index: 9999; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: var(--ink); background: var(--surface-2); box-shadow: 0 6px 18px -8px rgba(0,0,0,.45); transform: translate(-46px,-50%); pointer-events: none; transition: background .15s, color .15s; }
 #swBack.go { background: var(--accent); color: #fff; }
 .tp-fxq { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 16px; }
@@ -5274,7 +5284,7 @@ async function exportPdf(unitIds, name) {
   try {
     if (!window.html2pdf) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    const opt = { margin: [10, 9, 12, 9], filename: fname, image: { type: 'jpeg', quality: .92 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false },
+    const opt = { margin: [10, 9, 12, 9], filename: fname, image: { type: 'jpeg', quality: .92 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false, scrollX: 0, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['css', 'legacy'], before: '.pdf-break', avoid: ['tr', '.ex', '.tip', '.pdf-q', 'h2', 'h4', '.pdf-head', '.pdf-sec', '.pdf-title'] } };
     let w = html2pdf().set(opt).from(els[0]).toPdf();
     els.slice(1).forEach((el, i) => { w = w.get('pdf').then(pdf => { const m = $('#pdfMsg'); if (m) m.textContent = `${i + 1} / ${els.length} ünite`; pdf.addPage(); }).from(el).toContainer().toCanvas().toPdf(); });
