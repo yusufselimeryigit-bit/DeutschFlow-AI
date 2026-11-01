@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<script>(function(){var d="am",c=document.documentElement.classList;try{d=localStorage.getItem("df_design")||"am"}catch(e){}if(d==="fx")c.add("bm","fx");else if(d==="vx")c.add("bm","am","vx");else c.add("bm","am")})()</script>
+<script>(function(){var d="am",c=document.documentElement.classList;try{d=localStorage.getItem("df_design")||"am"}catch(e){}if(d==="fx")c.add("bm","fx");else if(d==="vx")c.add("bm","am","vx");else if(d==="lb")c.add("bm","am","lb");else if(d==="kb")c.add("bm","am","kb");else c.add("bm","am")})()</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -3170,6 +3170,184 @@ html.am .tp-chip[aria-pressed="true"] { background: var(--accent); color: #fff; 
 html.am label.between { border-bottom: .5px solid var(--rule); }
 html.am .page-sub { color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { html.am #topbar .page-title, html.am .bn-item, html.am .am-hero, html.am .btn, html.am #lesson .opt { transition: none; } }
+</style>
+<style id="card-button">
+/* Kart Buton (html.kb): Material 3 "Attachment" bileşeninin vanilla CSS uyarlaması. Liquid Glass (am) üstüne yalnızca butonları değiştirir:
+   kenarlıklı yuvarlak kart, ikon solda kare bir medya kutusunda, yazı yanında. */
+html.kb {
+  --kb-surf-low: #f7f2fa; --kb-surf: #f3edf7; --kb-surf-high: #ece6f0; --kb-surf-highest: #e6e0e9;
+  --kb-on: #1d1b20; --kb-on-var: #49454f; --kb-outline: #cac4d0;
+  --kb-err: #b3261e; --kb-err-c: #f9dedc; --kb-ring: #625b71;
+  --kb-pri-c: color-mix(in srgb, var(--accent) 12%, #fff); --kb-pri-on: var(--accd, #0060df);
+  --kb-spring: linear(0, .36, .65, .84, .95, 1.01, 1.03, 1.03, 1.02, 1.01, 1, 1);
+  --kb-spring-fx: linear(0, .48, .77, .91, .97, .99, 1);
+}
+html.kb.dark {
+  --kb-surf-low: #1d1b20; --kb-surf: #211f26; --kb-surf-high: #2b2930; --kb-surf-highest: #36343b;
+  --kb-on: #e6e0e9; --kb-on-var: #cac4d0; --kb-outline: #49454f;
+  --kb-err: #f2b8b5; --kb-err-c: #8c1d18; --kb-ring: #ccc2dc;
+  --kb-pri-c: color-mix(in srgb, var(--accent) 22%, #1d1b20); --kb-pri-on: color-mix(in srgb, var(--accent) 55%, #fff);
+}
+
+/* kart gövdesi (Attachment, size default) */
+html.kb .btn, html.kb .btn-ghost, html.kb .btn-red, html.kb .am-acts .btn, html.kb .am-acts .btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 6px 14px 6px 6px; border-radius: 16px !important;
+  border: 1px solid var(--kb-outline) !important; background: var(--kb-surf-low) !important; color: var(--kb-on) !important;
+  font-weight: 500; font-size: 15px; letter-spacing: .0125rem; text-shadow: none !important;
+  box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  transition: transform var(--kb-spring) 360ms, background-color var(--kb-spring-fx) 150ms, border-color var(--kb-spring-fx) 150ms !important;
+}
+html.kb .btn:not(:has(> i)) { padding: 6px 18px; }
+/* medya kutusu (AttachmentMedia): ilk ikon kare bir kutuya girer */
+html.kb .btn > i:first-child, html.kb .btn > i:last-child:not(:first-child) {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 12px; font-size: 15px;
+  background: var(--kb-surf-highest); color: var(--kb-on);
+}
+html.kb .btn > i:last-child:not(:first-child) { margin-right: -8px; }
+
+/* birincil: vurgu renkli kap + dolu ikon kutusu */
+html.kb .btn:not(.btn-ghost):not(.btn-red) { background: var(--kb-pri-c) !important; border-color: color-mix(in srgb, var(--accent) 35%, transparent) !important; color: var(--kb-pri-on) !important; }
+html.kb .btn:not(.btn-ghost):not(.btn-red) > i:first-child, html.kb .btn:not(.btn-ghost):not(.btn-red) > i:last-child:not(:first-child) { background: var(--accent); color: #fff; }
+html.kb .am-acts .btn:not(.btn-ghost) { background: var(--kb-surf-low) !important; border-color: var(--kb-outline) !important; color: var(--kb-on) !important; }
+/* hayalet: boştaki ek gibi kesik kenarlı (state=idle) */
+html.kb .btn.btn-ghost, html.kb .btn-ghost { border-style: dashed !important; }
+html.kb .btn.btn-ghost > i:first-child, html.kb .btn-ghost > i:first-child { color: var(--accent); }
+/* kırmızı: hata durumu (state=error) */
+html.kb .btn.btn-red, html.kb .btn-red { border-color: var(--kb-err) !important; background: var(--kb-surf-low) !important; color: var(--kb-err) !important; }
+html.kb .btn-red > i:first-child { background: var(--kb-err-c); color: var(--kb-err); }
+
+/* küçük boy (size sm / xs) */
+html.kb .btn-sm { min-height: 38px; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 12px !important; font-size: 13px; }
+html.kb .btn-sm:not(:has(> i)) { padding: 4px 14px; }
+html.kb .btn-sm > i:first-child, html.kb .btn-sm > i:last-child:not(:first-child) { width: 28px; height: 28px; border-radius: 8px; font-size: 12.5px; }
+html.kb .btn-block { justify-content: flex-start; width: 100%; }
+html.kb .btn-block:not(:has(> i)) { justify-content: center; }
+
+/* ikon butonları: tek başına bir medya kutusu */
+html.kb .icon-btn, html.kb #topbar .icon-btn, html.kb .tutor-top, html.kb #lesson .ls-top .icon-btn {
+  border-radius: 12px !important; border: 1px solid var(--kb-outline) !important; background: var(--kb-surf-low) !important;
+  color: var(--kb-on) !important; box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  transition: transform var(--kb-spring) 360ms, background-color 150ms !important;
+}
+html.kb #topbar .icon-btn[title="Profil değiştir"] { border-radius: 12px !important; border: 0 !important; }
+
+/* çipler ve kelime parçaları: xs ek kartı */
+html.kb .chip, html.kb .tp-chip, html.kb .br-chip, html.kb .tok, html.kb .mic-btn {
+  border-radius: 12px !important; border: 1px solid var(--kb-outline) !important; background: var(--kb-surf-low) !important;
+  color: var(--kb-on) !important; box-shadow: none !important; font-weight: 500;
+  transition: transform var(--kb-spring) 360ms, background-color 150ms, border-color 150ms !important;
+}
+html.kb .chip.on, html.kb .chip.active, html.kb .tp-chip.on, html.kb .br-chip.on { background: var(--kb-pri-c) !important; border-color: var(--accent) !important; color: var(--kb-pri-on) !important; }
+html.kb .mic-btn { border-radius: 16px !important; }
+
+/* ders seçenekleri: ek kartı, seçilince vurgu kenarı, doğru/yanlış renkleri korunur */
+html.kb #lesson .opt, html.kb #gameArea .opt { border-radius: 16px !important; border: 1px solid var(--kb-outline) !important; background: var(--kb-surf-low) !important; box-shadow: none !important; color: var(--kb-on); transition: transform var(--kb-spring) 360ms, background-color 150ms, border-color 150ms; }
+html.kb #lesson .opt.sel, html.kb #lesson .opt.selected, html.kb #lesson .opt.on { border-color: var(--accent) !important; background: var(--kb-pri-c) !important; box-shadow: inset 0 0 0 1px var(--accent) !important; }
+html.kb #lesson .opt.ok, html.kb #gameArea .opt.ok { border-color: var(--positive) !important; background: var(--pos-bg) !important; box-shadow: inset 0 0 0 1px var(--positive) !important; }
+html.kb #lesson .opt.bad, html.kb #gameArea .opt.bad { border-color: var(--kb-err) !important; background: var(--neg-bg) !important; box-shadow: inset 0 0 0 1px var(--kb-err) !important; }
+
+/* durumlar: üstüne gelince kap koyulaşır, basınca hafif göçer, odakta 3px halka */
+@media (hover: hover) {
+  html.kb .btn:hover:not(:disabled), html.kb .icon-btn:hover, html.kb .chip:hover, html.kb .tp-chip:hover, html.kb .br-chip:hover, html.kb .tok:hover, html.kb #lesson .opt:hover:not(:disabled):not(.ok):not(.bad) { background: var(--kb-surf) !important; opacity: 1; }
+  html.kb .btn:not(.btn-ghost):not(.btn-red):hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 18%, var(--kb-surf-low)) !important; }
+}
+html.kb .btn:active:not(:disabled), html.kb .icon-btn:active, html.kb .chip:active, html.kb .tok:active, html.kb .mic-btn:active, html.kb #lesson .opt:active { transform: scale(.97); opacity: 1; background: var(--kb-surf-high) !important; }
+html.kb .btn:disabled { opacity: .5; border-style: dashed !important; }
+html.kb .btn:focus-visible, html.kb .icon-btn:focus-visible, html.kb .chip:focus-visible, html.kb .tok:focus-visible, html.kb #lesson .opt:focus-visible { outline: 3px solid var(--kb-ring); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { html.kb .btn, html.kb .icon-btn, html.kb .chip, html.kb .tok, html.kb #lesson .opt { transition: none !important; transform: none !important; } }
+
+/* Ayarlar > Tasarım: beş seçenek ve önizleme */
+.ds-pick.ds-five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 760px) { .ds-pick.ds-five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .ds-pick.ds-five { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-pick.ds-five .ds-opt small { display: block; } }
+.ds-prev.kbp { position: relative; overflow: hidden; background: #fef7ff; }
+.ds-prev.kbp i { position: absolute; left: 12px; right: 12px; height: 26px; border-radius: 10px; border: 1px solid #cac4d0; background: #f7f2fa; }
+.ds-prev.kbp i::before { content: ""; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 6px; background: #e6e0e9; }
+.ds-prev.kbp i::after { content: ""; position: absolute; left: 28px; top: 8px; width: 42%; height: 4px; border-radius: 2px; background: #49454f; opacity: .55; box-shadow: 0 6px 0 -1px rgba(73,69,79,.35); }
+.ds-prev.kbp i:first-child { top: 10px; }
+.ds-prev.kbp i:nth-child(2) { top: 42px; border-style: dashed; }
+.ds-prev.kbp i:nth-child(2)::before { background: #007aff; }
+</style>
+<style id="liquid-button">
+/* Sıvı Buton (html.lb): LiquidButton bileşeninin vanilla CSS uyarlaması. Liquid Glass (am) üstüne yalnızca butonları değiştirir. */
+html.lb {
+  --lb-ring: 0 0 6px rgba(0,0,0,.03), 0 2px 6px rgba(0,0,0,.08), inset 3px 3px .5px -3px rgba(0,0,0,.9), inset -3px -3px .5px -3px rgba(0,0,0,.85), inset 1px 1px 1px -.5px rgba(0,0,0,.6), inset -1px -1px 1px -.5px rgba(0,0,0,.6), inset 0 0 6px 6px rgba(0,0,0,.12), inset 0 0 2px 2px rgba(0,0,0,.06), 0 0 12px rgba(255,255,255,.15);
+  --lb-ring-soft: 0 0 6px rgba(0,0,0,.03), 0 2px 6px rgba(0,0,0,.08), inset 3px 3px .5px -3px rgba(0,0,0,.7), inset -3px -3px .5px -3px rgba(0,0,0,.65), inset 1px 1px 1px -.5px rgba(0,0,0,.4), inset -1px -1px 1px -.5px rgba(0,0,0,.4), inset 0 0 5px 4px rgba(0,0,0,.07), 0 0 12px rgba(255,255,255,.15);
+  /* renkli (dolu) butonlar için beyaz kenarlı halka: koyu iç gölge rengi kirletmesin */
+  --lb-ring-fill: 0 0 6px rgba(0,0,0,.03), 0 6px 16px -8px var(--lb-tint, rgba(0,122,255,.7)), inset 3px 3px .5px -3px rgba(255,255,255,.95), inset -3px -3px .5px -3px rgba(255,255,255,.7), inset 1px 1px 1px -.5px rgba(255,255,255,.75), inset -1px -1px 1px -.5px rgba(0,0,0,.25), inset 0 0 6px 6px rgba(255,255,255,.12), inset 0 0 2px 2px rgba(255,255,255,.1);
+  --lb-glass: rgba(255,255,255,.28);
+  --lb-filter: blur(3px) saturate(1.6);
+}
+html.lb.dark {
+  --lb-ring: 0 0 8px rgba(0,0,0,.03), 0 2px 6px rgba(0,0,0,.08), inset 3px 3px .5px -3.5px rgba(255,255,255,.09), inset -3px -3px .5px -3.5px rgba(255,255,255,.85), inset 1px 1px 1px -.5px rgba(255,255,255,.6), inset -1px -1px 1px -.5px rgba(255,255,255,.6), inset 0 0 6px 6px rgba(255,255,255,.12), inset 0 0 2px 2px rgba(255,255,255,.06), 0 0 12px rgba(0,0,0,.15);
+  --lb-ring-soft: 0 0 8px rgba(0,0,0,.03), 0 2px 6px rgba(0,0,0,.08), inset -3px -3px .5px -3.5px rgba(255,255,255,.6), inset 1px 1px 1px -.5px rgba(255,255,255,.4), inset -1px -1px 1px -.5px rgba(255,255,255,.4), inset 0 0 5px 4px rgba(255,255,255,.07), 0 0 12px rgba(0,0,0,.15);
+  --lb-glass: rgba(255,255,255,.06);
+}
+@supports (backdrop-filter: url(#container-glass)) { html.lb { --lb-filter: url(#container-glass) saturate(1.4); } }
+
+/* ortak cam gövde */
+html.lb .btn, html.lb .btn-ghost, html.lb .btn-red,
+html.lb .icon-btn, html.lb #topbar .icon-btn, html.lb .tutor-top, html.lb #lesson .ls-top .icon-btn,
+html.lb .chip, html.lb .tp-chip, html.lb .br-chip, html.lb .tok, html.lb .mic-btn, html.lb .lnk.btn,
+html.lb .am-acts .btn, html.lb .am-acts .btn-ghost {
+  position: relative; isolation: isolate; border: 0 !important;
+  background: var(--lb-glass) !important; color: var(--accent) !important;
+  box-shadow: var(--lb-ring) !important;
+  -webkit-backdrop-filter: blur(3px) saturate(1.6); backdrop-filter: var(--lb-filter);
+  transition: transform .3s cubic-bezier(.2,.9,.3,1.25), box-shadow .3s, background-color .2s, opacity .2s !important;
+}
+html.lb:not(.dark) .btn-ghost, html.lb:not(.dark) .btn.btn-ghost, html.lb:not(.dark) .icon-btn, html.lb:not(.dark) .am-acts .btn { color: var(--accd) !important; }
+html.lb .btn, html.lb .btn-ghost, html.lb .btn-red { border-radius: 999px !important; }
+html.lb .am-acts .btn, html.lb .am-acts .btn-ghost { border-radius: 16px !important; }
+
+/* birincil: mavi dolu sıvı cam */
+html.lb .btn:not(.btn-ghost):not(.btn-red):not(.lnk) {
+  --lb-tint: rgba(0,122,255,.7);
+  background: linear-gradient(to top, var(--accent), color-mix(in srgb, var(--accent) 82%, #fff)) !important;
+  color: #fff !important; box-shadow: var(--lb-ring-fill) !important;
+  text-shadow: 0 -1px 0 rgba(0,40,120,.35);
+}
+html.lb .btn.btn-red, html.lb .btn-red {
+  --lb-tint: color-mix(in srgb, var(--negative) 70%, transparent);
+  background: linear-gradient(to top, var(--negative), color-mix(in srgb, var(--negative) 80%, #fff)) !important;
+  color: #fff !important; box-shadow: var(--lb-ring-fill) !important;
+}
+html.lb .am-acts .btn:not(.btn-ghost) { background: var(--lb-glass) !important; color: var(--accent) !important; box-shadow: var(--lb-ring) !important; text-shadow: none; }
+html.lb:not(.dark) .am-acts .btn:not(.btn-ghost) { color: var(--accd) !important; }
+
+/* küçük ve yardımcı butonlarda halka biraz daha ince */
+html.lb .btn-sm.btn-ghost, html.lb .chip, html.lb .tp-chip, html.lb .br-chip, html.lb .tok { box-shadow: var(--lb-ring-soft) !important; }
+html.lb .chip.on, html.lb .chip.active, html.lb .tp-chip.on, html.lb .br-chip.on {
+  --lb-tint: rgba(0,122,255,.5); background: var(--accent) !important; color: #fff !important; box-shadow: var(--lb-ring-fill) !important;
+}
+
+/* ders seçenekleri: cam kart + doğru/yanlış renkleri korunur */
+html.lb #lesson .opt, html.lb #gameArea .opt { background: var(--lb-glass) !important; border-color: transparent !important; box-shadow: var(--lb-ring-soft) !important; -webkit-backdrop-filter: blur(3px) saturate(1.6); backdrop-filter: var(--lb-filter); transition: transform .3s cubic-bezier(.2,.9,.3,1.25), box-shadow .3s, background-color .2s; }
+html.lb #lesson .opt.sel, html.lb #lesson .opt.selected, html.lb #lesson .opt.on { box-shadow: var(--lb-ring-soft), inset 0 0 0 2px var(--accent) !important; }
+html.lb #lesson .opt.ok, html.lb #gameArea .opt.ok { background: var(--pos-bg) !important; box-shadow: var(--lb-ring-soft), inset 0 0 0 2px var(--positive) !important; }
+html.lb #lesson .opt.bad, html.lb #gameArea .opt.bad { background: var(--neg-bg) !important; box-shadow: var(--lb-ring-soft), inset 0 0 0 2px var(--negative) !important; }
+
+/* hareket: üstüne gelince hafif büyür, basınca içe göçer */
+@media (hover: hover) {
+  html.lb .btn:hover:not(:disabled), html.lb .icon-btn:hover, html.lb .chip:hover, html.lb .tp-chip:hover, html.lb .br-chip:hover, html.lb .tok:hover, html.lb .mic-btn:hover { transform: scale(1.05); opacity: 1; }
+  html.lb #lesson .opt:hover:not(:disabled) { transform: scale(1.015); }
+  html.lb .btn-block:hover:not(:disabled) { transform: scale(1.02); }
+}
+html.lb .btn:active:not(:disabled), html.lb .icon-btn:active, html.lb .chip:active, html.lb .tp-chip:active, html.lb .br-chip:active, html.lb .tok:active, html.lb .mic-btn:active, html.lb #lesson .opt:active { transform: scale(.96); opacity: 1; filter: brightness(.95); }
+html.lb .btn:disabled { opacity: .45; box-shadow: var(--lb-ring-soft) !important; }
+html.lb .btn:focus-visible, html.lb .icon-btn:focus-visible, html.lb .chip:focus-visible, html.lb #lesson .opt:focus-visible { outline: none; box-shadow: var(--lb-ring), 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent) !important; }
+@media (prefers-reduced-motion: reduce) { html.lb .btn, html.lb .icon-btn, html.lb .chip, html.lb .tok, html.lb #lesson .opt { transition: none !important; transform: none !important; } }
+
+/* Ayarlar > Tasarım: dört seçenek ve önizleme */
+.ds-pick.ds-four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 560px) { .ds-pick.ds-four { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-pick.ds-four .ds-opt small { display: block; } }
+.ds-prev.lbp { position: relative; overflow: hidden; background: linear-gradient(160deg, #f2f2f7, #dfe7f5); }
+.ds-prev.lbp i { position: absolute; top: 12px; width: 34%; height: 30px; border-radius: 99px; background: rgba(255,255,255,.35); box-shadow: inset 3px 3px .5px -3px rgba(0,0,0,.9), inset -3px -3px .5px -3px rgba(0,0,0,.85), inset 1px 1px 1px -.5px rgba(0,0,0,.6), inset -1px -1px 1px -.5px rgba(0,0,0,.6), inset 0 0 6px 6px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.08); }
+.ds-prev.lbp i:first-child { left: 12px; }
+.ds-prev.lbp i:nth-child(2) { left: calc(12px + 34% + 8px); background: linear-gradient(to top, #007aff, #3d9bff); box-shadow: inset 3px 3px .5px -3px #fff, inset -1px -1px 1px -.5px rgba(0,0,0,.25), inset 0 0 6px 6px rgba(255,255,255,.12), 0 6px 14px -8px rgba(0,122,255,.8); }
+.ds-prev.lbp span { position: absolute; left: 12px; right: 12px; bottom: 10px; height: 18px; border-radius: 99px; background: rgba(255,255,255,.4); box-shadow: inset 2px 2px .5px -2px rgba(0,0,0,.8), inset -2px -2px .5px -2px rgba(0,0,0,.7), inset 0 0 4px 3px rgba(0,0,0,.08); }
 </style>
 </head>
 <body>
@@ -11739,6 +11917,37 @@ unitPdfHtml = function (u, L) {
   if (rows.length < 10) return h;
   return h.replace(/<h2 class="pdf-break">([^<]*Alıştırmalar)<\/h2>[\s\S]*?<div class="pdf-key">[\s\S]*?<\/div>/,
     (m, t) => `<h2 class="pdf-break">${t} <span class="pdf-muted" style="font-size:13px;font-weight:500">· ${rows.length} soru</span></h2>${rows.map(r => r.q).join('')}<h2 class="pdf-break">Cevap anahtarı</h2><div class="pdf-key">${rows.map(r => r.a).join('<br>')}</div>`);
+};
+
+/* ---------- Sıvı Buton tasarımı (html.bm.am.lb): Liquid Glass zemini, tüm butonlar LiquidButton gibi
+   iç gölgeli cam halka + SVG türbülans/displacement filtresiyle kırılan arka plan (filtre yalnızca Chromium'da; Safari'de bulanık cam) ---------- */
+/* Kart Buton (html.bm.am.kb): aynı zemin, butonlar Material 3 ek kartı (Attachment) gibi; CSS <style id="card-button"> */
+DESIGNS.lb = 'Sıvı Buton'; DESIGNS.kb = 'Kart Buton';
+const _applyDesignLb = applyDesign;
+applyDesign = function (d) {
+  const h = document.documentElement; h.classList.remove('lb', 'kb');
+  const btn = d === 'lb' || d === 'kb';
+  _applyDesignLb(btn ? 'am' : d); if (btn) h.classList.add(d);
+};
+(function () {
+  if (document.getElementById('lb-glass-svg')) return;
+  const add = () => document.body.insertAdjacentHTML('beforeend', `<svg id="lb-glass-svg" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="container-glass" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"/>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"/>
+      <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
+    </filter></defs></svg>`);
+  document.body ? add() : document.addEventListener('DOMContentLoaded', add);
+})();
+try { const d = localStorage.getItem('df_design'); if (d === 'lb' || d === 'kb') applyDesign(d); } catch (e) {}
+const _settingsLb = VIEWS.settings;
+VIEWS.settings = () => {
+  const h = document.documentElement.classList;
+  const cur = h.contains('lb') ? 'lb' : h.contains('kb') ? 'kb' : h.contains('vx') ? 'vx' : isFx() ? 'fx' : 'am';
+  const opt = (k, prev, t, s) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}<b>${t}</b><small>${s}</small></button>`;
+  return _settingsLb().replace(/<div class="ds-pick two ds-three">[\s\S]*?<\/button><\/div><\/div>/, `<div class="ds-pick two ds-three ds-five">${opt('am', '<div class="ds-prev lgp"><i></i><i></i><span></span></div>', 'Liquid Glass', 'Apple tarzı, cam ve mavi')}${opt('lb', '<div class="ds-prev lbp"><i></i><i></i><span></span></div>', 'Sıvı Buton', 'Kabartmalı cam butonlar')}${opt('kb', '<div class="ds-prev kbp"><i></i><i></i></div>', 'Kart Buton', 'İkon kutulu kart butonlar')}${opt('vx', '<div class="ds-prev vxp"><i></i><i></i><span></span></div>', 'Derin Cam', 'Renkli zemin, katman katman cam')}${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış', 'Tam ekran kaydırmalı, renkli')}</div></div>`);
 };
 
 /* ---------- Başlat ---------- */
