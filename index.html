@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<script>(function(){var d="am",c=document.documentElement.classList;try{d=localStorage.getItem("df_design")||"am"}catch(e){}if(d==="fx")c.add("bm","fx");else if(d==="vx")c.add("bm","am","vx");else if(d==="lb")c.add("bm","am","lb");else if(d==="kb")c.add("bm","am","kb");else c.add("bm","am")})()</script>
+<script>(function(){var d="am",c=document.documentElement.classList;try{d=localStorage.getItem("df_design")||"am"}catch(e){}if(d==="fx")c.add("bm","fx");else if(d==="vx")c.add("bm","am","vx");else if(d==="lb")c.add("bm","am","lb");else if(d==="kb")c.add("bm","am","kb");else if(d==="hb")c.add("bm","am","hb");else if(d==="hp"||d==="en")c.add("bm","am","hb",d);else if(d==="ak")c.add("bm","am","ak");else c.add("bm","am")})()</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DeutschFlow AI</title>
@@ -3348,6 +3348,522 @@ html.lb .btn:focus-visible, html.lb .icon-btn:focus-visible, html.lb .chip:focus
 .ds-prev.lbp i:first-child { left: 12px; }
 .ds-prev.lbp i:nth-child(2) { left: calc(12px + 34% + 8px); background: linear-gradient(to top, #007aff, #3d9bff); box-shadow: inset 3px 3px .5px -3px #fff, inset -1px -1px 1px -.5px rgba(0,0,0,.25), inset 0 0 6px 6px rgba(255,255,255,.12), 0 6px 14px -8px rgba(0,122,255,.8); }
 .ds-prev.lbp span { position: absolute; left: 12px; right: 12px; bottom: 10px; height: 18px; border-radius: 99px; background: rgba(255,255,255,.4); box-shadow: inset 2px 2px .5px -2px rgba(0,0,0,.8), inset -2px -2px .5px -2px rgba(0,0,0,.7), inset 0 0 4px 3px rgba(0,0,0,.08); }
+</style>
+<style id="hover-button">
+/* =====================================================================
+   HOVER BUTON (html.bm.am.hb): shadcn/ui "InteractiveHoverButton" bileşeninin vanilla CSS uyarlaması.
+   Nötr zinc paleti, Geist yazı, beyaz zemin üstünde 1px kenarlıklı kartlar.
+   Her düğme kenarlıklı bir hap; solundaki küçük birincil nokta üstüne gelince (dokunmatikte basınca)
+   büyüyüp düğmeyi doldurur, yazı sola kayar ve sağdan ArrowRight (lucide) oku girer.
+   Seçili sekme, çip ve alt bar öğesi o noktanın "dolmuş" hâlidir.
+   ===================================================================== */
+html.hb {
+  --hb-bg: #ffffff; --hb-fg: #09090b; --hb-muted: #f4f4f5; --hb-muted-fg: #71717a;
+  --hb-border: #e4e4e7; --hb-input: #e4e4e7; --hb-ring: #a1a1aa;
+  --hb-pri: #2563eb; --hb-pri-fg: #ffffff; --hb-dest: #dc2626; --hb-dest-fg: #fafafa;
+  --hb-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, .05);
+  --hb-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, .08), 0 2px 4px -2px rgba(0, 0, 0, .06);
+  --hb-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, .08), 0 4px 6px -4px rgba(0, 0, 0, .06);
+  --hb-ease: cubic-bezier(.4, 0, .2, 1); --hb-dur: 300ms;
+  --hb-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+  --sf: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --sans: var(--sf);
+  --ground: #fafafa; --surface: #ffffff; --surface-2: #f4f4f5; --raised: #ffffff;
+  --border: #e4e4e7; --rule: #e4e4e7; --control: #d4d4d8; --track: #f4f4f5;
+  --ink: #09090b; --muted: #71717a; --faint: #a1a1aa;
+  --accent: #2563eb; --accd: #1d4ed8; --accent-soft: rgba(37, 99, 235, .1);
+  --positive: #16a34a; --negative: #dc2626; --pos-bg: #f0fdf4; --neg-bg: #fef2f2;
+  --card-shadow: var(--hb-shadow-sm); --lg-shadow: var(--hb-shadow-lg); --lg-hi: none;
+  --lg-bg: rgba(255, 255, 255, .92); --lg-bg-strong: #ffffff; --lg-edge: #e4e4e7; --lg-blur: blur(8px);
+  --r-card: 12px; --r-list: 12px; --r-opt: 12px;
+}
+html.hb.dark {
+  --hb-bg: #09090b; --hb-fg: #fafafa; --hb-muted: #27272a; --hb-muted-fg: #a1a1aa;
+  --hb-border: #27272a; --hb-input: #27272a; --hb-ring: #52525b;
+  --hb-pri: #fafafa; --hb-pri-fg: #18181b; --hb-dest: #ef4444; --hb-dest-fg: #fafafa;
+  --hb-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, .4);
+  --hb-shadow-md: 0 4px 10px -2px rgba(0, 0, 0, .6);
+  --hb-shadow-lg: 0 12px 24px -6px rgba(0, 0, 0, .7);
+  --ground: #09090b; --surface: #0f0f11; --surface-2: #27272a; --raised: #18181b;
+  --border: #27272a; --rule: #27272a; --control: #3f3f46; --track: #27272a;
+  --ink: #fafafa; --muted: #a1a1aa; --faint: #71717a;
+  --accent: #3b82f6; --accd: #60a5fa; --accent-soft: rgba(59, 130, 246, .16);
+  --positive: #22c55e; --negative: #ef4444; --pos-bg: #052e16; --neg-bg: #450a0a;
+  --lg-bg: rgba(9, 9, 11, .9); --lg-bg-strong: #18181b; --lg-edge: #27272a;
+}
+html.hb[data-accent], html.hb.dark[data-accent] { --accent: #2563eb; --accd: #1d4ed8; --accent-soft: rgba(37, 99, 235, .1); }
+html.hb.dark[data-accent] { --accent: #3b82f6; --accd: #60a5fa; --accent-soft: rgba(59, 130, 246, .16); }
+html.hb body { font-family: var(--sf); letter-spacing: -.011em; font-feature-settings: 'ss01', 'tnum' 0; }
+html.hb ::selection { background: color-mix(in srgb, var(--hb-pri) 18%, transparent); }
+html.hb :focus-visible { outline: 2px solid var(--hb-ring); outline-offset: 2px; }
+html.hb { scrollbar-color: var(--hb-border) transparent; caret-color: var(--hb-fg); accent-color: var(--hb-pri); }
+html.hb .ios-lt { font-weight: 700; letter-spacing: -.035em; }
+html.hb .tabular, html.hb .stat-pill { font-variant-numeric: tabular-nums; }
+
+/* ---------- Kenarlıklı yüzeyler (cam yerine) ---------- */
+html.hb .lg, html.hb #bottomNav, html.hb #amMini, html.hb.tb-sc #topbar, html.hb .us-foot, html.hb #lesson .ls-foot:not(.ok):not(.bad), html.hb .toast, html.hb #tutorPanel {
+  background: var(--lg-bg) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+html.hb.tb-sc #topbar { box-shadow: 0 1px 0 var(--hb-border); }
+
+/* ---------- Kartlar / widget'lar: shadcn Card ---------- */
+html.hb .glass, html.hb .panel, html.hb .k-tile, html.hb .am-list, html.hb .hub, html.hb .us-s, html.hb .us-pc, html.hb .us-ai, html.hb .am-tracks, html.hb .tp-bk, html.hb .tp-cmp, html.hb .row-card {
+  background: var(--surface); border: 1px solid var(--hb-border) !important; border-radius: 12px; box-shadow: var(--hb-shadow-sm);
+}
+html.hb .hub .row-card { border: 0 !important; border-radius: 0; box-shadow: none; background: transparent; }
+html.hb .hub .row-card + .row-card { border-top: 1px solid var(--hb-border) !important; }
+html.hb .row-card { transition: background-color 150ms var(--hb-ease), border-color 150ms var(--hb-ease); }
+html.hb .row-card .rc-ic, html.hb .am-li .am-ic, html.hb .us-pc > i:first-child {
+  border-radius: 8px; background: var(--hb-muted) !important; color: var(--hb-fg) !important; box-shadow: inset 0 0 0 1px var(--hb-border);
+}
+html.hb .row-card.hot { background: var(--surface); border-color: var(--hb-pri) !important; box-shadow: 0 0 0 1px var(--hb-pri), var(--hb-shadow-sm); }
+html.hb .hub-h, html.hb .section-title { color: var(--hb-muted-fg); font-weight: 500; letter-spacing: 0; }
+html.hb .panel { padding: 20px; }
+html.hb .page-sub { color: var(--hb-muted-fg); }
+@media (hover: hover) {
+  html.hb .row-card:hover, html.hb .am-tr:hover:not(.lock) { background: var(--hb-muted); }
+  html.hb .hub .row-card:hover { background: color-mix(in srgb, var(--hb-muted) 60%, transparent); }
+}
+
+/* kapaklar: renk içerik olarak kalır, çerçeve shadcn yarıçapına iner */
+html.hb .am-cv { border-radius: 10px; }
+html.hb .am-cv.xl { border-radius: 14px; }
+html.hb .am-cv.sm { border-radius: 6px; }
+html.hb .am-mix, html.hb .tp-tile, html.hb .tp-sp { border-radius: 12px; }
+html.hb .am-hero { border-radius: 14px; box-shadow: var(--hb-shadow-md); border: 1px solid color-mix(in srgb, #000 8%, transparent); }
+html.hb .am-it b { font-weight: 600; }
+html.hb .am-sh h2 { font-size: 20px; font-weight: 600; letter-spacing: -.025em; }
+html.hb .am-sh button { color: var(--hb-muted-fg); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hb-border); }
+html.hb .am-eq i, html.hb .bar > div { background: var(--hb-pri); }
+html.hb .bar { background: var(--hb-muted); }
+html.hb .lvl-badge { border-radius: 999px; }
+
+/* ---------- Ortak hareket: genişleyen nokta + kayan ok ---------- */
+html.hb .btn, html.hb .btn-ghost, html.hb .btn-red, html.hb .am-play, html.hb .am-acts .btn, html.hb .am-acts .btn-ghost {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 8px 22px 8px 30px; border-radius: 999px !important;
+  border: 1px solid var(--hb-border) !important; background: var(--hb-bg) !important; color: var(--hb-fg) !important;
+  font: 600 15px/1.2 var(--sf); letter-spacing: -.01em; text-shadow: none !important; box-shadow: var(--hb-shadow-sm) !important;
+  -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 1;
+  transition: padding var(--hb-dur) var(--hb-ease), color var(--hb-dur) var(--hb-ease), border-color var(--hb-dur) var(--hb-ease), transform 150ms var(--hb-ease) !important;
+  --hb-dot: var(--hb-pri); --hb-on: var(--hb-pri-fg);
+}
+/* nokta (left-[20%] top-[40%] h-2 w-2 → tüm yüzey) */
+html.hb .btn::before, html.hb .btn-ghost::before, html.hb .btn-red::before, html.hb .am-play::before {
+  content: ""; position: absolute; z-index: -1; left: 14px; top: 50%; width: 8px; height: 8px; margin-top: -4px;
+  border-radius: 999px; background: var(--hb-dot); transform: scale(1); transform-origin: center;
+  transition: transform calc(var(--hb-dur) + 150ms) var(--hb-ease);
+}
+/* ok (yazının kopyası + ArrowRight) */
+html.hb .btn::after, html.hb .btn-ghost::after, html.hb .btn-red::after, html.hb .am-play::after {
+  content: ""; position: absolute; right: 12px; top: 50%; width: 16px; height: 16px; margin-top: -8px;
+  background: currentColor; -webkit-mask: var(--hb-arrow) center / contain no-repeat; mask: var(--hb-arrow) center / contain no-repeat;
+  opacity: 0; transform: translateX(-10px); transition: opacity var(--hb-dur) var(--hb-ease), transform var(--hb-dur) var(--hb-ease);
+}
+html.hb .btn > i, html.hb .btn-ghost > i, html.hb .btn-red > i, html.hb .am-play > i { color: inherit !important; transition: color var(--hb-dur) var(--hb-ease); }
+html.hb .btn-ghost, html.hb .btn.btn-ghost { --hb-dot: var(--hb-muted-fg); --hb-on: var(--hb-bg); }
+html.hb .btn-red, html.hb .btn.btn-red { --hb-dot: var(--hb-dest); --hb-on: var(--hb-dest-fg); color: var(--hb-dest) !important; border-color: color-mix(in srgb, var(--hb-dest) 35%, var(--hb-border)) !important; }
+html.hb .btn-sm { min-height: 36px; padding: 6px 16px 6px 26px; font-size: 13.5px; gap: 6px; }
+html.hb .btn-sm::before { left: 12px; width: 6px; height: 6px; margin-top: -3px; }
+html.hb .btn-sm::after { right: 9px; width: 14px; height: 14px; margin-top: -7px; }
+html.hb .btn-block { width: 100%; }
+/* nokta yazının hemen solunda durur (--hb-dl JS ile ölçülür); ölçülene kadar geniş düğmelerde %20 */
+html.hb :is(.btn, .btn-ghost, .btn-red)::before { left: var(--hb-dl, 14px); }
+html.hb :is(.btn-block, .am-acts .btn, .am-acts .btn-ghost, .us-go)::before { left: var(--hb-dl, 20%); }
+/* yalnızca ikonlu düğme (mobilde etiketi gizlenenler dahil): nokta ortadan dolar, ok yok */
+html.hb .hb-io { padding-left: 14px !important; padding-right: 14px !important; min-width: 44px; }
+html.hb .hb-io::before { left: 50% !important; margin-left: -4px; transform: scale(0); }
+html.hb .hb-io::after { display: none; }
+/* ders penceresi: renkli başlıktaki segment, video düğmeleri, hızlı geç */
+html.hb .us-tabs, html.hb.dark .us-tabs { background: rgba(255, 255, 255, .2) !important; }
+html.hb .us-tabs .tab { color: rgba(255, 255, 255, .92); }
+html.hb .us-tabs .tab.active { background: #fff !important; color: #09090b !important; }
+html.hb .yt-acts button, html.hb .yt-ext { background: var(--hb-bg); color: var(--hb-fg); border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-sm); font-family: var(--sf); font-weight: 500; }
+html.hb .yt-acts .yt-watch.on { background: var(--pos-bg); color: var(--positive); border-color: color-mix(in srgb, var(--positive) 35%, transparent); }
+html.hb.hb .us-skip { color: var(--hb-muted-fg) !important; font-weight: 500; }
+/* denetim düzeltmeleri */
+html.hb.hb :is(.btn.btn-red, .btn-red) { background: var(--hb-bg) !important; box-shadow: var(--hb-shadow-sm) !important; }
+html.hb.hb :is(.btn.btn-red, .btn-red):is(:hover, :active):not(:disabled) { color: var(--hb-dest-fg) !important; }
+html.hb .bn-item i, html.hb .bn-item.active i, html.hb #bottomNav .bn-item.active i { color: inherit !important; }
+html.hb.dark #bottomNav { background: rgba(9, 9, 11, .94) !important; }
+html.hb :is(.chip, .br-chip)[style*="--ink"] { background: var(--hb-pri) !important; border-color: var(--hb-pri) !important; color: var(--hb-pri-fg) !important; }
+/* birincil düğme dinlenirken de belli olur: vurgu renkli kenar + yazı */
+html.hb .btn:not(.btn-ghost):not(.btn-red):not(:disabled) { border-color: color-mix(in srgb, var(--hb-pri) 55%, var(--hb-border)) !important; }
+html.hb.hb .btn:not(.btn-ghost):not(.btn-red):not(:disabled):not(:hover):not(:active) { color: var(--hb-pri) !important; }
+html.hb .hb-nd::before { transform: scale(0); left: 50% !important; margin-left: -4px; }
+html.hb .tp-tile .tp-tt small, html.hb .tp-sp .tp-tt small { color: rgba(255, 255, 255, .88) !important; }
+html.hb #sideNav .nav-item i { color: inherit !important; }
+html.hb.hb :focus-visible { outline: 2px solid var(--hb-ring) !important; outline-offset: 2px; }
+html.hb.hb .am-acts :is(.btn, .btn-ghost):not(:hover):not(:active) { color: var(--hb-fg) !important; }
+html.hb.hb .am-sh button { color: var(--hb-muted-fg) !important; }
+html.hb .am-play { position: absolute; height: 44px; color: var(--hb-fg) !important; border-color: transparent !important; box-shadow: var(--hb-shadow-md) !important; }
+html.hb .am-play i { color: inherit; }
+
+/* hover (dokunmatikte basılı tutarken) = group-hover */
+@media (hover: hover) {
+  html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):hover:not(:disabled) { padding-left: 22px; padding-right: 32px; color: var(--hb-on) !important; border-color: var(--hb-dot) !important; }
+  html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):hover:not(:disabled)::before { transform: scale(120); }
+  html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):hover:not(:disabled)::after { opacity: 1; transform: none; }
+  html.hb .btn-sm:hover:not(:disabled) { padding-left: 16px; padding-right: 28px; }
+}
+html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):active:not(:disabled) { color: var(--hb-on) !important; border-color: var(--hb-dot) !important; transform: scale(.98); }
+html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):active:not(:disabled)::before { transform: scale(120); transition-duration: 220ms; }
+html.hb :is(.btn, .btn-ghost, .btn-red, .am-play):active:not(:disabled)::after { opacity: 1; transform: none; }
+html.hb :is(.btn, .btn-ghost, .btn-red):disabled { opacity: .5; cursor: not-allowed; box-shadow: none !important; }
+html.hb :is(.btn, .btn-ghost, .btn-red):disabled::before { background: var(--hb-muted-fg); }
+
+/* ---------- İkon düğmeleri: ortadaki nokta dolar ---------- */
+html.hb .icon-btn, html.hb #topbar .icon-btn, html.hb .tutor-top, html.hb #lesson .ls-top .icon-btn {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: 999px !important;
+  border: 1px solid var(--hb-border) !important; background: var(--hb-bg) !important; color: var(--hb-fg) !important;
+  box-shadow: var(--hb-shadow-sm) !important; -webkit-backdrop-filter: none; backdrop-filter: none;
+  transition: color var(--hb-dur) var(--hb-ease), border-color var(--hb-dur) var(--hb-ease), transform 150ms var(--hb-ease) !important;
+}
+html.hb .icon-btn::before, html.hb .tutor-top::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px;
+  border-radius: 999px; background: var(--hb-pri); transform: scale(0); transition: transform var(--hb-dur) var(--hb-ease);
+}
+@media (hover: hover) {
+  html.hb :is(.icon-btn, .tutor-top):hover { color: var(--hb-pri-fg) !important; border-color: var(--hb-pri) !important; }
+  html.hb :is(.icon-btn, .tutor-top):hover::before { transform: scale(16); }
+}
+html.hb :is(.icon-btn, .tutor-top):active { color: var(--hb-pri-fg) !important; transform: scale(.94); }
+html.hb :is(.icon-btn, .tutor-top):active::before { transform: scale(16); }
+html.hb #topbar .icon-btn[title="Profil değiştir"] { border: 0 !important; box-shadow: none !important; }
+html.hb #topbar .icon-btn[title="Profil değiştir"]::before { display: none; }
+html.hb .stat-pill { background: var(--hb-bg); border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-sm); font: 600 14px var(--sf); color: var(--hb-fg); }
+
+/* ---------- Alt bar: seçili öğe = dolmuş nokta ---------- */
+@media (max-width: 960px) {
+  html.hb #bottomNav, html.hb.dark #bottomNav { border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-lg); padding: 5px; height: 62px; }
+  html.hb .bn-item { position: relative; overflow: hidden; isolation: isolate; color: var(--hb-muted-fg); font: 500 10.5px/1 var(--sf); border-radius: 999px; transition: color var(--hb-dur) var(--hb-ease), transform 150ms var(--hb-ease); }
+  html.hb .bn-item::before { display: block !important; content: ""; position: absolute; z-index: -1; top: 50%; left: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 999px; background: var(--hb-pri); transform: scale(0); opacity: 1; transition: transform var(--hb-dur) var(--hb-ease); }
+  html.hb .bn-item.active, html.hb.dark .bn-item.active { color: var(--hb-pri-fg) !important; background: transparent !important; box-shadow: none !important; }
+  html.hb .bn-item.active::before { transform: scale(22); }
+  html.hb #bottomNav .wl-water, html.hb #bottomNav .bn-lens { display: none !important; }
+  html.hb .bn-item:not(.active):active::before { transform: scale(1); }
+}
+@media (min-width: 961px) {
+  html.hb #sideNav { background: var(--hb-bg); border-right: 1px solid var(--hb-border); }
+  html.hb #sideNav .nav-item, html.hb #sideNav button { border-radius: 999px; }
+  html.hb #sideNav .active { background: var(--hb-pri) !important; color: var(--hb-pri-fg) !important; }
+  html.hb #sideNav .active i { color: inherit !important; }
+}
+html.hb #amMini { border: 1px solid var(--hb-border); border-radius: 14px; box-shadow: var(--hb-shadow-lg); }
+html.hb #amMini .am-cv { border-radius: 8px; }
+html.hb #amMini button { color: var(--hb-fg); }
+
+/* ---------- Segmentler (shadcn Tabs), çipler (Badge) ---------- */
+html.hb .tabs, html.hb .us-tabs, html.hb.dark .tabs { background: var(--hb-muted); border-radius: 999px; padding: 4px; }
+html.hb .tab { border-radius: 999px; font: 500 14px var(--sf); color: var(--hb-muted-fg); }
+html.hb .tab.active, html.hb.dark .tab.active, html.hb .us-tabs .tab.active { background: var(--hb-bg); color: var(--hb-fg); box-shadow: var(--hb-shadow-sm); }
+html.hb .chip, html.hb .tp-chip, html.hb .br-chip, html.hb .tok, html.hb .mic-btn {
+  border-radius: 999px !important; border: 1px solid var(--hb-border) !important; background: var(--hb-bg) !important; color: var(--hb-fg) !important;
+  box-shadow: var(--hb-shadow-sm) !important; font-weight: 500;
+  transition: background-color 150ms var(--hb-ease), color 150ms var(--hb-ease), border-color 150ms var(--hb-ease), transform 150ms var(--hb-ease) !important;
+}
+html.hb :is(.chip.on, .chip.active, .tp-chip.on, .tp-chip[aria-pressed="true"], .br-chip.on) { background: var(--hb-pri) !important; border-color: var(--hb-pri) !important; color: var(--hb-pri-fg) !important; }
+@media (hover: hover) { html.hb :is(.chip, .tp-chip, .br-chip, .tok):hover:not(.on):not(.active):not([aria-pressed="true"]) { background: var(--hb-muted) !important; } }
+html.hb :is(.chip, .tp-chip, .br-chip, .tok, .mic-btn):active { transform: scale(.96); }
+html.hb .am-seg button { background: var(--hb-bg); border: 1px solid var(--hb-border); border-radius: 12px; box-shadow: var(--hb-shadow-sm); }
+html.hb .am-seg button.on { box-shadow: 0 0 0 1px var(--h, var(--hb-pri)), var(--hb-shadow-sm); border-color: var(--h, var(--hb-pri)); }
+html.hb .am-tracks { padding: 0 14px; }
+html.hb .am-tr { border-bottom: 1px solid var(--hb-border); }
+html.hb .am-tr:last-child { border-bottom: 0; }
+
+/* ---------- Form alanları (shadcn Input) ---------- */
+html.hb .pill-input, html.hb #app .pill-input, html.hb .sheet .pill-input, html.hb #lesson .pill-input, html.hb #tutorPanel .pill-input {
+  background: var(--hb-bg); border: 1px solid var(--hb-input); border-radius: 10px; box-shadow: var(--hb-shadow-sm); color: var(--hb-fg);
+}
+html.hb .pill-input::placeholder { color: var(--hb-muted-fg); }
+html.hb .pill-input:focus { border-color: var(--hb-ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--hb-ring) 30%, transparent); background: var(--hb-bg); outline: 0; }
+html.hb input[type=checkbox]:checked, html.hb.dark input[type=checkbox]:checked { background: var(--hb-pri); }
+html.hb label.between { border-bottom: 1px solid var(--hb-border); }
+
+/* ---------- Pencereler, bildirim, sohbet ---------- */
+html.hb .overlay { background: rgba(0, 0, 0, .5); -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.hb .sheet { background: var(--hb-bg); border: 1px solid var(--hb-border); border-bottom: 0; border-radius: 16px 16px 0 0; box-shadow: var(--hb-shadow-lg); }
+@media (min-width: 961px) { html.hb .sheet { border-radius: 14px; border-bottom: 1px solid var(--hb-border); } }
+html.hb .us-x { background: var(--hb-bg); color: var(--hb-fg); border: 1px solid var(--hb-border); -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.hb .us-foot { border-top: 1px solid var(--hb-border); }
+html.hb .us-skip { color: var(--hb-muted-fg); }
+html.hb .toast { color: var(--hb-fg); background: var(--hb-bg) !important; border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-lg); border-radius: 10px; }
+html.hb #tutorPanel { border-radius: 14px; border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-lg); }
+html.hb #tutorFab { background: var(--hb-pri); color: var(--hb-pri-fg); border-radius: 999px; box-shadow: var(--hb-shadow-lg); }
+
+/* ---------- Ders ekranı ---------- */
+html.hb #lesson { background: var(--ground); }
+html.hb #lesson .progress { height: 8px; background: var(--hb-muted); border-radius: 999px; }
+html.hb #lesson .progress > div { background: var(--hb-pri); border-radius: 999px; transition: width .5s var(--hb-ease); }
+html.hb .fx-kind { background: var(--hb-bg); border: 1px solid var(--hb-border); box-shadow: none; color: var(--hb-muted-fg); border-radius: 999px; font-weight: 500; }
+html.hb #lesson .opt, html.hb #gameArea .opt {
+  background: var(--hb-bg); border: 1px solid var(--hb-border) !important; border-radius: 12px; box-shadow: var(--hb-shadow-sm);
+  transition: background-color 150ms var(--hb-ease), border-color 150ms var(--hb-ease), box-shadow 150ms var(--hb-ease), transform 150ms var(--hb-ease);
+}
+@media (hover: hover) { html.hb :is(#lesson, #gameArea) .opt:hover:not(:disabled):not(.ok):not(.bad):not(.sel) { background: var(--hb-muted); } }
+html.hb #lesson .opt:active { transform: scale(.985); }
+html.hb #lesson .opt.sel, html.hb #lesson .opt.selected { border-color: var(--hb-pri) !important; box-shadow: 0 0 0 1px var(--hb-pri); background: var(--hb-bg); }
+html.hb :is(#lesson, #gameArea) .opt.ok { border-color: var(--positive) !important; box-shadow: 0 0 0 1px var(--positive); background: var(--pos-bg); }
+html.hb :is(#lesson, #gameArea) .opt.bad { border-color: var(--negative) !important; box-shadow: 0 0 0 1px var(--negative); background: var(--neg-bg); }
+html.hb #lesson .hl, html.hb .ls-q .hl { background: var(--hb-muted); color: inherit; border-radius: 4px; }
+html.hb #lesson .ls-foot { border-top: 1px solid var(--hb-border); }
+html.hb .tp-play, html.hb #swBack.go { background: var(--hb-pri); color: var(--hb-pri-fg); }
+html.hb .tp-slow { background: var(--hb-muted); color: var(--hb-fg); }
+html.hb .tp-bk > b { color: var(--hb-fg); }
+html.hb .mic-wave i { background: var(--hb-pri); }
+html.hb #spdT { background: var(--hb-bg); border: 1px solid var(--hb-border); box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.hb :is(.btn, .btn-ghost, .btn-red, .am-play, .icon-btn, .tutor-top, .bn-item, .chip, .tok, .row-card, #lesson .opt), html.hb :is(.btn, .btn-ghost, .btn-red, .am-play, .icon-btn, .tutor-top, .bn-item)::before, html.hb :is(.btn, .btn-ghost, .btn-red, .am-play)::after { transition: none !important; }
+}
+
+/* ---------- Ayarlar > Tasarım: altı seçenek ve önizleme ---------- */
+.ds-pick.ds-six { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@media (max-width: 900px) { .ds-pick.ds-six { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .ds-pick.ds-six { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-pick.ds-six .ds-opt small { display: block; } }
+.ds-prev.hbp { position: relative; overflow: hidden; background: #fafafa; }
+.ds-prev.hbp i { position: absolute; left: 12px; right: 12px; height: 22px; border-radius: 999px; border: 1px solid #e4e4e7; background: #fff; }
+.ds-prev.hbp i::before { content: ""; position: absolute; left: 9px; top: 7px; width: 6px; height: 6px; border-radius: 999px; background: #2563eb; }
+.ds-prev.hbp i::after { content: ""; position: absolute; left: 22px; top: 8px; width: 40%; height: 4px; border-radius: 2px; background: #09090b; opacity: .7; }
+.ds-prev.hbp i:first-child { top: 8px; }
+.ds-prev.hbp i:nth-child(2) { top: 34px; background: #2563eb; border-color: #2563eb; }
+.ds-prev.hbp i:nth-child(2)::before { left: auto; right: 10px; top: 6px; width: 8px; height: 8px; border-radius: 0; background: #fafafa; -webkit-mask: var(--hb-arrow-prev) center / contain no-repeat; mask: var(--hb-arrow-prev) center / contain no-repeat; }
+.ds-prev.hbp i:nth-child(2)::after { left: 14px; background: #fafafa; }
+.ds-prev.hbp { --hb-arrow-prev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E"); }
+</style>
+<style id="three-designs">
+/* =====================================================================
+   ÜÇ TASARIM: Hover Pro (html.hb.hp), Enerji (html.hb.en), Aktivite (html.am.ak)
+   Hover Pro ve Enerji, Hover Buton (hb) altyapısını (büyüyen nokta, kayan ok, hbMark) miras alır,
+   yalnızca renk/yarıçap/yazı katmanını değiştirir. Aktivite, Liquid Glass (am) üstüne ayrı bir katmandır.
+   ===================================================================== */
+
+/* ---------- HOVER PRO: sıcak kırık beyaz, 1px çizgi, "Glut" kırmızısı, seviye başına renk ---------- */
+html.hb.hp {
+  --hb-bg: #ffffff; --hb-fg: #17151a; --hb-muted: #f4f2ef; --hb-muted-fg: #6f6a74;
+  --hb-border: #e6e3df; --hb-input: #d9d5d0; --hb-ring: rgba(221, 63, 14, .45);
+  --hb-pri: #dd3f0e; --hb-pri-fg: #ffffff;
+  --ground: #fafaf8; --surface: #ffffff; --surface-2: #f4f2ef; --raised: #ffffff;
+  --border: #e6e3df; --rule: #e6e3df; --track: #f1eee9;
+  --ink: #17151a; --muted: #5b5760; --faint: #8c8790;
+  --accent: #dd3f0e; --accd: #b8340b; --accent-soft: #fdede6;
+  --lg-bg: rgba(250, 250, 248, .94); --lg-edge: #e6e3df;
+}
+html.hb.hp.dark {
+  --hb-bg: #18171b; --hb-fg: #f3f1ee; --hb-muted: #232127; --hb-muted-fg: #a9a4ad;
+  --hb-border: #2a282e; --hb-input: #3a3740; --hb-ring: rgba(255, 90, 36, .5);
+  --hb-pri: #ff5a24; --hb-pri-fg: #ffffff;
+  --ground: #0f0e11; --surface: #18171b; --surface-2: #232127; --raised: #18171b;
+  --border: #2a282e; --rule: #2a282e; --track: #2a282e;
+  --ink: #f3f1ee; --muted: #a9a4ad; --faint: #8c8790;
+  --accent: #ff5a24; --accd: #ff7a4d; --accent-soft: #2a1610;
+  --lg-bg: rgba(15, 14, 17, .94); --lg-edge: #2a282e;
+}
+html.hb.hp[data-accent], html.hb.hp.dark[data-accent] { --accent: #dd3f0e; --accd: #b8340b; --accent-soft: #fdede6; }
+html.hb.hp.dark[data-accent] { --accent: #ff5a24; --accd: #ff7a4d; --accent-soft: #2a1610; }
+html.hb.hp :is(.glass, .panel, .k-tile, .am-list, .hub, .us-s, .us-pc, .us-ai, .am-tracks, .tp-bk, .tp-cmp, .row-card) { border-radius: 20px; }
+html.hb.hp .hub .row-card { border-radius: 0; }
+html.hb.hp .am-hero { border-radius: 24px; }
+html.hb.hp .am-mix, html.hb.hp .tp-tile, html.hb.hp .tp-sp { border-radius: 20px; }
+html.hb.hp .ios-lt { letter-spacing: -.04em; }
+/* seçili / şu anki öğe: marka kırmızısı yıkama */
+html.hb.hp .row-card.hot { background: var(--accent-soft); border-color: color-mix(in srgb, var(--hb-pri) 45%, transparent) !important; box-shadow: none; }
+html.hb.hp :is(#lesson, #gameArea) .opt.sel, html.hb.hp #lesson .opt.selected { background: var(--accent-soft); }
+html.hb.hp .am-tr.cur, html.hb.hp .am-tr.now { background: var(--accent-soft); }
+html.hb.hp .am-ah .am-by { color: var(--accent); }
+/* kartlarda köşe noktası: üstüne gelince yıkamaya dönüşür */
+html.hb.hp :is(.panel, .k-tile) { position: relative; overflow: hidden; isolation: isolate; }
+html.hb.hp :is(.panel, .k-tile)::after { content: ""; position: absolute; z-index: -1; right: 16px; top: 16px; width: 7px; height: 7px; border-radius: 999px; background: var(--hb-pri); opacity: .85; transform: scale(1); transition: transform 600ms cubic-bezier(.22, 1, .36, 1), opacity 400ms; pointer-events: none; }
+@media (hover: hover) { html.hb.hp :is(.panel, .k-tile):hover::after { transform: scale(60); opacity: .06; } }
+
+/* ---------- ENERJİ: neon beceri renkleri + her yerde aynı büyüyen nokta ---------- */
+html.hb.en {
+  --en-ders: #e00a45; --en-kelime: #2f8f00; --en-yazma: #c300a8; --en-dinleme: #0089a6; --en-seri: #e07800;
+  --en-ders-f: #f0104c; --en-kelime-f: #4fc400; --en-dinleme-f: #00a9c9;
+  --en-round: "SF Pro Rounded", "Nunito", -apple-system, system-ui, sans-serif;
+  --hb-bg: #ffffff; --hb-fg: #0a0a0c; --hb-muted: #efeff3; --hb-muted-fg: #6a6a72;
+  --hb-border: #e3e3e8; --hb-input: #d3d3da; --hb-ring: rgba(240, 16, 76, .45);
+  --hb-pri: #f0104c; --hb-pri-fg: #ffffff;
+  --ground: #f5f5f7; --surface: #ffffff; --surface-2: #efeff3; --raised: #ffffff;
+  --border: #e3e3e8; --rule: #e3e3e8; --track: #efeff3;
+  --ink: #0a0a0c; --muted: #6a6a72; --faint: #a1a1aa;
+  --accent: #e00a45; --accd: #c20039; --accent-soft: rgba(240, 16, 76, .1);
+  --positive: #2f8f00; --pos-bg: #effbe6;
+  --lg-bg: rgba(250, 250, 252, .9); --lg-edge: rgba(0, 0, 0, .08);
+}
+html.hb.en.dark {
+  --en-ders: #ff3d6e; --en-kelime: #a6ff00; --en-yazma: #ff2bd6; --en-dinleme: #00e5ff; --en-seri: #ff9f0a;
+  --en-ders-f: #fa114f; --en-kelime-f: #a6ff00; --en-dinleme-f: #00e5ff;
+  --hb-bg: #1c1c1e; --hb-fg: #ffffff; --hb-muted: #2c2c2e; --hb-muted-fg: #a1a1a8;
+  --hb-border: #2c2c2e; --hb-input: #3a3a3e; --hb-ring: rgba(250, 17, 79, .55);
+  --hb-pri: #fa114f; --hb-pri-fg: #ffffff;
+  --ground: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --raised: #1c1c1e;
+  --border: #2c2c2e; --rule: #2c2c2e; --track: #2c2c2e;
+  --ink: #ffffff; --muted: #a1a1a8; --faint: #8d8d93;
+  --accent: #ff3d6e; --accd: #ff6b8e; --accent-soft: rgba(250, 17, 79, .18);
+  --positive: #a6ff00; --pos-bg: #18260a;
+  --lg-bg: rgba(18, 18, 20, .86); --lg-edge: rgba(255, 255, 255, .1);
+}
+html.hb.en[data-accent], html.hb.en.dark[data-accent] { --accent: #e00a45; --accd: #c20039; --accent-soft: rgba(240, 16, 76, .1); }
+html.hb.en.dark[data-accent] { --accent: #ff3d6e; --accd: #ff6b8e; --accent-soft: rgba(250, 17, 79, .18); }
+html.hb.en :is(.glass, .panel, .k-tile, .am-list, .hub, .us-s, .us-pc, .us-ai, .am-tracks, .tp-bk, .tp-cmp, .row-card) { border-radius: 24px; }
+html.hb.en .hub .row-card { border-radius: 0; }
+html.hb.en.dark :is(.glass, .panel, .k-tile, .am-list, .hub, .us-s, .us-pc, .us-ai, .am-tracks, .row-card) { box-shadow: none; }
+html.hb.en :is(#lesson, #gameArea) .opt { border-radius: 20px; }
+html.hb.en .am-hero { border-radius: 26px; }
+/* büyük yuvarlak rakamlar */
+html.hb.en :is(.ios-lt, .am-sh h2) { font-family: var(--en-round); font-weight: 900; letter-spacing: -.02em; }
+html.hb.en .stat-pill { font-family: var(--en-round); font-weight: 900; }
+html.hb.en #lesson .ls-q, html.hb.en .ls-q { font-family: var(--en-round); font-weight: 900; letter-spacing: -.015em; }
+/* beceri renkleri: ilerleme = kelime yeşili, ikincil düğme = dinleme mavisi, birincil = ders kırmızısı */
+html.hb.en .bar > div, html.hb.en #lesson .progress > div, html.hb.en .am-eq i { background: var(--en-kelime-f); }
+html.hb.en .btn-ghost, html.hb.en .btn.btn-ghost { --hb-dot: var(--en-dinleme-f); --hb-on: #ffffff; }
+html.hb.en.dark .btn-ghost, html.hb.en.dark .btn.btn-ghost { --hb-on: #001318; }
+/* derste "Kontrol et / Devam" kelime yeşiliyle açılır */
+html.hb.en #lesson .ls-foot .btn:not(.btn-ghost):not(.btn-red) { --hb-dot: var(--en-kelime-f); --hb-on: #0b1400; }
+html.hb.en.dark #lesson .ls-foot .btn:not(.btn-ghost):not(.btn-red):not(:disabled) { background: var(--en-kelime-f) !important; border-color: var(--en-kelime-f) !important; color: #0b1400 !important; }
+html.hb.en :is(#lesson, #gameArea) .opt.sel, html.hb.en #lesson .opt.selected { border-color: var(--en-kelime-f) !important; box-shadow: 0 0 0 1px var(--en-kelime-f); background: color-mix(in srgb, var(--en-kelime-f) 12%, var(--hb-bg)); }
+html.hb.en .row-card.hot { background: var(--accent-soft); border-color: color-mix(in srgb, var(--hb-pri) 40%, transparent) !important; box-shadow: none; }
+/* görev ve hub ikonları beceri renklerinde döner */
+html.hb.en .row-card .rc-ic, html.hb.en .am-li .am-ic { background: color-mix(in srgb, var(--rc, var(--en-ders)) 14%, var(--hb-bg)) !important; color: var(--rc, var(--en-ders)) !important; box-shadow: none; border-radius: 999px; }
+html.hb.en :is(.hub, .am-list) > :nth-child(4n+2) :is(.rc-ic, .am-ic) { --rc: var(--en-kelime); }
+html.hb.en :is(.hub, .am-list) > :nth-child(4n+3) :is(.rc-ic, .am-ic) { --rc: var(--en-yazma); }
+html.hb.en :is(.hub, .am-list) > :nth-child(4n+4) :is(.rc-ic, .am-ic) { --rc: var(--en-dinleme); }
+html.hb.en :is(.chip, .br-chip)[style*="--ink"], html.hb.en :is(.chip.on, .chip.active, .tp-chip.on, .tp-chip[aria-pressed="true"], .br-chip.on) { background: var(--hb-pri) !important; border-color: var(--hb-pri) !important; color: #fff !important; }
+
+/* ---------- AKTİVİTE: Apple Fitness — siyah zemin, neon beceriler, dolgulu kapsüller, yuvarlak kalın rakamlar ---------- */
+html.am.ak {
+  --ak-ders: #e5004a; --ak-kelime: #2fa800; --ak-yazma: #c300a8; --ak-dinleme: #0096b8; --ak-seri: #e07800; --ak-xp: #c99400;
+  --ak-on-kelime: #ffffff; --ak-btn2: #e9e9ee;
+  --ak-round: "SF Pro Rounded", "Nunito", -apple-system, system-ui, sans-serif;
+  --ground: #f2f2f7; --surface: #ffffff; --surface-2: #e9e9ee; --raised: #ffffff;
+  --border: #d1d1d6; --rule: #d1d1d6; --track: #e5e5ea;
+  --ink: #000000; --muted: #6c6c72; --faint: #8e8e93;
+  --accent: #e5004a; --accd: #c4003f; --accent-soft: rgba(229, 0, 74, .1);
+  --positive: #248a3d; --pos-bg: #e9f8ec;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .04); --lg-bg: rgba(242, 242, 247, .9); --lg-edge: rgba(0, 0, 0, .06);
+  --r-card: 22px; --r-list: 22px; --r-opt: 18px;
+}
+html.am.ak.dark {
+  --ak-ders: #fa114f; --ak-kelime: #a6ff00; --ak-yazma: #ff2bd6; --ak-dinleme: #00e5ff; --ak-seri: #ff9f0a; --ak-xp: #ffd60a;
+  --ak-on-kelime: #0b1400; --ak-btn2: #2c2c2e;
+  --ground: #000000; --surface: #1c1c1e; --surface-2: #2c2c2e; --raised: #1c1c1e;
+  --border: #38383a; --rule: #38383a; --track: #2c2c2e;
+  --ink: #ffffff; --muted: #a0a0a8; --faint: #8d8d93;
+  --accent: #fa114f; --accd: #ff4d7a; --accent-soft: rgba(250, 17, 79, .2);
+  --positive: #a6ff00; --pos-bg: #16240a; --negative: #ff453a; --neg-bg: #3a1311;
+  --card-shadow: none; --lg-bg: rgba(18, 18, 20, .88); --lg-edge: rgba(255, 255, 255, .08);
+}
+html.am.ak[data-accent], html.am.ak.dark[data-accent] { --accent: #e5004a; --accd: #c4003f; --accent-soft: rgba(229, 0, 74, .1); }
+html.am.ak.dark[data-accent] { --accent: #fa114f; --accd: #ff4d7a; --accent-soft: rgba(250, 17, 79, .2); }
+html.am.ak body { background: var(--ground); }
+html.am.ak ::selection { background: color-mix(in srgb, var(--ak-kelime) 35%, transparent); }
+html.am.ak :focus-visible { outline: 3px solid color-mix(in srgb, var(--ak-kelime) 70%, transparent); outline-offset: 2px; }
+/* yazı: başlıklar ve rakamlar yuvarlak kalın */
+html.bm.am.ak :is(.ios-lt, .am-sh h2, .stat-pill, .ls-q) { font-family: var(--ak-round); font-weight: 900; letter-spacing: -.02em; }
+html.bm.am.ak .ios-lt { font-size: 34px; }
+html.bm.am.ak .stat-pill { background: var(--ak-btn2); box-shadow: none; border: 0; }
+html.bm.am.ak .stat-pill i.fa-fire, html.bm.am.ak .stat-pill .fa-fire { color: var(--ak-seri); }
+html.bm.am.ak .stat-pill .fa-bolt { color: var(--ak-xp); }
+/* kartlar */
+html.bm.am.ak :is(.glass, .panel, .k-tile, .am-list, .hub, .us-s, .us-pc, .us-ai, .am-tracks, .tp-bk, .tp-cmp, .row-card) { background: var(--surface); border: 0; border-radius: 22px; box-shadow: var(--card-shadow); }
+html.bm.am.ak .hub .row-card { background: transparent; box-shadow: none; border-radius: 0; }
+html.bm.am.ak .am-hero { border-radius: 24px; box-shadow: none; }
+html.bm.am.ak .am-mix, html.bm.am.ak .tp-tile, html.bm.am.ak .tp-sp { border-radius: 20px; }
+html.bm.am.ak :is(.hub-h, .section-title) { color: var(--muted); font-weight: 600; }
+html.bm.am.ak .am-sh button { color: var(--ak-kelime); font-weight: 700; }
+html.bm.am.ak.dark .am-tr { border-bottom-color: #2c2c2e; }
+/* ikon kutuları beceri renklerinde döner */
+html.bm.am.ak :is(.row-card .rc-ic, .am-li .am-ic, .us-pc > i:first-child) { border-radius: 999px; background: var(--rc, var(--ak-ders)); color: #fff; }
+html.bm.am.ak :is(.hub, .am-list) > :nth-child(4n+2) :is(.rc-ic, .am-ic) { --rc: var(--ak-kelime); color: var(--ak-on-kelime); }
+html.bm.am.ak :is(.hub, .am-list) > :nth-child(4n+3) :is(.rc-ic, .am-ic) { --rc: var(--ak-yazma); }
+html.bm.am.ak :is(.hub, .am-list) > :nth-child(4n+4) :is(.rc-ic, .am-ic) { --rc: var(--ak-dinleme); color: #001318; }
+html.bm.am.ak .row-card.hot { background: color-mix(in srgb, var(--ak-ders) 12%, var(--surface)); }
+/* ilerleme: kelime yeşili, kalın ve yuvarlak */
+html.bm.am.ak .bar { background: var(--track); border-radius: 99px; }
+html.bm.am.ak .bar > div, html.bm.am.ak .am-eq i { background: var(--ak-kelime); }
+/* düğmeler: dolgulu kapsül, asla siyah değil */
+html.bm.am.ak :is(.btn, .btn-ghost, .btn-red) { border-radius: 999px !important; font-family: var(--ak-round); font-weight: 800; letter-spacing: 0; border: 0 !important; transition: transform .2s cubic-bezier(.23, 1, .32, 1), filter .2s, background-color .2s !important; }
+html.bm.am.ak .btn:not(.btn-ghost):not(.btn-red) { background: var(--ak-ders) !important; color: #fff !important; box-shadow: none !important; }
+html.bm.am.ak :is(.btn.btn-ghost, .btn-ghost) { background: var(--ak-btn2) !important; color: var(--ink) !important; box-shadow: none !important; }
+html.bm.am.ak :is(.btn.btn-ghost, .btn-ghost) > i { color: var(--ak-kelime); }
+html.bm.am.ak.dark :is(.btn.btn-ghost, .btn-ghost) > i { color: var(--ak-kelime); }
+html.bm.am.ak :is(.btn.btn-red, .btn-red) { background: var(--negative) !important; color: #fff !important; box-shadow: none !important; }
+html.bm.am.ak .am-acts .btn:not(.btn-ghost) { background: var(--ak-kelime) !important; color: var(--ak-on-kelime) !important; }
+html.bm.am.ak .am-acts .btn-ghost { background: var(--ak-btn2) !important; color: var(--ink) !important; }
+html.bm.am.ak #lesson .ls-foot .btn:not(.btn-ghost):not(.btn-red) { background: var(--ak-kelime) !important; color: var(--ak-on-kelime) !important; }
+html.bm.am.ak .am-play { background: var(--ak-ders); color: #fff; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; font-family: var(--ak-round); font-weight: 800; }
+html.bm.am.ak .am-play i { color: #fff; }
+@media (hover: hover) { html.bm.am.ak :is(.btn, .btn-ghost, .btn-red, .am-play):hover:not(:disabled) { filter: brightness(1.08); opacity: 1; } }
+html.bm.am.ak :is(.btn, .btn-ghost, .btn-red, .am-play):active:not(:disabled) { transform: scale(.96); filter: brightness(1.15); opacity: 1; }
+html.bm.am.ak .btn:disabled { opacity: .35; }
+html.bm.am.ak :is(.icon-btn, #topbar .icon-btn, .tutor-top, #lesson .ls-top .icon-btn) { background: var(--ak-btn2) !important; color: var(--ink) !important; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.bm.am.ak .tutor-top, html.bm.am.ak #topbar .icon-btn:last-child { color: var(--ak-dinleme) !important; }
+/* çipler ve segmentler */
+html.bm.am.ak :is(.chip, .tp-chip, .br-chip, .tok) { background: var(--ak-btn2); color: var(--ink); border: 0; box-shadow: none; border-radius: 999px; font-weight: 700; }
+html.bm.am.ak :is(.chip, .br-chip)[style*="--ink"], html.bm.am.ak :is(.chip.on, .chip.active, .tp-chip.on, .tp-chip[aria-pressed="true"], .br-chip.on) { background: var(--ak-kelime) !important; color: var(--ak-on-kelime) !important; }
+html.bm.am.ak :is(.tabs, .us-tabs) { background: var(--ak-btn2); border-radius: 999px; }
+html.bm.am.ak .tab { border-radius: 999px; font-family: var(--ak-round); font-weight: 800; }
+html.bm.am.ak .tab.active, html.bm.am.ak.dark .tab.active { background: var(--surface); color: var(--ink); }
+html.bm.am.ak.dark .tab.active { background: #3a3a3c; }
+html.bm.am.ak .am-seg button { background: var(--surface); box-shadow: none; border-radius: 18px; }
+html.bm.am.ak .am-seg button.on { box-shadow: inset 0 0 0 2.5px var(--h, var(--ak-kelime)); }
+html.bm.am.ak :is(.pill-input, #app .pill-input, .sheet .pill-input, #lesson .pill-input, #tutorPanel .pill-input) { background: var(--surface-2); border: 0; border-radius: 14px; }
+html.bm.am.ak .pill-input:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ak-kelime) 55%, transparent); background: var(--surface-2); }
+html.bm.am.ak input[type=checkbox]:checked { background: var(--ak-kelime); }
+/* alt bar: koyu cam yerine dolu, aktif sekme ders rengi */
+@media (max-width: 960px) {
+  html.bm.am.ak #bottomNav { background: var(--lg-bg) !important; border: .5px solid var(--lg-edge); box-shadow: 0 12px 30px -14px rgba(0, 0, 0, .5); }
+  html.bm.am.ak .bn-item { color: var(--faint); font-family: var(--ak-round); font-weight: 700; }
+  html.bm.am.ak .bn-item.active, html.bm.am.ak.dark .bn-item.active { color: var(--ak-ders) !important; background: transparent; box-shadow: none; }
+  html.bm.am.ak .bn-item.active i, html.bm.am.ak .bn-item i { color: inherit !important; }
+  html.bm.am.ak #bottomNav .wl-water, html.bm.am.ak #bottomNav .bn-lens { display: none !important; }
+}
+@media (min-width: 961px) {
+  html.bm.am.ak #sideNav .nav-item i { color: var(--ak-ders); }
+  html.bm.am.ak #sideNav .nav-item.active { background: var(--ak-btn2); }
+}
+/* ders ekranı */
+html.bm.am.ak #lesson { background: var(--ground); }
+html.bm.am.ak #lesson .progress { height: 8px; background: var(--track); }
+html.bm.am.ak #lesson .progress > div { background: var(--ak-kelime); }
+html.bm.am.ak .fx-kind { background: color-mix(in srgb, var(--ak-dinleme) 14%, transparent); color: var(--ak-dinleme); border: 0; box-shadow: none; font-weight: 700; }
+html.bm.am.ak :is(#lesson, #gameArea) .opt { background: var(--surface); border: 0; border-radius: 18px; box-shadow: var(--card-shadow); }
+html.bm.am.ak #lesson .opt.sel, html.bm.am.ak #lesson .opt.selected { box-shadow: inset 0 0 0 2px var(--ak-kelime); background: color-mix(in srgb, var(--ak-kelime) 12%, var(--surface)); }
+html.bm.am.ak :is(#lesson, #gameArea) .opt.ok { box-shadow: inset 0 0 0 2px var(--positive); background: var(--pos-bg); }
+html.bm.am.ak :is(#lesson, #gameArea) .opt.bad { box-shadow: inset 0 0 0 2px var(--negative); background: var(--neg-bg); }
+html.bm.am.ak .tp-play, html.bm.am.ak #swBack.go { background: var(--ak-dinleme); color: #001318; }
+html.bm.am.ak .mic-wave i { background: var(--ak-yazma); }
+html.bm.am.ak .sheet { background: var(--ground); }
+html.bm.am.ak .toast { background: var(--surface) !important; border: 0; }
+html.bm.am.ak .yt-acts button, html.bm.am.ak .yt-ext { background: var(--ak-btn2); color: var(--ink); box-shadow: none; }
+html.bm.am.ak .yt-acts button > i { color: var(--ak-dinleme); }
+html.bm.am.ak .us-skip { color: var(--ak-kelime); }
+html.bm.am.ak .tp-tile .tp-tt small, html.bm.am.ak .tp-sp .tp-tt small { color: rgba(255, 255, 255, .88); }
+@media (prefers-reduced-motion: reduce) { html.bm.am.ak :is(.btn, .btn-ghost, .btn-red, .am-play) { transition: none !important; } }
+
+/* ---------- Ayarlar > Tasarım: dokuz seçenek ---------- */
+.ds-pick.ds-nine { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 900px) { .ds-pick.ds-nine { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .ds-pick.ds-nine { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ds-pick.ds-nine .ds-opt small { display: block; } }
+.ds-prev.hpp { position: relative; overflow: hidden; background: #fafaf8; }
+.ds-prev.hpp i { position: absolute; left: 12px; right: 12px; height: 22px; border-radius: 999px; border: 1px solid #e6e3df; background: #fff; }
+.ds-prev.hpp i::before { content: ""; position: absolute; left: 9px; top: 7px; width: 6px; height: 6px; border-radius: 999px; background: #dd3f0e; }
+.ds-prev.hpp i::after { content: ""; position: absolute; left: 22px; top: 8px; width: 40%; height: 4px; border-radius: 2px; background: #17151a; opacity: .7; }
+.ds-prev.hpp i:first-child { top: 8px; }
+.ds-prev.hpp i:nth-child(2) { top: 34px; background: #dd3f0e; border-color: #dd3f0e; }
+.ds-prev.hpp i:nth-child(2)::before { display: none; }
+.ds-prev.hpp i:nth-child(2)::after { left: 14px; background: #fff; }
+.ds-prev.enp { position: relative; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.ds-prev.enp i { width: 14px; height: 14px; border-radius: 999px; box-shadow: 0 0 10px currentColor; }
+.ds-prev.enp i:nth-child(1) { background: #fa114f; color: #fa114f; } .ds-prev.enp i:nth-child(2) { background: #a6ff00; color: #a6ff00; }
+.ds-prev.enp i:nth-child(3) { background: #ff2bd6; color: #ff2bd6; } .ds-prev.enp i:nth-child(4) { background: #00e5ff; color: #00e5ff; }
+.ds-prev.akp { position: relative; overflow: hidden; background: #000; }
+.ds-prev.akp i { position: absolute; left: 50%; top: 50%; border-radius: 999px; border: 5px solid; transform: translate(-50%, -50%); }
+.ds-prev.akp i:nth-child(1) { width: 46px; height: 46px; border-color: #fa114f #fa114f #fa114f rgba(250, 17, 79, .25); }
+.ds-prev.akp i:nth-child(2) { width: 32px; height: 32px; border-color: #a6ff00 rgba(166, 255, 0, .25) #a6ff00 #a6ff00; }
+.ds-prev.akp i:nth-child(3) { width: 18px; height: 18px; border-color: #00e5ff #00e5ff rgba(0, 229, 255, .25) rgba(0, 229, 255, .25); }
 </style>
 </head>
 <body>
@@ -11645,7 +12161,7 @@ const WL = {
   glc: null, cv: null, nav: null, tried: false
 };
 const WL_FX = { home: 'glow', learn: 'spin', review: 'drop', practice: 'pop', more: 'wave' };
-const wlOn = () => isAm() && innerWidth <= 960 && !!document.getElementById('bottomNav');
+const wlOn = () => isAm() && !document.documentElement.classList.contains('hb') && !document.documentElement.classList.contains('ak') && innerWidth <= 960 && !!document.getElementById('bottomNav');
 
 function wlInitGL(cv) {
   const gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false }); if (!gl) return null;
@@ -11948,6 +12464,64 @@ VIEWS.settings = () => {
   const cur = h.contains('lb') ? 'lb' : h.contains('kb') ? 'kb' : h.contains('vx') ? 'vx' : isFx() ? 'fx' : 'am';
   const opt = (k, prev, t, s) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}<b>${t}</b><small>${s}</small></button>`;
   return _settingsLb().replace(/<div class="ds-pick two ds-three">[\s\S]*?<\/button><\/div><\/div>/, `<div class="ds-pick two ds-three ds-five">${opt('am', '<div class="ds-prev lgp"><i></i><i></i><span></span></div>', 'Liquid Glass', 'Apple tarzı, cam ve mavi')}${opt('lb', '<div class="ds-prev lbp"><i></i><i></i><span></span></div>', 'Sıvı Buton', 'Kabartmalı cam butonlar')}${opt('kb', '<div class="ds-prev kbp"><i></i><i></i></div>', 'Kart Buton', 'İkon kutulu kart butonlar')}${opt('vx', '<div class="ds-prev vxp"><i></i><i></i><span></span></div>', 'Derin Cam', 'Renkli zemin, katman katman cam')}${opt('fx', '<div class="ds-prev fxp"><i style="background:#e5372b"></i><i style="background:#f2b200"></i><i style="background:#2f5bff"></i></div>', 'Akış', 'Tam ekran kaydırmalı, renkli')}</div></div>`);
+};
+
+/* Hover Buton (html.bm.am.hb): shadcn InteractiveHoverButton; nötr zinc, Geist, kenarlıklı kartlar; CSS <style id="hover-button"> */
+DESIGNS.hb = 'Hover Buton';
+const _applyDesignHb = applyDesign;
+applyDesign = function (d) {
+  const h = document.documentElement; h.classList.remove('hb');
+  _applyDesignHb(d === 'hb' ? 'am' : d); if (d === 'hb') h.classList.add('hb');
+};
+try { if (localStorage.getItem('df_design') === 'hb') applyDesign('hb'); } catch (e) {}
+/* noktayı yazının soluna yerleştir, yalnızca ikonlu düğmeleri işaretle */
+let hbRaf = 0;
+function hbMark() {
+  hbRaf = 0; if (!document.documentElement.classList.contains('hb')) return;
+  document.querySelectorAll('.btn, .btn-ghost, .btn-red').forEach(b => {
+    if (b.matches(':hover, :active')) return;
+    const r = b.getBoundingClientRect(); if (!r.width) return;
+    const txt = [...b.childNodes].some(n => n.nodeType === 3 ? n.textContent.trim() : n.nodeType === 1 && n.tagName !== 'I' && n.offsetWidth > 0 && n.textContent.trim());
+    b.classList.toggle('hb-io', !txt); if (!txt) return;
+    const rg = document.createRange(); rg.selectNodeContents(b); const c = rg.getBoundingClientRect(); if (!c.width) return;
+    const dot = b.classList.contains('btn-sm') ? 6 : 8, dl = Math.round(c.left - r.left - dot - 8);
+    b.classList.toggle('hb-nd', dl < 6);                                  // sıkışık düğmede nokta ikonun üstüne binmesin
+    b.style.setProperty('--hb-dl', Math.max(6, dl) + 'px');
+  });
+}
+const hbQueue = () => { if (!hbRaf) hbRaf = requestAnimationFrame(hbMark); };
+new MutationObserver(hbQueue).observe(document.documentElement, { childList: true, subtree: true });
+addEventListener('resize', hbQueue);
+const _settingsHb = VIEWS.settings;
+VIEWS.settings = () => {
+  const on = document.documentElement.classList.contains('hb');
+  let s = _settingsHb();
+  if (on) s = s.replace(/class="ds-opt on" onclick="setDesign\('am'\)" aria-pressed="true"/, `class="ds-opt " onclick="setDesign('am')" aria-pressed="false"`);
+  const opt = `<button class="ds-opt ${on ? 'on' : ''}" onclick="setDesign('hb')" aria-pressed="${on}"><div class="ds-prev hbp"><i></i><i></i></div><b>Hover Buton</b><small>Sade, kenarlıklı, oklu butonlar</small></button>`;
+  return s.replace('<div class="ds-pick two ds-three ds-five">', '<div class="ds-pick two ds-three ds-five ds-six">')
+    .replace(/(<button class="ds-opt[^"]*" onclick="setDesign\('lb'\))/, opt + '$1');
+};
+
+/* Hover Pro (html.bm.am.hb.hp) ve Enerji (html.bm.am.hb.en): Hover Buton altyapısı + kendi renkleri;
+   Aktivite (html.bm.am.ak): Liquid Glass üstüne Apple Fitness katmanı. CSS <style id="three-designs"> */
+DESIGNS.hp = 'Hover Pro'; DESIGNS.en = 'Enerji'; DESIGNS.ak = 'Aktivite';
+const _applyDesign3 = applyDesign;
+applyDesign = function (d) {
+  const h = document.documentElement; h.classList.remove('hp', 'en', 'ak');
+  _applyDesign3(d === 'hp' || d === 'en' ? 'hb' : d === 'ak' ? 'am' : d);
+  if (d === 'hp' || d === 'en' || d === 'ak') h.classList.add(d);
+};
+try { const d = localStorage.getItem('df_design'); if (d === 'hp' || d === 'en' || d === 'ak') applyDesign(d); } catch (e) {}
+const _settingsTri = VIEWS.settings;
+VIEWS.settings = () => {
+  const c = document.documentElement.classList, cur = c.contains('hp') ? 'hp' : c.contains('en') ? 'en' : c.contains('ak') ? 'ak' : '';
+  let s = _settingsTri();
+  if (cur) s = s.replace(/class="ds-opt on" onclick="setDesign\('(am|hb)'\)" aria-pressed="true"/, `class="ds-opt " onclick="setDesign('$1')" aria-pressed="false"`);
+  const opt = (k, prev, t, sub) => `<button class="ds-opt ${cur === k ? 'on' : ''}" onclick="setDesign('${k}')" aria-pressed="${cur === k}">${prev}<b>${t}</b><small>${sub}</small></button>`;
+  const add = opt('en', '<div class="ds-prev enp"><i></i><i></i><i></i><i></i></div>', 'Enerji', 'Neon renkler, büyüyen nokta')
+    + opt('ak', '<div class="ds-prev akp"><i></i><i></i><i></i></div>', 'Aktivite', 'Fitness gibi neon halkalar')
+    + opt('hp', '<div class="ds-prev hpp"><i></i><i></i></div>', 'Hover Pro', 'Sıcak beyaz, kırmızı noktalı butonlar');
+  return s.replace('ds-five ds-six">', 'ds-five ds-six ds-nine">').replace(/(<button class="ds-opt[^"]*" onclick="setDesign\('hb'\))/, add + '$1');
 };
 
 /* ---------- Başlat ---------- */
