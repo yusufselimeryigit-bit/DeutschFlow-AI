@@ -3865,6 +3865,151 @@ html.bm.am.ak .tp-tile .tp-tt small, html.bm.am.ak .tp-sp .tp-tt small { color: 
 .ds-prev.akp i:nth-child(2) { width: 32px; height: 32px; border-color: #a6ff00 rgba(166, 255, 0, .25) #a6ff00 #a6ff00; }
 .ds-prev.akp i:nth-child(3) { width: 18px; height: 18px; border-color: #00e5ff #00e5ff rgba(0, 229, 255, .25) rgba(0, 229, 255, .25); }
 </style>
+<style id="docked-nav">
+/* Alt bar: yalnızca Liquid Glass (düz html.am) yüzen ada kalır; diğer bütün tasarımlarda bar ekranın altına yapışık, tek parça */
+@media (max-width: 960px) {
+  html.bm:is(.fx, .lb, .kb, .vx, .hb, .ak) #bottomNav, html.bm.dark:is(.fx, .lb, .kb, .vx, .hb, .ak) #bottomNav {
+    left: 0 !important; right: 0 !important; bottom: 0 !important; height: calc(56px + env(safe-area-inset-bottom)) !important;
+    padding: 3px 6px env(safe-area-inset-bottom) !important; align-items: stretch; gap: 0;
+    border-radius: 0 !important; border: 0 !important; border-top: 1px solid var(--rule, rgba(0, 0, 0, .1)) !important; box-shadow: none !important; overflow: visible;
+  }
+  html.bm:is(.fx, .lb, .kb, .vx, .hb, .ak) .bn-item { height: 50px !important; border-radius: 14px !important; justify-content: center; }
+  html.bm:is(.fx, .lb, .kb, .vx, .hb, .ak) #bottomNav :is(.wl-water, .bn-lens) { display: none !important; }
+  html.bm:is(.fx, .lb, .kb, .vx, .hb, .ak) #main { padding-bottom: calc(84px + env(safe-area-inset-bottom)) !important; }
+  html.bm.has-mini:is(.fx, .lb, .kb, .vx, .hb, .ak) #main { padding-bottom: calc(150px + env(safe-area-inset-bottom)) !important; }
+  html.bm:is(.fx, .lb, .kb, .vx, .hb, .ak) #amMini { bottom: calc(64px + env(safe-area-inset-bottom)) !important; left: 10px; right: 10px; }
+  html.hb #bottomNav, html.hb.dark #bottomNav { background: color-mix(in srgb, var(--hb-bg) 98%, transparent) !important; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top-color: var(--hb-border) !important; }
+  /* Hover tasarımları: seçili sekme = ikonun arkasında dolmuş nokta (hap), yazı vurgu renginde */
+  html.hb .bn-item { overflow: visible !important; gap: 4px; }
+  html.hb .bn-item::before { top: 5px !important; left: 50% !important; width: 54px !important; height: 30px !important; margin: 0 0 0 -27px !important; transform: scale(.12) !important; opacity: 0 !important; transition: transform 320ms cubic-bezier(.22, 1, .36, 1), opacity 160ms !important; }
+  html.hb .bn-item.active::before { transform: scale(1) !important; opacity: 1 !important; }
+  html.hb .bn-item i { position: relative; z-index: 1; height: 30px; display: flex; align-items: center; }
+  html.hb .bn-item.active, html.hb.dark .bn-item.active { color: var(--hb-fg) !important; font-weight: 600; }
+  html.hb .bn-item.active i { color: var(--hb-pri-fg) !important; }
+  html.bm.am.ak #bottomNav { background: color-mix(in srgb, var(--ground) 97%, transparent) !important; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+}
+</style>
+<style id="sade">
+/* SADE 2: Liquid Glass tabanlı tasarımlarda sadeleştirilmiş ekranların stilleri */
+html.am .sd-hero { display: flex; flex-direction: column; gap: 8px; }
+html.am .sd-next { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 10px 16px; border-radius: 16px; background: var(--surface); color: var(--ink); font: 500 14.5px var(--sf); text-align: left; box-shadow: var(--card-shadow); border: 0; }
+html.am .sd-next > i { color: var(--accent); width: 18px; text-align: center; }
+html.am .sd-next span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html.am .sd-next b { color: var(--accent); font-weight: 600; white-space: nowrap; }
+html.am .sd-next b i { font-size: 11px; margin-left: 2px; }
+html.am .sd-next.warn > i, html.am .sd-next.warn b { color: #c97a00; }
+html.am.dark .sd-next.warn > i, html.am.dark .sd-next.warn b { color: #ffb340; }
+html.hb .sd-next { border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-sm); border-radius: 14px; }
+html.am .sd-more .am-li { width: 100%; text-align: left; }
+html.am .sd-chev { color: var(--faint); font-size: 12px; margin-left: auto; }
+html.am .sd-fold b { font-weight: 500; color: var(--muted); }
+html.am .sd-fold .am-tn i, html.am .sd-fold .am-te i { color: var(--faint); }
+html.am .sd-all, html.am .sd-adv { margin-top: 18px; }
+html.am :is(.sd-all, .sd-adv) > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 50px; padding: 12px 16px; border-radius: 16px; background: var(--surface); box-shadow: var(--card-shadow); font: 600 15px var(--sf); color: var(--ink); }
+html.am :is(.sd-all, .sd-adv) > summary::-webkit-details-marker { display: none; }
+html.am :is(.sd-all, .sd-adv) > summary small { margin-left: auto; color: var(--muted); font-weight: 500; }
+html.am :is(.sd-all, .sd-adv) > summary > i { color: var(--accent); }
+html.am :is(.sd-all, .sd-adv)[open] > summary { margin-bottom: 12px; }
+html.hb :is(.sd-all, .sd-adv) > summary { border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-sm); border-radius: 12px; }
+html.am .sd-q { width: 100%; margin-bottom: 14px; font-size: 16px; }
+html.am .sd-adv > .panel, html.am .sd-adv > .glass { margin-bottom: 14px; }
+@media (max-width: 960px) {
+  /* üst çubuk: robot düğmesi ⋯ menüsünde zaten var */
+  html.am #topbar .tutor-top { display: none !important; }
+  /* ders penceresi: video düğmeleri tek satır, yana kayar; başlık küçülür */
+  html.am .yt-acts { flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  html.am .yt-acts::-webkit-scrollbar { display: none; }
+  html.am .yt-acts > * { flex: none; }
+  html.am .us-meta { display: none; }
+}
+</style>
+<style id="features">
+/* Tekrar kartı: kaydırma */
+.flash { position: relative; touch-action: pan-y; -webkit-user-select: none; user-select: none; --fz-p: 0; }
+.flash.fz-drag { cursor: grabbing; transition: none; }
+.flash:not(.fz-drag) { transition: transform .32s cubic-bezier(.32,.72,0,1), opacity .2s; }
+.flash.fz-fly { transition: transform .2s cubic-bezier(.4,0,1,1), opacity .2s; }
+.fz-tint { position: absolute; inset: 0; border-radius: 24px; pointer-events: none; z-index: 3; opacity: var(--fz-p); display: flex; align-items: flex-start; padding: 14px; }
+.flash[data-fz-dir="r"] .fz-tint { background: color-mix(in srgb, var(--positive, #34C759) 26%, transparent); box-shadow: inset 0 0 0 2px var(--positive, #34C759); justify-content: flex-start; }
+.flash[data-fz-dir="l"] .fz-tint { background: color-mix(in srgb, var(--negative, #FF3B30) 24%, transparent); box-shadow: inset 0 0 0 2px var(--negative, #FF3B30); justify-content: flex-end; }
+.fz-tint span { display: none; flex-direction: column; align-items: flex-start; gap: 1px; padding: 6px 12px; border-radius: 12px; font-weight: 700; font-size: 15px; color: #fff; line-height: 1.2; }
+.fz-tint small { font-size: 12px; font-weight: 500; opacity: .9; }
+.flash[data-fz-dir="r"] .fz-tr { display: inline-flex; background: var(--positive, #34C759); }
+.flash[data-fz-dir="l"] .fz-tl { display: inline-flex; background: var(--negative, #FF3B30); align-items: flex-end; }
+html.bh .fz-tint { border-radius: 12px; }
+
+/* Silmeyi geri al */
+.toast.fz-ut { pointer-events: auto; position: relative; overflow: hidden; padding-right: 8px; width: min(92vw, 360px); }
+html .toast.fz-ut > i.fa-trash-can { color: currentColor !important; opacity: .65; }
+.toast.fz-ut span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fz-ub { flex-shrink: 0; min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; background: var(--accent); color: var(--accent-ink, #fff); }
+html.hb .fz-ub { background: var(--hb-pri, var(--accent)); }
+.fz-ub:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fz-ubar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: currentColor; opacity: .35; transform-origin: left; animation: fzBar 5s linear forwards; }
+.toast.fz-ut.fz-out { opacity: 0; transform: translateY(-8px); transition: opacity .24s, transform .24s; }
+@keyframes fzBar { to { transform: scaleX(0); } }
+
+/* A1→C2 yolculuk */
+.fz-jr-wrap { margin: -2px 0 14px; }
+.fz-jr { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 32px; padding: 4px 0; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.fz-jr-cur { display: inline-flex; align-items: baseline; gap: 6px; flex-shrink: 0; font-size: 14px; }
+.fz-jr-cur b { font-weight: 700; }
+.fz-jr-cur small, .fz-jr-end { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fz-jr-bar { flex: 1; display: flex; gap: 4px; min-width: 90px; max-width: 420px; }
+.fz-jr-s { position: relative; flex: 1; height: 5px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.fz-jr-s i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: var(--accent); }
+html.hb .fz-jr-s i { background: var(--hb-pri, var(--accent)); }
+.fz-jr-s.on { height: 7px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+.fz-jr-s.on i { min-width: 3px; }
+.fz-jr:hover .fz-jr-end { color: var(--ink); }
+.fz-jr:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 8px; }
+
+/* Ekran okuyucu için gizli */
+.fz-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Ders sonu özeti */
+#lsBody .fz-sumwrap { padding: 12px 0 6px !important; }
+#lsBody .fz-sumwrap > div:first-child { font-size: 0 !important; line-height: 0; }
+#lsBody .fz-sumwrap > div:first-child svg { width: 104px; height: 104px; }
+#lsBody .fz-sumwrap .ls-q { font-size: clamp(20px, 5.4vw, 26px); }
+.fz-sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 460px; margin: 16px auto 12px; border-radius: 20px; background: var(--surface); border: 1px solid var(--rule); overflow: hidden; }
+.fz-sum > div { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 14px 6px; min-width: 0; }
+.fz-sum > div + div { border-left: 1px solid var(--rule); }
+.fz-sum small { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.fz-sum b { font-size: 26px; font-weight: 700; line-height: 1.15; color: var(--ink); font-variant-numeric: tabular-nums; }
+.fz-sum b.fz-xp { color: var(--accent); }
+html.hb .fz-sum b.fz-xp { color: var(--hb-pri, var(--accent)); }
+.fz-sum em { font-style: normal; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+html.bh .fz-sum { border-radius: 10px; }
+.ls-foot-in.fz-sfoot { flex-direction: column; align-items: stretch; gap: 10px; flex-wrap: nowrap; }
+.fz-sx { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.fz-sm { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 10px; }
+.fz-sm .btn { width: 100%; justify-content: center; white-space: nowrap; }
+@media (min-width: 700px) { .ls-foot-in.fz-sfoot { flex-direction: row; justify-content: space-between; align-items: center; } .fz-sx { justify-content: flex-start; } .fz-sm { display: flex; } .fz-sm .btn { width: auto; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .flash, .flash.fz-fly, .flash:not(.fz-drag) { transition: none !important; }
+  .fz-ubar { animation: none; }
+  .toast.fz-ut.fz-out { transition: none; }
+}
+</style>
+<style id="polish">
+/* Denetim düzeltmeleri (yapışık alt bar, ders penceresi, kontrast) — en sonda durur ki önceki katmanları yensin */
+@media (max-width: 960px) {
+  html.hb #bottomNav .bn-item.active i, html.hb.dark #bottomNav .bn-item.active i { color: var(--hb-pri-fg) !important; }
+  html.hb #bottomNav .bn-item { justify-content: flex-start !important; padding: 4px 0 0 !important; gap: 3px !important; }
+  html.hb #bottomNav .bn-item::before { top: 4px !important; height: 28px !important; width: 52px !important; margin-left: -26px !important; }
+  html.hb #bottomNav .bn-item i { height: 28px !important; }
+  html.bm.kb #bottomNav { background: var(--ground) !important; }
+  html.bm:is(.lb, .vx) #bottomNav { background: color-mix(in srgb, var(--ground) 92%, transparent) !important; -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); }
+  html.bm:is(.lb, .kb, .vx) .bn-item { color: var(--muted) !important; }
+  html.bm:is(.lb, .kb, .vx) .bn-item.active { color: var(--accent) !important; }
+  html.am .yt-acts { margin: 0 -16px; padding: 0 16px 2px; scroll-padding-inline: 16px; }
+}
+@media (max-width: 640px) { html.bm .sheet.us-sheet { border-radius: 0 !important; } }
+.tp-tile .tp-tt small, .tp-sp .tp-tt small { color: rgba(255, 255, 255, .88) !important; }
+html.am:not(.dark):not(.hb):not(.ak):not(.lb):not(.kb) .am-play { background: rgba(255, 255, 255, .96); }
+</style>
 </head>
 <body>
 <div id="toast"></div>
@@ -12161,7 +12306,7 @@ const WL = {
   glc: null, cv: null, nav: null, tried: false
 };
 const WL_FX = { home: 'glow', learn: 'spin', review: 'drop', practice: 'pop', more: 'wave' };
-const wlOn = () => isAm() && !document.documentElement.classList.contains('hb') && !document.documentElement.classList.contains('ak') && innerWidth <= 960 && !!document.getElementById('bottomNav');
+const wlOn = () => isAm() && !/\b(hb|ak|lb|kb|vx)\b/.test(document.documentElement.className) && innerWidth <= 960 && !!document.getElementById('bottomNav');
 
 function wlInitGL(cv) {
   const gl = cv.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false }); if (!gl) return null;
@@ -12522,6 +12667,265 @@ VIEWS.settings = () => {
     + opt('ak', '<div class="ds-prev akp"><i></i><i></i><i></i></div>', 'Aktivite', 'Fitness gibi neon halkalar')
     + opt('hp', '<div class="ds-prev hpp"><i></i><i></i></div>', 'Hover Pro', 'Sıcak beyaz, kırmızı noktalı butonlar');
   return s.replace('ds-five ds-six">', 'ds-five ds-six ds-nine">').replace(/(<button class="ds-opt[^"]*" onclick="setDesign\('hb'\))/, add + '$1');
+};
+
+/* =====================================================================
+   SADE 2 (Liquid Glass tabanlı bütün tasarımlar): telefonda kalabalığı azaltır.
+   Ana Sayfa tek "sıradaki" adım + görevler; Öğren'de bitenler ve uzak dersler katlanır;
+   Pratik/Araçlar'da en çok kullanılan 4 araç + aranabilir "Tüm araçlar"; Ayarlar'da teknik alanlar katlanır.
+   ===================================================================== */
+// Ana Sayfa: "Senin İçin" rafı ve ayrı uyarı kalkar; tekrar/plan gecikmesi sıradaki kartın altında tek satır
+const _homeSade = VIEWS.home;
+VIEWS.home = () => {
+  let h = _homeSade(); if (!isAm() || !D) return h;
+  const late = ytPlanLate(), due = lessonsDue(), dueC = D.cards.filter(c => c.due <= Date.now()).length, done = D.daily && D.daily[today()] != null;
+  const line = late.length ? ['fa-triangle-exclamation', `Planın ${late.length} ders geride`, 'Planı aç', "go('dersplan')", 'warn']
+    : dueC ? ['fa-layer-group', `Sonra · ${dueC} kart tekrarı`, 'Tekrarla', "go('review')", '']
+    : due.length ? ['fa-rotate', `Sonra · Ders ${esc(due[0].ders)} tekrarı`, 'Başla', `startLessonReview('${due[0].id}')`, ''] : null;
+  const next = line ? `<button class="sd-next ${line[4]}" onclick="${line[3]}"><i class="fa-solid ${line[0]}"></i><span>${line[1]}</span><b>${line[2]} <i class="fa-solid fa-chevron-right"></i></b></button>` : '';
+  const more = `<section class="sd-more"><div class="am-sh"><h2>Vaktin varsa</h2></div><div class="am-list">
+    <button class="am-li" onclick="startToday()"><span class="am-ic"><i class="fa-solid fa-calendar-day"></i></span><span class="am-lm"><b>Bugünün 10 dakikası</b><small>${done ? 'Bugün yapıldı · yeni set' : '16 soru · karışık günlük set'}</small></span><i class="fa-solid fa-chevron-right sd-chev"></i></button>
+    <button class="am-li" onclick="go('topics')"><span class="am-ic"><i class="fa-solid fa-layer-group"></i></span><span class="am-lm"><b>Konu testleri</b><small>Sayılar, saat, artikel…</small></span><i class="fa-solid fa-chevron-right sd-chev"></i></button></div></section>`;
+  h = h.replace(/<button class="yt-warn"[\s\S]*?<\/button>/, '')
+    .replace(/<section><div class="am-sh"><h2>Senin İçin<\/h2><\/div><div class="am-row">[\s\S]*?<\/div><\/section>/, '')
+    .replace(/<button onclick="go\('badges'\)">Rozetler<\/button>/, '');
+  h = h.replace(/(<button class="am-hero"[\s\S]*?<\/button>|<div class="am-hero"[\s\S]*?<\/div>)/, m => `<div class="sd-hero">${m}${next}</div>`);
+  return h.replace(/<\/div>\s*$/, more + '</div>');
+};
+// Araç kullanım sayısı: Pratik ve Araçlar'da en çok kullanılanlar üstte durur
+const _goSade = go;
+go = function (p) {
+  try { if (D && typeof p === 'string' && PAGES[p] && !['home', 'learn', 'review', 'practice', 'more', 'settings'].includes(p)) { D.toolUse = D.toolUse || {}; D.toolUse[p] = (D.toolUse[p] || 0) + 1; } } catch (e) {}
+  const r = _goSade.apply(this, arguments);
+  if (isAm() && D) try { sadeAfter(PAGE); } catch (e) {}
+  return r;
+};
+function sadeAfter(pg) {
+  const v = document.getElementById('view') || document.getElementById('main'); if (!v) return;
+  if (pg === 'learn') sadeLearn(v);
+  if (pg === 'practice' || pg === 'more') sadeHub(v, pg);
+  if (pg === 'settings') sadeSettings(v);
+}
+// Öğren: bitenler tek satıra, sıradakinden sonra 6 ders; gerisi "Tümünü göster"
+function sadeLearn(v) {
+  const box = v.querySelector('.am-tracks'); if (!box || box.dataset.sd) return; box.dataset.sd = '1';
+  const rows = [...box.querySelectorAll(':scope > .am-tr')]; if (rows.length < 12) return;
+  let ci = rows.findIndex(r => r.classList.contains('cur')); if (ci < 0) ci = rows.findIndex(r => !r.classList.contains('done')); if (ci < 0) ci = 0;
+  const before = rows.slice(0, Math.max(0, ci - 1)), after = rows.slice(ci + 7, rows.length - 1);   // son satır (seviye sınavı) hep görünür
+  const fold = (list, label, where) => {
+    if (list.length < 2) return; list.forEach(r => r.hidden = true);
+    const b = document.createElement('button'); b.className = 'am-tr sd-fold'; b.type = 'button';
+    b.innerHTML = `<span class="am-tn"><i class="fa-solid ${where === 'before' ? 'fa-check' : 'fa-ellipsis'}"></i></span><span class="am-tm"><b>${label}</b></span><span class="am-te"><i class="fa-solid fa-chevron-down"></i></span>`;
+    b.onclick = () => { list.forEach(r => r.hidden = false); b.remove(); };
+    where === 'before' ? list[0].before(b) : list[list.length - 1].after(b);
+  };
+  const nDone = before.filter(r => r.classList.contains('done')).length;
+  fold(before, nDone === before.length ? `${before.length} ders tamamlandı` : `Önceki ${before.length} ders`, 'before');
+  fold(after, `Tümünü göster · ${after.length} ders daha`, 'after');
+}
+// Pratik / Araçlar: en çok kullanılan 4 araç + arama kutulu "Tüm araçlar"
+function sadeHub(v, pg) {
+  if (v.querySelector('.sd-pins')) return;
+  const groups = [...v.querySelectorAll('.hub-g')]; if (groups.length < 2) return;
+  const cards = groups.flatMap(g => [...g.querySelectorAll('.row-card')]);
+  const key = c => ((c.getAttribute('onclick') || '').match(/go\('([^']+)'\)/) || [])[1];
+  const use = (D && D.toolUse) || {};
+  const pins = cards.map((c, i) => ({ c, i, n: use[key(c)] || 0 })).sort((a, b) => b.n - a.n || a.i - b.i).slice(0, 4).map(x => x.c);
+  const top = document.createElement('section'); top.className = 'hub-g sd-pins';
+  top.innerHTML = `<h2 class="hub-h">${Object.keys(use).length ? 'En çok kullandıkların' : 'Başlangıç için'}</h2><div class="hub"></div>`;
+  pins.forEach(c => top.querySelector('.hub').appendChild(c.cloneNode(true)));
+  const all = document.createElement('details'); all.className = 'sd-all';
+  all.innerHTML = `<summary><i class="fa-solid fa-magnifying-glass"></i> Tüm araçlar <small>${cards.length}</small></summary><input class="pill-input sd-q" type="search" placeholder="Araç ara" aria-label="Araç ara">`;
+  groups[0].before(top); top.after(all); groups.forEach(g => all.appendChild(g));
+  all.querySelector('.sd-q').addEventListener('input', e => {
+    const q = deFold(e.target.value.trim());
+    groups.forEach(g => { let any = 0; g.querySelectorAll('.row-card').forEach(c => { const ok = !q || deFold(c.textContent).includes(q); c.hidden = !ok; any += ok; }); g.hidden = !any; });
+  });
+}
+// Ayarlar: yapay zekâ anahtarı, Firebase ve teknik bölümler "Gelişmiş" altında kapalı
+function sadeSettings(v) {
+  if (v.querySelector('.sd-adv')) return;
+  const secs = [...v.querySelectorAll(':scope .panel, :scope .glass.card, :scope section.panel')].filter(s => /Gemini|Firebase|API anahtar|fbConfig|Yedek ve senkron|Geliştirici/i.test(s.textContent) && !s.querySelector('.ds-pick'));
+  if (!secs.length) return;
+  const d = document.createElement('details'); d.className = 'sd-adv';
+  d.innerHTML = '<summary><i class="fa-solid fa-gear"></i> Gelişmiş <small>Yapay zekâ anahtarı, bulut senkronu</small></summary>';
+  secs[0].before(d); secs.forEach(s => d.appendChild(s));
+}
+
+/* =====================================================================
+   EK: Kart kaydırma · Silmeyi geri al · Ders klavyesi · A1→C2 yolculuk · Ders sonu özeti
+   ===================================================================== */
+const fzCalm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fzTyping = () => { const a = document.activeElement; return !!a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && !a.disabled; };
+
+/* ---------- 1) Tekrar kartı: sağa kaydır = biliyorum, sola = bilmiyorum; Boşluk çevirir, 1-4 puanlar ---------- */
+function fzSwipe() {
+  const fl = $('#flash'), c = rv && rv.list[rv.i]; if (!fl || !c || fl.dataset.fzSw) return; fl.dataset.fzSw = '1';
+  let ivl = g => ''; try { ivl = g => fmtIvl(fsrsIvlMs(g, fsrsNext(c, g).s)); } catch (e) {}
+  fl.insertAdjacentHTML('beforeend', `<div class="fz-tint" aria-hidden="true"><span class="fz-tl"><i class="fa-solid fa-xmark"></i> Bilmiyorum<small>${ivl(1)}</small></span><span class="fz-tr"><i class="fa-solid fa-check"></i> Biliyorum<small>${ivl(3)}</small></span></div>`);
+  fl.setAttribute('aria-label', 'Kartı çevir. Sağa kaydır: biliyorum, sola kaydır: bilmiyorum');
+  let x0 = 0, y0 = 0, dx = 0, pid = null, drag = false, moved = false, busy = false;
+  const th = () => Math.min(110, fl.offsetWidth * .28);
+  const paint = () => { fl.style.transform = `translateX(${dx}px)` + (fzCalm() ? '' : ` rotate(${dx / 22}deg)`); fl.style.setProperty('--fz-p', Math.min(1, Math.abs(dx) / th()).toFixed(3)); fl.dataset.fzDir = dx > 0 ? 'r' : 'l'; };
+  const reset = () => { fl.classList.remove('fz-drag'); fl.style.transform = ''; fl.style.setProperty('--fz-p', 0); };
+  fl.addEventListener('pointerdown', e => { if (busy || e.button > 0) return; x0 = e.clientX; y0 = e.clientY; dx = 0; pid = e.pointerId; drag = false; moved = false; });
+  fl.addEventListener('pointermove', e => {
+    if (pid !== e.pointerId) return; const x = e.clientX - x0, y = e.clientY - y0;
+    if (!drag) { if (Math.abs(x) < 10) return; if (Math.abs(y) > Math.abs(x)) { pid = null; return; } drag = moved = true; fl.classList.add('fz-drag'); try { fl.setPointerCapture(pid); } catch (er) {} }
+    dx = x; paint();
+  });
+  const end = e => {
+    if (pid !== e.pointerId) return; pid = null; if (!drag) return; drag = false;
+    if (e.type === 'pointercancel' || Math.abs(dx) < th()) { reset(); return; }
+    const good = dx > 0; busy = true; fl.classList.remove('fz-drag');
+    if (fzCalm()) { rvGrade(good ? 3 : 1); return; }
+    fl.classList.add('fz-fly'); fl.style.transform = `translateX(${good ? 140 : -140}%) rotate(${good ? 16 : -16}deg)`; fl.style.opacity = '0';
+    setTimeout(() => { if (rv && $('#flash') === fl) rvGrade(good ? 3 : 1); }, 190);
+  };
+  fl.addEventListener('pointerup', end); fl.addEventListener('pointercancel', end);
+  fl.addEventListener('click', e => { if (moved || busy) { moved = false; e.stopImmediatePropagation(); e.preventDefault(); } }, true);
+}
+const _rrcFz = renderReviewCard;
+renderReviewCard = function () { const r = _rrcFz.apply(this, arguments); try { fzSwipe(); } catch (e) { console.warn(e); } return r; };
+addEventListener('keydown', e => {
+  const fl = $('#flash'); if (!fl || !rv || $('#drawLayer') || e.metaKey || e.ctrlKey || e.altKey || fzTyping()) return;
+  if (e.key === ' ') { e.preventDefault(); if (!e.repeat && !fl.classList.contains('flip')) fl.click(); return; }
+  if (/^[1-4]$/.test(e.key) && !e.repeat) { const bs = $('#rvBtns'), b = bs && !bs.hidden && bs.querySelectorAll('button')[+e.key - 1]; if (b) { e.preventDefault(); b.click(); } }
+});
+
+/* ---------- 2) Silmeyi geri al: onay penceresi yerine anında sil + 5 sn "Geri al" ---------- */
+let FZ_UNDO = null;
+function fzUndo(msg, restore) {
+  if (FZ_UNDO) FZ_UNDO.done();
+  const box = $('#toast'); if (!box) return;
+  const el = document.createElement('div'), d0 = D; el.className = 'toast fz-ut';
+  el.innerHTML = `<i class="fa-solid fa-trash-can" aria-hidden="true"></i><span>${esc(msg)}</span><button type="button" class="fz-ub">Geri al</button><i class="fz-ubar" aria-hidden="true"></i>`;
+  box.appendChild(el);
+  const u = FZ_UNDO = { done() { clearTimeout(u.t); if (FZ_UNDO === u) FZ_UNDO = null; el.classList.add('fz-out'); setTimeout(() => el.remove(), 260); } };
+  u.t = setTimeout(() => u.done(), 5000);
+  el.querySelector('.fz-ub').onclick = () => { u.done(); if (D !== d0 || RO) return; restore(); save(); toast('Geri alındı'); };
+}
+const _delCardFz = delCard;
+delCard = function (id) {
+  if (!canEdit()) return; const i = D.cards.findIndex(c => c.id === id); if (i < 0) return _delCardFz.apply(this, arguments);
+  const c = D.cards[i]; D.cards.splice(i, 1); save(); go('deck');
+  fzUndo(`“${c.de}” silindi`, () => { D.cards.splice(Math.min(i, D.cards.length), 0, c); if (PAGE === 'deck') go('deck'); });
+};
+// Satır içi silme düğmeleri (Yanlış Deposu, not, hedef): tıklama önce burada yakalanır; kalıp tanınmazsa eski davranış sürer
+addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('button[onclick]'); if (!b || !D) return;
+  const s = b.getAttribute('onclick') || ''; let m, run;
+  if ((m = s.match(/D\.wrong\.splice\((\d+),\s*1\)/))) run = () => {
+    const i = +m[1], w = D.wrong[i]; if (!w) return; D.wrong.splice(i, 1); save(); go('errors');
+    fzUndo('Yanlış silindi', () => { D.wrong.splice(Math.min(i, D.wrong.length), 0, w); if (PAGE === 'errors') go('errors'); });
+  };
+  else if (/confirm\('Tüm yanlışlar silinsin mi\?'\)/.test(s)) run = () => {
+    const old = D.wrong.slice(); if (!old.length) return; D.wrong = []; save(); go('errors');
+    fzUndo(`${old.length} yanlış silindi`, () => { D.wrong = old.concat(D.wrong.filter(w => !old.some(o => o.id === w.id))); if (PAGE === 'errors') go('errors'); });
+  };
+  else if ((m = s.match(/confirm\('Not silinsin mi\?'\)\)\s*\{\s*D\.notes\s*=\s*D\.notes\.filter\(x\s*=>\s*x\.id\s*!==\s*'([^']+)'\)/))) run = () => {
+    const i = D.notes.findIndex(x => x.id === m[1]); if (i < 0) return; const n = D.notes[i]; D.notes.splice(i, 1); save(); closeModal(); go('notes');
+    fzUndo('Not silindi', () => { D.notes.splice(Math.min(i, D.notes.length), 0, n); if (PAGE === 'notes') go('notes'); });
+  };
+  else if (/confirm\('Hedef silinsin mi\?'\)/.test(s)) run = () => {
+    const g = D.goal; if (!g) return; delete D.goal; save(); go('plan');
+    fzUndo('Hedef silindi', () => { D.goal = g; if (PAGE === 'plan') go('plan'); });
+  };
+  else return;
+  e.preventDefault(); e.stopImmediatePropagation();
+  if (canEdit()) run();
+}, true);
+
+/* ---------- 3) Ders klavyesi: 1-9 şık seçer, Enter alttaki ana düğmeye basar ---------- */
+const fzPrimary = () => [...document.querySelectorAll('#lsFoot button.btn')].filter(b => !b.disabled && !b.classList.contains('btn-ghost') && b.offsetParent !== null).pop();
+addEventListener('keydown', e => {
+  if (!LSN || !$('#lesson') || $('#drawLayer') || $('#modalRoot').innerHTML || e.metaKey || e.ctrlKey || e.altKey || e.isComposing) return;
+  const a = document.activeElement, typing = fzTyping();
+  if (e.key === 'Enter') {
+    if (e.shiftKey || e.repeat) return;
+    if (typing && a.hasAttribute('onkeydown')) return;             // kendi Enter davranışı olan alanlar (boşluk doldurma, tablo) aynen kalsın
+    if (!typing && a && a !== document.body && a.tagName === 'BUTTON' && a.matches(':focus-visible') && a !== fzPrimary()) return; // Tab ile seçilen düğme
+    const p = fzPrimary(); if (!p) return;
+    e.preventDefault(); e.stopImmediatePropagation(); p.click(); return;
+  }
+  if (typing || !/^[1-9]$/.test(e.key) || LSN.checked || !LSN.items[LSN.i]) return;
+  const opts = [...document.querySelectorAll('#lsBody .opt')].filter(b => !b.closest('.match-grid') && !b.disabled && b.offsetParent !== null), b = opts[+e.key - 1];
+  if (!b) return; e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) b.click();
+}, true);
+// Geri bildirim ekran okuyucuya okunsun (alt çubuk her tuşta yeniden çizildiği için ayrı canlı bölge)
+const _startLessonFz = startLesson;
+startLesson = function () {
+  const r = _startLessonFz.apply(this, arguments);
+  const l = $('#lesson'); if (l && !$('#fzLive')) l.insertAdjacentHTML('beforeend', '<div id="fzLive" class="fz-sr" role="status" aria-live="polite"></div>');
+  const f = $('#lsFoot'); if (f) f.setAttribute('aria-describedby', 'fzLive');
+  return r;
+};
+// gsap.from, CSS footIn animasyonunun başlangıcını (14px) bitiş sanıyor; alt çubuk aşağıda kalıp kesiliyordu. Kaymayı CSS animasyonu yapsın
+function fzFootFix() { const f = $('#lsFoot'); if (!f) return; if (window.gsap) gsap.killTweensOf(f); f.style.transform = ''; }
+const _finishItemFz = finishItem;
+finishItem = function () {
+  const r = _finishItemFz.apply(this, arguments), live = $('#fzLive');
+  fzFootFix();
+  if (live) live.textContent = [...document.querySelectorAll('#lsFoot .fb-title, #lsFoot .fb-text')].slice(0, 2).map(x => x.textContent.trim()).join(' ');
+  return r;
+};
+
+/* ---------- 4) A1→C2 yolculuk göstergesi (Ana sayfa ve Öğren başlığının altında tek satır) ---------- */
+function fzJourney() {
+  const lv = LEVELS.map((L, li) => { const n = L.units.length, d = L.units.filter(u => D.done[u.id] != null).length; return { id: L.id, d, n, p: D.boss[L.id] || li < D.placement ? 1 : n ? d / n : 0 }; });
+  const cur = currentLevelIdx(), all = lv.reduce((s, x) => s + x.p, 0) / lv.length;
+  return { lv, cur, all };
+}
+function fzJourneyHtml() {
+  const { lv, cur, all } = fzJourney(), c = lv[cur];
+  return `<button type="button" class="fz-jr" onclick="try{amLv=currentLevelIdx()}catch(e){}go('learn')" aria-label="Seviye yolculuğu: ${esc(c.id)}, ${c.d}/${c.n} ünite, A1'den C2'ye yüzde ${Math.round(all * 100)}. Öğren sayfasını aç">
+    <span class="fz-jr-cur"><b>${esc(c.id)}</b><small>${c.d}/${c.n}</small></span>
+    <span class="fz-jr-bar" aria-hidden="true">${lv.map((x, i) => `<span class="fz-jr-s${i === cur ? ' on' : ''}${x.p >= 1 ? ' full' : ''}" title="${esc(x.id)} · %${Math.round(x.p * 100)}"><i style="width:${Math.round(x.p * 100)}%"></i></span>`).join('')}</span>
+    <span class="fz-jr-end" aria-hidden="true">C2 · %${Math.round(all * 100)}</span></button>`;
+}
+function fzJourneyMount() {
+  if (!D || !['home', 'learn'].includes(PAGE)) return; const v = $('#view'); if (!v || v.querySelector('.fz-jr')) return;
+  const t = [...v.querySelectorAll('h1, .page-title')].find(x => x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden');
+  const html = `<div class="fz-jr-wrap">${fzJourneyHtml()}</div>`;
+  if (t) t.insertAdjacentHTML('afterend', html); else v.insertAdjacentHTML('afterbegin', html);
+}
+const _goFz = go;
+go = function () { const r = _goFz.apply(this, arguments); try { fzJourneyMount(); } catch (e) { console.warn(e); } return r; };
+
+/* ---------- 5) Ders sonu: doğru/toplam, XP, seri ve "Sonraki ünite" tek ekranda ---------- */
+function fzNextUnit() {
+  quitLesson(true); const n = nextUnit(); if (!n) { go('learn'); return; }
+  if (n.boss) startBoss(n.li); else openUnit(n.u.id);
+}
+const _lessonSummaryFz = lessonSummary;
+lessonSummary = function () {
+  const o = LSN && LSN.opts, xp0 = D ? D.xp : 0, n = LSN ? LSN.items.length : 0, c = LSN ? LSN.correct : 0;
+  const r = _lessonSummaryFz.apply(this, arguments);
+  try {
+    if (!o || !LSN) return r; fzFootFix();
+    const body = $('#lsBody > div'), grid = body && body.querySelector('.grid-3'), gain = Math.max(0, D.xp - xp0), st = displayStreak(), pct = n ? Math.round(c / n * 100) : 0;
+    const k = $('#fxKind'); if (k) k.hidden = true;
+    if (body) body.classList.add('fz-sumwrap');
+    if (grid) grid.outerHTML = `<div class="fz-sum" role="group" aria-label="Ders sonucu">
+      <div><small>Doğru</small><b class="tabular">${c}/${n}</b><em>%${pct}</em></div>
+      <div><small>XP</small><b class="tabular fz-xp">+${gain}</b><em>toplam ${D.xp}</em></div>
+      <div><small>Seri</small><b class="tabular">${st}</b><em>gün</em></div></div>`;
+    const fi = $('#lsFoot .ls-foot-in'), dv = fi && fi.querySelector('button[onclick="quitLesson(true)"]');
+    if (!dv) return r;                                                // sınav/düello gibi kendi alt çubuğu olanlara dokunma
+    const pass = c / (n || 1) >= (o.pass || 0), retry = fi.querySelector('button[onclick="retryLesson()"]'), nx = nextUnit();
+    const extras = [...fi.querySelectorAll('button')].filter(b => b !== dv && b !== retry);
+    let main;
+    if (!pass && retry) { retry.className = 'btn'; main = retry; }
+    else if (nx) { main = document.createElement('button'); main.className = 'btn'; main.setAttribute('onclick', 'fzNextUnit()'); main.innerHTML = `${nx.boss ? 'Seviye sınavı' : 'Sonraki ünite'} <i class="fa-solid fa-arrow-right"></i>`; main.title = nx.boss ? LEVELS[nx.li].id + ' sınavı' : nx.u.t; if (retry) extras.push(retry); }
+    else { main = dv.cloneNode(true); if (retry) extras.push(retry); }
+    const home = document.createElement('button'); home.className = 'btn btn-ghost'; home.setAttribute('onclick', "quitLesson(true);go('home')"); home.innerHTML = '<i class="fa-solid fa-house"></i> Ana sayfa';
+    extras.forEach(b => b.classList.add('btn-sm'));
+    fi.innerHTML = ''; fi.classList.add('fz-sfoot');
+    if (extras.length) { const x = document.createElement('div'); x.className = 'fz-sx'; extras.forEach(b => x.appendChild(b)); fi.appendChild(x); }
+    const m = document.createElement('div'); m.className = 'fz-sm'; m.append(home, main); fi.appendChild(m);
+    const live = $('#fzLive'); if (live) live.textContent = `Ders bitti. ${c}/${n} doğru, ${gain} XP, seri ${st} gün.`;
+  } catch (e) { console.warn(e); }
+  return r;
 };
 
 /* ---------- Başlat ---------- */
