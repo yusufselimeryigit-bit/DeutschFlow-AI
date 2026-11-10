@@ -4010,6 +4010,86 @@ html.bh .fz-sum { border-radius: 10px; }
 .tp-tile .tp-tt small, .tp-sp .tp-tt small { color: rgba(255, 255, 255, .88) !important; }
 html.am:not(.dark):not(.hb):not(.ak):not(.lb):not(.kb) .am-play { background: rgba(255, 255, 255, .96); }
 </style>
+<style id="sade-3">
+/* Tekrar: katlanan kutular */
+html.am .sd-boxes { margin: 14px 0; }
+html.am :is(.sd-boxes, .sd-more-ds) > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 16px; border-radius: 16px; background: var(--surface); box-shadow: var(--card-shadow); font: 600 15px var(--sf); color: var(--ink); }
+html.am :is(.sd-boxes, .sd-more-ds) > summary::-webkit-details-marker { display: none; }
+html.am :is(.sd-boxes, .sd-more-ds) > summary small { margin-left: auto; color: var(--muted); font-weight: 500; font-size: 13px; }
+html.am .sd-boxes > summary > i { color: var(--accent); }
+html.am .sd-boxes[open] > summary, html.am .sd-more-ds[open] > summary { margin-bottom: 12px; }
+html.hb :is(.sd-boxes, .sd-more-ds) > summary { border: 1px solid var(--hb-border); box-shadow: var(--hb-shadow-sm); border-radius: 12px; }
+html.am .sd-more-ds { margin-top: 10px; }
+html.am .sd-more-ds > summary { min-height: 42px; padding: 8px 14px; font-size: 14px; background: transparent; box-shadow: none; border: 1px dashed var(--rule) !important; }
+/* Tasarım galerisi: telefonda üçlü kompakt ızgara */
+@media (max-width: 760px) {
+  html.am .ds-pick.ds-nine { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
+  html.am .ds-pick.ds-nine .ds-opt { padding: 6px 6px 8px; }
+  html.am .ds-pick.ds-nine .ds-prev { height: 46px; margin-bottom: 6px; }
+  html.am .ds-pick.ds-nine .ds-opt b { font-size: 12.5px; display: block; line-height: 1.2; }
+  html.am .ds-pick.ds-nine .ds-opt small { display: none !important; }
+}
+/* Ders penceresi: telefonda başlık sıkışır, kapatma düğmesi sağ üstte */
+@media (max-width: 640px) {
+  html.am .us-head { position: relative; padding: calc(12px + env(safe-area-inset-top)) 16px 0; }
+  html.am .us-top { position: absolute; right: 12px; top: calc(10px + env(safe-area-inset-top)); z-index: 2; }
+  html.am .us-top .smallcaps { display: none; }
+  html.am .us-de { font-size: 25px; margin: 0; padding-right: 50px; }
+  html.am .us-tr { font-size: 14px; margin-top: 2px; }
+  html.am .us-head .us-tabs { margin-top: 10px; }
+}
+/* Yazı ölçeği: ana sayfada ikincil yazılar tek boy */
+html.am .am-home :is(.am-li small, .am-it small, .sd-next, .am-hero p) { font-size: 13.5px; }
+html.am .am-home .am-li b { font-size: 15px; }
+html.am .am-home .am-sh h2 { font-size: 20px; }
+/* Masaüstü: ana sayfa iki sütun */
+@media (min-width: 1100px) {
+  html.am .am-home.am-simple { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: 28px; row-gap: 22px; align-items: start; }
+  html.am .am-home.am-simple > :not(.sd-hero):not(section) { grid-column: 1 / -1; }
+  html.am .am-home.am-simple > .sd-hero { grid-column: 1; grid-row: span 3; }
+  html.am .am-home.am-simple > section { grid-column: 2; }
+  html.am .am-home.am-simple .am-hero { min-height: 340px; }
+  html.am .am-home.am-simple .am-hero .am-hcv { display: none; }
+}
+</style>
+<style id="features2">
+/* ---------- 1) Görev halkaları (Aktivite / Enerji) ---------- */
+.f2-qr { display: flex; align-items: center; gap: 14px; }
+.f2-qr > .am-list { flex: 1; min-width: 0; }
+.f2-rings { flex: none; width: 96px; height: 96px; }
+.f2-rings svg { display: block; width: 96px; height: 96px; overflow: visible; }
+.f2-rg circle { fill: none; stroke-width: 9.5; }
+.f2-tr { stroke: var(--f2c); opacity: .17; }
+html.dark .f2-tr { opacity: .24; }
+.f2-ar { stroke: var(--f2c); stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: var(--f2o);
+  animation: f2Ring .9s cubic-bezier(.2, .75, .25, 1) var(--f2d) both; }
+.f2-cap { transform-box: view-box; transform-origin: 48px 48px; transform: rotate(var(--f2a));
+  animation: f2Cap .9s cubic-bezier(.2, .75, .25, 1) var(--f2d) both; }
+.f2-cap circle { fill: var(--f2c); stroke: none; filter: drop-shadow(0 0 1.6px rgba(0, 0, 0, .45)); }
+html.dark .f2-cap circle { filter: drop-shadow(0 0 1.8px rgba(0, 0, 0, .8)); }
+@keyframes f2Ring { from { stroke-dashoffset: 100; } }
+@keyframes f2Cap { from { transform: rotate(0deg); } }
+@media (prefers-reduced-motion: reduce) { .f2-ar, .f2-cap { animation: none; } }
+
+/* ---------- 2) Seviye rengi: ayar satırı ---------- */
+.f2-lvrow small { font-weight: 500; margin-top: 2px; }
+
+/* ---------- 4) AI bekleme iskeleti ---------- */
+.f2-skhost { display: block; }
+.ai-box.f2-skhost { width: 100%; max-width: 560px; box-sizing: border-box; }
+.f2-skel { display: grid; gap: 10px; padding: 4px 0 2px; width: 100%; min-width: 200px; }
+.f2-skhost > .f2-skel:not(:first-child) { margin-top: 10px; }
+.f2-skel i { display: block; height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, rgba(120, 120, 128, .14) 0 35%, rgba(120, 120, 128, .28) 50%, rgba(120, 120, 128, .14) 65% 100%) 0 0 / 300% 100%;
+  animation: f2Shim 1.3s linear infinite; }
+.f2-skel i:nth-child(1) { width: 92%; }
+.f2-skel i:nth-child(2) { width: 100%; }
+.f2-skel i:nth-child(3) { width: 84%; }
+.f2-skel i:nth-child(4) { width: 58%; }
+html.dark .f2-skel i { background-image: linear-gradient(90deg, rgba(235, 235, 245, .08) 0 35%, rgba(235, 235, 245, .17) 50%, rgba(235, 235, 245, .08) 65% 100%); }
+@keyframes f2Shim { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .f2-skel i { animation: none; background-position: 50% 0; } }
+</style>
 </head>
 <body>
 <div id="toast"></div>
@@ -12704,7 +12784,24 @@ function sadeAfter(pg) {
   const v = document.getElementById('view') || document.getElementById('main'); if (!v) return;
   if (pg === 'learn') sadeLearn(v);
   if (pg === 'practice' || pg === 'more') sadeHub(v, pg);
-  if (pg === 'settings') sadeSettings(v);
+  if (pg === 'settings') { sadeSettings(v); sadeDesigns(v); }
+  if (pg === 'review') sadeReview(v);
+}
+// Tekrar: "Tekrara başla" kartı en üstte, kutu ızgarası katlanır
+function sadeReview(v) {
+  const grid = v.querySelector(':scope > .box-grid'), card = v.querySelector(':scope > .glass.card'); if (!grid || !card || grid.closest('details')) return;
+  grid.before(card);
+  const d = document.createElement('details'); d.className = 'sd-boxes';
+  d.innerHTML = '<summary><i class="fa-solid fa-boxes-stacked"></i> Kutular <small>kelimelerin hafızadaki durumu</small></summary>';
+  card.after(d); d.appendChild(grid);
+}
+// Ayarlar > Tasarım: az kullanılan dört tasarım "Diğer tasarımlar" altında
+function sadeDesigns(v) {
+  const pick = v.querySelector('.ds-pick.ds-nine'); if (!pick || pick.querySelector('.sd-more-ds')) return;
+  const rest = ['hb', 'lb', 'kb', 'vx'].map(k => pick.querySelector(`.ds-opt[onclick="setDesign('${k}')"]`)).filter(Boolean); if (!rest.length) return;
+  const d = document.createElement('details'); d.className = 'sd-more-ds'; d.open = rest.some(b => b.classList.contains('on'));
+  d.innerHTML = '<summary>Diğer tasarımlar <small>' + rest.length + '</small></summary><div class="ds-pick ds-nine sd-rest"></div>';
+  rest.forEach(b => d.lastElementChild.appendChild(b)); pick.after(d);
 }
 // Öğren: bitenler tek satıra, sıradakinden sonra 6 ders; gerisi "Tümünü göster"
 function sadeLearn(v) {
@@ -12927,6 +13024,127 @@ lessonSummary = function () {
   } catch (e) { console.warn(e); }
   return r;
 };
+
+/* =====================================================================
+   FEATURES 2 — (1) Aktivite/Enerji görev halkaları, (2) seviye rengi,
+   (3) cevap geri bildirimi (parlama / sallanma / titreşim), (4) AI bekleme iskeleti
+   Tüm adlar f2 önekli. CSS: style#features2
+   ===================================================================== */
+const f2RM = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } };
+
+/* ---------- 1) Görev halkaları (yalnızca ak ve en) ---------- */
+function f2RingsHtml() {
+  const h = document.documentElement.classList, pre = h.contains('ak') ? 'ak' : h.contains('en') ? 'en' : '';
+  if (!pre || !D || !D.quests || !D.quests.list) return '';
+  const cols = ['ders', 'kelime', 'yazma'], R = [41, 29.5, 18], C = 48;
+  const qs = D.quests.list.map(q => ({ q, d: QUEST_POOL.find(x => x.id === q.id) })).filter(x => x.d).slice(0, 3);
+  if (!qs.length) return '';
+  const label = qs.map(x => `${x.d.t}: ${Math.min(x.q.p, x.d.goal)}/${x.d.goal}`).join(', ');
+  const rings = qs.map((x, i) => {
+    const p = Math.max(0, Math.min(1, (x.q.p || 0) / x.d.goal)), r = R[i], col = `var(--${pre}-${cols[i]})`;
+    const off = (100 - p * 100).toFixed(2), ang = (p * 360).toFixed(1);
+    return `<g class="f2-rg" style="--f2c:${col};--f2o:${off};--f2a:${ang}deg;--f2d:${i * 90}ms">
+      <circle class="f2-tr" cx="${C}" cy="${C}" r="${r}"/>
+      <circle class="f2-ar" cx="${C}" cy="${C}" r="${r}" pathLength="100" transform="rotate(-90 ${C} ${C})" ${p ? '' : 'style="display:none"'}/>
+      ${p > 0 && p < 1 ? `<g class="f2-cap"><circle cx="${C}" cy="${C - r}" r="4.3"/></g>` : ''}</g>`;
+  }).join('');
+  return `<div class="f2-rings" role="img" aria-label="Görev ilerlemesi: ${esc(label)}"><svg viewBox="0 0 96 96" width="96" height="96" aria-hidden="true">${rings}</svg></div>`;
+}
+const _f2Home = VIEWS.home;
+VIEWS.home = () => {
+  const h = _f2Home();
+  try {
+    const rings = f2RingsHtml(); if (!rings) return h;
+    const t = h.indexOf('<h2>Bugünün görevleri</h2>'); if (t < 0) return h;
+    const a = h.indexOf('<div class="am-list">', t), e = h.indexOf('</section>', a); if (a < 0 || e < 0) return h;
+    return h.slice(0, a) + `<div class="f2-qr">${rings}` + h.slice(a, e) + '</div>' + h.slice(e);
+  } catch (err) { console.warn(err); return h; }
+};
+
+/* ---------- 2) Seviye rengi: --accent / --accd / --accent-soft / --hb-pri seviyeyi izler ---------- */
+// [açık accent, açık accd, koyu accent, koyu accd, r,g,b (açık), r,g,b (koyu)] — tonlar AM_HUE ile aynı aile
+const F2_LVC = {
+  a1: ['#e0243a', '#b51a2d', '#ff4d5e', '#ff7d8a', '224,36,58', '255,77,94'],
+  a2: ['#d35400', '#a84300', '#ff8a3d', '#ffa86b', '211,84,0', '255,138,61'],
+  b1: ['#a86e00', '#855700', '#f5b324', '#ffc95c', '168,110,0', '245,179,36'],
+  b2: ['#128a47', '#0d6b37', '#32d074', '#6be09b', '18,138,71', '50,208,116'],
+  c1: ['#0a6ed1', '#0857a6', '#3d9bff', '#75b8ff', '10,110,209', '61,155,255'],
+  c2: ['#7c3fd0', '#6330a8', '#b38cff', '#cbb0ff', '124,63,208', '179,140,255']
+};
+const F2_LVPROPS = ['--accent', '--accd', '--accent-soft', '--acc', '--hb-pri'];
+function f2LvApply() {
+  const h = document.documentElement, s = h.style;
+  const on = !!(CFG && CFG.lvc) && !h.classList.contains('fx') && typeof D !== 'undefined' && D;
+  h.classList.toggle('f2-lvc', !!on);
+  if (!on) { F2_LVPROPS.forEach(p => s.removeProperty(p)); return; }
+  let li = 0; try { li = currentLevelIdx(); } catch (e) {}
+  const L = LEVELS[li] || LEVELS[0], c = F2_LVC[L.color] || F2_LVC.a1, dk = h.classList.contains('dark');
+  const acc = dk ? c[2] : c[0], accd = dk ? c[3] : c[1];
+  s.setProperty('--accent', acc); s.setProperty('--accd', accd); s.setProperty('--acc', acc);
+  s.setProperty('--accent-soft', `rgba(${dk ? c[5] : c[4]},${dk ? .2 : .12})`);
+  if (h.classList.contains('hb')) s.setProperty('--hb-pri', acc); else s.removeProperty('--hb-pri');
+}
+const _f2ApplyDesign = applyDesign;
+applyDesign = function () { const r = _f2ApplyDesign.apply(this, arguments); try { f2LvApply(); } catch (e) {} return r; };
+const _f2ApplyTheme = applyTheme;
+applyTheme = function () { const r = _f2ApplyTheme.apply(this, arguments); try { f2LvApply(); } catch (e) {} return r; };
+const _f2Go = go;
+go = function () { const r = _f2Go.apply(this, arguments); try { f2LvApply(); } catch (e) {} return r; };
+const _f2Settings = VIEWS.settings;
+VIEWS.settings = () => {
+  const s = _f2Settings();
+  const row = `<label class="between f2-lvrow" style="margin-top:10px;cursor:pointer"><span><b>Seviye rengi</b><small class="muted" style="display:block;font-size:12px">Vurgu rengi bulunduğun seviyeye (A1…C2) göre değişir</small></span><input type="checkbox" ${CFG.lvc ? 'checked' : ''} onchange="CFG.lvc=this.checked;saveCfg();f2LvApply()"></label>`;
+  const m = s.match(/<label[^>]*><b>Tam siyah koyu tema[\s\S]*?<\/label>/);
+  if (m) return s.replace(m[0], m[0] + row);
+  const k = s.indexOf('<b>Titreşim'); if (k < 0) return s;
+  const st = s.lastIndexOf('<label', k); return s.slice(0, st) + row + s.slice(st);
+};
+try { f2LvApply(); } catch (e) {}
+
+/* ---------- 3) Cevap geri bildirimi ---------- */
+function f2Feedback(ok) {
+  const rm = f2RM(), body = document.getElementById('lsBody'); if (!body) return;
+  const pick = sels => { for (const q of sels) { const el = body.querySelector(q); if (el) return el; } return null; };
+  const el = ok ? pick(['.opt.sel', '.opt.ok', '.spot-w.sel', '#fillIn', 'input', 'textarea', '.sel']) || body.firstElementChild
+    : pick(['.opt.bad', '.opt.sel', '.spot-w.sel', '#fillIn', 'input', 'textarea', '.sel']) || body.firstElementChild;
+  if (CFG.haptic !== false && navigator.vibrate) { try { navigator.vibrate(rm ? 0 : ok ? 10 : [20, 40, 20]); } catch (e) {} }
+  if (!el || !el.animate) return;
+  if (ok) {
+    el.animate([{ boxShadow: '0 0 0 0 rgba(52,199,89,.55)' }, { boxShadow: '0 0 0 12px rgba(52,199,89,0)' }], { duration: rm ? 1 : 520, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    if (!rm) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.025)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'cubic-bezier(.2,.7,.2,1)', composite: 'add' });
+  } else if (!rm) {
+    el.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(3px)' }, { transform: 'translateX(0)' }], { duration: 300, easing: 'ease-out', composite: 'add' });
+  }
+}
+const _f2FinishItem = finishItem;
+finishItem = function (ok) {
+  const was = !!(LSN && LSN.checked), r = _f2FinishItem.apply(this, arguments);
+  if (!was && LSN && LSN.checked) try { f2Feedback(!!ok); } catch (e) {}
+  return r;
+};
+
+/* ---------- 4) AI bekleme iskeleti ---------- */
+// f2Skel(el): el içine parlayan 4 satırlık iskelet koyar; içerik gelince el.innerHTML değişir ve iskelet kendiliğinden gider
+function f2SkelNode(n = 4) {
+  const d = document.createElement('div'); d.className = 'f2-skel'; d.setAttribute('aria-hidden', 'true');
+  d.innerHTML = Array.from({ length: n }, () => '<i></i>').join(''); return d;
+}
+function f2Skel(el, n) { if (!el) return; el.setAttribute('aria-busy', 'true'); el.appendChild(f2SkelNode(n)); }
+// Yapay zeka çıktı kutularındaki "typing" noktalarını iskeletle değiştirir (sohbet balonları ve küçük durum yazıları hariç)
+const F2_SK_IDS = /^(aiUnitOut|whyBox|storyAi|pronAi|aiConjOut|aiArtOut|repOut|exGrade|wrOut|lcAi|planAi|diOut|fqAi|rdOut|exOut|wdAi|wy\d+)$/;
+function f2SkelSwap(t) {
+  if (t.dataset.f2 || t.closest('.msg, #gateWait, #lgBox, #dlBox, #modelOut, #aiTest, #wpTr, #tutorPanel')) return;
+  const host = t.closest('.ai-box') || (t.parentElement && F2_SK_IDS.test(t.parentElement.id) ? t.parentElement : null)
+    || (t.parentElement && t.parentElement.parentElement && F2_SK_IDS.test(t.parentElement.parentElement.id) ? t.parentElement : null);
+  if (!host) return;
+  t.dataset.f2 = 1; t.hidden = true;
+  host.classList.add('f2-skhost'); f2Skel(host, 4);
+}
+new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
+  if (n.nodeType !== 1) return;
+  if (n.matches('span.typing')) f2SkelSwap(n);
+  else if (n.firstElementChild) n.querySelectorAll('span.typing').forEach(f2SkelSwap);
+}))).observe(document.body, { childList: true, subtree: true });
 
 /* ---------- Başlat ---------- */
 applyTheme();
