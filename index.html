@@ -4090,6 +4090,117 @@ html.dark .f2-skel i { background-image: linear-gradient(90deg, rgba(235, 235, 2
 @keyframes f2Shim { from { background-position: 100% 0; } to { background-position: 0 0; } }
 @media (prefers-reduced-motion: reduce) { .f2-skel i { animation: none; background-position: 50% 0; } }
 </style>
+<style id="note-photos">
+/* ---------- Not fotoğraflarım (ders paneli) + Not Galerim (YKS galerisi gibi) ---------- */
+.nf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.nf-sec summary .fa-images { color: var(--accent); }
+.nf-add { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.nf-pick { position: relative; cursor: pointer; flex: 1 1 auto; min-height: 42px; text-align: center; line-height: 1.25; }
+.nf-pick:first-child { flex-basis: 100%; }
+.nf-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nf-file { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 0; }
+.nf-file::-webkit-file-upload-button { cursor: pointer; }
+.nf-prog { margin-top: 10px; padding: 9px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--ink); background: var(--accent-soft, var(--surface-2)); display: flex; align-items: center; gap: 8px; }
+.nf-prog[hidden] { display: none; }
+.nf-prog i { color: var(--accent); }
+.nf-body { margin-top: 10px; }
+.nf-empty-s { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.nf-link { border: 0; background: none; padding: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.nf-solo { margin: 16px 0 4px; }
+/* Kare karo ızgara: telefonda 3, genişte 5 sütun */
+.nf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+@media (min-width: 640px) { .nf-page .nf-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.nf-tile { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 0; padding: 0; margin: 0; cursor: pointer; background: var(--surface-2); color: #fff; display: block; width: 100%; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; }
+.nf-tile:active { transform: scale(.97); }
+.nf-tile:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.nf-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nf-tile img:not([src]) { visibility: hidden; }
+.nf-tile.sel { box-shadow: 0 0 0 3px var(--accent); } .nf-tile.sel img { opacity: .72; }
+.nf-badge { position: absolute; left: 5px; bottom: 22px; max-width: calc(100% - 10px); padding: 2px 6px; border-radius: 6px; font: 700 10.5px/1.3 -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #fff; background: rgba(0,0,0,.62); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left; }
+.nf-badge::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--nfc, var(--accent)); margin-right: 4px; vertical-align: 1px; }
+.nf-date { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 6px 4px; font: 600 11px/1.2 -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #fff; text-align: left; background: linear-gradient(transparent, rgba(0,0,0,.66)); text-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.nf-tile .nf-cap-dot { position: absolute; top: 5px; left: 5px; width: 20px; height: 20px; border-radius: 6px; background: rgba(0,0,0,.55); display: grid; place-items: center; font-size: 10px; }
+.nf-check { position: absolute; top: 5px; right: 5px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff; background: rgba(0,0,0,.3); color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.nf-tile.sel .nf-check { background: var(--accent); }
+/* Galeri sayfası */
+.nf-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 22px; }
+.nf-stats > div { background: var(--surface); border-radius: 18px; padding: 12px 14px; box-shadow: var(--card-shadow, none); min-width: 0; }
+.nf-stats b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nf-stats small { color: var(--muted); font-size: 12.5px; }
+.nf-head { align-items: center; gap: 8px; flex-wrap: wrap; }
+.nf-hb { display: flex; gap: 6px; flex-wrap: wrap; }
+.nf-hb .btn { min-height: 36px; padding: 7px 14px; font-size: 14px; }
+.nf-pills { display: flex; gap: 6px; overflow-x: auto; padding: 2px 1px 6px; margin-bottom: 8px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.nf-pills::-webkit-scrollbar { display: none; }
+.nf-pill { position: relative; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; padding: 0 12px; height: 36px; border-radius: 999px; font: 600 13.5px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface-2); color: var(--ink); border: 0; cursor: pointer; white-space: nowrap; }
+.nf-pill > span { color: var(--muted); font-weight: 500; }
+.nf-pill b { font-weight: 600; padding-right: 12px; max-width: 52vw; overflow: hidden; text-overflow: ellipsis; }
+.nf-pill select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; appearance: none; -webkit-appearance: none; border: 0; }
+.nf-pill::after { content: '▾'; position: absolute; right: 11px; font-size: 10px; color: var(--muted); pointer-events: none; }
+.nf-pill.nf-clear::after { content: none; }
+.nf-pill:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.nf-pill.act { background: var(--accent-soft, color-mix(in srgb, var(--accent) 14%, transparent)); color: var(--accent); }
+.nf-pill.act > span, .nf-pill.act::after { color: inherit; opacity: .8; }
+.nf-range { display: flex; align-items: center; gap: 6px; margin: 0 0 10px; color: var(--muted); }
+.nf-range input { max-width: 170px; font-size: 16px; padding: 7px 12px; }
+.nf-n { color: var(--muted); font-size: 13px; margin: 4px 0 8px; }
+.nf-grp { margin: 0 0 22px; }
+.nf-gh { display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px; }
+.nf-gh h3 { font-size: 16px; font-weight: 700; letter-spacing: -.01em; margin: 0; color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nf-gh small { color: var(--muted); font-size: 13px; flex-shrink: 0; }
+.nf-gh .nf-link { margin-left: auto; flex-shrink: 0; font-size: 14px; }
+.nf-empty { text-align: center; padding: 36px 18px; background: var(--surface); border-radius: 22px; box-shadow: var(--card-shadow, none); }
+.nf-empty > i { font-size: 34px; color: var(--accent); }
+.nf-empty b { display: block; font-size: 18px; margin: 10px 0 6px; color: var(--ink); }
+.nf-empty p { color: var(--muted); margin: 0 auto 16px; max-width: 42ch; line-height: 1.5; font-size: 15px; }
+.nf-foot { margin-top: 14px; display: grid; gap: 8px; justify-items: start; }
+.nf-more { width: 100%; }
+html.nf-sel #amMini { display: none !important; }
+.nf-page { padding-bottom: 40px; }
+html.nf-sel .nf-page { padding-bottom: 96px; }
+.nf-selbar { position: fixed; left: 12px; right: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 92px); z-index: 70; max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 6px; padding: 7px 7px 7px 16px; border-radius: 999px;
+  background: var(--am-glass, var(--surface)); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); border: .5px solid var(--lg-edge, var(--border)); box-shadow: 0 14px 34px -12px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.35); color: var(--ink); }
+@media (min-width: 961px) { .nf-selbar { bottom: 24px; left: 240px; } }
+.nf-selbar .nf-sn { flex: 1; font-weight: 700; font-size: 14px; white-space: nowrap; }
+.nf-selbar button { border: 0; cursor: pointer; min-height: 38px; padding: 0 12px; border-radius: 999px; font: 600 13.5px -apple-system, BlinkMacSystemFont, Inter, sans-serif; background: var(--surface-2); color: var(--ink); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.nf-selbar button.pri { background: var(--accent); color: var(--accent-ink, #fff); }
+.nf-selbar button.del { color: var(--negative); }
+.nf-selbar button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 420px) { .nf-selbar .nf-sbt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } .nf-selbar { padding-left: 14px; } .nf-selbar button { padding: 0 11px; } }
+/* Öğren listesinde fotoğraf sayısı */
+.nf-chip { display: inline-flex; align-items: center; gap: 3px; margin-left: 4px; padding: 0 6px; border-radius: 999px; font-size: 11.5px; font-weight: 600; line-height: 18px; color: var(--accent); background: var(--accent-soft, color-mix(in srgb, var(--accent) 12%, transparent)); vertical-align: 1px; white-space: nowrap; }
+.nf-chip i { font-size: 10px; }
+.am-te .nf-chip { margin: 0 6px 0 0; }
+/* Tam ekran görüntüleyici: her tasarımda koyu (fotoğraf görüntüleyici gibi) */
+html.nf-lock, html.nf-lock body { overflow: hidden; }
+.nf-lb { position: fixed; inset: 0; z-index: 390; background: #000; color: #fff; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, Inter, 'Segoe UI', sans-serif; animation: fadeIn .18s ease; }
+.nf-lb-top { display: flex; align-items: center; gap: 12px; padding: calc(10px + env(safe-area-inset-top)) 12px 10px 18px; background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,0)); position: relative; z-index: 2; }
+.nf-lb-meta { flex: 1; min-width: 0; }
+.nf-lb-meta b { display: block; font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nf-lb-meta small { display: block; font-size: 13px; color: #d4d4d8; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.nf-lb-btn { border: 0; cursor: pointer; width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; font-size: 18px; color: #fff; background: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); flex-shrink: 0; }
+.nf-lb-btn:hover { background: rgba(255,255,255,.26); }
+.nf-lb-btn:focus-visible, .nf-lb-acts button:focus-visible, .nf-lb-cap:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.nf-lb-stage { flex: 1; min-height: 0; position: relative; overflow: hidden; touch-action: none; display: grid; place-items: center; user-select: none; -webkit-user-select: none; }
+.nf-lb-img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center center; will-change: transform; -webkit-user-drag: none; pointer-events: none; }
+.nf-lb-nav { position: absolute; top: 50%; margin-top: -22px; z-index: 2; background: rgba(0,0,0,.55); box-shadow: 0 0 0 1px rgba(255,255,255,.25); }
+.nf-lb-nav:disabled { opacity: .35; cursor: default; }
+.nf-lb-nav.prev { left: 12px; } .nf-lb-nav.next { right: 12px; }
+.nf-lb-nav[hidden] { display: none; }
+@media (hover: none) and (max-width: 700px) { .nf-lb-nav { opacity: .75; } }
+.nf-lb-bar { padding: 10px 14px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.75) 30%); display: grid; gap: 10px; position: relative; z-index: 2; max-width: 760px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+.nf-lb-cap { width: 100%; box-sizing: border-box; border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.1); color: #fff; border-radius: 14px; padding: 10px 14px; font: 400 16px -apple-system, BlinkMacSystemFont, Inter, sans-serif; }
+.nf-lb-cap::placeholder { color: #c4c4cc; }
+.nf-lb-cap[readonly] { border-color: transparent; background: transparent; padding-left: 0; }
+.nf-lb-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.nf-lb-acts button { border: 0; cursor: pointer; min-height: 42px; padding: 0 16px; border-radius: 999px; font: 600 14.5px -apple-system, BlinkMacSystemFont, Inter, sans-serif; color: #fff; background: rgba(255,255,255,.16); display: inline-flex; align-items: center; gap: 7px; }
+.nf-lb-acts button:hover { background: rgba(255,255,255,.26); }
+.nf-lb-acts .del { margin-left: auto; color: #ff8a80; }
+.nf-lb-load { position: absolute; inset: 0; display: grid; place-items: center; color: #d4d4d8; font-size: 14px; pointer-events: none; }
+.nf-addm .nf-add { margin-top: 14px; }
+.nf-addm .yt-note-s { margin-top: 12px; }
+@media (prefers-reduced-motion: reduce) { .nf-lb { animation: none; } .nf-tile { transition: none; } }
+</style>
 </head>
 <body>
 <div id="toast"></div>
@@ -5952,7 +6063,7 @@ function deleteProfileById(id) {
   const del = async () => {
     closeModal(); if (!confirm(`“${p.name}” profili ve tüm ilerlemesi BÜTÜN cihazlardan silinsin mi? Bu geri alınamaz.`)) return;
     DELETED[id] = Date.now(); LS.set('df_deleted', DELETED);
-    PROFILES = PROFILES.filter(x => x.id !== id); LS.set('df_profiles', PROFILES); localStorage.removeItem('df_data_' + id);
+    PROFILES = PROFILES.filter(x => x.id !== id); LS.set('df_profiles', PROFILES); localStorage.removeItem('df_data_' + id); if (typeof nfWipe === 'function') nfWipe(id);
     const db = await fbInit();
     if (db) { try { await db.ref('deutschflow').update({ ['deleted/' + id]: DELETED[id], ['profiles/' + id]: null, ['data/' + id]: null }); } catch (e) { toast('Buluttan silinemedi: ' + e.message, 'err'); } }
     toast(`“${p.name}” silindi`);
@@ -13145,6 +13256,486 @@ new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
   if (n.matches('span.typing')) f2SkelSwap(n);
   else if (n.firstElementChild) n.querySelectorAll('span.typing').forEach(f2SkelSwap);
 }))).observe(document.body, { childList: true, subtree: true });
+
+/* =====================================================================
+   NOT FOTOĞRAFLARIM: her dersin video panelinde el yazısı not fotoğrafları + "Not Galerim" sayfası
+   (YKS takipçisinin galerisi gibi: kare karolar, süzgeçler, Seç modu, PDF).
+   Fotoğraflar YALNIZCA bu cihazda durur: IndexedDB 'dfNotes', profil kimliğiyle (pid).
+   D'ye ve Firebase'e görüntü gitmez (RTDB profil verisi şişmesin, kimlik doğrulaması yok).
+     meta  { id, pid, unit, at, cap, w, h, bytes }        (keyPath id, index pid)
+     img   `${id}|f` ≤1600px JPEG · `${id}|t` ≤360px JPEG küçük resim
+   ===================================================================== */
+let NF_DBP = null, NF_BUSY = false, NF_LAST = null, NF_LB = null;
+const NF_IDX = {}, NF_TURL = {};
+const NF_G = { pid: null, unit: '', range: 'all', from: '', to: '', sort: 'recent', selecting: false, sel: new Set(), shown: [], limit: 90 };
+function nfDb() {
+  return NF_DBP || (NF_DBP = new Promise((res, rej) => {
+    if (!window.indexedDB) { NF_DBP = null; return rej(new Error('IndexedDB yok')); }
+    const q = indexedDB.open('dfNotes', 1);
+    q.onupgradeneeded = () => { const db = q.result; db.createObjectStore('meta', { keyPath: 'id' }).createIndex('pid', 'pid'); db.createObjectStore('img'); };
+    q.onsuccess = () => res(q.result); q.onerror = () => { NF_DBP = null; rej(q.error); };
+  }));
+}
+const nfReq = r => new Promise((ok, no) => { r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); });
+const nfTx = t => new Promise((ok, no) => { t.oncomplete = ok; t.onerror = () => no(t.error); t.onabort = () => no(t.error || new Error('abort')); });
+async function nfLoad(pid = PID, force) {
+  if (!pid) return [];
+  if (NF_IDX[pid] && !force) return NF_IDX[pid];
+  try { const db = await nfDb(), list = await nfReq(db.transaction('meta').objectStore('meta').index('pid').getAll(pid)); NF_IDX[pid] = list.sort((a, b) => b.at - a.at); }
+  catch (e) { console.warn('dfNotes', e); NF_IDX[pid] = []; }
+  return NF_IDX[pid];
+}
+async function nfImg(id, k) { const db = await nfDb(); return nfReq(db.transaction('img').objectStore('img').get(id + '|' + k)); }
+const nfMeta = id => (NF_IDX[PID] || []).find(m => m.id === id);
+// Etiketler
+function nfLabel(id) {
+  const f = findUnit(id); if (!f) return 'Silinmiş ders';
+  return f.u.ders != null ? `Ders ${f.u.ders} · ${f.u.t.replace(/^Ders [^·]+· /, '')}` : `${f.L.id} · ${f.u.t}`;
+}
+function nfShort(id) { const f = findUnit(id); return !f ? '?' : f.u.ders != null ? 'Ders ' + f.u.ders : `${f.L.id} · ${f.ui + 1}`; }
+function nfOrd(id) { const f = findUnit(id); return f ? f.li * 1000 + f.ui : 1e9; }
+function nfDate(t) { const d = new Date(t), y = d.getFullYear() !== new Date().getFullYear(); return d.toLocaleDateString('tr-TR', y ? { day: 'numeric', month: 'short', year: '2-digit' } : { day: 'numeric', month: 'short' }); }
+const nfDateLong = t => new Date(t).toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const nfSize = b => b < 1048576 ? Math.max(0, Math.round(b / 1024)) + ' KB' : (b / 1048576).toLocaleString('tr-TR', { maximumFractionDigits: 1 }) + ' MB';
+function nfFname(m, ext = 'jpg') { const d = new Date(m.at), p = n => String(n).padStart(2, '0'); return `DeutschFlow-${nfShort(m.unit)}-${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}.${ext}`.replace(/[^\w.-]+/g, '-'); }
+
+// Küçük resimleri tek işlemde yükle (blob: adresleri önbellekte kalır)
+async function nfHydrate(root) {
+  const imgs = [...(root || document).querySelectorAll('img[data-nft]')].filter(i => !i.getAttribute('src'));
+  const need = imgs.filter(i => !NF_TURL[i.dataset.nft]).map(i => i.dataset.nft);
+  if (need.length) try {
+    const db = await nfDb(), st = db.transaction('img').objectStore('img');
+    const blobs = await Promise.all([...new Set(need)].map(id => nfReq(st.get(id + '|t')).then(b => [id, b]).catch(() => [id, null])));
+    blobs.forEach(([id, b]) => { if (b && !NF_TURL[id]) NF_TURL[id] = URL.createObjectURL(b); });
+  } catch (e) {}
+  imgs.forEach(i => { const u = NF_TURL[i.dataset.nft]; if (u) i.src = u; });
+}
+
+// Görüntüyü çöz: EXIF yönü korunur; Safari HEIC'i <img> ile çözer
+async function nfDecode(file) {
+  if (window.createImageBitmap) { try { const b = await createImageBitmap(file, { imageOrientation: 'from-image' }); return { src: b, w: b.width, h: b.height, done: () => b.close && b.close() }; } catch (e) {} }
+  const url = URL.createObjectURL(file), img = new Image();
+  const p = new Promise((ok, no) => { img.onload = ok; img.onerror = no; });
+  img.src = url;
+  try { await p; if (img.decode) await img.decode().catch(() => {}); if (!img.naturalWidth) throw 0; }
+  catch (e) { URL.revokeObjectURL(url); const er = new Error('decode'); er.nfDecode = 1; throw er; }
+  return { src: img, w: img.naturalWidth, h: img.naturalHeight, done: () => URL.revokeObjectURL(url) };
+}
+function nfCanvas(src, w, h, max) {
+  const s = Math.min(1, max / Math.max(w, h)), c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w * s)); c.height = Math.max(1, Math.round(h * s));
+  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height);
+  x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high'; x.drawImage(src, 0, 0, c.width, c.height);
+  return c;
+}
+const nfBlob = (c, q) => new Promise((ok, no) => c.toBlob(b => b ? ok(b) : no(new Error('toBlob')), 'image/jpeg', q));
+
+function nfProgress(txt) { document.querySelectorAll('.nf-prog').forEach(p => { p.hidden = !txt; p.innerHTML = txt ? `<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> ${esc(txt)}` : ''; }); }
+async function nfAdd(unit, input) {
+  const files = [...((input && input.files) || [])]; if (input) input.value = '';
+  if (!files.length || !PID || !findUnit(unit)) return;
+  if (!canEdit()) return;
+  if (NF_BUSY) { toast('Önceki fotoğraflar hâlâ ekleniyor', 'warn'); return; }
+  NF_BUSY = true; NF_LAST = unit;
+  const pid = PID, bad = []; let ok = 0, full = false;
+  try {
+    await nfLoad(pid);
+    try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(() => {}); } catch (e) {}
+    for (let i = 0; i < files.length && !full; i++) {
+      nfProgress(files.length > 1 ? `Fotoğraflar ekleniyor… ${i + 1} / ${files.length}` : 'Fotoğraf ekleniyor…');
+      try {
+        const d = await nfDecode(files[i]); let fb, tb, w, h;
+        try { const c = nfCanvas(d.src, d.w, d.h, 1600); w = c.width; h = c.height; fb = await nfBlob(c, .82); tb = await nfBlob(nfCanvas(c, w, h, 360), .8); c.width = c.height = 0; }
+        finally { d.done(); }
+        const m = { id: 'nf' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), pid, unit, at: Date.now(), cap: '', w, h, bytes: fb.size + tb.size };
+        const db = await nfDb(), t = db.transaction(['meta', 'img'], 'readwrite');
+        t.objectStore('img').put(fb, m.id + '|f'); t.objectStore('img').put(tb, m.id + '|t'); t.objectStore('meta').put(m);
+        await nfTx(t);
+        NF_IDX[pid].unshift(m); ok++;
+      } catch (e) {
+        if (e && (e.name === 'QuotaExceededError' || /quota/i.test(e.message || ''))) full = true;
+        else { console.warn('nfAdd', e); bad.push(files[i].name || 'fotoğraf'); }
+      }
+    }
+  } finally { NF_BUSY = false; nfProgress(''); }
+  if (ok) toast(ok === 1 ? 'Not fotoğrafı eklendi' : `${ok} not fotoğrafı eklendi`);
+  if (full) toast('Cihazda yer kalmadı; bazı fotoğraflar kaydedilemedi. Eski fotoğrafları silip yeniden dene.', 'err');
+  if (bad.length) setTimeout(() => toast(`${bad.length === 1 ? 'Bir fotoğraf' : bad.length + ' fotoğraf'} açılamadı. iPhone'un HEIC fotoğrafıysa Safari'de ekle ya da JPEG olarak kaydedip yeniden dene.`, 'err'), ok ? 900 : 0);
+  nfRefresh(unit);
+}
+async function nfDelete(ids) {
+  if (!ids.length) return;
+  const db = await nfDb(), t = db.transaction(['meta', 'img'], 'readwrite');
+  ids.forEach(id => { t.objectStore('meta').delete(id); t.objectStore('img').delete(id + '|f'); t.objectStore('img').delete(id + '|t'); });
+  await nfTx(t);
+  const set = new Set(ids);
+  Object.keys(NF_IDX).forEach(p => { NF_IDX[p] = NF_IDX[p].filter(m => !set.has(m.id)); });
+  ids.forEach(id => { if (NF_TURL[id]) { URL.revokeObjectURL(NF_TURL[id]); delete NF_TURL[id]; } NF_G.sel.delete(id); });
+}
+async function nfSetCap(id, v) {
+  const m = nfMeta(id); if (!m || RO) return; v = String(v || '').trim().slice(0, 140); if (m.cap === v) return; m.cap = v;
+  try { const db = await nfDb(), t = db.transaction('meta', 'readwrite'); t.objectStore('meta').put(m); await nfTx(t); } catch (e) { toast('Açıklama kaydedilemedi', 'err'); }
+  nfRefresh(m.unit, true);
+}
+// Profil silinince o profilin fotoğrafları da gider
+async function nfWipe(pid) {
+  try { const db = await nfDb(), ids = await nfReq(db.transaction('meta').objectStore('meta').index('pid').getAllKeys(pid)); await nfDelete(ids); delete NF_IDX[pid]; } catch (e) {}
+}
+function nfRefresh(unit, quiet) {
+  document.querySelectorAll(`.nf-sec[data-nf="${unit}"]`).forEach(s => nfFillSec(s));
+  if (PAGE === 'notfoto') nfRenderGallery();
+  if (PAGE === 'learn' && !quiet) nfLearnChips();
+}
+
+/* ---------- Ders panelinde “Not fotoğraflarım” ---------- */
+const nfPickers = (id, oc) => `<div class="nf-add">
+    <label class="btn btn-sm nf-pick"><i class="fa-solid fa-images" aria-hidden="true"></i> Not Fotoğrafı Ekle (birden fazla seçebilirsin)<input class="nf-file" type="file" accept="image/*" multiple onchange="${oc}"></label>
+    <label class="btn btn-sm btn-ghost nf-pick"><i class="fa-solid fa-camera" aria-hidden="true"></i> Fotoğraf çek<input class="nf-file" type="file" accept="image/*" capture="environment" onchange="${oc}"></label></div>`;
+function nfSecHtml(id) {
+  return `<details class="yt-note nf-sec" data-nf="${id}"><summary><i class="fa-solid fa-images" aria-hidden="true"></i> Not fotoğraflarım <small class="nf-cnt"></small></summary>
+    ${RO ? '' : nfPickers(id, `nfAdd('${id}',this)`)}
+    <div class="nf-prog" role="status" hidden></div>
+    <div class="nf-body"></div>
+    <small class="yt-note-s">Fotoğraflar yalnızca bu cihazda saklanır. <button type="button" class="nf-link" onclick="closeModal();go('notfoto')">Not Galerim</button></small></details>`;
+}
+function nfTile(m, o = {}) {
+  const sel = o.sel && NF_G.sel.has(m.id), f = o.badge && findUnit(m.unit);
+  return `<button type="button" class="nf-tile ${sel ? 'sel' : ''}" data-id="${m.id}" onclick="nfTap('${m.id}','${o.ctx || 'u'}')" aria-label="${esc(nfLabel(m.unit))}, ${nfDateLong(m.at)}${m.cap ? ', ' + esc(m.cap) : ''}"${o.sel ? ` aria-pressed="${sel}"` : ''}>
+    <img data-nft="${m.id}" alt="">${m.cap ? '<span class="nf-cap-dot" aria-hidden="true"><i class="fa-solid fa-align-left"></i></span>' : ''}
+    ${f ? `<span class="nf-badge" style="--nfc:var(--${f.L.color})">${esc(nfShort(m.unit))}</span>` : ''}<span class="nf-date">${nfDate(m.at)}</span>${o.sel ? `<span class="nf-check" aria-hidden="true">${sel ? '<i class="fa-solid fa-check"></i>' : ''}</span>` : ''}</button>`;
+}
+async function nfFillSec(sec) {
+  const id = sec.dataset.nf, list = (await nfLoad()).filter(m => m.unit === id), body = sec.querySelector('.nf-body'); if (!body) return;
+  sec.querySelector('.nf-cnt').textContent = list.length ? list.length + ' fotoğraf' : '';
+  body.innerHTML = list.length ? `<div class="nf-grid">${list.map(m => nfTile(m, { ctx: 'u' })).join('')}</div>`
+    : `<p class="nf-empty-s">Defterine aldığın notların fotoğrafını çek; burada tarihleriyle durur.</p>`;
+  if (list.length && !sec.dataset.touched) sec.open = true;
+  nfHydrate(sec);
+}
+const _openUnitNf = openUnit;
+openUnit = function (id) {
+  const el = _openUnitNf.apply(this, arguments);
+  if (!el || !findUnit(id) || el.querySelector('.nf-sec')) return el;
+  const box = el.querySelector('.yt-box');
+  if (box) box.insertAdjacentHTML('beforeend', nfSecHtml(id));
+  else { const body = el.querySelector('.sheet-body'); if (!body) return el; const last = body.lastElementChild; last ? last.insertAdjacentHTML('beforebegin', nfSecHtml(id)) : body.insertAdjacentHTML('beforeend', nfSecHtml(id)); el.querySelector('.nf-sec').classList.add('nf-solo'); }
+  const sec = el.querySelector('.nf-sec');
+  sec.querySelector('summary').addEventListener('click', () => { sec.dataset.touched = 1; });
+  nfFillSec(sec);
+  return el;
+};
+
+/* ---------- Not Galerim ---------- */
+function nfRangeOk(m) {
+  if (NF_G.range === 'all') return true;
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  if (NF_G.range === 'week') { d.setDate(d.getDate() - (d.getDay() + 6) % 7); return m.at >= d.getTime(); }
+  if (NF_G.range === 'month') { d.setDate(1); return m.at >= d.getTime(); }
+  const k = dKeyNf(m.at); return (!NF_G.from || k >= NF_G.from) && (!NF_G.to || k <= NF_G.to);
+}
+function dKeyNf(t) { const d = new Date(t); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function nfGroups(all) {
+  const a = all.filter(m => (!NF_G.unit || m.unit === NF_G.unit) && nfRangeOk(m));
+  if (NF_G.sort === 'date') return { flat: a, groups: null };
+  const g = new Map(); a.forEach(m => { if (!g.has(m.unit)) g.set(m.unit, []); g.get(m.unit).push(m); });
+  const groups = [...g.entries()].sort((x, y) => NF_G.sort === 'lesson' ? nfOrd(x[0]) - nfOrd(y[0]) : y[1][0].at - x[1][0].at);
+  return { flat: groups.flatMap(x => x[1]), groups };
+}
+function nfSet(p) { Object.assign(NF_G, p); NF_G.limit = 90; nfRenderGallery(); }
+VIEWS.notfoto = () => {
+  if (NF_G.pid !== PID) Object.assign(NF_G, { pid: PID, unit: '', range: 'all', from: '', to: '', selecting: false, sel: new Set() });
+  return `<div class="yt-page nf-page"><p class="page-sub">El yazısı ders notlarının fotoğrafları, hangi derse ait olduklarıyla. Fotoğraflar yalnızca bu cihazda saklanır.</p><div id="nfGal" aria-busy="true"></div></div>`;
+};
+AFTER.notfoto = () => nfRenderGallery();
+async function nfRenderGallery() {
+  const host = document.getElementById('nfGal'); if (!host) return;
+  const all = await nfLoad(); if (!document.getElementById('nfGal') || PAGE !== 'notfoto') return;
+  host.removeAttribute('aria-busy');
+  const cnt = {}; all.forEach(m => { cnt[m.unit] = (cnt[m.unit] || 0) + 1; });
+  const units = Object.keys(cnt).sort((a, b) => nfOrd(a) - nfOrd(b));
+  if (NF_G.unit && !cnt[NF_G.unit]) NF_G.unit = '';
+  const bytes = all.reduce((s, m) => s + (m.bytes || 0), 0);
+  const head = `<div class="am-sh nf-head"><h2>Bütün Fotoğraflar</h2><div class="nf-hb">${RO ? '' : `<button type="button" class="btn btn-sm btn-ghost" onclick="nfAddPick()"><i class="fa-solid fa-plus" aria-hidden="true"></i> Ekle</button>`}${all.length ? `<button type="button" class="btn btn-sm btn-ghost" onclick="nfToggleSel()" aria-pressed="${NF_G.selecting}">${NF_G.selecting ? 'Bitti' : 'Seç'}</button><button type="button" class="btn btn-sm" onclick="nfPdf()"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</button>` : ''}</div></div><div class="nf-prog" role="status" hidden></div>`;
+  if (!all.length) {
+    NF_G.shown = []; NF_G.selecting = false; nfSelUi();
+    host.innerHTML = head + `<div class="nf-empty"><i class="fa-solid fa-images" aria-hidden="true"></i><b>Henüz not fotoğrafın yok</b><p>Öğren'de bir dersi aç; videonun altındaki “Not fotoğraflarım” bölümünden fotoğraf çek ya da galeriden seç. Buradaki “Ekle” düğmesi de olur.</p><button type="button" class="btn" onclick="go('learn')"><i class="fa-solid fa-route" aria-hidden="true"></i> Derslere git</button></div>`;
+    return;
+  }
+  const stats = `<div class="nf-stats"><div><b>${all.length}</b><small>fotoğraf</small></div><div><b>${units.length}</b><small>ders</small></div><div><b>${nfSize(bytes)}</b><small>kullanılan alan</small></div></div>`;
+  const opt = (v, l, cur) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${l}</option>`;
+  const RL = { all: 'Tüm zamanlar', week: 'Bu hafta', month: 'Bu ay', custom: 'Özel aralık' }, SL = { recent: 'Son eklenen ders', lesson: 'Ders sırası', date: 'Tarih (hepsi)' };
+  const any = NF_G.unit || NF_G.range !== 'all';
+  const pills = `<div class="nf-pills" role="group" aria-label="Süzgeçler">
+    <label class="nf-pill ${NF_G.unit ? 'act' : ''}"><span>Ders</span><b>${NF_G.unit ? esc(nfShort(NF_G.unit)) : 'Hepsi'}</b><select onchange="nfSet({unit:this.value})" aria-label="Derse göre süz">${opt('', 'Hepsi', NF_G.unit)}${units.map(u => opt(u, `${esc(nfLabel(u))} (${cnt[u]})`, NF_G.unit)).join('')}</select></label>
+    <label class="nf-pill ${NF_G.range !== 'all' ? 'act' : ''}"><span>Tarih</span><b>${RL[NF_G.range]}</b><select onchange="nfSet({range:this.value})" aria-label="Tarihe göre süz">${opt('all', 'Tüm zamanlar', NF_G.range)}${opt('week', 'Bu hafta', NF_G.range)}${opt('month', 'Bu ay', NF_G.range)}${opt('custom', 'Özel aralık', NF_G.range)}</select></label>
+    <label class="nf-pill"><span>Sıra</span><b>${SL[NF_G.sort]}</b><select onchange="nfSet({sort:this.value})" aria-label="Sıralama">${opt('recent', 'Son eklenen ders', NF_G.sort)}${opt('lesson', 'Ders sırası', NF_G.sort)}${opt('date', 'Tarih (hepsi)', NF_G.sort)}</select></label>
+    ${any ? `<button type="button" class="nf-pill nf-clear" onclick="nfSet({unit:'',range:'all',from:'',to:''})"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Temizle</button>` : ''}</div>
+    ${NF_G.range === 'custom' ? `<div class="nf-range"><input type="date" class="pill-input" value="${NF_G.from}" onchange="nfSet({from:this.value})" aria-label="Başlangıç tarihi"> – <input type="date" class="pill-input" value="${NF_G.to}" onchange="nfSet({to:this.value})" aria-label="Bitiş tarihi"></div>` : ''}`;
+  const { flat, groups } = nfGroups(all); NF_G.shown = flat;
+  [...NF_G.sel].forEach(id => { if (!all.some(m => m.id === id)) NF_G.sel.delete(id); });
+  const o = { ctx: 'g', sel: NF_G.selecting };
+  let body;
+  if (!flat.length) body = `<div class="nf-empty"><i class="fa-solid fa-filter" aria-hidden="true"></i><b>Bu seçimde fotoğraf yok</b><p>Süzgeçleri değiştir ya da temizle.</p></div>`;
+  else if (groups) body = groups.map(([u, ms]) => `<section class="nf-grp"><div class="nf-gh"><h3>${esc(nfLabel(u))}</h3><small>${ms.length}</small><button type="button" class="nf-link" onclick="nfGoUnit('${u}')">Derse git</button></div><div class="nf-grid">${ms.map(m => nfTile(m, o)).join('')}</div></section>`).join('');
+  else body = `<p class="nf-n">${flat.length} fotoğraf</p><div class="nf-grid">${flat.slice(0, NF_G.limit).map(m => nfTile(m, Object.assign({ badge: 1 }, o))).join('')}</div>${flat.length > NF_G.limit ? `<button type="button" class="btn btn-ghost nf-more" onclick="NF_G.limit+=90;nfRenderGallery()">Daha fazla göster (${flat.length - NF_G.limit})</button>` : ''}`;
+  host.innerHTML = head + stats + pills + body + (flat.length ? `<div class="nf-foot"><button type="button" class="btn btn-ghost btn-sm" onclick="nfDownload(NF_G.shown)"><i class="fa-solid fa-download" aria-hidden="true"></i> Tümünü indir (${flat.length})</button><p class="am-foot">Fotoğraflar telefonla bilgisayar arasında eşitlenmez; yedek için “Tümünü indir”i kullan.</p></div>` : '');
+  nfHydrate(host); nfSelUi();
+}
+function nfGoUnit(u) { nfClose(); closeModal(); if (findUnit(u)) openUnit(u); }
+function nfToggleSel() { NF_G.selecting = !NF_G.selecting; if (!NF_G.selecting) NF_G.sel.clear(); nfRenderGallery(); }
+const nfSelList = () => NF_G.shown.filter(m => NF_G.sel.has(m.id));
+function nfSelAll() { const all = NF_G.shown.length && NF_G.shown.every(m => NF_G.sel.has(m.id)); NF_G.shown.forEach(m => all ? NF_G.sel.delete(m.id) : NF_G.sel.add(m.id)); nfRenderGallery(); }
+function nfSelUi() {
+  let b = document.getElementById('nfSelBar'); const on = NF_G.selecting && PAGE === 'notfoto' && !!D;
+  document.documentElement.classList.toggle('nf-sel', on);
+  if (!on) { if (b) b.remove(); return; }
+  if (!b) { b = document.createElement('div'); b.id = 'nfSelBar'; b.className = 'nf-selbar'; b.setAttribute('role', 'toolbar'); b.setAttribute('aria-label', 'Seçili fotoğraflar'); document.body.appendChild(b); }
+  const n = NF_G.sel.size, all = NF_G.shown.length && NF_G.shown.every(m => NF_G.sel.has(m.id)), dis = n ? '' : 'disabled';
+  b.innerHTML = `<span class="nf-sn" aria-live="polite">${n} seçili</span><button type="button" onclick="nfSelAll()">${all ? 'Hiçbiri' : 'Tümünü seç'}</button><button type="button" class="pri" onclick="nfPdf(true)" ${dis}><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</button><button type="button" onclick="nfDownload(nfSelList())" ${dis} aria-label="Seçilenleri indir"><i class="fa-solid fa-download" aria-hidden="true"></i><span class="nf-sbt"> İndir</span></button>${RO ? '' : `<button type="button" class="del" onclick="nfDelSel()" ${dis} aria-label="Seçilenleri sil"><i class="fa-solid fa-trash" aria-hidden="true"></i><span class="nf-sbt"> Sil</span></button>`}`;
+}
+async function nfDelSel() {
+  const ids = [...NF_G.sel]; if (!ids.length || !canEdit()) return;
+  if (!confirm(`${ids.length} fotoğraf kalıcı olarak silinsin mi?`)) return;
+  try { await nfDelete(ids); toast(`${ids.length} fotoğraf silindi`); } catch (e) { toast('Silinemedi', 'err'); }
+  NF_G.sel.clear(); nfRenderGallery();
+}
+function nfTap(id, ctx) {
+  if (ctx === 'g' && NF_G.selecting) {
+    NF_G.sel.has(id) ? NF_G.sel.delete(id) : NF_G.sel.add(id);
+    const t = document.querySelector(`#nfGal .nf-tile[data-id="${id}"]`), s = NF_G.sel.has(id);
+    if (t) { t.classList.toggle('sel', s); t.setAttribute('aria-pressed', s); t.querySelector('.nf-check').innerHTML = s ? '<i class="fa-solid fa-check"></i>' : ''; }
+    nfSelUi(); return;
+  }
+  const m = nfMeta(id); if (!m) return;
+  const ids = ctx === 'g' ? NF_G.shown.map(x => x.id) : (NF_IDX[PID] || []).filter(x => x.unit === m.unit).map(x => x.id);
+  nfOpen(ids, Math.max(0, ids.indexOf(id)), ctx);
+}
+// Galeriden “Ekle”: önce hangi ders, sonra seçici
+function nfAddPick() {
+  if (!canEdit()) return;
+  const nu = nextUnit(), cur = NF_G.unit || NF_LAST || (nu && !nu.boss ? nu.u.id : LEVELS[0].units[0].id);
+  const opts = LEVELS.map(L => `<optgroup label="${esc(L.id + ' · ' + L.tr)}">${L.units.map(u => `<option value="${u.id}" ${u.id === cur ? 'selected' : ''}>${esc(nfLabel(u.id))}</option>`).join('')}</optgroup>`).join('');
+  modal(`<div class="sheet-head"><h3>Not fotoğrafı ekle</h3><button type="button" class="icon-btn" onclick="closeModal()" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="sheet-body nf-addm"><label class="rc-pick"><span>Hangi ders?</span><select id="nfAddU" class="pill-input">${opts}</select></label>
+    ${nfPickers('', `nfAddFrom(this)`)}<small class="yt-note-s">Fotoğraflar yalnızca bu cihazda saklanır.</small></div>`, true, 480);
+}
+function nfAddFrom(inp) {
+  const u = ($('#nfAddU') || {}).value; if (!u) return;
+  const files = [...(inp.files || [])]; inp.value = ''; closeModal(); if (!files.length) return;
+  if (NF_G.unit && NF_G.unit !== u) NF_G.unit = '';
+  nfAdd(u, { files });
+}
+
+/* ---------- Paylaş / indir ---------- */
+function nfDl(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }
+async function nfShareFiles(files, title) {
+  try { if (navigator.share && navigator.canShare && navigator.canShare({ files })) { await navigator.share({ files, title }); return 'share'; } }
+  catch (e) { if (e && e.name === 'AbortError') return 'abort'; }
+  for (let i = 0; i < files.length; i++) { nfDl(files[i], files[i].name); if (i < files.length - 1) await new Promise(r => setTimeout(r, 350)); }
+  return 'dl';
+}
+async function nfDownload(list) {
+  list = (list || []).slice(); if (!list.length) return;
+  if (list.length > 1) toast(`${list.length} fotoğraf hazırlanıyor…`);
+  try {
+    const files = [];
+    for (const m of list) { const b = await nfImg(m.id, 'f'); if (b) files.push(new File([b], nfFname(m), { type: 'image/jpeg' })); }
+    const r = await nfShareFiles(files, 'Not fotoğraflarım');
+    if (r === 'dl') toast(files.length === 1 ? 'Fotoğraf indirildi' : `${files.length} fotoğraf indirildi`);
+  } catch (e) { toast('Fotoğraflar hazırlanamadı', 'err'); }
+}
+
+/* ---------- PDF: seçilenler ya da süzülenler, ders başlıklarıyla (A4, sayfa başına 2 fotoğraf) ---------- */
+async function nfPdf(fromSel) {
+  const items = (fromSel || (NF_G.selecting && NF_G.sel.size)) ? nfSelList() : NF_G.shown.slice();
+  if (!items.length) { toast('PDF için fotoğraf seç', 'warn'); return; }
+  const g = new Map(); items.forEach(m => { if (!g.has(m.unit)) g.set(m.unit, []); g.get(m.unit).push(m); });
+  const groups = [...g.entries()], fname = `DeutschFlow-not-fotograflari-${today()}.pdf`;
+  pdfProgress(`0 / ${items.length} fotoğraf`);
+  try {
+    if (!(window.jspdf && window.jspdf.jsPDF)) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    const W = 1240, H = 1754, M = 84, F = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif';
+    let first = true, done = 0;
+    const fit = (x, s, w) => { if (x.measureText(s).width <= w) return s; while (s.length > 1 && x.measureText(s + '…').width > w) s = s.slice(0, -1); return s + '…'; };
+    for (const [u, ms] of groups) {
+      for (let i = 0; i < ms.length; i += 2) {
+        const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+        x.fillStyle = '#fff'; x.fillRect(0, 0, W, H);
+        x.fillStyle = '#111'; x.font = `700 40px ${F}`; x.fillText(fit(x, nfLabel(u), W - 2 * M), M, M + 34);
+        x.fillStyle = '#555'; x.font = `400 24px ${F}`; x.fillText(`${i ? 'devam · ' : ''}${ms.length} fotoğraf · DeutschFlow not fotoğrafları`, M, M + 74);
+        x.fillStyle = '#ddd'; x.fillRect(M, M + 96, W - 2 * M, 2);
+        const top = M + 126, slot = (H - top - M) / 2;
+        for (let k = 0; k < 2 && i + k < ms.length; k++) {
+          const m = ms[i + k], b = await nfImg(m.id, 'f'); if (!b) continue;
+          const d = await nfDecode(b), aw = W - 2 * M, ah = slot - 64, s = Math.min(aw / d.w, ah / d.h), dw = d.w * s, dh = d.h * s, y = top + k * slot;
+          x.drawImage(d.src, M + (aw - dw) / 2, y, dw, dh); d.done();
+          x.fillStyle = '#333'; x.font = `500 23px ${F}`; x.fillText(fit(x, nfDateLong(m.at) + (m.cap ? ' · ' + m.cap : ''), aw), M + (aw - dw) / 2, y + dh + 34);
+          done++; const pm = $('#pdfMsg'); if (pm) pm.textContent = `${done} / ${items.length} fotoğraf`;
+        }
+        if (!first) pdf.addPage(); first = false;
+        pdf.addImage(c.toDataURL('image/jpeg', .86), 'JPEG', 0, 0, 210, 297);
+        c.width = c.height = 0;
+      }
+    }
+    pdf.save(fname); closeModal(); toast('📄 PDF indirildi: ' + fname);
+  } catch (e) { console.warn(e); closeModal(); toast('PDF kütüphanesi yüklenemedi; yazdırma penceresinden “PDF olarak kaydet”i seç', 'warn'); nfPrint(groups); }
+}
+// Yedek: tarayıcının yazdırma sayfası (aynı sayfada gizli çerçeve, açılır pencere engeline takılmaz)
+async function nfPrint(groups) {
+  const urls = [], parts = [];
+  for (const [u, ms] of groups) {
+    const imgs = [];
+    for (const m of ms) { const b = await nfImg(m.id, 'f'); if (!b) continue; const url = URL.createObjectURL(b); urls.push(url); imgs.push(`<figure><img src="${url}"><figcaption>${esc(nfDateLong(m.at))}${m.cap ? ' · ' + esc(m.cap) : ''}</figcaption></figure>`); }
+    parts.push(`<section><h1>${esc(nfLabel(u))}</h1><p>${ms.length} fotoğraf · DeutschFlow not fotoğrafları</p>${imgs.join('')}</section>`);
+  }
+  const fr = document.createElement('iframe'); fr.style.cssText = 'position:fixed;width:0;height:0;border:0;right:0;bottom:0'; document.body.appendChild(fr);
+  fr.srcdoc = `<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>Not fotoğraflarım</title><style>body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;margin:0}section{break-before:page}section:first-child{break-before:auto}h1{font-size:20px;margin:0 0 2px}p{color:#555;margin:0 0 10px;font-size:12px}figure{margin:0 0 14px;break-inside:avoid;text-align:center}img{max-width:100%;max-height:118mm;object-fit:contain}figcaption{font-size:11px;color:#333;margin-top:4px}@page{size:A4;margin:12mm}</style></head><body>${parts.join('')}</body></html>`;
+  fr.onload = () => { const w = fr.contentWindow; Promise.all([...w.document.images].map(i => i.decode ? i.decode().catch(() => {}) : 0)).then(() => { w.focus(); w.print(); setTimeout(() => { fr.remove(); urls.forEach(URL.revokeObjectURL); }, 60000); }); };
+}
+
+/* ---------- Tam ekran görüntüleyici ---------- */
+function nfOpen(ids, i, ctx) {
+  if (!ids.length) return;
+  nfClose(true);
+  const el = document.createElement('div'); el.id = 'nfLb'; el.className = 'nf-lb';
+  el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Not fotoğrafı');
+  el.innerHTML = `<div class="nf-lb-top"><div class="nf-lb-meta"><b class="nf-lb-t"></b><small class="nf-lb-d"></small></div><button type="button" class="nf-lb-btn nf-lb-x" aria-label="Kapat" onclick="nfClose()"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="nf-lb-stage"><span class="nf-lb-load">Yükleniyor…</span><img class="nf-lb-img" alt=""></div>
+    <button type="button" class="nf-lb-btn nf-lb-nav prev" aria-label="Önceki fotoğraf" onclick="nfStep(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" class="nf-lb-btn nf-lb-nav next" aria-label="Sonraki fotoğraf" onclick="nfStep(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="nf-lb-bar"><input class="nf-lb-cap" type="text" maxlength="140" enterkeyhint="done" placeholder="${RO ? '' : 'Açıklama ekle (isteğe bağlı)'}" aria-label="Fotoğraf açıklaması" ${RO ? 'readonly' : ''}>
+      <div class="nf-lb-acts"><button type="button" onclick="nfShareCur()"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Paylaş/İndir</button>${ctx === 'g' ? `<button type="button" onclick="nfGoUnit(NF_LB.unit)"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Derse git</button>` : ''}${RO ? '' : `<button type="button" class="del" onclick="nfDelCur()"><i class="fa-solid fa-trash" aria-hidden="true"></i> Sil</button>`}</div></div>`;
+  document.body.appendChild(el);
+  NF_LB = { el, ids: ids.slice(), i, ctx, ret: document.activeElement, z: 1, tx: 0, ty: 0, url: null, blob: null, unit: null };
+  document.documentElement.classList.add('nf-lock');
+  const cap = el.querySelector('.nf-lb-cap');
+  let ct = null; cap.addEventListener('input', () => { const id = NF_LB.ids[NF_LB.i]; clearTimeout(ct); ct = setTimeout(() => nfSetCap(id, cap.value), 500); });
+  cap.addEventListener('change', () => { clearTimeout(ct); nfSetCap(NF_LB.ids[NF_LB.i], cap.value); });
+  cap.addEventListener('keydown', e => { if (e.key === 'Enter') cap.blur(); });
+  nfGestures(el); nfShow();
+  el.querySelector('.nf-lb-x').focus();
+}
+function nfClose(silent) {
+  if (!NF_LB) return; const L = NF_LB; NF_LB = null;
+  const cap = L.el.querySelector('.nf-lb-cap'); if (cap && !silent) nfSetCap(L.ids[L.i], cap.value);
+  L.el.remove(); if (L.url) URL.revokeObjectURL(L.url);
+  document.documentElement.classList.remove('nf-lock');
+  if (!silent && L.ret && L.ret.isConnected) try { L.ret.focus(); } catch (e) {}
+}
+function nfZoom(z, tx = 0, ty = 0, anim) { const L = NF_LB; if (!L) return; L.z = z; L.tx = tx; L.ty = ty; const im = L.el.querySelector('.nf-lb-img'); im.style.transition = anim ? 'transform .22s ease' : 'none'; im.style.transform = `translate(${tx}px,${ty}px) scale(${z})`; }
+async function nfShow() {
+  const L = NF_LB; if (!L) return;
+  const id = L.ids[L.i], m = nfMeta(id); if (!m) return;
+  L.unit = m.unit; L.blob = null;
+  const el = L.el, im = el.querySelector('.nf-lb-img');
+  el.querySelector('.nf-lb-t').textContent = nfLabel(m.unit);
+  el.querySelector('.nf-lb-d').textContent = nfDateLong(m.at) + (L.ids.length > 1 ? ` · ${L.i + 1} / ${L.ids.length}` : '');
+  el.querySelector('.nf-lb-cap').value = m.cap || '';
+  el.querySelectorAll('.nf-lb-nav').forEach(b => b.hidden = L.ids.length < 2);
+  el.querySelector('.prev').disabled = L.i === 0; el.querySelector('.next').disabled = L.i === L.ids.length - 1;
+  nfZoom(1); im.style.opacity = '';
+  if (NF_TURL[id]) im.src = NF_TURL[id];
+  const b = await nfImg(id, 'f').catch(() => null); if (NF_LB !== L || L.ids[L.i] !== id) return;
+  el.querySelector('.nf-lb-load').hidden = true;
+  if (!b) { im.alt = 'Fotoğraf bulunamadı'; return; }
+  if (L.url) URL.revokeObjectURL(L.url); L.url = URL.createObjectURL(b); L.blob = b; im.src = L.url;
+  im.alt = 'Not fotoğrafı: ' + nfLabel(m.unit) + (m.cap ? ', ' + m.cap : '');
+}
+function nfStep(d) { const L = NF_LB; if (!L) return; const n = L.i + d; if (n < 0 || n >= L.ids.length) { nfZoom(1, 0, 0, true); return; } const cap = L.el.querySelector('.nf-lb-cap'); nfSetCap(L.ids[L.i], cap.value); L.i = n; nfShow(); }
+async function nfShareCur() {
+  const L = NF_LB; if (!L) return; const m = nfMeta(L.ids[L.i]); if (!m) return;
+  const b = L.blob || await nfImg(m.id, 'f'); if (!b) return;
+  const r = await nfShareFiles([new File([b], nfFname(m), { type: 'image/jpeg' })], nfLabel(m.unit));
+  if (r === 'dl') toast('Fotoğraf indirildi');
+}
+async function nfDelCur() {
+  const L = NF_LB; if (!L || !canEdit()) return; const id = L.ids[L.i], m = nfMeta(id);
+  if (!confirm('Bu fotoğraf kalıcı olarak silinsin mi?')) return;
+  try { await nfDelete([id]); } catch (e) { toast('Silinemedi', 'err'); return; }
+  toast('Fotoğraf silindi');
+  if (NF_LB === L) { L.ids.splice(L.i, 1); if (!L.ids.length) nfClose(); else { L.i = Math.min(L.i, L.ids.length - 1); nfShow(); } }
+  if (m) nfRefresh(m.unit);
+}
+// Kaydır: sağa/sola önceki/sonraki, aşağı kapat; iki parmak büyüt; çift dokun yakınlaştır
+function nfGestures(el) {
+  const st = el.querySelector('.nf-lb-stage'), im = el.querySelector('.nf-lb-img'), P = new Map(); let g = null, lastTap = 0;
+  const pinchD = () => { const [a, b] = [...P.values()]; return Math.hypot(a.x - b.x, a.y - b.y) || 1; };
+  st.addEventListener('pointerdown', e => {
+    if (!NF_LB) return; try { st.setPointerCapture(e.pointerId); } catch (_) {}
+    P.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (P.size === 2) g = { pinch: 1, d: pinchD(), z: NF_LB.z };
+    else if (P.size === 1) g = { x: e.clientX, y: e.clientY, tx: NF_LB.tx, ty: NF_LB.ty };
+  });
+  st.addEventListener('pointermove', e => {
+    const L = NF_LB; if (!L || !P.has(e.pointerId) || !g) return;
+    P.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (g.pinch && P.size >= 2) { nfZoom(Math.min(4, Math.max(1, g.z * pinchD() / g.d)), L.tx, L.ty); return; }
+    if (g.pinch) return;
+    const dx = e.clientX - g.x, dy = e.clientY - g.y;
+    if (L.z > 1) { nfZoom(L.z, g.tx + dx, g.ty + dy); return; }
+    if (Math.abs(dy) > Math.abs(dx) && dy > 0) { im.style.transition = 'none'; im.style.transform = `translateY(${dy}px) scale(${Math.max(.8, 1 - dy / 1200)})`; el.style.backgroundColor = `rgba(0,0,0,${Math.max(.35, 1 - dy / 400)})`; }
+    else { im.style.transition = 'none'; im.style.transform = `translateX(${dx}px)`; }
+  });
+  const up = e => {
+    const L = NF_LB; if (!P.has(e.pointerId)) return; P.delete(e.pointerId); if (!L || !g) return;
+    el.style.backgroundColor = '';
+    if (g.pinch) { if (!P.size) { g = null; if (L.z < 1.05) nfZoom(1, 0, 0, true); } return; }
+    const dx = e.clientX - g.x, dy = e.clientY - g.y; g = null;
+    if (e.type === 'pointercancel') { if (L.z === 1) nfZoom(1, 0, 0, true); return; }
+    const tap = Math.abs(dx) < 10 && Math.abs(dy) < 10;
+    if (tap) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (L.z > 1) nfZoom(1, 0, 0, true); else { const r = st.getBoundingClientRect(), z = 2.5; nfZoom(z, (e.clientX - r.left - r.width / 2) * (1 - z), (e.clientY - r.top - r.height / 2) * (1 - z), true); } }
+      else lastTap = now;
+      if (L.z === 1) nfZoom(1, 0, 0);
+      return;
+    }
+    if (L.z > 1) return;
+    if (dy > 110 && Math.abs(dy) > Math.abs(dx)) { nfClose(); return; }
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { nfStep(dx < 0 ? 1 : -1); return; }
+    nfZoom(1, 0, 0, true);
+  };
+  st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
+  st.addEventListener('wheel', e => { const L = NF_LB; if (!L || !(e.ctrlKey || L.z > 1)) return; e.preventDefault(); const z = Math.min(4, Math.max(1, L.z * (e.deltaY < 0 ? 1.12 : 1 / 1.12))); nfZoom(z, z === 1 ? 0 : L.tx, z === 1 ? 0 : L.ty); }, { passive: false });
+}
+addEventListener('keydown', e => {
+  const L = NF_LB; if (!L) return;
+  if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); nfClose(); return; }
+  if (e.key === 'Tab') { const f = [...L.el.querySelectorAll('button:not([hidden]):not(:disabled),input')].filter(x => x.offsetParent !== null); if (!f.length) return; const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } else if (!L.el.contains(document.activeElement)) { e.preventDefault(); a.focus(); } return; }
+  if (e.target && e.target.classList && e.target.classList.contains('nf-lb-cap')) return;
+  if (e.key === 'ArrowRight') { e.preventDefault(); nfStep(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); nfStep(-1); }
+}, true);
+
+/* ---------- Öğren listesinde fotoğraf sayısı rozeti ---------- */
+async function nfLearnChips() {
+  const list = await nfLoad(); if (PAGE !== 'learn') return;
+  const c = {}; list.forEach(m => { c[m.unit] = (c[m.unit] || 0) + 1; });
+  document.querySelectorAll('#view [onclick*="openUnit(\'"]').forEach(b => {
+    if (b.classList.contains('btn')) return;
+    const id = ((b.getAttribute('onclick') || '').match(/openUnit\('([^']+)'\)/) || [])[1], old = b.querySelector('.nf-chip');
+    if (old) old.remove(); if (!id || !c[id]) return;
+    const te = b.querySelector('.am-te'); (te || b).insertAdjacentHTML(te ? 'afterbegin' : 'beforeend', ` <span class="nf-chip"><i class="fa-solid fa-image" aria-hidden="true"></i>${c[id]}<span class="nf-sr"> not fotoğrafı</span></span>`);
+  });
+}
+const _goNf = go;
+go = function () {
+  if (NF_LB) nfClose(true);
+  const r = _goNf.apply(this, arguments);
+  if (PAGE !== 'notfoto' && NF_G.selecting) { NF_G.selecting = false; NF_G.sel.clear(); }
+  nfSelUi();
+  if (PAGE === 'learn' && D) nfLearnChips();
+  return r;
+};
+const _logoutNf = logout;
+logout = function () { nfClose(true); NF_G.selecting = false; NF_G.sel.clear(); const r = _logoutNf.apply(this, arguments); nfSelUi(); return r; };
+
+/* ---------- Sayfa kaydı: Daha › Araçlar ---------- */
+Object.assign(PAGES, { notfoto: ['Not Galerim', 'fa-images'] });
+Object.assign(NAV_PARENT, { notfoto: 'more' });
+Object.assign(HUB_DESC, { notfoto: 'Ders notlarının fotoğrafları, derslere göre' });
+Object.assign(FX_DE, { notfoto: 'Notizen Fotos Heft' });
+MORE_GROUPS[2][3].splice(Math.max(0, MORE_GROUPS[2][3].indexOf('notes') + 1), 0, 'notfoto');
 
 /* ---------- Başlat ---------- */
 applyTheme();
